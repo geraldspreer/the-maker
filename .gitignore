@@ -9,6 +9,7 @@ Entitlements.plist
 
 *.pkg
 *.pyc
+*.zip
 .DS_Store
 .project
 .pydevproject
