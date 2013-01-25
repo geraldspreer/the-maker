@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="mac-roman"?>
+<resource>
+  <object class="wxDialog" name="newFile">
+    <title>add new file</title>
+    <centered>1</centered>
+    <pos>10,0</pos>
+    <size>450, 140</size>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxPanel">
+              <object class="wxTextCtrl" name="textField">
+                <value>newFilename</value>
+                <pos>20,40</pos>
+                <size>300, 25</size>
+              </object>
+              <object class="wxChoice" name="langChoice">
+                <content>
+                  <item/></content>
+                <selection>2</selection>
+                <pos>340, 40</pos>
+                <size>80,20</size>
+              </object>
+              <object class="wxStaticText" name="static">
+                <label>Language:</label>
+                <pos>346, 15</pos>
+              </object>
+            </object>
+          </object>
+        </object>
+        <option>1</option>
+        <flag>wxGROW</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxButton" name="Add">
+            <label>Add</label>
+            <default>1</default>
+            <pos>340, 0</pos>
+            <size>80, 25</size>
+          </object>
+          <object class="wxButton" name="Cancel">
+            <label>Cancel</label>
+            <default>0</default>
+            <pos>240, 0</pos>
+            <size>80, 25</size>
+          </object>
+        </object>
+        <option>0</option>
+        <flag>wxEXPAND</flag>
+        <minsize>640, 40</minsize>
+      </object>
+    </object>
+  </object>
+</resource>

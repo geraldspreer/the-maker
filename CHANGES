@@ -1,0 +1,2507 @@
+changeLOG for the-maker
+
+--------------------------------------------------------------------
+																	|
+TO DO / Notes														|
+																	|
+--------------------------------------------------------------------
+	
+	
+	- add Language / remove Language single dialog
+	- better php support 
+	- multiple copy buffers
+	- user prefs
+	- switch to head button
+	- pretty print
+		
+
+-------------------------------------------------------------------------
+	KNOWN BUGS															 |
+-------------------------------------------------------------------------
+	
+
+-------------------------------------------------------------------------.		
+	planned features	     										     |
+-------------------------------------------------------------------------'
+		
+		- when an opened file changes in the filesystem -> notify
+		
+		- switch project on group selection
+		- use delayed result where possible		
+		- when adding item to tree / if in queue mark
+		
+		- make auto complete faster
+		- from FTP Browser delete folders that are not empty
+		- make dynamics work with .html (.php ?) files					  
+																		  
+																		  |	
+--------------------------------------------------------------------------'
+
+December 7, 2012 	Gerald
+
+	- according to Apple requirements, the maker now writes his files to
+	~/Library/Application Support/TheMaker
+
+
+November 28, 2012 	Gerald
+
+	- the fork in the road
+	- creating fork "The Maker For OS X"
+	- this new project resides on github at 
+		https://github.com/geraldspreer/the-maker-for-osx.git
+
+February 6, 2012	Ian
+
+	- Added support for footnotes and tables from within 'Markdown(2)'
+	- Fixed missing closing tag within head (meta name) in .html template
+	
+--------------------------------------------
+ the maker 1.5
+--------------------------------------------
+
+Oktober 1, 2011		Gerald
+
+	- you can now use Markdown in maker parts (.content, .foot, .body, .nav)
+
+September 26, 2011		Gerald
+
+	- more code style
+
+September 24, 2011		Gerald
+
+	- all kinds of things 
+
+
+September 20,21 2011	Gerald
+
+	- run Python files from within the maker with an interactive shell
+	- export project as template
+
+September 19, 2011	Gerald
+
+	- manage linked projects tool
+	- add any file (how could I have missed this?)
+
+
+September 13, 2011 Gerald
+
+	- added support for linked (external) projects they can be on a USB stick,
+	  webDAV or Dropbox 
+
+
+August 19, 2011	Gerald
+
+	- now session data regarding files is saved, this means files that are open
+	when the maker is closed will be reopened at the next start of the maker
+
+August 8, 2011	Gerald
+	
+	- work on replace string in project
+	- replace in current and replace in project DONE
+
+
+July 12, 2011	Gerald
+
+	- Saving GUI settings... 
+		- Frame Size
+		- Frame Position
+		- Splitter Sash Position
+
+
+July 8, 2011	Gerald
+
+	- prep for implementaion of replace in project
+
+
+
+June 29, 2011		- Ian
+	- repositioned 'Find' and 'Replace With' "wxStaticText" <label> in makerReplaceDialog.py
+	- renamed 'one', 'two' and 'text to be 'findtext', 'replacetext' and 'pagetext' 
+		in function replace in makerReplace.py
+
+
+
+June 29, 2011	Gerald
+
+	- added Find / Replace (in open file)
+	- also as right click menu
+
+
+--------------------------------------------
+ the maker 1.1
+--------------------------------------------
+
+
+
+June 29, 2010			- Gerald
+
+	- working on makerProjectManager to fix Vista issues
+	
+
+June 23, 2010			- Gerald
+
+	- working on error report fix
+
+
+June 18, 2010			- Gerald
+
+	- included new templates
+	
+	
+
+June 15, 2010			- Gerald
+	
+	- fixed issues with wxPython versions > 2.8.8.1
+	
+
+
+March 30, 2010			- Gerald
+
+	- font (Button) fixes in 
+		* Main Interface
+		* About Dialog
+		* Dist Table Editor
+		* Default Folder Editor
+
+
+March 22, 2010			- Gerald
+
+	- more work on font issues
+
+
+March 10, 2010			- Gerald
+
+	- fixing font size issues
+
+
+February 15, 2010		- Gerald
+
+	- small fix in makerServerlink
+
+
+February 4, 2010		- Gerald
+	
+	- make all now 20% faster
+	
+
+January 21, 2010		- Gerald
+
+	- .css preview now works	
+
+
+January 20, 2010		- Gerald
+
+	- image references are now updated correctly in .css files (used to require 
+	  quotes)
+	- re implementing preview for .css files (work in progress)
+
+
+January 19, 2010		- Gerald
+
+	- fixed bug: [2935005] where it was impossible to delete unsynced images
+
+
+January 13, 2010		- Gerald
+
+	- made current project more obvious by showing project and filename in the
+	application window title and also showing the project name in the file delete 
+	dialog
+	- fixed error on HTML argument autocomplete, used to fail when no .css file
+	was linked 
+	- fixed a bug that when a filename was still in the FTP Queue but the file
+	had been deleted (usually from outside the app) it would throw error messages
+	- fixed bug where on file deletion file entry where not removed from the FTP
+	queue
+
+January 8,	2010		- Gerald
+
+	- fixed bug [2927206] now there is a check that the value of 
+		"Name for remote graphics folder" is not empty
+
+
+
+
+	Update Release: The Maker 1.01
+
+December 31, 2009		- Gerald
+	
+	- Bugfix where it was impossible to publish unsupported files
+
+
+December 27, 2009		
+
+	Official Release Of The Maker 1.0
+
+December 27, 2009		- Gerald
+
+	- fixed remote folder stuff
+
+
+December 26, 2009		- Gerald
+
+	- fixed "small image bug on Windows"
+	
+December 23, 2009		- Gerald 
+
+	- fixed linux bug where template preview image would not appear in dialog
+	- other fixes
+	- fixed MenuItemFontNormal
+	- invalid project root crosscheck works
+	- cleanup after dist edit works
+
+December 22, 2009		- Gerald
+	
+	- changes is makerProjectSetup now making sure it is just a NAME for the 
+	image folder and not a path
+	- more work on FTP browser, exceptions and error warnings
+	- you can delete binary files with FTP browser even inside folders
+	- however you can only delete empty folders and this is good enough for now
+	
+	- fixed a bug in make all
+	- work on GUI status updates
+	- fixed undo bug on binary files
+	
+
+December 21, 2009		- Gerald
+	
+	- small changes, removing some debug print calls for more speed 
+	- image delete now works again
+	- fix in project setup gfx folder name
+	- you can now delete files and folders with the FTP browser
+
+
+December 20, 2009		- Gerald
+
+	- improved image sync: Now there is a flag called self.imageSyncNeeded in
+	makerProject that is set after certain ops like image import or first project 
+	setup. Then on publishQueuedFiles this flag is checked and images are synchronized 
+	when needed
+	- work on progress bars now they don't freeze on windows anymore
+	
+	
+
+
+December 17, 2006		- Gerald
+
+	- progress bars are more logical now
+	- other fixes
+
+
+December 16, 2006		- Gerald
+
+	- makerFTPBrowser: Since the textfield in the browser is disabled 
+	the check for root does not make sense anymore
+
+
+
+December 15, 2006		- Gerald
+
+	- fixes in FTP Browser
+	- fixes in project setup
+	- default FTP root for new projects is now . 
+	- when adding file to queue we check if it exists fist
+	
+	change:
+	- after project setup not all files are queued 
+		the user has to do this himself by pressing Upload Everything
+		( there are situations where a setting has changed and you don't 
+		want to do a full upload)
+
+December 13, 2009		- Gerald
+
+	- new module makerThread
+	- check for updates on startup now threaded
+
+
+December 8, 2009		- Gerald
+	
+	- fixed all of the following 
+		- Tutorial did not work
+		- Check for updates did not check for Internet connection
+		- sync images did not check for Internet connection
+		- renamed: Project Setup dialog title to Setup FTP Connection...
+		- with delete Image you could delete all kinds of files - fixed 
+	
+		- when root of treeView was selected and projects open then 
+			there was an error 
+
+
+December 6, 2009		- Gerald
+
+	- fixes in the white template
+
+
+December 5, 2009		- Gerald
+	
+	- bug fixes publish should work again
+
+---------------------------------------------------------------------------
+	BUG HUNTING SEASON IS OPEN -^
+---------------------------------------------------------------------------
+
+November 28, 2009		- Gerald and Ian : MDM 2009 Rothenburg
+	
+	- check if project is set up
+	- copyright stamp
+	- footer messages
+	- new makerCheckInternetConnection 
+	- fixed issues related to no internet connection
+	- add binary files to FTP queue manually
+	- moved some menu items - project menu gone
+	- keyboard shortcuts for some HTML tags
+	- improved menu logic
+	- bugfixes 
+	- check for encoding errors and encoding fallback
+
+
+-------------------------------------------------------------------------
+	done and rewritten for 1.0 														 |
+-------------------------------------------------------------------------
+		
+		- default encoding wont work			done			
+		- edit other parts						done			
+		- new files								done
+		- autocomplete							done
+		- import files							done
+		- printing 								done
+		- fonts and wrapping (maker wrap default) 
+			- real toggle
+			- inc / dec font size				done
+		
+		- insert markers						done
+		- right click menu in editor			done
+		- sync images							done
+		- get compiling to work again on Mac	done
+		- import images							done
+		- clean up Linux fonts and interface	done
+		- new ErrorHandler						done
+		- remove debug print statemnts			done
+		- browse server							done		
+		- delete images							done
+		- close file							done
+		- deleting of files						done			
+		- renaming of files						done
+		- edit .content file .head				done
+		- clean up on app quit					done
+		- languages								done
+		- save .head file as .head template		done
+		- add new project 						done
+		- import project						done
+		- verify project version on load		done
+		- edit distribution table data			done
+		- edit default remote folders			done
+		- upload everything						done
+		- check if project is set up			done
+
+---------------------------------------------------------------------
+
+
+November 22, 2009		- Gerald
+
+	- fixed bug where search did not work on Windows and Linux
+		(only Win tested.)
+	- import projects
+	- improved. makerProjectConverter
+	- verify project on load
+	- editor tabs X on tab
+	- edit distribution table data			
+	- edit default remote folders			
+	- fixes in make all
+	- upload everything
+
+
+November 3, 2009		- Gerald
+
+	- add new project 
+
+
+
+November 2, 2009		- Gerald
+
+	- save .head file as .head template
+	- other small fixes
+
+
+
+November 1, 2009		- Gerald
+	
+	- small fixes
+	- since parts are displayed in the tree view, they got a little gear icon
+		to make a distinction between "ordinary" files
+
+
+October 28, 2009		- Gerald
+	
+	- languages done
+
+
+October 27, 2009		- Gerald
+	
+	- Work in progress
+	- re implemented project languages
+	- .nav .body and .foot are now part of the tree view
+	- parts menu gone
+
+
+
+October 9, 2009		- Gerald
+
+	- bugfix in delete file
+	- bugfix in delete image
+
+
+September 22, 2009	- Gerald
+	
+	- edit .content .head
+
+
+
+
+September 17, 2009	- Gerald
+
+	- renaming of files
+
+
+September 14, 2009	- Gerald
+
+	- delete image
+	- close file
+	- deleting of files
+	- bug fixes
+	
+
+August 31, 2009 	- Gerald
+
+	- removed debug print statements
+	- browse server	
+	
+	
+
+
+August 26, 2009 	- Gerald
+	
+	- make Tools menu work
+	- clean up Linux interface
+	- new Errorhandler (report dialog)
+	- removed the LogWindow (hope I will not miss it for long)
+
+
+
+August 15, 2009		- Gerald
+
+	- Image Import finished
+
+
+
+August 12, 2009		- Gerald
+
+	- Image Import 
+	- Image Tool improvements 
+
+
+August 2, 2009		- Gerald
+
+	- image stuff (working on it)
+	- sync images
+	- now using native dialog for image selection 
+	- maker is compiling again, wasn't for half a year
+	- makerHistory is now history
+
+
+
+May 27, 2009		- Gerald
+
+	- right click menu in editor
+	
+	
+
+
+May 13, 2009		- Gerald
+	
+	- insert markers	
+	- cut, copy and paste shortcuts
+	- work in progress
+
+
+April 16, 2009		- Gerald
+
+	- fonts and wrapping (maker wrap default) 
+			- real toggle
+			- inc / dec font size	
+
+	- later that day
+	- you asked for it: Could we 'option 0' to return to normal nominal size 
+		like in firefox? ,also would be good if "option=" 
+		was for inc so shift not req
+
+
+
+April 15, 2009 		- Gerald
+	
+	- work on data model for noteBookPages (projectManagerController) 
+	- file print works
+	- FIXED - adding new .content or dynamic does not add to tree or 
+		be available for edit until maker is re-started -- 
+		Bug or should this be #makerBug ;-)
+		
+
+April 13, 2009		- Gerald 
+
+	- fix for "part Bug" (when edit .nav .top or .foot)
+	
+
+
+March 27, 2009		- Gerald
+
+	- file import
+	- some bug fixes
+	
+
+March 15, 2009		- Gerald
+
+	- fix for autocomplete / bug
+
+
+
+March 14, 2009		- Gerald
+
+	-small changes here and there
+	- Insert Menu
+
+March 12,2009		- Gerald
+	
+	- Bugfixes in processing of dynamics
+	- autocomplete
+
+
+March 11, 2009		- Gerald
+	
+	- Bugfixes and stuff
+	- 	if a dynamic is saved all the effected files are queued for FTP. There is
+		no more dialog, asking the user to publish since this interrupts the 
+		workflow
+	- "interactive" publish menu item (showing nr of queued files)
+	- Number of queued files now in status bar
+	
+
+
+March 5, 2009		- Gerald
+	
+	- edit .nav .body .foot and rss.head
+	- so parts menu is complete
+	- makerPartEditor.py is history
+	- adding of new files
+	
+	new: makerFileTemplates.py
+
+	
+
+March 4, 2009		- Gerald
+
+	- fix of dynamic problem
+
+
+February 27 , 2009		- Gerald
+
+	- cross project saving of FTP queue 
+	- save all unsaved files when application closes
+	- make all
+	- I took the makerFileClasses and moved them from makerProject.py
+		into makerFileTypes.py 
+	- publish
+
+---------------------------
+2009 (I can't believe it)
+---------------------------
+
+
+December 10, 2008	- Gerald
+	
+	- search, cut, copy and paste
+	
+	
+
+December 9, 2008	- Gerald 
+	
+	- changes in maker.py
+				makerController.py
+	- some button and menu logic
+
+
+
+November 27, 2008	- Gerald
+
+	- thousands of changes
+	- initial commit to /current
+
+---------------------------------------------------------------------------
+
+	the new MVC implementation
+	
+---------------------------------------------------------------------------
+
+
+August 31, 2008	- Gerald
+	
+	- I changed the way we update the status in the GUI. In makerCore there is
+	now a decorator called afterThisUpdateStatusInfo wrapped around the "set"
+	functions related to the data in the status bar.
+	Basically "logging" each time self.language, self.project and self.current-
+	File is set
+	- this decorator is also used to indicate queued files
+	- makerFileContent class method makerWebSite is now making a difference be-
+	tween preview builds and final ones. Sites not built for preview are queued
+	for FTP
+	- makerController / actionPublishAll is gone !!! Try a "make all"
+
+
+
+ ^
+ |_ here starts the cleanup
+ 
+
+Revision 265 - release 0.9
+
+
+August 27, 2008		- Gerald
+
+	- Blue template
+	- changes in makerController, makerGUI
+
+August 20, 2008		- Gerald
+	
+	- AutoComplete featuring all HTML Tags
+	- renamed templates default = simple 
+						white_tree_col_fixed_0.1 = white
+						
+
+August 20, 2008		- Gerald back in Texas
+
+	- Debugged and Optimized AutoComplete
+	- added autoComp for < braces giving a list of
+		possible tags
+
+	- added AutoComp for background-image: url(" in Css files
+	- fixed Bug in getArgument
+
+
+July 24, 2008		- MDM 2008 , Gerald and Ian
+	
+	- Finished Autocomplete - Big Time
+
+
+July 20, 2008		- Gerald
+
+	- WORK IN PROGRESS
+	
+	- Autocomplete in the Editor (with Bugs)
+	- Printing via Browser
+
+June 27, 2008		- Gerald
+	- changed makerCore / createNewDefaultFoldersFile
+
+
+
+June 24, 2008		- Gerald
+	
+	- fixed some behavior in the table editors
+	- changed to serialized file format (cPickle) for default folders since XML has proven
+		not to be suitable
+		renamed methods in makerUtilies readDataFromXML / writeDataToXML
+		to readDataFromFile / writeDataToFile
+	- default remote folders stored in setup/defaultFolders.dat
+
+
+June 22, 2008		- Gerald
+	
+	- new methods in makerUtilies readDataFromXML / writeDataToXML
+	- new method in makerController getDefaultRemoteFolder changes in makerCore
+		addMakerFile
+	- added Menu and Button Logic
+	- small improvements in project setup
+	- added dialog for setting default remote folders
+	- zebra tables
+	
+
+June 1, 2008		- Gerald
+
+	- I changed the filename of the file storing the path to projects on XP 
+	from path to makerPath. So the user will know to which app this file
+	belongs
+	- fixed BUG [ 1970442 ] when lastProject.txt not found maker crashes
+	  changed makerController / getLastProject
+	- fixed a Bug in makerCore / updateDynamic
+	- bugFix in actionImportFile
+
+
+May 25, 2008 	- Gerald
+	
+	- removed most of the code from rev 251 since it was not performing well
+	on Windows
+	- added copyFileTree to makerUtilities and changes in makerGUI and 
+	makerController 
+
+
+May 21, 2008	- Gerald
+	
+	- added a couple of methods to the makerGUI to make the ProgressBar Pulse 
+	if needed
+	
+
+
+May 19, 2008 - Brinick
+ - Bug fix: renaming binary files causes crash (SF bug: 1967219)
+
+    M   maker-dev/makerUtilities.py
+    M   maker-dev/makerCore.py
+
+May 19, 2008	- Gerald
+
+	- On Windows after the project has been loaded the tree view is at the root
+		of the list
+	- moved the path indicator for Xp to C:/
+	- BUGFIX [ 1966477 ] Todays date maker marker not working
+
+
+
+Revision 247	Release 0.8
+
+
+May 8, 2008 	- Gerald
+
+	- Fixed Bug 1848777 (image reference update only works with double quotes )
+	- work in makerController publishCurrentFile
+	- Brinick fixed Bug 1959625
+	- new in makerGUI PulseProgress now used when importing projects 
+	 
+May 6, 2008		- Gerald
+
+	- The Most Stable Project Setup We Ever Had ('t was a long night)
+	- many, really many changes and Bugfixes in project setup
+	- changes in makerController actionTestFtp
+	- added function full upload to FTP menu
+	- fixes in makerController actionNewProject 	
+
+
+
+May 1, 2008 		- Gerald	
+	
+	- fixed BUG # 1952295
+	- makerController method ftpBrowserAction_connect_ now returns True or False
+		to determine sucess
+	
+April 28, 2008			- Gerald	rev 238
+	- new template "Modern"
+	- imported files are added to ftpQueue
+	- fixed some odd behaviors
+	- bugfixes
+	
+	
+April 24, 2008			- Gerald
+	 - enabled the horizontal scrollbar in the editor and added an edge marker
+	 at column 200
+
+
+
+
+April 24, 2008 			- Gerald
+
+	- reduced makerController method findActionForEvent to half its size
+	- !!! switch to UTF-8 as project encoding
+	
+	# Implementation: starting now, all our templates have the 'encoding' node in
+	the system_setup.xml the value is set to utf-8 by default.
+	When loading an older project (prior to verion 0.8) the maker is assuming 
+	latin-1 as encoding since all those earlier projects use latin-1 as default
+
+
+
+April 23, 2008			- Gerald
+
+	- Added all(!) Css Selectors to the insert menu
+
+	! change in makerController / findActionForEvent: I renamed the dictionary with
+	the Ids and actions to "theActions" instead of "theIds"
+	
+	- also a change of implementation in this method with help from Brinick
+	
+	- added Learn HTML and CSS item to HELP menu
+
+
+April 18, 2008			- Gerald	
+
+	- Bulk import for files
+	- small changes on actionMakeAll
+	- new feature: Sync Images With Server
+	- new method in makerCore downloadFile
+	- new method in makerServerlink download
+
+
+April 15, 2008 			- Gerald
+	
+	- after publish stay in the edited position
+	- after import only enter new name when a file with the same name exists  
+
+
+April 14, 2008			- Gerald
+	
+	- new feature scrollkeeper, changes in makerController.py
+	
+	
+	
+
+April 3, 2008 	
+		
+	- release 0.79
+	
+	-----
+	
+	
+	March 31, 2008		- Gerald
+	
+	BUGFIXES
+	----------
+	1834111  	preview button	    	 		* 2007-11-18 10:53 5  	Closed  
+	1834110 	if .head mode is enabled ... 	* 2007-11-18 10:52 5 	Closed 	
+
+
+
+
+March 30, 2008		- Gerald
+
+	- finished conflict check code for distribution table
+	- if there are conflicts the user is informed and has the choice to ignore
+		or to resolve them
+		makerController / makerDistEditor
+		
+	- new methods in makerController ftpLogin / ftpLogout
+	- new method in makerCore renameRemoteFile
+	- new method in makerServerlink rename
+	
+	after changes have been made the maker is moving and renaming the files in 
+	the appropriate way. If folders do not exist they are created
+
+
+March 20, 2008		- Gerald
+
+	- images with upper case extensions are now also ignored in the tree view
+
+
+March 18, 2008			- Gerald
+	- Work in Progress ! When the Distribtion Table Editing Tool is shown
+	all items with conflicts are marked RED
+
+
+March 18, 2008			- Gerald
+	
+	a couple of small changes/fixes
+	- renamed makerController method actionPopupTool_img to actionInsertImage
+	- added Image selection dialog to the HTML / img function
+
+	- deleted newVersionDialog
+	
+	- fixed actionCheckForUpdate in the makerController
+
+
+February 10, 2008 		- Gerald
+	- Bugfix makerTemplateDialog
+
+February 9, 2008 		- Gerald
+	
+	- created new dialog for providing information on app updates
+	- also when the maker starts the update check is now done in maker.py
+		before the GUI is displayed. The check is NOT threaded anymore
+	
+	- changes in makerController and makerGUI regarding the search field
+		
+		The wx.SearchCtrl on the Mac is implemented in a different way than
+		on windows. On the Mac it is one native Control on the windows it is
+		a composite of three controls. So changing the searchtext color only 
+		worked on the Mac. 
+		There would have been a workaround, - extract the TextCtrl on windows
+		out of the SearchCtrl and the change the text color but this would have
+		ment more platform dependent code.
+		So I decided to put a status text next to the search field and when the
+		string is not found a simple 'String not found!' message appears.
+		Feels the same to me from a users perpsctive...
+
+
+
+January 23, 2008		- Gerald
+
+	- changed unEditableFileMessage in makerCore
+	- fix in makerGUI
+	- implemented all 78 XHTML tags in the insert menu
+		changes in makerGUI and makerController
+
+January 17, 2008: Brinick
+
+    --- Bugfix in InputWithValue()
+
+    M   makerGUI.py
+
+January 16, 2008	- Gerald
+	
+	- makerController.py
+	- Any Binary or Text File can be imported and used in the maker
+
+
+	- fix makerGUI.py InputWithValue returns String or None 
+		and not "Null" if there is no string or cancel
+
+
+
+January 15, 2008: Brinick
+
+ --- Bug fix for binary files
+
+M makerController.py
+
+
+January 14, 2008 	- Gerald
+	
+	- fixes in makerController
+	- makerGUI changed all Menu Items to Upper Case
+		enlarge / decrease font size now only affects the editor
+	
+	
+	
+	
+
+January 8, 2008: Brinick
+ --- More clean up/refactoring
+
+M      makerController.py
+M      makerGUI.py
+M      makerProjectSetup.py
+M      makerConstants.py
+M      makerServerlink.py
+M      makerCore.py
+
+January 7, 2008		- Gerald
+
+	- images and other needed file in parts are ignored in the tree view
+	- work in progress (unstable)
+
+January 6, 2008 	- Gerald
+	
+	- new feature: search
+	- new methods in makerController (searchInEditor, findNext) and changes 
+		plus a little clean up in makerGUI
+
+
+
+---
+HAPPY NEW YEAR BOYS
+---
+
+
+
+December 15, 2007	- Gerald
+	- new method in makerController called switchToProject(self, project)
+
+
+
+December 10, 2007: Brinick
+ --- Clean up/refactoring
+
+M      makerController.py
+M      makerGUI.py
+M      makerProjectSetup.py
+M      makerImage.py
+M      makerFtpBrowser.py
+
+December 10, 2007: Brinick
+ --- Clean up/refactoring
+
+M      makerController.py
+M      makerGUI.py
+M      makerProjectSetup.py
+M      ImageGUI.py
+
+December 8, 2007: Brinick
+ --- Bugfix for importing projects
+
+M      makerUtilities.py
+M      makerController.py
+M      makerGUI.py
+M      maker.py
+
+December 8, 2007: Brinick
+ --- More clean up/refactoring
+
+M      makerController.py
+M      makerGUI.py
+M      makerCore.py
+
+December 8, 2007: Brinick
+ --- More clean up/refactoring
+
+M      makerUtilities.py
+M      makerController.py
+M      makerGUI.py
+A      makerConstants.py
+
+November 30, 2007: Brinick
+ --- More clean up and refactoring again
+
+M      makerController.py
+M      makerProjectSetup.py
+M      makerWidgets.py
+M      ImageGUI.py
+M      makerAbout.py
+
+November 30, 2007: Brinick
+ --- More clean up and refactoring
+
+A      makerFonts.py
+A      makerWidgets.py
+
+M      makerProjectBrowser.py
+M      makerDistEditor.py
+M      changes.txt
+M      makerController.py
+M      makerGUI.py
+M      makerEditor.py
+M      makerAbout.py
+M      makerFtpTools.py
+M      makerImportOrNew.py
+M      makerCore.py
+M      makerFtpBrowser.py
+D      makerDialog.py
+
+November 15, 2007 	 - Gerald
+		
+		- deleted doc folder in order to fix svn
+		- rev 198 added doc folder to SVN
+
+RELEASE 0.72
+
+November 14, 2007 	- Gerald  
+		
+		- updated API documentation in doc/ 
+		- fixed bug in makerController FtpBrowserAction_Ok_ 
+			If the directory that was selected was deeper than one level an 
+			incorrect path had been returned
+		- fixes in the white_template
+
+
+November 13, 2007	- Gerald
+		
+		- resolved  
+		- also fix in makerCore updateFileBase
+		- both bugs therefore fixed
+		- small change in makerController SelectNothing
+		- fix in makerController ActionBuildAll
+		- fixed inconsistency between makerFtpBrowser and makerController
+			in the new makerFtpBrowser the listbox is called listBox and not 
+			listBox1 as it was in the controller
+
+
+November 13, 2007: Brinick
+ --- Bugfix: updateDynamics() was not taking correct path
+
+M      makerCore.py
+
+
+November 12, 2007	- Gerald
+		- fix in makerController ActionBuildAll
+
+
+November 12, 2007: Brinick
+ --- more clean up
+ --- addition of addToolBar method to MakerDialog
+ --- correction README.txt
+
+M      makerDistEditor.py
+M      makerController.py
+M      makerDialog.py
+M      README.txt
+
+November 12, 2007 	- Gerald
+		
+		- changes in makerGUI
+			* Fallback code for older wxPython versions
+			* when an error message is sent to logtext and the cursor is busy
+				it is set to notBusy at once
+		- changes in makerController fix in ActionAddNewFile()
+		- Bugfix in makerController ActionDeleteImage
+
+
+November 11, 2007: Brinick
+ --- more clean up
+ --- addWindow method added to MakerDialog
+
+M      makerController.py
+M      makerFtpBrowser.py
+M      makerDialog.py
+
+November 11, 2007: Brinick
+ --- more clean up
+
+M      makerProjectBrowser.py
+M      makerController.py
+M      makerGUI.py
+M      makerProjectSetup.py
+
+November 11, 2007: Ian
+	New file compile_win.py
+
+
+November 11, 2007: Brinick
+  --- clean up of makerImportOrNew
+  --- delete from repository unused makerLoadOrNew
+  --- changing class name in makerProjectSetup to follow coding rules
+
+M      makerController.py
+M      makerProjectSetup.py
+M      makerImportOrNew.py
+D      makerLoadOrNew.py
+
+November 8 - , 2007	- Gerald
+		
+		- change in makerGUI using Add() instead of AddWindow()
+		- fix in the white_template
+		
+
+November 10, 2007: Brinick
+   --- bugfix (indent wrong)
+M      makerCore.py
+
+November 9, 2007: Brinick
+   --- more clean up of makerCore.py
+   --- added append write to makerUtilities.writeFile()
+
+M      makerUtilities.py
+M      makerController.py
+M      makerCore.py
+
+RELEASE 0.71
+
+
+November 7, 2007	- Gerald
+		
+		- fix in makerController / ActionCheckForUpdate
+		- change in makerController / ActionImportFile
+		- fix in makerGUI GetFileFromUser
+		- fix in makerController / CheckIfFileIsBinary
+		- changes in makerController / ActionNewFile
+		
+
+November 7, 2007: Brinick:
+   --- small bugfix on yesterday's commit (makerCore.py)
+
+
+November 6, 2007  - Gerald
+        - fixes in makerController / ActionCssTool_color
+        - fixes in makerController / ActionImportFile
+
+
+
+November 6, 2007: Brinick
+   --- more clean up
+   --- Bugfix: comparison of actual and latest maker versions in 
+   				makerController.ActionCheckForUpdate
+       was not comparing like with like i.e. float with float. 
+       Caused maker to suggest an update even when at the latest version.
+
+M      makerController.py
+M      makerGUI.py
+M      makerCore.py
+
+
+RELEASE 0.7
+
+
+November 5, 2007: Brinick
+  --- more clean up
+M      makerController.py
+M      makerProjectConverter.py
+M      makerCore.py
+
+November 2 2007			- Gerald
+	
+	- changes in makerController
+
+Novemver 3, 2007		- Gerald
+	
+	- fixes here and there
+	- makerController FullUpload, Autoselect ...
+
+
+November 1, 2007		- Gerald
+
+	- small changes in makerController
+	- makerGUI method GetFileFromUser is now able to select multiple files
+	- new Image /system
+	- changes in compile_win.bat
+	- changes in gatherSource.sh
+	
+	- changes in README.txt
+	- the windows working dir is saved in path not path.txt
+
+
+
+October 30, 2007 		- Gerald
+
+	- little work on makerController PublishCurrentFile
+	- also changes in compile_win.bat
+	- Changes in makerAbout slash bitmap was assuming system path
+	- changes in makerController Autoselect
+		also changes in ActionImportFile: the new item is Autoselected 
+		after its import
+	
+ 
+October 30, 2007 		- Gerald
+	
+	- little work on makerController method GetTemplates
+	- added Ian's white Edu-template to SVN
+
+October 29 - 30, 2007	- Gerald
+	
+	- I took the verbal logging of the password out of makerServerlink
+	- did some changes in makerController ActionPublish , PublishCurrentFile
+	- fixes in makerController
+
+October 29, 2007 - Brinick
+  --- Bugfix in makerUtilities.py: added missing import of os.path
+
+October 29, 2007	- Gerald
+
+	- changes in compile_win.bat
+	- marker Menu is working
+	
+	new method in makerGUI: CallController(self, event)
+	is calling controller.FindActionForEvent(event)
+	! This will be the only method we bind to menu items and buttons in the future !
+	
+	new method in makerController FindActionForEvent(self, event)
+	- is dispatching functions and arguments as needed
+
+
+October 29, 2007	- Gerald
+	
+	- fix in makerGUI  
+
+
+October 28, 2007: Brinick
+ --- Adding missing makerUtilities.py module to repository
+
+
+October 27, 2007: Brinick
+ --- More clean up
+
+October 14 - 25 , 2007	- Gerald
+	
+	new folder system/templates contains one template named "default"
+	__________
+	folder system/default.tmp deleted
+	
+	___________
+        
+        - fix in .pdf import on XP. files with the .pdf extension are now generally
+            treated as binary
+	___________
+	- new files are automatically selected in the tree when they are created
+	
+	___________
+	- new method in makerCore / GetSystemPath() returns self.path_system
+	
+	new module makerTemplateDialog for the purpose of selecting a template at project
+	creation
+	
+	- new method ShowTemplateDialog in makerController
+
+	------------
+	- fixed bug in marker replacement inside makerCore.py
+	------------
+	- new feature: after you edit and save a .dynamic file the maker is creating a 
+	list of files affected by this change. These files are then rebuilt and queued for
+	upload
+	
+	
+	
+	------------
+	- new method in makerCore 
+		
+		FindContentFilesContainingThisDynamic(self, dynamic):
+        """
+        is returning a list of all the .content files containing a reference
+        to a certain dynamic
+        """
+
+	------------
+	FTP QUEUE
+	____________
+	
+	I have been working on the maker a lot and wanted to let you know what is going on.
+	The original idea was that when a .dynamic file is saved that the user does not have to make 
+	all since he might not remember in which .content files this dynamic is used.
+	
+	So now after saving a .dynamic file all the files hat make use of this .dynamic are queued for ftp
+	upload. The publish feature is uploading that queue.
+	
+	Since I had this possibility I make the ftp queue that standard procedure for all files. Simply
+	when you save a file it is added to the queue. Then you can edit another file and another without
+	having to remember which ones you changed. Then just hit publish and the maker will work its way
+	thru the queue.
+	
+	Of course if a file is already in the queue it is not added again. After it is sent to the server it is removed from the queue.
+	
+	When the maker is closed, or the project is changed, before the queue is publised it is saved (pickled) for the next 
+	session on the project. 
+	
+	All this is very useful and makes working with the maker even more intuitive.
+
+	- - -
+	new methods in makerCore 
+	
+		*InitFtpQueue(self):
+        *self.SetFtpQueue([])
+        *SetFtpQueue(self, files):
+        *AddToFtpQueue(self, file):
+        *DeleteFromFtpQueue(self, file):
+        *GetFtpQueue(self):
+        *ClearFtpQueue(self):
+        *SaveFtpQueue(self):
+        
+     Of course there are a lot of changes in makerController
+
+
+
+________________________________________________
+September 8, 2007 	(MDC 2007)	- Gerald, Ian
+	- Fixed bug in makerController / FtpBrowserAction_Ok_ replaced os.path.join
+		by urlparse.urljoin since on windows the os call was inserting backslashes
+	- Added Undo / Redo to the Edit menu in makerGUI
+	- modified makerController to facilitate choosing path to 'makerProjects' 
+	    folder on windows platform, path to projects saved in path.txt file.
+	- changes in ImageGUI and makerImage to display the preview image at import 
+		in its actual ratio	
+	- maker marker feature added to makerCore, new methods :
+			GetFileCreationDate
+			GetDataForMakerMarker
+		markers are replaced in the makeWebsite method of the makerFileContent class
+		(menu items not added yet - sub menu recommended)
+
+Release 0.6.93
+_______________________________________
+August 25, 2007    - Gerald
+
+    - Fixed bug in RSS Creation. Before the fix the markup became invalid
+    - Changed code in source markers. Since the comment <!-- start head -->
+      was above the Doctype declaration IE could not handle it. Misinterpreting 
+      the whole markup
+          ( Doctype def also starts with "<!" sequence )
+    - Finally fixed bug in Image import
+    - Error Messages in the log window are displayed with in a new line each
+    
+
+_______________________________________
+Release 0.6.92
+
+
+August 23, 2007		- Gerald
+		- going back to wxPyhon 2.8.4.0
+
+
+August 19, 2007 	- Gerald
+
+		- updated doc folder API information
+
+
+----------------------------------------
+
+Release 0.6.91
+
+August 15, 2007 	- Gerald
+		- fix in makerImage
+
+Release 0.6.9
+
+-----------------------------------------
+August 13, 2007 	- Gerald
+		- Automatic updates possible
+		- chamges in makerGUI, makerController and makerCore
+
+
+August 13, 2007		- Gerald
+
+		- fix in compile_win.bat
+		- fix in makerProjectConverter typo in line 81 and 82 
+
+August 13, 2007 - Brinick
+ - More clean up
+
+M      makerController.py
+M      makerAbout.py
+M      makerServerlink.py
+M      makerCore.py
+M      makerLoadOrNew.py
+
+August 13, 2007 	- Gerald
+	- changes in README.txt 
+	- changes in compile.bat also renamed to compile_win.bat
+	- new version of tags.ico
+
+	- changes in compile_mac.sh
+		
+
+August 11, 2007 - Brinick
+ - makerHistory.py/makerImage.py/makerSplash.py: 
+       Set to lower case the first letter of method names in 
+       accordance with Python good coding practices. 
+       thisIsAMethodName() and ThisIsAClassName.
+
+ - makerCore.py/makerController.py:  
+       Adapted code that called methods on makerHistory/makerImage
+
+ - makerServerlink.py: clean up
+
+ - makerProjectConverter.py: clean up/coding standards adherance
+
+
+August 11, 2007		- Gerald
+		
+		- new method s makerController called RestartController and it does 
+		  just that, method is called in SwitchProject method
+		 
+		 - also fix in makerController / ActionUpload regarding binary files
+
+
+August 6, 2007 		- Gerald
+
+		- small fix in makerCore/makerFileContent/CreateRSSFeed
+
+August 5, 2007		- Gerald
+		- the Splash Screen is now a png called Splash.png also the same image
+		  is used in the makerAbout Dialog.
+		  maker_640.jpg - deleted
+		  
+		  I purchased the font so we can create High Quality Images and Logos
+
+
+August 4, 2007 		- Gerald
+		- edit .head mode is returing to the maker. This used to be a feature 
+		  	in the early versions before I moved to wxPython
+		- makerCore there is a method all in the __init__ section, 
+				self.SetContentEditMode(".content")
+			new methods SetContentEditMode and GetContentEditMode,
+			also SwitchContentEditMode...
+			
+		- in the makerGUI in the Extra now Tools menu, the item edit .head is now a 
+			wx.ITEM_CHECK
+			
+		- ... 
+		  	
+
+
+August 2, 2007		- Gerald
+		- updated API information in the doc/ folder
+		- small fix on makerGUI
+		- mew file maker.icns (OS X icon)
+
+July 31, 2007 		- Gerald
+
+		- added Source markers to .content files
+		- small fixes in CreateRSSFeed
+
+July 29, 2007 		- Gerald
+		
+		- makerController fixes in ActionImportFile
+		- makerGUI more styles for HTML and PHP in style_stc
+
+		
+		
+		
+
+July 26,  2007		- Gerald
+
+		- removed Copyright message from makerCore since it is displayed in the
+			maker.py.
+			
+		- Finalising implementation of more filetypes
+			makerController method CheckIfToolIsRight , the .content tool
+			tool is now also supporting .html and .php files
+			
+		- did some (a lot of) work on makerGUI
+		  * re- written .Bind code, Menu items are now object instances so we
+		    can apply their methods, like .Disable and also re- use them all 
+		    over the GUI 
+		    
+		  * Icons in the tree view
+		  
+		  * some work with the About menu in makerGUI, got it to appear natively
+		   in the Application Menu on the Mac
+		    
+		    for implementation details see:
+			http://wiki.wxpython.org/Optimizing_for_Mac_OS_X
+		
+		  * the Editor right click menu is now also containing cut, copy and 
+		    paste
+
+		- makerController method CheckIfFileIsBinary(self, file)
+			returns True or False for importing binary files
+			
+			* also did changes to ActionImportFile to distinuish between binary
+			  and text files on windows
+			
+			* some fixes regarding Autoselect
+			
+			
+		- makerCore, did fix a Bug in ReplaceInAllItems. Also in the same method
+		  there is now a try block since we also have to deal with binary files
+		  so the method tries to replace the string but just fails if it is a
+		  binary file...
+		  
+		* also makerCore method AddMakerFile has one more argument: mode 
+			  which is lines by default but can be set to binary
+
+		
+
+
+July 7th 2007 		- Gerald
+		
+		- deleted the File xml_1.0.head from the system folder. The makerCore
+		  function GetXmlHead is returning the data as a string.		
+
+		- BIGFIX at file creation the message passing was poorly implemented 
+		  and would still need some work
+		  
+		- I added templates to the files that are editable at this point 
+		- Added item icons to the items list
+		
+		
+
+June 1st 2007		- Gerald
+
+		! This code is not complete but for sync reasons I commit today
+		
+		###
+		in the makerCore method I changed the default data that is written to
+		the distribution tablen when a file is created. 
+		
+		- making all other kinds of files managable in order to do this I 
+		thought it would be best to create a class for each type of file so 
+		we could have different behaviour when calling class methods
+		
+		
+
+		new methods:
+			makerCore:
+				- GetAllFilesFromParts
+				- GetFileClassForGroup
+				
+				
+			makerFile in makerCore:
+				- GetNewFileTemplate
+				
+			in the makerCore also the makerFile class has a new flag self.edi-
+			table and the methods SetEditable() which is setting its value to
+			True and GetEditable() which returns self.editable
+			
+			if a filetype like .mov is not editable this method has to be 
+			overridden
+						
+			
+			makerController 
+				- in the method ActionTreeSelectItem we are using the makerFile
+				method GetEditable to determine wheather we turn the save button
+				on or off
+				
+				- in the ActionAddNewFile the new makerCore method 
+					GetNewFileTemplate is being used
+		
+		-----
+		Due to the .htm / .html convention I had to change the Preview method 
+		in makerFileDynamic. It is now using the .htm extension like all maker
+		created files
+		-----
+			
+						
+		I also changed makerGUI method OntreeLeftClick(self, event):
+		I took the try: / except: block out	
+		
+		
+		
+		
+
+=======
+
+2007-07-01  Brinick Simmons  <brinick@brinick-simmons-computer.local>
+
+	* makerDialog.py: New module that serves as a base class and 
+	useful method place holder for maker child wx.dialogs.
+
+        A  makerDialog.py
+
+	* makerAbout.py: 
+	-- class name change to Python recommended
+	i.e. capitalised MakerAbout instead of makerAbout.
+	-- MakerAbout inherits from new class MakerDialog. 
+	-- Tidied up the module a bit.
+
+	* makerController.py (Controller.ActionShowAbout): 
+	Call to makerAbout.makerAbout() modified to makerAbout.MakerAbout()
+
+
+>>>>>>> .r110
+18. Mai 2007		- Gerald
+		
+		Renaming maker items... 
+		I comitted this to SVN for testing purposes so you guys can have a look
+		
+		
+		-new method in makerCore in super-class makerFile 
+			
+			Rename(self,newName):
+			ReplaceStringInAllItems
+        
+
+		- new methods for the purpose of renaming files in the makerController are:
+
+    		SetOriginalName(self, Name):
+        	GetOriginalItemName(self):
+        	ActionEditTreeItemLabel(self, event):
+	    	VerifyNewName(self,event):
+	    	ActionOnEditTreeItem(self, event):
+	    	ActionTreeEditFinish(self, event):
+	       
+        
+       - new methods and bindings in the makerGUI
+	       	self.tree.Bind(wx.EVT_LEFT_UP, self.OntreeLeftClick)
+	        self.tree.Bind(wx.EVT_RIGHT_DOWN, self.OntreeLeftClick)
+	        # This binding is calling the same method as EVT_LEFT_UP because
+	        # before the item can be renamed it has to be selected
+	        #
+	        self.tree.Bind(wx.EVT_RIGHT_UP, self.OntreeRightUp)
+	        self.tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.OntreeEdit)
+	        self.tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.OntreeEditEnd)
+        
+        	OntreeRightUp
+			OntreeEdit
+			OntreeEditEnd
+			BindVerifyer
+			UnbindVerifyer
+
+
+
+2. April 2007	- Gerald
+		"Make All" had the following problem:
+		If the connection dies you have to start over again and if it is a large project
+		 you will eventually never make it through. 
+		 therefore:
+	- changes in makerServerlink method upload:
+		after an attempt has failed the method is logging out
+        from the server, is establishing a new connection and is trying
+        again. Still for 10 times at the most
+
+
+
+30. March 2007 - Gerald
+		- changes in makerController, ImageGUI and makerImage
+			if an Image is stored in the same dimensions as the original
+			then it is not scaled and not converted if the format is the same
+			too. The original file is renamed and used...
+			
+						
+
+
+
+19. March 2007 	- Gerald	release 0.6.2
+		- one last change in makerController ActionProjectSetup
+			if the setup is cancelled then the last selected file is
+			active again
+
+
+19. March 2007	- Gerald
+		- in makerProjectSetup.py the Label next to the root_ctrl text field
+			was too long thus making it impossible to edit the text field
+			- fixed
+			
+		- in makerProjectSetup.py method CheckFtpSettings() if the controller
+		 small changes
+		 
+		- in the makerController method CheckIfPasswordIsSet the number of 
+			attempts has been limited to 3 after that the maker quits
+		new methods to do this in makerController
+				GetPassAttempts(self):
+       			IncPassAttempts(self):
+        		ClearPassAttempts(self):
+       
+       - the makerController method CheckIfPasswordIsSet is now returning
+       True or False all the calls of this method have been updated to this
+       		ActionDeleteCurrentFile
+       		ActionPublish
+       		ActionPublishAll
+       		ActionUploadFile
+       		ActionDeleteImage
+       
+
+
+16. March 2007	- Gerald
+		- minor changes in makerController / ActionDeleteCurrentFile
+			Removed the call for RestartCore from where it was unneccessary
+				eg. in ActionAddNewFile
+		
+
+
+
+16. March 2007 	- Gerald	rev 100
+		- in the makerController method ActionImport file in the last line of
+		the def there was a call to RestartCore. This was not necessary so I
+		replaced it with core.LoadGroupItems and self.ActionFillTree
+		This way the imported file appears in the items list
+		
+		- I also did a change in ActionCssTool_style in makerController because 
+		the inserted CSS was actually incorrect
+
+
+15. March 2007 - Gerald
+		- minor layout related changes in makerProjectSetup.py
+		- changed some syles in style_stc in makerGUI
+
+		- changes in makerController method	ActionNewProject, the system folder
+		now remains static, therefore it can be bundled with the app
+		or can be in a place where the user has only reading permissions
+		
+		- changes in the makerController method ProjectProcedure()
+			fixing BUG # 1673910 "Closing start up dialog crashes theMaker" 
+
+
+13. March 2007	- Gerald
+		- after make all and the user does not want to upload all files
+			the last active file is also selected.
+			modified method: ActionUploadAll
+
+
+12. March 2007	- Gerald 
+		
+		- in the makerServerlink.py method upload I limited the number of
+		  attempts for storing to 10
+		- fixed a Bug in Language switching
+		- fixed the make all Bug !
+			Updated the methods ActionMakeAll, ActionPublish, ActionUploadAll, 
+			ActionBuildAll, ActionPublishAll
+			
+		- makerController changes
+			after make all the last active item is selected bu the Autoselect
+			method. By this the make all bug is fixed!
+			also new methods SetLastUsedItem and GetLastUsedItem
+
+
+8. March 2007 	- Gerald
+		- commented out event.Skip() in method OnDeleteFile() in makerGUI
+		- in the makerGUI I changed in the method ExpandTree from
+			Expand(rootItem) to ExpandAll it appears more logical since 
+			newly created items are immediately visible
+	
+		new makerController method SelectNothing()
+			"""
+	        is unbinding the text change event in the editor
+	        is clearing the editor
+	        is setting core.currentFile to None
+	        is refeshing the status bar
+	        """
+	        
+	    adding files is now working without errors and the user is
+	    promptet to save when neccessary
+	    
+	    makerController:
+	    added self.CheckIfCurrentFileIsSaved() to ActionSwitchProject() 
+
+
+8. March 2007 	- Gerald	rev 97
+		- Fixed the GUI close error
+		- added ChekIfCurrentFileIsSaved() to makerController.py
+
+
+
+7. March 2007 	- Gerald 
+		Bugfix in Project Setup
+		changed the makerController method FtpBrowserAction_Ok_()
+		
+		
+
+7. March 2007 	- Gerald 
+		the makerController method ActionPublish
+		is now prompting the user to save the file 
+		if the currentFile has not been saved
+
+
+
+6. March 2007	- Gerald 	rev 93
+		- corrected mistake in makerGUI.py
+			methods BindModifiedToEditor and UnbindModifiedToEditor
+			the event used has to be STC_CHANGE and not STC_MODIFIED which
+			leads to Errors on Windows because the event is also
+			triggered when style changes are made and if one does
+			AddText(content) to a STC on Windows it appears to take a 
+			while until the text is styled
+		- also added the style feature wx.EXPAND to toolbar1
+
+
+6. March 2007 	- Gerald	rev 92
+		
+		- deleted Dialog1.py since deprecated
+		- deleted the following Methods in makerHistory.py
+			WriteUserSettings
+			ReadUserSetting	
+		both have not been used
+		- deleted server_test.py
+				  server.html
+		
+		
+
+6. March 2007 	- Gerald	rev 91
+		
+		implemented logic for the save, publish and upload button
+		makerCore.py
+		makerController.py
+		makerGUI.py
+		
+		for the most part work was done at the ActionTreeSelectItem method
+		in the makerController
+
+		it's docstring
+		"""
+        selects an item in the items tree
+        
+        this method is checking if the parent is "items:" 
+        if so the method does nothing 
+        
+        if the parent is not items then it is an item from a group and
+        the item is selected and 
+        self.loadContent(item,filetype) is called
+        eg. self.loadContent("index_en",".content")
+        
+        
+        this method is also making shure that the previous file has been saved
+        
+        and is enabling the save, preview and publish buttons according
+        to selection  
+        """
+        
+        
+
+
+5. March 2007	- Gerald
+		added methods
+		
+    	DiableSaveButton
+        EnableSaveButton
+        DisablePreviewButton
+        EnablePreviewButton
+        
+        to makerGUI.py
+        
+  
+   
+
+
+5. March 2007	- Gerald
+		makerController.py 	
+			the methods ActionCalcX and ActionCalcY
+			now consider the image orientation
+			the makerImage.py method .GetRatio()
+			is returning the Ratio and the larger side
+			of the image like this e.g. 
+			(1.3333333,"x")	== (ratio,"larger side") 
+
+
+
+
+3. March 2007 	- Gerald 	- rev 87
+
+		did some changes in ImageGUI.py (one string) and deleted the makerImageTool.py file since
+		it was not needed anymore
+
+
+2.     March 2007 - Brinick
+        Removing all the .pyc files.
+
+D         makerFtpTools.pyc
+D         makerAbout.pyc
+D         makerImage.pyc
+D         makerController.pyc
+D         makerProjectSetup.pyc
+D         makerCore.pyc
+D         makerSplash.pyc
+D         pro_setup.pyc
+D         ImageGUI.pyc
+D         makerDistEditor.pyc
+D         makerProjectBrowser.pyc
+D         makerGUI.pyc
+D         makerImportOrNew.pyc
+D         makerEditor.pyc
+D         server.pyc
+D         makerFtpBrowser.pyc
+D         makerProjectConverter.pyc
+D         makerHistory.pyc
+
+
+2.	March 2007  - Brinick
+	Testing svn checkin.
+	M      changes.txt
+	M      maker.py
+
+1. 	March 2007 		- Gerald
+	Cut, Copy and Paste is using the System Clipboard
+
+
+28. February 2007	- Gerald
+	Image Ratio is kept in the imagetool, the user can select if he wants to scale relative
+	or not
+	Item selection in the item list is now single click and is more intuitive
+	File status is still not finished
+
+
+26. February 2007	- Gerald
+	removed some import Image statements for the PIL they were still in there...
+
+
+25. February 2007 	- Gerald
+
+	Did some minor changes in GUI Layout to cope with wxPython 2.8.1.1
+	The new wxPython hanldes events different so I had to disable some event.Skip() calls
+	other changes:
+		makerProjectSetup, all settings have to be done by the user in the correct way.
+		Version 0.6.1 did auto-connect the url and ftp root setting to reduce setup errors
+		but this causes problems due to the differences in how Hosting Providers layout their
+		servers.
+ 		I deleted the browser button for the image folder. The user has just to enter the name....
+ 		
+ 		Deleted some obsolete files...
+ 		
+
+22. February 2007	- Gerald
+
+	I got the maker running with wxPython 2.8.1.1
+	the makerCore method Help is now opening a webbrowser to view 
+	http://www.makercms.org/tutorial
+
+
+
+
+
+
+14. February 2007	release 0.6.1	(revision 73)
+_________________________
+	BUGFIX RELEASE
+
+
+	February 13, 2007 	- Gerald
+	
+		BUGFIXES
+			- RSSCreation at method makerCore / CreateRSSFeed
+				the headlines have to be encoded to ("latin-1") so that they work
+				with german projects
+			- diverted the stdout to the LogWindow (I forgot that)
+
+
+
+
+10. February 2007 release 0.6
+---------------------------	
+
+
+
+	February 7, 2006 	- Gerald
+			minor changes and fixes
+	
+	
+	February 6, 2007 	- Gerald
+			RSS creation is finished !!!
+			Now testing starts !!! 
+			
+			
+	
+	
+	February 4, 2007 	- Gerald
+			later that day
+				- FullUpload finished and working
+	
+	
+	February 4, 2007 	- Gerald
+			
+			I added the FullUpload method to makerController
+			The purpose of this method is to upload all Files to the server
+			after the user has set up his projects Ftp settings for 
+			the first time.
+			- the method is not finished...
+			
+			I also added a stack for Progress Bars to the makerGUI
+			The stack is a list object. The purpose is the ability to have
+			multiple progress bars and the "destruction" of them in order they appear.
+			
+			I still have to add the upload of all gfx data to FullUpload
+			
+			+ several minor fixes
+			
+	
+	
+	
+	January 26, 2007	- Gerald
+			new methods in the makerController
+				ActionTestFtp
+					is testing ftp settings
+				
+			makerProjectSetup is now doing several tests making shure the user is entering valid values
+	
+	
+	
+	
+	January 25, 2007 	- Gerald
+			On the Mac Ctrl+S for save file did put the s letter in the editor.
+			I fixed that today.
+			
+			
+			
+
+
+	January 23, 2007 	- Gerald
+			- basic implementation of add Project
+	
+	January 20, 2007 	- Gerald
+			I put the splashscreen in a thread and put some more sense in the initialization 
+			of the app.  
+	
+	
+	January 19, 2007 	- Gerald
+			- some fixes on makerImage.py and makerController / Action_Image_Scale
+			
+	
+	January 18, 2007 	- Gerald
+			- new makerDistEditor an editor for distribution table settings
+			
+	
+
+
+	January 17, 2007 	- Gerald
+			- re- written Image scaling code using wxPython thus the maker does not use
+			  the PIL anymore
+			-makerController / ActionMakeAll has now a language filter. Only .content Files of the current language
+			 are subject to MakeAll
+			-UpdateFilebase is now much faster
+
+
+
+	January 13, 2007 	- Gerald
+		- some more Bugfixing and improvements on makerCore / UpdateFilebase
+		- speed improvements in the makerController / ActionPublishAll method
+		
+		
+
+
+	January 12, 2007 	- Gerald
+		fixed a bug in makerCore / UpdateFilebase
+
+
+
+	January 10, 2007 	- Gerald
+		Importing files is working
+		poweredit
+		
+		
+
+
+	January 9, 2007		- Gerald
+		Wrote some code for managing font sizes in the GUI
+		
+
+
+
+	January 8, 2007		- Gerald
+		I did some fixes on the makerController. There have been issues on Windows.
+		This revision does work and does compile on Windows as well as on OS X. The import 
+		Image code is still not working. I did not work on it...
+
+
+
+
+	January 1, 2007 	- Gerald
+			- HAPPY NEW YEAR !!!
+			- Fixed a Bug in UpdateImageBase
+			- Fixed a Bug in makerProjectBrowser 
+
+
+	December 20, 2006 	- Gerald
+			new module makerProjectConverter
+				- is converting old maker projects to be compatible with the new  maker version
+			
+			
+			
+
+	December 19, 2006 	- Gerald
+		
+		I have written so much code that it would be hard to do comments on everything.
+		So far the-maker has been looking for his projects in his own working directory and 
+		has been reading the projects from the projects/ folder.
+		Now the folder makerProjects represents the place where the projects are stored and can
+		be found in the users $HOME directory.
+		
+		I have been writing several makerController methods that are related to that improvement
+		Also when the makerCore is instatiated it needs a project be given to him. Not just a project name
+		but a full path.
+		
+		Also switch Projects is working and a lot of other things that were missing...
+		
+		In the makerProjects Folder there is also a file called lastProject.txt. This file is uesed to find and load the
+		last Project that the user has been working on
+
+
+	December 11, 2006 	- Gerald
+		- makerHistory has new methods
+			GetLastImageDir and SetLastImageDir
+			this is useful to the import image function so that while importing images 
+			the user ends up in the last directory he imported images from
+			
+			
+
+
+
+
+
+
+	December 6, 2006 	- Gerald
+		- dynamic files get a "language stamp" foo.dynamic will be foo_en.dynamic when 
+		  english is selected
+		- added language filter for dynamic files
+
+
+
+
+	December 5, 2006 	- Gerald
+		
+		- implemented dynamics !
+			This is done by the makerCore method UpdateDynamic() which is part of the
+			makerFileContent Class
+			UpdateDynamic is called be the MakeWebsite Method
+			---
+			Inside the content of a file the user may enter something like
+			<maker_dynamic:foo /> the UpdateDynamic method is replacing that
+			with the contents of the file foo.dynamic
+			
+			
+		- Language switching possible
+			Deutsch / English
+		
+		- the makerController method ActionFillTree has got a 
+			"language Filter" so that only content Files for the current
+			Language are displayed
+			
+		- each language used to have its own ditribution Table
+			from now on it is only one
+			
+			 
+
+
+
+
+	November 30, 2006	- Gerald
+		- been working on the popup tools
+			
+			
+
+	November 29, 2006 	- Gerald
+	
+		- makerGUI new methods
+			InsertText ... inserts text to styledTextCtrl1
+			InsertHtmlTags ... insert html tags into the main editor
+        		if text is selected , the tags are wrapped around it
+			ShowPopupTool(self,toolset,event)
+        	toolset can be either html, css, cgi or whatever
+        	this show a popup Menu in the main Editor with items depending
+        	on the selected file
+        	so far there is popup "Tools" for .content and .css
+        	
+        - makerController new methods
+        	ActionShowPopupTool(self,event) evnent is the GUI event that is sent back to the GUI
+        	for further use
+              
+             
+    		ActionPopupTool_h1(self) insert html tags <h1></h1>in GUI Editor 
+        	NOTE: there will be a lot more of these Actions
+        
+        
+
+
+
+
+	November 27, 2006 	- Gerald
+		- did some minor changes on makerCore method UpdateFilebase()
+
+
+
+
+	November 22, 2006 	- Gerald (late)
+	
+		- UpdateImageBase is only replacing occurences with quotes like "foo.jpg"
+		  "foo.jpg" will be replaced, but in:
+		  		This is some placeholder text for foo.jpg and other images...
+			nothing will be replaced.
+			
+			
+
+	November 22, 2006 	- Gerald
+	
+		- IMPORTANT the logal image files are stored in parts/ and not anymore in 
+		  parts/gfx
+
+		- makerCore new methods
+			- GetImageFiles returns a list of all the images
+			- BackupLocalFile is backing up the current File for
+			  example as myfile.content_local
+			- RestoreLocalFile is doing the opposite
+			- UpdateImageBase 
+			  
+			  	this is upadating references to image files from "imgage.jpg" to the
+        		"http://server.com/gfx/image.jpg" full path that is needed on the remote server 
+        		
+        		one image at a time because of GUI interaction
+			   
+				Note: This is working for all Files css as well as content or whatever
+				There is also a method UpdateFilebase in the makerCore this is only for content(html)
+				Files.
+				Basically the files that are on the remote server differ from the local Files in some 
+				ways the references of images <img src="" > and links as well as other references to other files are
+				updated on upload
+		
+		- the makerController has also a new method called ActionUpdateImageBase this is just
+		  calling makerCore.UpdateImageBase with some GUI interaction
+		
+		
+		
+		
+
+	November 21, 2006 	- Gerald
+	
+		- makerController has new method ActionUploadFile 
+		  this is a generalpurpose upload method with GUI interaction
+		- the makerController method ActionAddImage has been added for importing images
+		- the makerController method ActionDeleteImage has been added
+	
+	
+		- makerCore new method GetRemoteGfxFolder()
+		
+		- new module ImageGUI this is the interface for importing and
+		  scaling images
+		- new module makerImage this does the scaling and such
+		
+	
+	
+
+	Novemer 16, 2006    - Gerald
+		-imagetool.py renamed to ImageGUI.py
+		-added Menu Item Files / import File 		
+
+
+
+
+	
+	November 14, 2006 	- Gerald
+		-makerFtpBrowser.py feature complete and working
+		 with makerController
+		 the makerFtpBrowser is called (displayed) by the 
+		 makerController method: ActionBrowseServer()		  
+		
+		-the module ftp_browser.py was renamed to makerFtpTools.py
+		 a doc string was added to makerFtpTools.py
+		 
+		-in makerGUI.py I renamed all occurences of Page like select Page
+		 to File "select File" since we do not deal with Pages only
+		 
+		-maker GUI has new methods:
+		 ExpandTree() expands the root item in the tree View
+		 CollapseTree() collapses the root item in the tree View
+		 
+		 A ExpandTree() call was added to the makerController method
+		 ActionFillTree()
+		 
+		-makerCore method DeleteMakerFile has been improoved
+		 DeleteMakerFile is a method for deleting a file and its parts
+		 locally
+		 
+		 
+		-makerCore method Distribute is returning a list with all the remote locations of that file
+		 this is because the maker does support mutiple remote Targets
+		 
+		-makerController method ActionDeleteFile is working
+		 it removes all remote Files and Copies of a file as well as local Files
+		 
+!!!		 	TO DO:
+		 	the maker does not remove empty folders from the ftp server
+		 
+		  
+		
+	
+	
+	
+	- before upload, check if remote dir exists
+	- several misc improvements
+	- committed to svn on November 10 2006
+    - FTP Browser revision
+    - FTP Password is not stored on File anymore
+    - implementation of the MVC paradigm
+    - new makerController the makerCore is controlled by it
+    
+    - support for javascript, cgi, txt, css and "dynamic" files
+    - revision of project setup dialog methods
+    - revision of ServerLogin, ServerLogout, Upload_File
+    - revision of Make all
+    
+
+
+12. September 2006 release 0.5.1
+	
+	- pagetool bug fixed (if target dir is / or .)
+	- insert Tag bug fixed
+	- making the core more independent from the GUI
+	- there was a bug on OS X with the STC.Cut Method I worked around it by using .Clear
+		please have a look at 	http://sourceforge.net/tracker/index.php?func=detail&aid=1535155&group_id=9863&atid=109863
+		if you want to know more. It is a wxWidgets BUG
+		
+		
+	- serverlink retries to upload files if connection breaks
+        - Fixed Font sizes
+	- window.Destoroy() Bugs fixed
+
+ 
+	
+
+27. July 2006 release 0.5
+
+	- create / import script more stable
+	- import older projects possible @ first start
+	- Bugfix: rss could only be created from english headlines (encoding problem with german language)
+	- rss: feeds links to the actual rss-page
+		- links to the related articles 
+		-
+		-
+
+	- GUI: increase or decrease font size
+	- core
+		method: Get_Page_Locations return all urls of the page on the server
+		delete page: deletes all pages locally and remote
+		
+		
+	- ftp speedup	
+	- autoupdate help File						
+	- preview appears in menu 			
+	- busy cursor bei upload und make all and so on		
+	- more busy cursors
+	- Keyboard shortcuts
+	- stderr to "Errorhandler" ->log window
+	- stdout redirected to log window 
+	- log window included in the GUI
+	- GUI cosmetics
+	- server.py essential ftp stuff (login,logout,upload,delete...) 
+		-making the ftp code more flexible, so far there has been about five or
+		 six ftp routines in the core.py. By using server.py the core gets smaller and
+		 the maker operates much faster.
+
+	- upoload any file (Ftp_Save_File_Dialog)
+	- added more html Buttons to the GUI using wxNotebook
+
+
+
+22. Mai 2006 1st official release 0.4.92
+
+        - pagetool is more verbose
+	
+	BUGFIXES
+            - FTP Browser did try to set wxCursor to not busy
+                -now it check if it is busy then sets it to "relax"
+	    - Projectbrowser got in trouble if there where hidden dirs
+		like those created by SVN
+		
+        
+15. Mai 2006 - - - testing starts - - - Version 0.4.90
+
+	- getting it ready to install
+	- ftp browser UP Button and functions
+	- website	
+	- Bugreport	
+	- added advanced menu
+	- switch language
+	    -check for existing languages
+	- index has to be first created page
+		-pagetool is checking for that
+	- rss language = sprache
+	- add project sets up the future template
+	- some speed improvements
+   
+    
+    Project Setup Dialog
+        -if you browse, you browse the server with the information that you just entered
+        -you can give a file to the dialog
+            this way you can edit a project that you are not currently
+            running. Useful for add_projects
+        -write Project setup to file
+        -fill Dialog with current values
+        -read all information from file
+        -connect to ftp browser to set ftp_root
+        -the Dialog itself
+    
+    - Help can jump to a topic
+    - we do not need the path (for XP) in system_setup.xml 
+    
+    Editmenu:
+        -Copy, Cut and Paste
+    Imagetool:
+        - check if a file with the same name already exists
+        - tests for dots and extensions (.jpg ?)
+        - preview Image is scaled 
+        - imagetool now supports png, gif and jpeg
+    - all kinds of busy cursors
+    - Add Page browser for remote dir , check if page exists, check for dots (.html ?)
+    - Functions to the ftp browser
+    - the FTP Browser
+    - switch Projects (including the projectbrowser)
+    - automatic system restart possible
+    - ! add Projects
+    - Language handling: GUI reads project setup
+        - If there is no add_language there is no menu entry
+        - Default language is in the menu first
+        
+    - App restarts after project setup and system setup
+        -There are also warnings added
+    
+    - Edit RSS Title
+        -rss parts have to be in /parts
+    
+    - setup projects inits self.ftp_root
+    - project_setup.xml has new node ftp_root
+        -this was kind of a BUGFIX
+    
+    - Special Editor shows Filename
+    
+    - delete page deletes pages rules from distr. table
+        ! old distribution tables have to be in the right format
+        
+0.4.12 
+    
+    -Edit Parts was removed - not useful anymore, the maker does that
+    -delete Image
+    -the current language is mentionened in the status Bar
+    -working on the core to make it usable from 'extensions'
+        -you can give content to Add_Page()
+    
+    - add Page adds rule to distribution Table
+    - new - the pagetool
+    - delete Page (also removes all the pages rules from distribution.xml
+        and from the remote server) 
+    - 
+    -BUGFIX get Distribution Filename
+    -BUGFIX preview did not work anymore on windows
+    -BUGFIX add page messes up distribution table on windows
+
+
+0.4.4   Jan. 30 2006
+
+    - add Image on windows bug fixed
+    - imagetool - show actual size of imported image
+    - preview and help work also on the mac platform
+
+
+0.4.3    Jan. 27 2006

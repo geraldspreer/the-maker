@@ -1,0 +1,16 @@
+dist
+build
+lib
+maker-src
+
+setup_app_store.py
+compile.sh
+Entitlements.plist
+
+*.pkg
+*.pyc
+.DS_Store
+.project
+.pydevproject
+.settings
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?><!-- file was created @: Sat Oct 20 10:33:38 2007 -->
+<distribution>
+<rule ftp_source="main.css" remote_dir="styles/" ftp_mode="lines" target="main.css" ></rule>
+<rule ftp_source="index_en.htm" remote_dir="." ftp_mode="lines" target="index.htm" ></rule>
+<rule ftp_source="one_en.htm" remote_dir="." ftp_mode="lines" target="one_en.htm" ></rule>
+<rule ftp_source="two_en.htm" remote_dir="." ftp_mode="lines" target="two_en.htm" ></rule>
+<rule ftp_source="three_en.htm" ftp_mode="lines" remote_dir="." target="three_en.htm" ></rule>
+</distribution>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<resource class="wxDialog">
+  <object class="wxDialog" name="FindReplace">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxStaticText">
+            <pos>10, 10</pos>
+            <size>200,20</size>
+            <label>Find</label>
+          </object>
+          <object class="wxTextCtrl" name="Find">
+            <XRCED>
+              
+              <events>EVT_TEXT_ENTER</events>
+              
+              <assign_var>1</assign_var>
+            </XRCED>
+            <pos>10, 40</pos>
+            <size>380, 20</size>
+          </object>
+        </object>
+        <flag>wxEXPAND|wxFIXED_MINSIZE</flag>
+        <minsize>100, 100</minsize>
+      </object>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxStaticText" name="Replace_">
+            <label>Replace With</label>
+            <wrap>0</wrap>
+          </object>
+          <object class="wxTextCtrl" name="Replace"/>
+        </object>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="spacer">
+            <size>200, 20</size>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="Cancel">
+              <label>Cancel</label>
+              <XRCED>
+                
+                <events>EVT_BUTTON</events>
+                
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <flag>wxFIXED_MINSIZE</flag>
+            <minsize>100, 20</minsize>
+          </object>
+          <object class="spacer">
+            <size>40, 20</size>
+            <option>1</option>
+            <flag>wxRIGHT|wxFIXED_MINSIZE</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="OK">
+              <size>100, 20</size>
+              <label>OK</label>
+              <default>1</default>
+              <XRCED>
+                
+                <events>EVT_BUTTON</events>
+                
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <flag>wxFIXED_MINSIZE</flag>
+            <minsize>100, 20</minsize>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+        </object>
+        <option>0</option>
+        <flag>wxEXPAND|wxGROW|wxALIGN_CENTRE_VERTICAL|wxADJUST_MINSIZE|wxFIXED_MINSIZE</flag>
+        <border>0</border>
+        <minsize>320, 80</minsize>
+      </object>
+    </object>
+    <pos>10,10</pos>
+    <size>400, 200</size>
+    <title>Replace</title>
+    <centered>1</centered>
+  </object>
+</resource>
