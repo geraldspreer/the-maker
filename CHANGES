@@ -6,13 +6,15 @@ TO DO / Notes														|
 																	|
 --------------------------------------------------------------------
 	
+	- validate input on project and filename
+	- simplify version handling and source collection
 	
 	- add Language / remove Language single dialog
 	- better php support 
 	- multiple copy buffers
 	- user prefs
 	- switch to head button
-	- pretty print
+	- pretty print (tidy)
 		
 
 -------------------------------------------------------------------------
@@ -34,8 +36,9 @@ TO DO / Notes														|
 		- from FTP Browser delete folders that are not empty
 		- make dynamics work with .html (.php ?) files					  
 																		  
-																		  |	
---------------------------------------------------------------------------'
+-------------------------------------------------------------------------.		
+																	     |
+-------------------------------------------------------------------------'
 
 December 7, 2012 	Gerald
 

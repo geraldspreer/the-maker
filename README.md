@@ -17,7 +17,7 @@ __________________________________________
 To run TheMaker from source using Python you need:
 
 - Python 2.7 
-- wxPython 2.9.0.0 (Cocoa build for OS X) .
+- wxPython 2.9.4.0 (Cocoa build for OS X) .
 - python-markdown2 (http://code.google.com/p/python-markdown2/) 
 
 ------------------------------------------
