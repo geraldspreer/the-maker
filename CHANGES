@@ -6,15 +6,17 @@ TO DO / Notes														|
 																	|
 --------------------------------------------------------------------
 	
-	- validate input on project and filename
-	- simplify version handling and source collection
+	- validate input on project name
 	
+	
+	- simplify version handling and source collection
 	- add Language / remove Language single dialog
 	- better php support 
 	- multiple copy buffers
 	- user prefs
 	- switch to head button
 	- pretty print (tidy)
+	- selector explorer
 		
 
 -------------------------------------------------------------------------
@@ -40,10 +42,21 @@ TO DO / Notes														|
 																	     |
 -------------------------------------------------------------------------'
 
+
+February x, 2013
+
+	- validate characters on project name
+	
+	
+---------------------------------------		
+December 20, 2012 -	TheMaker 1.6										 
+---------------------------------------
+
+
 December 7, 2012 	Gerald
 
 	- according to Apple requirements, the maker now writes his files to
-	~/Library/Application Support/TheMaker
+	~/Library/Application Support/TheMaker on OS X
 
 
 November 28, 2012 	Gerald

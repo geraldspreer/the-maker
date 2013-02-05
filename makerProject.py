@@ -1855,7 +1855,7 @@ class MakerProjectModel:
                                 
             writeFile(pathToNewHead, head)
         
-                    # TO DO: convert to use os.path.join()
+            # TO DO: convert to use os.path.join()
             nameInTable = name +  ".htm"
                                 
             self.addToDistributionTable(nameInTable, 

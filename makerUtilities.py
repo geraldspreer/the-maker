@@ -99,7 +99,17 @@ def copyFileTree(src, dst, callback = None, *args):
                 print "\ncopy failed: ", str(e)
                 raise e
             
-            
+def verifyLatinChars(string):
+    """ returns True if string contains only Latin chars"""
+    
+    try:
+        new = string.encode("latin-1")
+        return True
+    
+    except:
+        return False
+
+
 def readDataFromFile(fileName):
     """
     read serialized data from a file

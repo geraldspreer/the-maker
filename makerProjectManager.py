@@ -6,6 +6,9 @@ from makerConstants import Constants
 from makerUtilities import readFile, writeFile
 from makerUtilities import writeDataToFile, readDataFromFile
 from makerUtilities import copyFileTree
+from makerUtilities import verifyLatinChars
+
+
 import makerController
 import makerProject
 import makerTemplateDialog
@@ -26,6 +29,8 @@ class ProjectManagerController(makerController.SuperController):
         # format {NoteBookSelection[int], <makerFileController class>}
         self.noteBookPages = {}
         
+        # This is a flag used to control unit tests
+        self.testing = False
         
         
     def bindActions(self):
@@ -225,7 +230,9 @@ class ProjectManagerController(makerController.SuperController):
         
         item = self.treeViewAppendItem(self.treeRoot, projectName, type="Project")
         self.rootAndProjectTreeItems.append(item)
-        self.treeView.SelectItem(item, True)
+        # only not if not running test suite
+        if not self.testing:
+            self.treeView.SelectItem(item, True)
     
     
     def createAbstractNameForViewObjects(self):
@@ -384,6 +391,14 @@ class ProjectManager:
 
         if not projName: 
             return 
+
+        if not verifyLatinChars(projName):
+            self.controller.errorMessage("Please use only Latin characters for project names...")
+            if not self.controller.testing:
+                self.addNewProject(None)
+            else:
+                return
+
 
         print "creating folders and files for ", projName
         

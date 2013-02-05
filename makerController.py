@@ -22,6 +22,7 @@ class SuperController:
         self.progressBars = []
         
         
+        
     def bindActions(self):
         """ please override """
         pass

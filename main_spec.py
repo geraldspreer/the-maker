@@ -22,7 +22,28 @@ class TestApp(wx.App):
         return TestView(parent) 
 
 
+class ProjectManagerTestController(makerProjectManager.ProjectManagerController):
 
+   def showTemplateDialog(self):
+       """ return the Simple template for testing"""
+       
+       return "Simple"
+
+
+
+class TestProjectManager(makerProjectManager.ProjectManager):
+
+    def __init__(self, view):
+        
+        self.controller = ProjectManagerTestController(self, view)
+        self.setProjectDir()
+        
+        self.linkedProjectPaths = []
+        self.loadLinkedProjects()
+        self.linkedProjects = {}
+        self.controller.listProjectsInTree(self.getProjects())
+        self.openProjects = []
+        self.openFiles = []
         
 
 class TestView(spec_mockView.wxPythonGUI):
@@ -30,31 +51,43 @@ class TestView(spec_mockView.wxPythonGUI):
     def Input(self, Question="?"):
     
         return self.inputReturnString
+    
+
+    def Error(self, Message):
         
-        
+        self._lastErrorMessage = Message
+
+    
     def setInputReturnString(self, string):
-        
+
         self.inputReturnString = string
 
-
-
-
+    
 
 class MakerTest(unittest.TestCase):
 
     def setUp(self):
        
         self.user_home = "/Users/maker"
-        self.app = TestApp()
-        self.pm = makerProjectManager.ProjectManager(self.app.mainView)
-
+        self.osx_correct = "Library/Application Support/TheMaker/makerProjects"
         
+        self.projectPath = os.path.join(self.user_home, self.osx_correct)
+        self.app = TestApp()
+        self.pm = TestProjectManager(self.app.mainView)
+        self.pm.controller.testing = True
+
+    def test_mockViewErrorMessage(self):
+        
+        m = "This is an error..."
+        self.pm.controller.errorMessage(m)
+        self.assertEqual(self.pm.controller.view._lastErrorMessage, m)
+    
+    
     def test_setCorrectProjectDir_OSX(self):
         
-        osx_correct = "Library/Application Support/TheMaker/makerProjects"
         self.pm.setProjectDir()
         self.assertEqual(self.pm.projectDir, 
-                         os.path.join(self.user_home, osx_correct),
+                         os.path.join(self.user_home, self.osx_correct),
                          "Project dir is set correct...")
         
     
@@ -78,13 +111,41 @@ class MakerTest(unittest.TestCase):
       
     def test_invalidCharsShouldNotCreateProject(self):
         
-        projects = len(self.pm.getProjects())
+        existingProjects = len(self.pm.getProjects())
+        self.app.mainView.setInputReturnString(u"лывора")
         
-        print "There are ", projects
+        self.pm.addNewProject()
         
-        #self.pm.addNewProject()
+        self.assertEqual(len(self.pm.getProjects()), existingProjects) 
+        
+        self.assertEqual(self.app.mainView._lastErrorMessage, "Please use only Latin characters for project names...") 
+        
+        self.app.mainView.inputReturnString = None
+        self.app.mainView._lastErrorMessage = None
+    
+        
+
+    def test_validCharsShouldCreateProject(self):
+        
+        testProjectName = u"__Test__"
+        existingProjects = len(self.pm.getProjects())
+        self.app.mainView.setInputReturnString(testProjectName)
         
         
+        self.pm.addNewProject()
+        
+        self.assertEqual(len(self.pm.getProjects()), existingProjects + 1) 
+        
+        self.app.mainView.inputReturnString = None
+        
+        # make this a run shell script thing
+        #os.remove(os.path.join(self.projectPath, testProjectName))
+        
+ 
+    
+    def test_deleteProject(self):
+        
+        pass
 
       
               
