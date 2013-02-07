@@ -1,0 +1,20 @@
+
+    <div id="sidebar">
+ <span class="makercomment">This an example of maker 'dynamic' file and it is a way of inserting a 'block'of HTML by refering to it with a special maker tag: "&lt;maker_dynamic:file_name&gt;" and can be used anywhere a repeating block is required, this file is called colthree_en in the template</span>
+      <p class="bagheading">
+        <br />
+        CONTENT MANAGEMENT
+        with the 
+        <a href="http://www.makercms.org/">THE-MAKER</a>
+        <br />
+        <span class="slogan">
+            RAPID <br />
+            WEBSITE <br />
+            DEVELOPMENT <br />
+        </span>
+      </p>
+      <p>
+      This template contains  four pages (index_en, blog_en, page_eight_en, page_six_en) and shows the various parts of the maker system, how they are used and subsequenly built into the final webpages, use this template to experiment with, and quickly you learn the 'maker'.
+This pages are simple but uses the principle of seperating content from style, which is facilitated by the associated .css file.
+      </p>
+    </div>

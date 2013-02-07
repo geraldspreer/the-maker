@@ -3,32 +3,48 @@
 echo "removing zip files..."
 rm *.zip
 
-rm maker-src
-mkdir maker-src
+version=$(python ./makerVersion.py)
+dashed_version=$(python ./makerVersion.py --use-dash)
+
+target=the-maker-$version-src
+dash=the-maker-$dashed_version-src
+
+rm $target
+mkdir $target
 
 echo "Gathering source..."
 echo "All files..."
-cp -v -f *.* maker-src
+cp -v -f *.* $target
 echo "System..."
-cp -R -P -v -f system maker-src/system
-cp -R -P -v -f XRCed_Files maker-src/XRCed_Files
+cp -R -P -v -f system $target/system
+cp -R -P -v -f XRCed_Files $target/XRCed_Files
 
 echo "removing zip files..."
-rm maker-src/*.zip
+rm $target/*.zip
 
 echo "removing .pyc files..."
-rm maker-src/*.pyc 
+rm $target/*.pyc 
 
 echo "removing Entitlements..."
-rm maker-src/Entitlements.plist
+rm $target/Entitlements.plist
 
 echo "removing App Store Setup..."
-rm maker-src/setup_app_store.py
+rm $target/setup_app_store.py
+
+echo "removing App Store compile script..."
+rm $target/compile.sh
 
 echo "removing Packages..."
-rm maker-src/TheMaker.pkg
+rm $target/TheMaker.pkg
 
 echo "removing Tools..."
-rm -v maker-src/gatherSource.sh
+rm -v $target/gatherSource.sh
 
-zip -r the-maker-src maker-src/.
+echo "Packaging..."
+zip -r $dash $target/.
+
+echo "Renaming..."
+mv $dash.zip $target.zip
+
+echo "removing tmp files..."
+rm -rf $target

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="mac-roman"?>
+<resource>
+  <object class="wxDialog" name="DIALOG1">
+    <title>select a template</title>
+    <centered>1</centered>
+    <pos>0,0</pos>
+    <size>640, 320</size>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <orient>wxHORIZONTAL</orient>
+          <object class="sizeritem">
+            <object class="wxListBox" name="List">
+              <content/>
+            </object>
+            <option>1</option>
+            <flag>wxEXPAND|wxGROW</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticBitmap" name="Preview">
+              <bitmap stock_id="wx.NULLBITMAP"></bitmap>
+              <size>320, 240</size>
+              <style>wxSIMPLE_BORDER</style>
+            </object>
+            <option>0</option>
+            <flag>wxEXPAND</flag>
+            <minsize>322, 260</minsize>
+          </object>
+        </object>
+        <option>1</option>
+        <flag>wxEXPAND|wxGROW</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxButton" name="Ok">
+            <label>OK</label>
+            <default>1</default>
+            <pos>550, 10</pos>
+            <size>80, 30</size>
+          </object>
+          <object class="wxButton" name="Cancel">
+            <label>Cancel</label>
+            <default>0</default>
+            <pos>460, 10</pos>
+            <size>80, 30</size>
+          </object>
+        </object>
+        <option>0</option>
+        <flag>wxEXPAND</flag>
+        <minsize>640, 40</minsize>
+      </object>
+    </object>
+    <exstyle></exstyle>
+  </object>
+</resource>

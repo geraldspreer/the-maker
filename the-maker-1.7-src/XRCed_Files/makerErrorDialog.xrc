@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="mac-roman"?>
+<resource>
+  <object class="wxDialog" name="ErrorDialog">
+    <title>Error Report</title>
+    <centered>1</centered>
+    <pos>0,0</pos>
+    <size>640, 320</size>
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxPanel">
+              <object class="wxStaticBitmap">
+                <bitmap stock_id="wxART_ERROR"></bitmap>
+                <pos>10, 2</pos>
+              </object>
+              <object class="wxStaticText" name="Label1">
+                <label>Here are the details:</label>
+                <pos>48, 10</pos>
+                <size>400, 30</size>
+              </object>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="ErrorText">
+              <size>320, 240</size>
+              <style>wxTE_MULTILINE|wxSIMPLE_BORDER</style>
+              <fg>#C70202</fg>
+            </object>
+            <option>1</option>
+            <flag>wxGROW</flag>
+            <minsize>322, 200</minsize>
+          </object>
+        </object>
+        <option>1</option>
+        <flag>wxGROW</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxButton" name="Report">
+            <label>Report</label>
+            <default>0</default>
+            <pos>550, 10</pos>
+            <size>80, 30</size>
+          </object>
+          <object class="wxButton" name="Cancel">
+            <label>Close</label>
+            <default>1</default>
+            <pos>460, 10</pos>
+            <size>80, 30</size>
+          </object>
+        </object>
+        <option>0</option>
+        <flag>wxEXPAND</flag>
+        <minsize>640, 40</minsize>
+      </object>
+    </object>
+  </object>
+</resource>

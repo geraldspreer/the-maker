@@ -1,0 +1,51 @@
+
+<aside>
+<markdown>
+### *Aside*
+*markdown.css includes styling for the new HTML5 tag `aside` so although not part of the markdown syntax new features in HTML5 can be included within a **maker .content** file*
+### *HTML5 Features*
+*many other HTML5 features are also catered for within markdown.css as can be seen to the left.*
+</markdown>
+</aside>
+<markdown>
+## Aside tag & HTML5 features
+### Forms and Buttons etc.<button type="submit">Sample Button</button>
+</form>
+<button type="button">Click Me!</button>
+<br />
+<meter value="0.6">60%</meter> Download meter
+<br />
+
+Here's a sample form:
+<form>
+  <input type="text" size="30" />
+  <br>
+  <label>
+      <input type="checkbox" />
+      <span>This is text accompanying the checkbox</span>
+  </label><br>
+  <label>
+      <input type="checkbox" />
+      <span>More text with a different checkbox</span>
+  </label>
+  <br><br>
+  <select>
+    <option>Select an option</option>
+    <option>One</option>
+    <option>Two</option>
+  </select>
+  <br>
+
+<audio controls="controls">
+  <source src="" type="audio/mp3" /> Your browser does not support the audio element.</audio>*Audio*
+
+<video width="450" height="360" controls="controls">
+  <source src="" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+*Video*
+### Preview
+
+![preview.jpg](preview.jpg "Preview image")
+
+</markdown>

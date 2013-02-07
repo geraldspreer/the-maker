@@ -1,0 +1,43 @@
+ 
+
+ <div id="main2">
+ <span class="makercomment">
+
+Below is  the maker '.content' file and is the main part of each html file, this one is named page_six_en in the template, this page uses a two column layout to give more room for content this is specified by the div id="main2" in the .css file named "white" in the template.
+
+</span>
+
+<maker_dynamic:tagline_en />
+
+<h1>!pageName!</h1>
+
+<hr />
+
+ 
+ <span class="image">
+
+
+<img src="img_8681.jpg" align="left" alt="img_8681.jpg"/>
+
+</span>
+
+
+<h1>Isle of Skye coastline</h1>
+
+<p>The Isle of Skye Coastline, provides a great habitat for sea birds.</p>
+
+<p>
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+<br />
+
+<hr />
+
+
+<h1>Takimata Sanctus Est</h1>
+
+<p>
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+
+

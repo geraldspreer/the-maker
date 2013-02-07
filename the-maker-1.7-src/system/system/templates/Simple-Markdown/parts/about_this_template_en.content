@@ -1,0 +1,41 @@
+<markdown>
+
+## About this template...
+
+*This is a very simple template:*
+
+- html5 .head section
+- minimal html5 `<header>`.body (top) section
+- html5 `<nav>` .nav section
+- main .content section intended for use with 'markdown'
+- minimal html5 `<footer>`.foot section
+
+*Most of the emphasis with this template has been to provide a suitable (comprehensive) style sheet as detailed below:*
+
+
+*Below the break is the markdown page (in iframe) from [Kevin Burke]( http://kev.inburke.com/),  to demonstrate both markdown and the elegant markdown.css*
+
+*A copy of the stylesheet (markdown.css) is included with this template, but the latest version should be checked out from* [here](http://bitbucket.org/kevinburke/markdowncss).
+
+*alternatively you can add the following to the .head file for this project to call the css directly from the repository*  
+
+    <link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+<br />
+
+-------
+
+##### *"Let's make the Web prettier." from [kevinburke.bitbucket.org/markdowncss/](http://kevinburke.bitbucket.org/markdowncss/):...*
+
+ > <iframe src="http://kevinburke.bitbucket.org/markdowncss/" width=800 height=730 frameborder=0></iframe>
+
+<br />
+
+<!-- -------
+
+ *NOTES:*
+
+- *This maker .content file has no remote file record in the distribution table and is intended for local use only, to give background information about this template.*   
+- *Without internet connection you will not see the "Let's make the Web prettier." iframe above.*  
+- *There is no association between The Maker CMS template:' SimpleMarkdown' and Kevin Burke.* -->
+
+</markdown>

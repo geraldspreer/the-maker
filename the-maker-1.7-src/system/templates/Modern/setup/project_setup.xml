@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<project_setup>
+		<version>1</version>
+		<sprache>en</sprache>
+		<encoding>utf-8</encoding>
+		<add_language>de</add_language>
+		<gfx_folder>gfx/</gfx_folder>
+		<ftp_host>not set</ftp_host>
+		<ftp_user>not set</ftp_user>
+        	<ftp_password>None</ftp_password>
+		<ftp_root>.</ftp_root>
+		<url>http://www.yourserver.com/</url>
+
+</project_setup>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
