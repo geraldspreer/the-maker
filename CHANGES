@@ -2,51 +2,42 @@ changeLOG for the-maker
 
 --------------------------------------------------------------------
 																	|
-TO DO / Notes														|
+TO DO / planned features											|
 																	|
 --------------------------------------------------------------------
 	
 	- validate input on project name
 	
-	
-	- simplify version handling and source collection
 	- add Language / remove Language single dialog
 	- better php support 
 	- multiple copy buffers
 	- user prefs
 	- switch to head button
 	- pretty print (tidy)
-	- selector explorer
+	- css selector explorer
 		
 
 -------------------------------------------------------------------------
 	KNOWN BUGS															 |
 -------------------------------------------------------------------------
 	
-
--------------------------------------------------------------------------.		
-	planned features	     										     |
--------------------------------------------------------------------------'
-		
-		- when an opened file changes in the filesystem -> notify
-		
-		- switch project on group selection
-		- use delayed result where possible		
-		- when adding item to tree / if in queue mark
-		
-		- make auto complete faster
-		- from FTP Browser delete folders that are not empty
-		- make dynamics work with .html (.php ?) files					  
-																		  
+	-- 
+																			  
 -------------------------------------------------------------------------.		
 																	     |
 -------------------------------------------------------------------------'
 
-
 February x, 2013
 
+	
+	
+
+February 7, 2013	Gerald
+
 	- validate characters on project name
-	- 
+	- simplified version handling and source collection
+	- unit tests for new features and bug fixes
+	
 	
 ---------------------------------------		
 December 20, 2012 -	TheMaker 1.6										 
