@@ -1,9 +1,0 @@
-  <body>
-    <div id="header">
- <span class="makercomment"><p>This is the 
-maker '.body' file and is the 'top of page' for each HTML file, and is a place for logos etc.</p>
-  </span> 
-<img src="grey.png" align="left" alt="grey.png"/>
-<p>!projectName!</p>
-    </div>
- 

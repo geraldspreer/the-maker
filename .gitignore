@@ -1,7 +1,7 @@
 dist
 build
 lib
-maker-src
+the-maker-*-src
 
 setup_app_store.py
 compile.sh

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?><!-- file was created @: Thu Dec 13 22:17:45 2012 -->
-<distribution>
-<rule ftp_source="markdown.css" remote_dir="." ftp_mode="lines" target="markdown.css" ></rule>
-<rule ftp_source="about_this_template_en.htm" remote_dir="." ftp_mode="lines" target="about_en.htm" ></rule>
-<rule ftp_source="index_en.htm" remote_dir="." ftp_mode="lines" target="index_en.htm" ></rule>
-<rule ftp_source="aside_en.htm" remote_dir="." ftp_mode="lines" target="aside_en.htm" ></rule>
-<rule ftp_source="FAP_ATS_en.htm" remote_dir="." ftp_mode="lines" target="FAP_ATS_en.htm" ></rule>
-<rule ftp_source="sample_mpeg4.mp4" remote_dir="." ftp_mode="binary" target="sample_mpeg4.mp4" ></rule>
-</distribution>
