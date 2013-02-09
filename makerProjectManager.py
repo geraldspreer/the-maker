@@ -1,6 +1,6 @@
 import os
 import sys
-#import shutil
+import shutil
 
 from makerConstants import Constants
 from makerUtilities import readFile, writeFile
@@ -54,6 +54,10 @@ class ProjectManagerController(makerController.SuperController):
         self.view.Bind(self.view.wx.EVT_MENU, 
                        self.model.importProject,  
                        self.view.MenuItemImportProject)
+
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                       self.model.deleteProject,  
+                       self.view.MenuItemDeleteProject)
         
         self.view.Bind(self.view.wx.EVT_MENU, 
                        self.model.linkToProject,  
@@ -406,7 +410,7 @@ class ProjectManager:
         tgt = os.path.join(self.getProjectDir(), projName)
                 
         if os.path.isdir(tgt):
-            m  = "A project with the name '" + projName + "' already exists ! "
+            m  = "A project with the name '" + projName + "' already exists !"
             self.controller.errorMessage(m)
             return
         
@@ -415,8 +419,10 @@ class ProjectManager:
             template = self.controller.showTemplateDialog()        
             if not template: 
                 return
-             
+            
             src = os.path.join(self.getSystemPath(), 'templates', template)
+            
+            print "Source is:", src
             
             self.controller.showProgress(limit = 1, Message="Creating project...", title="Creating project...")
             copyFileTree(src, tgt, self.controller.updateProgressPulse, 
@@ -630,8 +636,33 @@ class ProjectManager:
         
     
  
-    
-    
+    def deleteProject(self, event=None):
+        
+        project = self.getActiveProject()
+        if self.controller.askYesOrNo("Do you want to delete the project: '" + project.getProject() + "'?") == "Yes":
+            
+            values = []
+            
+            for value in self.controller.noteBookPages.itervalues():
+                values.append(value)
+            
+            for aFile in values:
+
+                if aFile.model.core.getProject() == project.getProject():
+                    
+                    aFile.model.closeFile(callController = True)
+
+            for item in self.controller.rootAndProjectTreeItems:
+                if self.controller.treeView.GetItemText(item) == project.getProject():
+                    self.controller.treeView.Delete(item)
+
+
+            shutil.rmtree(project.getProjectPath())
+            self.openProjects.remove(project)
+            
+
+
+ 
     def closeOpenProjects(self, event=None):
         """ called when the App is closed """
         

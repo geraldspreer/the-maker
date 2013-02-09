@@ -6,8 +6,7 @@ TO DO / planned features											|
 																	|
 --------------------------------------------------------------------
 	
-	- validate input on project name
-	
+	- delete project	
 	- add Language / remove Language single dialog
 	- better php support 
 	- multiple copy buffers

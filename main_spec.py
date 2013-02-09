@@ -3,6 +3,7 @@
 
 import unittest
 import os
+import shutil
 import makerProjectManager
 import spec_mockView
 import wx
@@ -25,7 +26,7 @@ class ProjectManagerTestController(makerProjectManager.ProjectManagerController)
 
    def showTemplateDialog(self):
        """ return the Simple template for testing"""
-       
+       print "Returning Template 'Simple'"
        return "Simple"
 
 
@@ -44,16 +45,22 @@ class TestProjectManager(makerProjectManager.ProjectManager):
         self.openProjects = []
         self.openFiles = []
         
+    def getSystemPath(self):
+        """ get system path """
+        return os.path.join(os.getcwd(), "system/")
+
 
 class TestView(spec_mockView.wxPythonGUI):
     
     def Input(self, Question="?"):
     
+        print "Input string was:", self.inputReturnString
         return self.inputReturnString
     
 
     def Error(self, Message):
         
+        print "Error message was:", Message
         self._lastErrorMessage = Message
 
     
@@ -69,11 +76,11 @@ class MakerTest(unittest.TestCase):
        
         self.user_home = "/Users/maker"
         self.osx_correct = "Library/Application Support/TheMaker/makerProjects"
-        
         self.projectPath = os.path.join(self.user_home, self.osx_correct)
         self.app = TestApp()
         self.pm = TestProjectManager(self.app.mainView)
         self.pm.controller.testing = True
+
 
     def test_mockViewErrorMessage(self):
         
@@ -116,7 +123,6 @@ class MakerTest(unittest.TestCase):
         self.pm.addNewProject()
         
         self.assertEqual(len(self.pm.getProjects()), existingProjects) 
-        
         self.assertEqual(self.app.mainView._lastErrorMessage, "Please use only Latin characters for project names...") 
         
         self.app.mainView.inputReturnString = None
@@ -124,26 +130,42 @@ class MakerTest(unittest.TestCase):
     
         
 
-    def test_validCharsShouldCreateProject(self):
-        return 
+    def test_validCharsShouldCreateProject_IfNotExising(self):
     
-        testProjectName = u"__Test__"
+        testProjectName = u"Test_Project"
         existingProjects = len(self.pm.getProjects())
         self.app.mainView.setInputReturnString(testProjectName)
-        
+        testPath = os.path.join(self.projectPath, testProjectName)
+        try:
+            # just in case
+            shutil.rmtree(testPath)
+        except:
+            pass
         
         self.pm.addNewProject()
         
         self.assertEqual(len(self.pm.getProjects()), existingProjects + 1) 
         
-        self.app.mainView.inputReturnString = None
+        self.assertTrue(os.path.isdir(os.path.join(testPath, "parts")))
+        self.assertTrue(os.path.isdir(os.path.join(testPath, "templates")))
+        self.assertTrue(os.path.isdir(os.path.join(testPath, "setup")))
         
-        # make this a run shell script thing cause sudo needed
-        #os.remove(os.path.join(self.projectPath, testProjectName))
+        # Test for not creating project if it exists
+        self.pm.addNewProject()
+        self.assertEqual(self.app.mainView._lastErrorMessage, "A project with the name '" + testProjectName + "' already exists !")
+
+        
+        self.app.mainView.inputReturnString = None
+        print "Removing test project..."
+        shutil.rmtree(testPath)
         
      
     
     def test_deleteProject(self):
+        
+        # should not be in thee 
+        # should not be dir
+        # should not be in pm.openProjects
         
         pass
 
