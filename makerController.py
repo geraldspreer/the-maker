@@ -290,6 +290,7 @@ returns the instance of the progressbar that was last added to the stack
         self.view.MenuItemPreview.Enable(False) 
         self.view.MenuItemImportFile.Enable(False)
         self.view.MenuItemImportProject.Enable(True)
+        self.view.MenuItemDeleteProject.Enable(False)
         self.view.MenuItemLinkToProject.Enable(True)
         
         # you can always add new projects

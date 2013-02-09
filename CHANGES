@@ -6,7 +6,6 @@ TO DO / planned features											|
 																	|
 --------------------------------------------------------------------
 	
-	- delete project	
 	- add Language / remove Language single dialog
 	- better php support 
 	- multiple copy buffers
@@ -26,17 +25,18 @@ TO DO / planned features											|
 																	     |
 -------------------------------------------------------------------------'
 
-February x, 2013
 
+February 9, 2013	Gerald
+
+	- added functions to delete projects
 	
-	
+
 
 February 7, 2013	Gerald
 
 	- validate characters on project name
 	- simplified version handling and source collection
 	- unit tests for new features and bug fixes
-	
 	
 ---------------------------------------		
 December 20, 2012 -	TheMaker 1.6										 

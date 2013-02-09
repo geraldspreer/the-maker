@@ -1012,6 +1012,7 @@ class MakerProjectController(makerController.SuperController):
         
         self.view.MenuItemFullUpload.Enable(True)
         self.view.MenuItemSaveProjectAsTemplate.Enable(True)
+        self.view.MenuItemDeleteProject.Enable(True)
         
         if not self.model.getFtpQueue():
             self.publishButton.SetLabel("publish")

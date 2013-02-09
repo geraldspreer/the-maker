@@ -541,6 +541,10 @@ class wxPythonGUI(wx.Frame):
                                                    kind=wx.ITEM_NORMAL, 
                                                    text=u'Import Project')
         
+        self.MenuItemDeleteProject = parent.Append(help='Delete a maker project', 
+                                                   id=-1,
+                                                   kind=wx.ITEM_NORMAL, 
+                                                   text=u'Delete Project')
         
         self.MenuItemLinkToProject = parent.Append(help='link to external maker project', 
                                                    id=-1,

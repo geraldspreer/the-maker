@@ -29,6 +29,14 @@ class ProjectManagerTestController(makerProjectManager.ProjectManagerController)
        print "Returning Template 'Simple'"
        return "Simple"
 
+   def showProgress(self, limit, Message, title):
+       print Message
+       
+   def updateProgressPulse(self, foo):
+
+       print "updating progress pulse"
+
+
 
 
 class TestProjectManager(makerProjectManager.ProjectManager):
@@ -52,6 +60,10 @@ class TestProjectManager(makerProjectManager.ProjectManager):
 
 class TestView(spec_mockView.wxPythonGUI):
     
+    def askYesOrNo(self, question):
+        return self.choiceReturnString
+    
+    
     def Input(self, Question="?"):
     
         print "Input string was:", self.inputReturnString
@@ -68,6 +80,10 @@ class TestView(spec_mockView.wxPythonGUI):
 
         self.inputReturnString = string
 
+
+    def setChoiceReturnString(self, string):
+
+        self.choiceReturnString = string
     
 
 class MakerTest(unittest.TestCase):
@@ -157,20 +173,12 @@ class MakerTest(unittest.TestCase):
         
         self.app.mainView.inputReturnString = None
         print "Removing test project..."
+        
         shutil.rmtree(testPath)
-        
-     
     
-    def test_deleteProject(self):
-        
-        # should not be in thee 
-        # should not be dir
-        # should not be in pm.openProjects
-        
-        pass
 
-        
-      
+    
+    
               
 if __name__=="__main__":
     unittest.main()
