@@ -6,6 +6,9 @@ TO DO / planned features											|
 																	|
 --------------------------------------------------------------------
 	
+	- make linked projects work with Sandbox
+	- general editing
+	
 	- add Language / remove Language single dialog
 	- better php support 
 	- multiple copy buffers
