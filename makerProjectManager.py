@@ -75,7 +75,8 @@ class ProjectManagerController(makerController.SuperController):
         interfaceData = {"Size" : self.view.GetSize(),
                           "Position" : self.view.GetPosition(),
                           "SplitterSashPosition" : self.view.splitter.GetSashPosition(),
-                          "sessionFiles" : self.model.sessionFiles}
+                          "sessionFiles" : self.model.sessionFiles,
+                          "linkedProjects" : self.model.linkedProjectPaths}
                         
         # due to Sandbox on OS X linked projects to get saved for next session
         #"linkedProjects" : self.model.linkedProjectPaths}
@@ -445,20 +446,19 @@ class ProjectManager:
     
     
     def loadLinkedProjects(self):
-        """ Due to Sandbox on Mac we do not load linked projects on launch..."""
-        pass
     
-#        theFile = os.path.join(self.getProjectDir(), "../.makerUISettings")
-#        if os.path.isfile(theFile):
-#            try:
-#                interfaceData = readDataFromFile(theFile)
-#                for path in interfaceData['linkedProjects']:
-#                    if os.path.isdir(path):
-#                        self.linkedProjectPaths.append(path)
-#            except Exception, e:
-#                print "unable to load linked projects:" , str(e)
+        theFile = os.path.join(self.getProjectDir(), "../.makerUISettings")
+        if os.path.isfile(theFile):
+            try:
+                interfaceData = readDataFromFile(theFile)
+                for path in interfaceData['linkedProjects']:
+                    if os.path.isdir(path):
+                        self.linkedProjectPaths.append(path)
+            except Exception, e:
+                print "unable to load linked projects:" , str(e)
                 
     
+
     def manageLinkedProjects(self, event=None):
         makerManageLinkedProjects.Manager(self.controller.view, self)
     
