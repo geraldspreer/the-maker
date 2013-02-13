@@ -6,7 +6,7 @@ TO DO / planned features											|
 																	|
 --------------------------------------------------------------------
 	
-	- make linked projects work with Sandbox
+	
 	- general editing
 	
 	- add Language / remove Language single dialog
@@ -28,13 +28,17 @@ TO DO / planned features											|
 																	     |
 -------------------------------------------------------------------------'
 
+February 13, 2013
+
+	- linked projects now work with Sandbox 
+
+
 
 February 9, 2013	Gerald
 
 	- added functions to delete projects
 	
-
-
+		
 February 7, 2013	Gerald
 
 	- validate characters on project name
