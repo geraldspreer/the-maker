@@ -2422,10 +2422,9 @@ class wxPythonGUI(wx.Frame):
         # changed where the noteBoolPages dict is updated
         #
         self.noteBook = nb.FlatNotebook(self.splitter, wx.ID_ANY, 
-                                        style= nb.FNB_NODRAG | 
-                                        nb.FNB_X_ON_TAB )
+                                        style= wx.lib.flatnotebook.FNB_NODRAG | 
+                                        wx.lib.flatnotebook.FNB_X_ON_TAB )
         
-
         
         # add a welcome message to the noteBook        
         
@@ -2450,24 +2449,12 @@ class wxPythonGUI(wx.Frame):
         self.listSizer = wx.BoxSizer(orient=wx.VERTICAL)
 
 
-        
-        self.treeNoteBook = nb.FlatNotebook(self.listWindow, wx.ID_ANY, 
-                                        style= nb.FNB_NO_X_BUTTON  )
-        
-
 # the listbox is added to the splitter too
-        self.tree = wx.TreeCtrl(self.treeNoteBook, -1, 
+        self.tree = wx.TreeCtrl(self.listWindow, -1, 
                                 style=wx.TR_HAS_BUTTONS
                                 |wx.TR_LINES_AT_ROOT
                                 |wx.TR_DEFAULT_STYLE
                                 |wx.SUNKEN_BORDER)
-        
-        self.dirControl = wx.GenericDirCtrl(self.treeNoteBook, id=wx.ID_ANY, dir=os.environ['HOME'], style=0, filter="", defaultFilter=0, name="TreeCtrlNameStr")
-        
-        
-        
-        self.treeNoteBook.AddPage(self.tree, "Projects")
-        self.treeNoteBook.AddPage(self.dirControl, "All Files")
         
         
         
@@ -2492,16 +2479,13 @@ class wxPythonGUI(wx.Frame):
    
 
         #self.listSizer.Add(self.listBox1, 1, border=0, flag=wx.EXPAND)
-        self.listSizer.Add(self.treeNoteBook, 1, border=0, flag=wx.EXPAND)
+        self.listSizer.Add(self.tree, 1, border=0, flag=wx.EXPAND)
       
         
             
         self.listWindow.SetAutoLayout(True)
         self.listWindow.SetSizer(self.listSizer)
-        self.listSizer.Fit(self.treeNoteBook)
-
-
-
+        self.listSizer.Fit(self.listWindow)
 
         self.splitter.SetMinimumPaneSize(200)
         self.splitter.SplitVertically(self.listWindow, self.noteBook, 180)    
