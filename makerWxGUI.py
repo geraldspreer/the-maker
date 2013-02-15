@@ -2478,7 +2478,7 @@ class wxPythonGUI(wx.Frame):
         self.fldropenidx = il.Add(wx.ArtProvider_GetBitmap(wx.ART_FILE_OPEN, wx.ART_OTHER, image_size))
         self.fileidx     = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, image_size))
         try:
-            self.filechange  = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NEW, wx.ART_OTHER, image_size))
+            self.filechange = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NEW, wx.ART_OTHER, image_size))
         except:
             
             self.filechange  = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, image_size))
