@@ -634,7 +634,8 @@ class MakerProjectController(makerController.SuperController):
         
         else:
             self.model.loadFile(theFile, group)    
-    
+        
+        
        
     
         
