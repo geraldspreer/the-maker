@@ -87,7 +87,8 @@ class TestView(spec_mockView.wxPythonGUI):
     
 
 class MakerTest(unittest.TestCase):
-
+    
+    
     def setUp(self):
        
         self.user_home = "/Users/maker"
@@ -175,9 +176,7 @@ class MakerTest(unittest.TestCase):
         print "Removing test project..."
         
         shutil.rmtree(testPath)
-    
-
-    
+        
     
               
 if __name__=="__main__":
