@@ -1,10 +1,10 @@
-This is the 1.6 release of "TheMaker". The maker is a Content Management System 
-(CMS) for websites. The Maker is running on your local computer and after you 
-made your changes you are publishing via FTP. 
+The maker is a Content Management System (CMS) for websites. 
+The Maker is running on your local computer and after you made your changes you 
+are publishing via FTP. 
 
 All that is required is some webspace with FTP access.
 
-TheMaker is developed for OS X but should run on Linux and Windows as well.
+TheMaker is developed for Mac OSX but should will on Linux and Windows as well.
 	
 We hope you have a pleasant experience using the maker. If you have any feedback
 you are welcome to contact us at [info at makercms dot org] .
@@ -24,10 +24,10 @@ To run TheMaker from source using Python you need:
 
 To build "TheMaker" you will need:
 
-- py2app 
-- py2exe
+- py2app on OSX
+- py2exe on Windows
 
-To build, rust run: 
+To build, you just need to run: 
 
 $ ./compile_mac.sh
 
@@ -44,4 +44,6 @@ python ./maker.py
 ____________________________________________
 
 See LICENSE for license information.
+
+ion.
 
