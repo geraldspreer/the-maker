@@ -317,7 +317,7 @@ class wxPythonGUI(wx.Frame):
                                                 )
         
         
-        self.MenuItemLanguages = parent.AppendMenu(help='add or remove a language',
+        self.MenuItemLanguages = parent.AppendMenu(help='manage project languages',
                            id=-1,
                            submenu = self.subMenuLanguages, 
                            text=u'Project Languages'
@@ -387,7 +387,12 @@ class wxPythonGUI(wx.Frame):
                                                     kind=wx.ITEM_NORMAL, 
                                                     text=u'Add Language')
     
-        
+        self.MenuItemRemoveLanguage = parent.Append(help='remove language from project', 
+                                                    id=-1,
+                                                    kind=wx.ITEM_NORMAL, 
+                                                    text=u'Remove Language')
+    
+
         
     
     
@@ -2776,7 +2781,20 @@ class wxPythonGUI(wx.Frame):
         return value
     
     
-    
+    def SingleChoiceDialog(self, choices, title="", message="Please choose..."):
+        
+        value = None
+        dlg = wx.SingleChoiceDialog(
+                self, message, title,
+                choices, 
+                wx.CHOICEDLG_STYLE
+                )
+
+        if dlg.ShowModal() == wx.ID_OK:
+            value = dlg.GetStringSelection()
+
+        dlg.Destroy()
+        return value
     
 
     def Input(self, Question="?"):

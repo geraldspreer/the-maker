@@ -344,8 +344,9 @@ returns the instance of the progressbar that was last added to the stack
         """
         
     
-    
-    
+    def singleChoice(self, choices, title="", message=""):
+        
+        return self.view.SingleChoiceDialog(choices, title, message)
     
     
     def dirDialog(self, message="Choose a directory:"):

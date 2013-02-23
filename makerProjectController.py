@@ -4,6 +4,7 @@ import makerProjectSetup
 import makerController
 import makerEditDistributionData
 import makerThread
+from makerProjectLanguages import possibleLanguages
 
 class MakerProjectController(makerController.SuperController):
     
@@ -219,7 +220,19 @@ class MakerProjectController(makerController.SuperController):
                   self.view.MenuItemSaveProjectAsTemplate
                   )
         
-
+        # add language to project
+        
+        
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                  self.actionAddLanguageToProject, 
+                  self.view.MenuItemAddLanguage
+                  )
+        
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                  self.actionRemoveLanguageFromProject, 
+                  self.view.MenuItemRemoveLanguage
+                  )
+        
 
     
     
@@ -443,6 +456,52 @@ class MakerProjectController(makerController.SuperController):
         return self.treeView.GetItemText(item)
        
            
+    def actionAddLanguageToProject(self, event):
+        
+        choices = []
+        for language in possibleLanguages.iterkeys():
+            choices.append(language)
+        choices.sort(cmp=None, key=None, reverse=False)
+        theChoice = self.singleChoice(choices, message="Add language to project...")
+        if theChoice:
+            langCode = possibleLanguages[theChoice]
+            if not langCode in self.model.getProjectLanguages():
+                self.infoMessage(langCode)
+                # call model here...
+                # model will call back to controller
+                #    -> add items to tree and such
+            else:
+                self.errorMessage("The language '%s' already exists in this project." % theChoice)
+        else:
+            return
+    
+    
+    
+    def actionRemoveLanguageFromProject(self, event):
+        
+        inProject = self.model.getProjectLanguages()
+        
+        if len(inProject) == 1:
+            self.errorMessage("This cannot be done.\nYou do need at least ONE language in your project.")
+            return
+            
+        langNames = []
+        for item in inProject:
+        
+            for name, code in possibleLanguages.iteritems():
+                if code == item:
+                    langNames.append(name)
+            
+        langNames.sort(cmp=None, key=None, reverse=False)
+        theChoice = self.singleChoice(langNames, message="Remove language from project...")
+        if theChoice:
+            self.infoMessage(possibleLanguages[theChoice])
+        else:
+            return
+    
+    
+    
+    
     
     def actionLoadFile(self, event):
                 
@@ -998,7 +1057,13 @@ class MakerProjectController(makerController.SuperController):
 
         # languages 
         
-        self.view.MenuItemLanguages.Enable(False)
+        self.view.MenuItemLanguages.Enable(True)
+        # if only one project language exists...you cannot remove it 
+        if len(self.model.getProjectLanguages()) == 1:
+            self.view.MenuItemRemoveLanguage.Enable(False)
+        else:
+            self.view.MenuItemRemoveLanguage.Enable(True)
+        
                 
         # images
         self.view.MenuItemImportImage.Enable(True)
