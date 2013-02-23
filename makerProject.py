@@ -1762,6 +1762,37 @@ class MakerProjectModel:
             
        
 
+    def addLanguage(self, newLang=None, langName = None):
+        
+        fileTypesNeeded = ['.nav','.body','.foot']
+        existingLangs = self.getProjectLanguages()
+        
+        for type in fileTypesNeeded:
+            src = os.path.join(self.getPathParts(), existingLangs[0] + type)
+            dst = os.path.join(self.getPathParts(), newLang + type)
+            shutil.copyfile(src, dst)
+            
+
+            group = self.projectController.findTreeItemByText(type)
+            if not group:
+                group = self.projectController.treeViewAddFolder(type)
+                    
+            newItem = self.projectController.treeViewAppendItem(group, newLang, type=None)
+            self.projectController.selectTreeItemAndLoad(newItem)
+            
+        m = "TYou have added the Language: '%s' to your project." % langName
+        m += "\nThe following files have been created:\n"
+        
+        for type in fileTypesNeeded:
+            
+            m += "\t" + newLang + type + "\n"
+            
+        m += "Please translate them as needed."
+        
+        self.projectController.infoMessage(m)
+
+
+
 
     def addMakerFile(self, name=None, type=None, content=None, mode="lines"):    
         

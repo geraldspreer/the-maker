@@ -466,10 +466,7 @@ class MakerProjectController(makerController.SuperController):
         if theChoice:
             langCode = possibleLanguages[theChoice]
             if not langCode in self.model.getProjectLanguages():
-                self.infoMessage(langCode)
-                # call model here...
-                # model will call back to controller
-                #    -> add items to tree and such
+                self.model.addLanguage(langCode, theChoice)
             else:
                 self.errorMessage("The language '%s' already exists in this project." % theChoice)
         else:
