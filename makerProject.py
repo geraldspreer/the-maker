@@ -1808,9 +1808,10 @@ class MakerProjectModel:
                     theFile.closeFile(callController = True)
             
             os.remove(os.path.join(self.getPathParts(), toRemove + type))
-            
-            # remove from tree
-        
+            # delete tree item
+            item = self.projectController.findTreeItem(toRemove, type)
+            self.projectController.treeItems.remove(item) 
+            self.projectController.view.tree.Delete(item)
             
         m = "TYou have removed the Language: '%s' from your project." % langName
         

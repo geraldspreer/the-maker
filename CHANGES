@@ -9,9 +9,9 @@ TO DO / planned features											|
 	
 	- general editing
 	 
-	- multiple copy buffers
 	- user prefs
 	- switch to head button
+	- spell checker
 	- pretty print (tidy)
 
 		
@@ -26,7 +26,7 @@ TO DO / planned features											|
 																	     |
 -------------------------------------------------------------------------'
 
-February 23, 2013	Gerald 
+February 25, 2013	Gerald 
 	
 	- add language to project, remove language from project
 
