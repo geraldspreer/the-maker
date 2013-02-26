@@ -1790,7 +1790,31 @@ class MakerProjectModel:
         m += "Please translate them as needed."
         
         self.projectController.infoMessage(m)
+        
+        
 
+    
+    def removeLanguage(self, toRemove=None, langName = None):
+        
+        fileTypesNeeded = ['.nav','.body','.foot']
+        
+        openFiles = self.projectManager.openFiles[:]
+        
+        for type in fileTypesNeeded:
+            
+            for theFile in openFiles:
+                  
+                if toRemove + type == theFile.getFileName():
+                    theFile.closeFile(callController = True)
+            
+            os.remove(os.path.join(self.getPathParts(), toRemove + type))
+            
+            # remove from tree
+        
+            
+        m = "TYou have removed the Language: '%s' from your project." % langName
+        
+        self.projectController.infoMessage(m)
 
 
 

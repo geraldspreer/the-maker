@@ -492,7 +492,8 @@ class MakerProjectController(makerController.SuperController):
         langNames.sort(cmp=None, key=None, reverse=False)
         theChoice = self.singleChoice(langNames, message="Remove language from project...")
         if theChoice:
-            self.infoMessage(possibleLanguages[theChoice])
+            langCode = possibleLanguages[theChoice]
+            self.model.removeLanguage(langCode, theChoice)
         else:
             return
     
