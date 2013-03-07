@@ -568,7 +568,7 @@ class MakerProjectModel:
         os.mkdir(fullTarget)
         
         src = self.getProjectPath()
-        self.projectController.showProgress(limit=1, Message="Saving template...", title="Caving template...")
+        self.projectController.showProgress(limit=1, Message="Saving template...", title="Saving template...")
         copyFileTree(src, fullTarget, self.projectController.updateProgressPulse, ("storing: " + self.getProject()))
                      
         deleteHiddenFiles(root = fullTarget)
