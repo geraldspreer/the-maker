@@ -177,7 +177,32 @@ class MakerTest(unittest.TestCase):
         
         shutil.rmtree(testPath)
         
+    def test_deleteProject(self):
     
+        testProjectName = u"To_Delete_Project"
+        existingProjects = len(self.pm.getProjects())
+        self.app.mainView.setInputReturnString(testProjectName)
+        testPath = os.path.join(self.projectPath, testProjectName)
+        try:
+            # just in case
+            shutil.rmtree(testPath)
+        except:
+            pass
+        
+        self.pm.addNewProject()
+        
+        self.assertEqual(len(self.pm.getProjects()), existingProjects + 1) 
+        
+        self.assertTrue(os.path.isdir(os.path.join(testPath, "parts")))
+        self.assertTrue(os.path.isdir(os.path.join(testPath, "templates")))
+        self.assertTrue(os.path.isdir(os.path.join(testPath, "setup")))
+        
+        
+        self.assertTrue(testProjectName not in self.pm.getProjects())
+        
+        self.app.mainView.inputReturnString = None
+        
+        
               
 if __name__=="__main__":
     unittest.main()
