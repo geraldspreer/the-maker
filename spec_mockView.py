@@ -381,13 +381,17 @@ class wxPythonGUI(wx.Frame):
         
     
     def _init_coll_sub_menu_languages(self, parent):
-        
+             
         self.MenuItemAddLanguage = parent.Append(help='add a language to this project', 
                                                     id=-1,
                                                     kind=wx.ITEM_NORMAL, 
                                                     text=u'Add Language')
     
-        
+        self.MenuItemRemoveLanguage = parent.Append(help='remove language from project', 
+                                                    id=-1,
+                                                    kind=wx.ITEM_NORMAL, 
+                                                    text=u'Remove Language')
+    
         
     
     

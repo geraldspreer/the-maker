@@ -660,8 +660,6 @@ class ProjectManager:
             shutil.rmtree(project.getProjectPath())
             self.openProjects.remove(project)
             
-
-
  
     def closeOpenProjects(self, event=None):
         """ called when the App is closed """

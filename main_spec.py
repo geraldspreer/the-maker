@@ -153,11 +153,9 @@ class MakerTest(unittest.TestCase):
         existingProjects = len(self.pm.getProjects())
         self.app.mainView.setInputReturnString(testProjectName)
         testPath = os.path.join(self.projectPath, testProjectName)
-        try:
-            # just in case
+
+        if os.path.isdir(testPath):
             shutil.rmtree(testPath)
-        except:
-            pass
         
         self.pm.addNewProject()
         
@@ -176,32 +174,47 @@ class MakerTest(unittest.TestCase):
         print "Removing test project..."
         
         shutil.rmtree(testPath)
-        
+    
+    
+    
+    
     def test_deleteProject(self):
     
         testProjectName = u"To_Delete_Project"
         existingProjects = len(self.pm.getProjects())
         self.app.mainView.setInputReturnString(testProjectName)
         testPath = os.path.join(self.projectPath, testProjectName)
-        try:
-            # just in case
+        
+        if os.path.isdir(testPath):
             shutil.rmtree(testPath)
-        except:
-            pass
         
         self.pm.addNewProject()
         
-        self.assertEqual(len(self.pm.getProjects()), existingProjects + 1) 
+        #self.assertEqual(len(self.pm.getProjects()), existingProjects + 1) 
         
         self.assertTrue(os.path.isdir(os.path.join(testPath, "parts")))
         self.assertTrue(os.path.isdir(os.path.join(testPath, "templates")))
         self.assertTrue(os.path.isdir(os.path.join(testPath, "setup")))
         
         
+        self.pm.load(testProjectName)
+        
+        print "PROJECT IS:", self.pm.getActiveProject().getProject()
+        
+        self.pm.deleteProject()
+        
         self.assertTrue(testProjectName not in self.pm.getProjects())
+        self.assertNotEqual(testProjectName, self.pm.getActiveProject().getProject())
         
         self.app.mainView.inputReturnString = None
         
+        # create mock for dialog
+        # test for no being pressend
+        # test for yes 
+    
+    
+    
+    
         
               
 if __name__=="__main__":
