@@ -6,6 +6,7 @@ TO DO / planned features											|
 																	|
 --------------------------------------------------------------------
 	
+	- also delete all content files for language
 	
 	- general editing
 	 
@@ -25,6 +26,13 @@ TO DO / planned features											|
 -------------------------------------------------------------------------.		
 																	     |
 -------------------------------------------------------------------------'
+
+
+March 14, 2013		Gerald
+
+	- fixed bug: when project was deleted there were still "leftovers" in memory 
+	  and UI 
+	
 
 February 25, 2013	Gerald 
 	

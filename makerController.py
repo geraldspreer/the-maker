@@ -324,7 +324,13 @@ returns the instance of the progressbar that was last added to the stack
         self.view.MenuItemDeleteImage.Enable(False)
         self.view.MenuItemSyncImages.Enable(False)
         
+        # Status Bar
         
+        self.view.statusBar1.SetStatusText(number = 1, text='Project: ')
+        self.view.statusBar1.SetStatusText(number = 2, text='Language: ')
+        self.view.statusBar1.SetStatusText(number = 3, text='File: ')
+        self.view.statusBar1.SetStatusText(number = 4, text="FTP Queue: ")
+                
         
     
     def createAbstractNameForViewObjects(self):
