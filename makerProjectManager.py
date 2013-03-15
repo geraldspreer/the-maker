@@ -660,6 +660,9 @@ class ProjectManager:
             shutil.rmtree(project.getProjectPath())
             self.openProjects.remove(project)
             
+            if self.openProjects == []:
+                self.controller.resetAllViews()
+            
  
     def closeOpenProjects(self, event=None):
         """ called when the App is closed """
@@ -705,35 +708,35 @@ class ProjectManager:
             return None
     
     
-    def switchProjectDueToNoteBookEvent(self, otherProject, event=None):
-        
-                
-        # if this method gets called from inside a current project
-        # an event gets passed on to the project we are switching to 
-        #
-        # please see makerProjectController.py / actionLoadFile for
-        # clarity
-        
-        print "switching from ", self.getActiveProject().getProject(), "to " , otherProject
-         
-        if self.getActiveProject() not in self.openProjects:
-            self.openProjects.append(self.getActiveProject())
-        
-        existingInstance = self.findOpenProjectInstByName(otherProject)
-        
-        if existingInstance:
-            #print "projectManager: loading existing instance", existingInstance.getProject()
-            self.setActiveProject(existingInstance)
-            # take control
-            #print "active project now: ", self.getActiveProject().getProject()
-            self.getActiveProject().projectController.bindActions()
-            
-            if event:
-                self.getActiveProject().projectController.actionLoadFile(event)
-                        
-        else:
-            # load new project
-            self.load(otherProject)
+#    def switchProjectDueToNoteBookEvent(self, otherProject, event=None):
+#        
+#                
+#        # if this method gets called from inside a current project
+#        # an event gets passed on to the project we are switching to 
+#        #
+#        # please see makerProjectController.py / actionLoadFile for
+#        # clarity
+#        
+#        print "switching from ", self.getActiveProject().getProject(), "to " , otherProject
+#         
+#        if self.getActiveProject() not in self.openProjects:
+#            self.openProjects.append(self.getActiveProject())
+#        
+#        existingInstance = self.findOpenProjectInstByName(otherProject)
+#        
+#        if existingInstance:
+#            #print "projectManager: loading existing instance", existingInstance.getProject()
+#            self.setActiveProject(existingInstance)
+#            # take control
+#            #print "active project now: ", self.getActiveProject().getProject()
+#            self.getActiveProject().projectController.bindActions()
+#            
+#            if event:
+#                self.getActiveProject().projectController.actionLoadFile(event)
+#                        
+#        else:
+#            # load new project
+#            self.load(otherProject)
         
     
     def switchProject(self, otherProject, event=None):

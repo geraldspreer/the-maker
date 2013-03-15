@@ -816,7 +816,7 @@ class MakerProjectController(makerController.SuperController):
                                            + str((self.model.getCurrentFile()).getLanguage())
                                            )
         except Exception, e:
-            print e
+            print "Exception was:", e
         
         self.view.statusBar1.SetStatusText(number=3,
                                            text='File: '
@@ -856,7 +856,7 @@ class MakerProjectController(makerController.SuperController):
                 self.view.SetTitle("The Maker - " + self.model.getProject() + 
                                    " - " + self.model.currentFile.getFileName())
                
-               
+                
                 self.view.MenuItemWrapWord.Enable(True)
                        
                 if self.model.currentFile.fileController.editor.GetWrapMode() == self.view.wx.stc.STC_WRAP_WORD:

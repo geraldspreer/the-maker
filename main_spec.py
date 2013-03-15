@@ -60,7 +60,7 @@ class TestProjectManager(makerProjectManager.ProjectManager):
 
 class TestView(spec_mockView.wxPythonGUI):
     
-    def askYesOrNo(self, question):
+    def Ask_YesOrNo(self, question):
         return self.choiceReturnString
     
     
@@ -201,18 +201,15 @@ class MakerTest(unittest.TestCase):
         
         print "PROJECT IS:", self.pm.getActiveProject().getProject()
         
+        self.app.mainView.choiceReturnString = "Yes"
+        
         self.pm.deleteProject()
         
         self.assertTrue(testProjectName not in self.pm.getProjects())
-        self.assertNotEqual(testProjectName, self.pm.getActiveProject().getProject())
+
+        self.app.mainView.choiceReturnString = None
         
-        self.app.mainView.inputReturnString = None
         
-        # create mock for dialog
-        # test for no being pressend
-        # test for yes 
-    
-    
     
     
         
