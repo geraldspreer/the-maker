@@ -402,7 +402,7 @@ class wxPythonGUI(wx.Frame):
         self.MenuItemNewContentFile = parent.Append(help='', 
                                                     id=-1,
                                                     kind=wx.ITEM_NORMAL, 
-                                                    text=u'.content')
+                                                    text=u'.content\tCtrl-N')
         
         self.MenuItemNewCssFile = parent.Append(help='', 
                                                 id=-1, 

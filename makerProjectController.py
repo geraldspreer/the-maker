@@ -560,7 +560,7 @@ class MakerProjectController(makerController.SuperController):
                 
                     fileType = self.treeView.GetItemText(itemParent)
                     self.model.loadFile(theFile, fileType)
-                    
+        
       
 
     def selectTreeItemAndLoad(self, item):

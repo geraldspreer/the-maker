@@ -662,7 +662,12 @@ class ProjectManager:
             
             if self.openProjects == []:
                 self.controller.resetAllViews()
-            
+    
+    
+    def exitApplication(self):
+        """ alias method """
+        self.closeOpenProjects(None)
+    
  
     def closeOpenProjects(self, event=None):
         """ called when the App is closed """

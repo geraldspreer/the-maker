@@ -1764,6 +1764,15 @@ class MakerProjectModel:
 
     def addLanguage(self, newLang=None, langName = None):
         
+        
+        # create header template
+        
+        contents = readFile(os.path.join(self.getProjectPath(),"templates", 
+                                     self.getProjectLanguages()[0] + ".head"))
+        writeFile(os.path.join(self.getProjectPath(),"templates", newLang + ".head"), contents)
+        
+        # ------
+        
         fileTypesNeeded = ['.nav','.body','.foot']
         existingLangs = self.getProjectLanguages()
         
@@ -1795,28 +1804,45 @@ class MakerProjectModel:
 
     
     def removeLanguage(self, toRemove=None, langName = None):
+        """ 
+            toRemove is language code like de, en 
+            langName is the written language name like 'German'
+        """
+        
+        resp = self.projectController.askYesOrNo("This will remove all files of the language '" + langName 
+                                           + "' and you will need to restart the application.\n Would you like to do that?" )
+        
+        if resp != "Yes":
+            return
+        
+        
+        # delete header template
+        
+        os.remove(os.path.join(self.getProjectPath(),"templates", toRemove + ".head"))
+    
+        # ------
         
         fileTypesNeeded = ['.nav','.body','.foot']
         
-        openFiles = self.projectManager.openFiles[:]
-        
         for type in fileTypesNeeded:
             
-            for theFile in openFiles:
-                  
-                if toRemove + type == theFile.getFileName():
-                    theFile.closeFile(callController = True)
-            
-            os.remove(os.path.join(self.getPathParts(), toRemove + type))
-            # delete tree item
-            item = self.projectController.findTreeItem(toRemove, type)
-            self.projectController.treeItems.remove(item) 
-            self.projectController.view.tree.Delete(item)
-            
-        m = "TYou have removed the Language: '%s' from your project." % langName
+           os.remove(os.path.join(self.getPathParts(), toRemove + type))
         
-        self.projectController.infoMessage(m)
 
+        types = [".content",".dynamic",".head"]
+        
+        for type in types:
+            
+            someFiles = self.getFilesByExtension(type)
+            theList = self.filterFilesByLanguage(someFiles, toRemove)
+            
+            for item in theList:
+                
+                os.remove(os.path.join(self.getPathParts(), item + type))
+
+        # exit
+        self.projectManager.exitApplication()
+    
 
 
     def addMakerFile(self, name=None, type=None, content=None, mode="lines"):    
@@ -2054,10 +2080,10 @@ class MakerProjectModel:
             lang = self.currentFile.getLanguage()
             
         result = []
-        for file in listOfFiles:
+        for aFile in listOfFiles:
             
-            if file.endswith(self.currentFile.getLanguage()): 
-                result.append(file)
+            if aFile.endswith(lang): 
+                result.append(aFile)
                 
         return result
     

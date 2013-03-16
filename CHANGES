@@ -28,6 +28,12 @@ TO DO / planned features											|
 -------------------------------------------------------------------------'
 
 
+March 15, 2013 		Gerald
+
+	- added shortcut for new .content file
+	- remove language now deletes all files of language
+
+
 March 14, 2013		Gerald
 
 	- fixed bug: when project was deleted there were still "leftovers" in memory 
