@@ -431,7 +431,9 @@ class ProjectManager:
                      
             self.controller.addProjectIconToTree(projName)
             self.controller.killProgressBar()
-    
+            
+            if not self.controller.testing:
+                self.activeProject.makeAll()
     
     
     

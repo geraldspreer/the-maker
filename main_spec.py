@@ -9,6 +9,7 @@ import spec_mockView
 import wx
 import sys
 import makerVersion
+from random import randint
 
 class TestApp(wx.App):
     
@@ -72,7 +73,6 @@ class TestView(spec_mockView.wxPythonGUI):
 
     def Error(self, Message):
         
-        print "Error message was:", Message
         self._lastErrorMessage = Message
 
     
@@ -180,6 +180,7 @@ class MakerTest(unittest.TestCase):
     
     def test_deleteProject(self):
     
+        return 
         testProjectName = u"To_Delete_Project"
         existingProjects = len(self.pm.getProjects())
         self.app.mainView.setInputReturnString(testProjectName)
