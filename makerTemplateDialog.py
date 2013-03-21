@@ -50,8 +50,10 @@ class xrcDIALOG1(wx.Dialog):
         self.Sizer.Layout()
         self.Refresh()
         
-        #self.WebView = wv
-
+        self.Bind(theView.EVT_WEB_VIEW_NAVIGATING, self.onWebViewNavigating, self.wv)
+        
+    def onWebViewNavigating(self, evt):
+        print evt.GetURL()
 
 
 # ------------------------ Resource data ----------------------

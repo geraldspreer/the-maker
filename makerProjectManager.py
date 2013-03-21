@@ -2,22 +2,17 @@ import os
 import sys
 import shutil
 
-
 from makerConstants import Constants
 from makerUtilities import readFile, writeFile
 from makerUtilities import writeDataToFile, readDataFromFile
 from makerUtilities import copyFileTree
 from makerUtilities import verifyLatinChars
 
-
 import makerController
 import makerProject
 import makerTemplateDialog
 import makerProjectConverter
 import makerManageLinkedProjects
-
-import wx.html2 as theWebView
-
 
 class ProjectManagerController(makerController.SuperController):
     def __init__(self, model , view):
@@ -193,11 +188,6 @@ class ProjectManagerController(makerController.SuperController):
         self.template = None
         selector = makerTemplateDialog.xrcDIALOG1(self.view)
         
-        
-        
-        def onWebViewNavigating(event):
-            print event.GetURL()
-        
         def cancel(event):
             self.template = None
             selector.Close()
@@ -229,9 +219,6 @@ class ProjectManagerController(makerController.SuperController):
         #selector.List.Bind(self.view.wx.EVT_LISTBOX, select)
         selector.Ok.Bind(self.view.wx.EVT_BUTTON, ok)
         selector.Cancel.Bind(self.view.wx.EVT_BUTTON, cancel)
-        
-        selector.Bind(theWebView.EVT_WEB_VIEW_NAVIGATING, onWebViewNavigating, selector.wv)
-        
         
         selector.Show()
         
