@@ -2,6 +2,7 @@ import os
 import sys
 import shutil
 
+
 from makerConstants import Constants
 from makerUtilities import readFile, writeFile
 from makerUtilities import writeDataToFile, readDataFromFile
@@ -14,6 +15,9 @@ import makerProject
 import makerTemplateDialog
 import makerProjectConverter
 import makerManageLinkedProjects
+
+import wx.html2 as theWebView
+
 
 class ProjectManagerController(makerController.SuperController):
     def __init__(self, model , view):
@@ -188,12 +192,11 @@ class ProjectManagerController(makerController.SuperController):
         """
         self.template = None
         selector = makerTemplateDialog.xrcDIALOG1(self.view)
-        selector.List.InsertItems(self.model.getTemplates(), 0)
-        fPath = os.path.join(os.path.dirname(sys.argv[0]), "./system/select.png")
         
-        print "fPath is: ", fPath   
-        bmfi = self.view.wx.Image(fPath).ConvertToBitmap()
-        selector.Preview.SetBitmap(bmfi)
+        
+        
+        def onWebViewNavigating(event):
+            print event.GetURL()
         
         def cancel(event):
             self.template = None
@@ -223,11 +226,14 @@ class ProjectManagerController(makerController.SuperController):
                 #bmfi  = self.view.wx.BitmapFromImage(image, self.view.wx.BITMAP_TYPE_ANY)
                 selector.Preview.SetBitmap(bmfi)
         
-        selector.List.Bind(self.view.wx.EVT_LISTBOX, select)
+        #selector.List.Bind(self.view.wx.EVT_LISTBOX, select)
         selector.Ok.Bind(self.view.wx.EVT_BUTTON, ok)
         selector.Cancel.Bind(self.view.wx.EVT_BUTTON, cancel)
         
-        selector.ShowModal()
+        selector.Bind(theWebView.EVT_WEB_VIEW_NAVIGATING, onWebViewNavigating, selector.wv)
+        
+        
+        selector.Show()
         
         return self.template
     

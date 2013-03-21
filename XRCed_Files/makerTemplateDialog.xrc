@@ -1,56 +1,76 @@
 <?xml version="1.0" encoding="mac-roman"?>
-<resource>
+<resource class="wxHtmlWindow">
   <object class="wxDialog" name="DIALOG1">
-    <title>select a template</title>
-    <centered>1</centered>
-    <pos>0,0</pos>
-    <size>640, 320</size>
     <object class="wxBoxSizer">
-      <orient>wxVERTICAL</orient>
-      <object class="sizeritem">
-        <object class="wxBoxSizer">
-          <orient>wxHORIZONTAL</orient>
-          <object class="sizeritem">
-            <object class="wxListBox" name="List">
-              <content/>
-            </object>
-            <option>1</option>
-            <flag>wxEXPAND|wxGROW</flag>
-          </object>
-          <object class="sizeritem">
-            <object class="wxStaticBitmap" name="Preview">
-              <bitmap stock_id="wx.NULLBITMAP"></bitmap>
-              <size>320, 240</size>
-              <style>wxSIMPLE_BORDER</style>
-            </object>
-            <option>0</option>
-            <flag>wxEXPAND</flag>
-            <minsize>322, 260</minsize>
-          </object>
-        </object>
-        <option>1</option>
-        <flag>wxEXPAND|wxGROW</flag>
-      </object>
       <object class="sizeritem">
         <object class="wxPanel">
-          <object class="wxButton" name="Ok">
-            <label>OK</label>
-            <default>1</default>
-            <pos>550, 10</pos>
-            <size>80, 30</size>
+          <object class="wxStaticText">
+            <pos>10, 10</pos>
+            <label>Project name:</label>
           </object>
-          <object class="wxButton" name="Cancel">
-            <label>Cancel</label>
-            <default>0</default>
-            <pos>460, 10</pos>
-            <size>80, 30</size>
+          <object class="wxTextCtrl" name="ProjectName">
+            <pos>10, 35</pos>
+            <size>680, 20</size>
+            <value>New Project Name</value>
+            <XRCED>
+              <assign_var>1</assign_var>
+            </XRCED>
           </object>
+          <size>700, 70</size>
         </object>
         <option>0</option>
-        <flag>wxEXPAND</flag>
-        <minsize>640, 40</minsize>
+        <flag>wxEXPAND|wxGROW</flag>
+        <border>1</border>
       </object>
+      <object class="sizeritem">
+        <object class="wxHtmlWindow" name="WebView">
+          <pos>10, 10</pos>
+          <size>320, 240</size>
+          <style>wxBORDER_RAISED</style>
+          <XRCED>
+            <assign_var>1</assign_var>
+          </XRCED>
+        </object>
+        <option>1</option>
+        <flag>wxEXPAND|wxGROW|wxADJUST_MINSIZE|wxFIXED_MINSIZE</flag>
+        <minsize>700, 500</minsize>
+      </object>
+      <object class="sizeritem">
+        <object class="wxPanel" name="BottomPanel">
+          <object class="wxButton" name="Help">
+            <pos>10, 10</pos>
+            <label>Help</label>
+            <XRCED>
+              <assign_var>1</assign_var>
+            </XRCED>
+          </object>
+          <size>700, 50</size>
+          <object class="wxButton" name="Ok">
+            <pos>600, 10</pos>
+            <label>Ok</label>
+            <default>1</default>
+            <XRCED>
+              <assign_var>1</assign_var>
+            </XRCED>
+          </object>
+          <object class="wxButton" name="Cancel">
+            <pos>500, 10</pos>
+            <label>Cancel</label>
+            <XRCED>
+              <assign_var>1</assign_var>
+            </XRCED>
+          </object>
+        </object>
+      </object>
+      <orient>wxVERTICAL</orient>
+      <XRCED>
+        <assign_var>1</assign_var>
+      </XRCED>
     </object>
-    <exstyle></exstyle>
+    <pos>10, 10</pos>
+    <size>700, 500</size>
+    <title>Create new project</title>
+    <centered>1</centered>
+    <focused>1</focused>
   </object>
 </resource>
