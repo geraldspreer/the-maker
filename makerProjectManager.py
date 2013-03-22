@@ -13,6 +13,7 @@ import makerProject
 import makerTemplateDialog
 import makerProjectConverter
 import makerManageLinkedProjects
+import makerTemplateSelect
 
 class ProjectManagerController(makerController.SuperController):
     def __init__(self, model , view):
@@ -186,6 +187,7 @@ class ProjectManagerController(makerController.SuperController):
         Returns the template name as a string or None (if nothing selected).
         """
         self.template = None
+        #tool = makerTemplateSelect.TemplateView(self.model.getTemplateDir(), self.model.getProjectDir())
         selector = makerTemplateDialog.xrcDIALOG1(self.view)
         
         def cancel(event):
@@ -220,6 +222,7 @@ class ProjectManagerController(makerController.SuperController):
         selector.Ok.Bind(self.view.wx.EVT_BUTTON, ok)
         selector.Cancel.Bind(self.view.wx.EVT_BUTTON, cancel)
         
+        selector.loadTemplates()
         selector.Show()
         
         return self.template
@@ -317,6 +320,12 @@ class ProjectManager:
                 templateList.append(item)
         
         return templateList
+    
+    
+    def getTemplateDir(self):
+        """ returns the directory containing the templates """
+        return os.path.join(self.getSystemPath(), 'templates')
+        
     
     def importProject(self, event=None):        
         """

@@ -43,17 +43,23 @@ class xrcDIALOG1(wx.Dialog):
         self.Ok = xrc.XRCCTRL(self, "Ok")
         self.Cancel = xrc.XRCCTRL(self, "Cancel")
 
-        self.wv = theView.WebView.New(self, url="http://www.makercms.org")
-        
+        self.wv = theView.WebView.New(self)
+          
+        self.selectedURL = None
         
         self.Sizer.Replace(self.WebView, self.wv)
         self.Sizer.Layout()
         self.Refresh()
         
         self.Bind(theView.EVT_WEB_VIEW_NAVIGATING, self.onWebViewNavigating, self.wv)
+    
+    
+    def loadTemplates(self):
+        
+        self.wv.LoadURL("file:///Users/maker/Desktop/test.html")
         
     def onWebViewNavigating(self, evt):
-        print evt.GetURL()
+        self.selectedURL = evt.GetURL()
 
 
 # ------------------------ Resource data ----------------------
