@@ -179,6 +179,13 @@ class ProjectManagerController(makerController.SuperController):
                 
         #self.view.wx.Yield()
         #event.Skip()
+        
+        
+    def buildTemplateView(self):
+        
+        pass
+        
+        
     
     def showTemplateDialog(self):
         """
@@ -394,7 +401,7 @@ class ProjectManager:
     
     def addNewProject(self, event=None):
         
-        projName = self.controller.input("Enter a project name...")
+        projName = self.controller.input("Enter a project name...", title="Create new project...")
 
         if not projName: 
             return 

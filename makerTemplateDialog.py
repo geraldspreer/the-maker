@@ -3,6 +3,7 @@
 
 import wx
 import wx.xrc as xrc
+import cStringIO
 
 import wx.html2 as theView
 
@@ -42,9 +43,9 @@ class xrcDIALOG1(wx.Dialog):
         self.Help = xrc.XRCCTRL(self, "Help")
         self.Ok = xrc.XRCCTRL(self, "Ok")
         self.Cancel = xrc.XRCCTRL(self, "Cancel")
-
+        
         self.wv = theView.WebView.New(self)
-          
+        
         self.selectedURL = None
         
         self.Sizer.Replace(self.WebView, self.wv)
@@ -53,14 +54,14 @@ class xrcDIALOG1(wx.Dialog):
         
         self.Bind(theView.EVT_WEB_VIEW_NAVIGATING, self.onWebViewNavigating, self.wv)
     
-    
     def loadTemplates(self):
         
         self.wv.LoadURL("file:///Users/maker/Desktop/test.html")
-        
+            
     def onWebViewNavigating(self, evt):
+        print "Navigating"
         self.selectedURL = evt.GetURL()
-
+        print self.selectedURL
 
 # ------------------------ Resource data ----------------------
 

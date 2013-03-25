@@ -167,8 +167,8 @@ returns the instance of the progressbar that was last added to the stack
     def askYesOrNo(self, question):
         return self.view.Ask_YesOrNo(question)
     
-    def input(self, question="?"):
-        return self.view.Input(question)
+    def input(self, question="?", title="Question:"):
+        return self.view.Input(question, title)
     
    
     def inputWithValue(self, question, value):

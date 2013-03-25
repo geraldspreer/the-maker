@@ -2797,7 +2797,7 @@ class wxPythonGUI(wx.Frame):
         return value
     
 
-    def Input(self, Question="?"):
+    def Input(self, Question="?", title=None):
         """
         user input Dialog 
         returns a string or Null
@@ -2805,7 +2805,7 @@ class wxPythonGUI(wx.Frame):
         value = None
         dlg = wx.TextEntryDialog(
                 self, Question,
-                'Question', '')
+                title, '')
 
         if dlg.ShowModal() == wx.ID_OK:
             value = dlg.GetValue()
