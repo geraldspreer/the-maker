@@ -15,6 +15,8 @@ import makerProjectConverter
 import makerManageLinkedProjects
 import makerTemplateSelect
 
+import wx.html2 as theView
+
 class ProjectManagerController(makerController.SuperController):
     def __init__(self, model , view):
         #print "initializing:", self
@@ -197,6 +199,27 @@ class ProjectManagerController(makerController.SuperController):
         #tool = makerTemplateSelect.TemplateView(self.model.getTemplateDir(), self.model.getProjectDir())
         selector = makerTemplateDialog.xrcDIALOG1(self.view)
         
+        # customize 
+        
+        selector.wv = theView.WebView.New(selector)
+        selector.selectedURL = None
+        
+        selector.Sizer.Replace(selector.WebView, selector.wv)
+        selector.Sizer.Layout()
+        selector.Refresh()
+        
+        
+        def loadTemplates():
+        
+            selector.wv.LoadURL("file:///Users/maker/Desktop/test.html")
+            
+        def onWebViewNavigating(evt):
+            print "Navigating"
+            selector.selectedURL = evt.GetURL()
+            print selector.selectedURL
+
+
+         
         def cancel(event):
             self.template = None
             selector.Close()
@@ -206,33 +229,13 @@ class ProjectManagerController(makerController.SuperController):
             selector.Close()
             event.Skip()
         
-        def select(event):
-            """Get the selected string from the listbox."""            
-            try:
-                print "dirname ", os.path.dirname(sys.argv[0])
-                self.template = event.GetString()
-                fPath = os.path.join(os.path.dirname(sys.argv[0]),
-                                     "./system/templates", self.template,
-                                     "parts/preview.jpg")
-                bmfi = self.view.wx.Image(fPath).ConvertToBitmap()
-                #bmfi = self.view.wx.BitmapFromImage(image, self.view.wx.BITMAP_TYPE_ANY)
-                selector.Preview.SetBitmap(bmfi)
-            except:
-                print "ERROR in select"
-                fPath = os.path.join(os.path.dirname(sys.argv[0]), 
-                                     "./system/select.png") 
-                bmfi = self.view.wx.Image(fPath).ConvertToBitmap()
-                #bmfi  = self.view.wx.BitmapFromImage(image, self.view.wx.BITMAP_TYPE_ANY)
-                selector.Preview.SetBitmap(bmfi)
+        selector.Bind(theView.EVT_WEB_VIEW_NAVIGATING, onWebViewNavigating, selector.wv)
         
-        #selector.List.Bind(self.view.wx.EVT_LISTBOX, select)
-        selector.Ok.Bind(self.view.wx.EVT_BUTTON, ok)
-        selector.Cancel.Bind(self.view.wx.EVT_BUTTON, cancel)
         
-        selector.loadTemplates()
-        selector.Show()
+        loadTemplates()
+        selector.ShowWindowModal()
         
-        return self.template
+        
     
     def addProjectIconToTree(self, projectName):
         
@@ -412,10 +415,6 @@ class ProjectManager:
                 self.addNewProject(None)
             else:
                 return
-
-
-        print "creating folders and files for ", projName
-        
         
         tgt = os.path.join(self.getProjectDir(), projName)
                 
@@ -428,6 +427,7 @@ class ProjectManager:
             
             template = self.controller.showTemplateDialog()        
             if not template: 
+                print "no template"
                 return
             
             src = os.path.join(self.getSystemPath(), 'templates', template)

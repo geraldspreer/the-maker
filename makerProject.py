@@ -1789,7 +1789,7 @@ class MakerProjectModel:
             newItem = self.projectController.treeViewAppendItem(group, newLang, type=None)
             self.projectController.selectTreeItemAndLoad(newItem)
             
-        m = "TYou have added the Language: '%s' to your project." % langName
+        m = "You have added the Language: '%s' to your project." % langName
         m += "\nThe following files have been created:\n"
         
         for type in fileTypesNeeded:

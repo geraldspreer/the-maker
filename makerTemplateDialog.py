@@ -3,9 +3,6 @@
 
 import wx
 import wx.xrc as xrc
-import cStringIO
-
-import wx.html2 as theView
 
 __res = None
 
@@ -38,30 +35,21 @@ class xrcDIALOG1(wx.Dialog):
         get_resources().LoadOnDialog(pre, parent, "DIALOG1")
         self.PostCreate(pre)
 
-        self.ProjectName = xrc.XRCCTRL(self, "ProjectName")
+        # Define variables for the controls, bind event handlers
         self.WebView = xrc.XRCCTRL(self, "WebView")
-        self.Help = xrc.XRCCTRL(self, "Help")
-        self.Ok = xrc.XRCCTRL(self, "Ok")
         self.Cancel = xrc.XRCCTRL(self, "Cancel")
+
+        self.Bind(wx.EVT_BUTTON, self.OnButton_Cancel, self.Cancel)
+
+#!XRCED:begin-block:xrcDIALOG1.OnButton_Cancel
+    def OnButton_Cancel(self, evt):
+        # Replace with event handler code
+        self.Destroy()
         
-        self.wv = theView.WebView.New(self)
-        
-        self.selectedURL = None
-        
-        self.Sizer.Replace(self.WebView, self.wv)
-        self.Sizer.Layout()
-        self.Refresh()
-        
-        self.Bind(theView.EVT_WEB_VIEW_NAVIGATING, self.onWebViewNavigating, self.wv)
-    
-    def loadTemplates(self):
-        
-        self.wv.LoadURL("file:///Users/maker/Desktop/test.html")
-            
-    def onWebViewNavigating(self, evt):
-        print "Navigating"
-        self.selectedURL = evt.GetURL()
-        print self.selectedURL
+#!XRCED:end-block:xrcDIALOG1.OnButton_Cancel        
+
+
+
 
 # ------------------------ Resource data ----------------------
 
@@ -72,24 +60,22 @@ def __init_resources():
     wx.FileSystem.AddHandler(wx.MemoryFSHandler())
 
     makerTemplateDialog_xrc = '''\
-<?xml version="1.0" ?><resource class="wxHtmlWindow">
+<?xml version="1.0" ?><resource class="wxStaticText">
   <object class="wxDialog" name="DIALOG1">
     <object class="wxBoxSizer">
       <object class="sizeritem">
         <object class="wxPanel">
           <object class="wxStaticText">
-            <pos>10, 10</pos>
-            <label>Project name:</label>
-          </object>
-          <object class="wxTextCtrl" name="ProjectName">
-            <pos>10, 35</pos>
-            <size>680, 20</size>
-            <value>New Project Name</value>
+            <pos>20, 20</pos>
+            <size>700, 40</size>
+            <label>Choose a template:</label>
+            <style>wxALIGN_CENTRE</style>
             <XRCED>
               <assign_var>1</assign_var>
             </XRCED>
           </object>
-          <size>700, 70</size>
+          <size>860, 60</size>
+          <style>wxBORDER_RAISED</style>
         </object>
         <option>0</option>
         <flag>wxEXPAND|wxGROW</flag>
@@ -99,41 +85,30 @@ def __init_resources():
         <object class="wxHtmlWindow" name="WebView">
           <pos>10, 10</pos>
           <size>320, 240</size>
-          <style>wxBORDER_RAISED</style>
+          <style>wxBORDER_SUNKEN</style>
           <XRCED>
             <assign_var>1</assign_var>
           </XRCED>
         </object>
         <option>1</option>
         <flag>wxEXPAND|wxGROW|wxADJUST_MINSIZE|wxFIXED_MINSIZE</flag>
-        <minsize>700, 500</minsize>
+        <minsize>700, 600</minsize>
       </object>
       <object class="sizeritem">
         <object class="wxPanel" name="BottomPanel">
-          <object class="wxButton" name="Help">
-            <pos>10, 10</pos>
-            <label>Help</label>
-            <XRCED>
-              <assign_var>1</assign_var>
-            </XRCED>
-          </object>
-          <size>700, 50</size>
-          <object class="wxButton" name="Ok">
-            <pos>600, 10</pos>
-            <label>Ok</label>
-            <default>1</default>
-            <XRCED>
-              <assign_var>1</assign_var>
-            </XRCED>
-          </object>
           <object class="wxButton" name="Cancel">
-            <pos>500, 10</pos>
+            <pos>740, 10</pos>
             <label>Cancel</label>
+            <style>wxBU_RIGHT</style>
             <XRCED>
+              <events>EVT_BUTTON</events>
               <assign_var>1</assign_var>
             </XRCED>
           </object>
+          <size>860, 50</size>
+          <style>wxBORDER_SUNKEN</style>
         </object>
+        <flag>wxADJUST_MINSIZE</flag>
       </object>
       <orient>wxVERTICAL</orient>
       <XRCED>
@@ -141,7 +116,7 @@ def __init_resources():
       </XRCED>
     </object>
     <pos>10, 10</pos>
-    <size>700, 500</size>
+    <size>860, 800</size>
     <title>Create new project</title>
     <centered>1</centered>
     <focused>1</focused>
@@ -163,10 +138,7 @@ def __gettext_strings():
     
     def _(str): pass
     
-    _("Project name:")
-    _("New Project Name")
-    _("Help")
-    _("Ok")
+    _("Choose a template:")
     _("Cancel")
     _("Create new project")
 

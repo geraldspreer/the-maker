@@ -272,10 +272,10 @@ class wxPythonGUI(wx.Frame):
     def _init_coll_view_Items(self, parent):
         
         
-        self.MenuItemWrapWord = parent.Append(help='wrap words in editor',
+        self.MenuItemWrapWord = parent.Append(help='Wrap Words In Editor',
                                               id=-1, 
                                               kind=wx.ITEM_CHECK, 
-                                              text=u'wrap words in editor\tCtrl+Shift+w')
+                                              text=u'Wrap Words In Editor\tCtrl+Shift+w')
 
 
 

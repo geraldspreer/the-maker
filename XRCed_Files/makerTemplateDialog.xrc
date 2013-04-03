@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="mac-roman"?>
-<resource class="wxHtmlWindow">
+<resource class="wxStaticText">
   <object class="wxDialog" name="DIALOG1">
     <object class="wxBoxSizer">
       <object class="sizeritem">
         <object class="wxPanel">
           <object class="wxStaticText">
-            <pos>10, 10</pos>
-            <label>Project name:</label>
-          </object>
-          <object class="wxTextCtrl" name="ProjectName">
-            <pos>10, 35</pos>
-            <size>680, 20</size>
-            <value>New Project Name</value>
+            <pos>20, 20</pos>
+            <size>700, 40</size>
+            <label>Choose a template:</label>
+            <style>wxALIGN_CENTRE</style>
             <XRCED>
               <assign_var>1</assign_var>
             </XRCED>
           </object>
-          <size>700, 70</size>
+          <size>860, 60</size>
+          <style>wxBORDER_RAISED</style>
         </object>
         <option>0</option>
         <flag>wxEXPAND|wxGROW</flag>
@@ -26,7 +24,7 @@
         <object class="wxHtmlWindow" name="WebView">
           <pos>10, 10</pos>
           <size>320, 240</size>
-          <style>wxBORDER_RAISED</style>
+          <style>wxBORDER_SUNKEN</style>
           <XRCED>
             <assign_var>1</assign_var>
           </XRCED>
@@ -37,30 +35,19 @@
       </object>
       <object class="sizeritem">
         <object class="wxPanel" name="BottomPanel">
-          <object class="wxButton" name="Help">
-            <pos>10, 10</pos>
-            <label>Help</label>
-            <XRCED>
-              <assign_var>1</assign_var>
-            </XRCED>
-          </object>
-          <size>700, 50</size>
-          <object class="wxButton" name="Ok">
-            <pos>600, 10</pos>
-            <label>Ok</label>
-            <default>1</default>
-            <XRCED>
-              <assign_var>1</assign_var>
-            </XRCED>
-          </object>
           <object class="wxButton" name="Cancel">
-            <pos>500, 10</pos>
+            <pos>740, 10</pos>
             <label>Cancel</label>
+            <style>wxBU_RIGHT</style>
             <XRCED>
+              <events>EVT_BUTTON</events>
               <assign_var>1</assign_var>
             </XRCED>
           </object>
+          <size>860, 50</size>
+          <style>wxBORDER_SUNKEN</style>
         </object>
+        <flag>wxADJUST_MINSIZE</flag>
       </object>
       <orient>wxVERTICAL</orient>
       <XRCED>
@@ -68,7 +55,7 @@
       </XRCED>
     </object>
     <pos>10, 10</pos>
-    <size>700, 500</size>
+    <size>860, 600</size>
     <title>Create new project</title>
     <centered>1</centered>
     <focused>1</focused>
