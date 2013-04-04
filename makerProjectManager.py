@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import re
 
 from makerConstants import Constants
 from makerUtilities import readFile, writeFile
@@ -50,7 +51,7 @@ class ProjectManagerController(makerController.SuperController):
                        self.view.MenuItemQuit)
         
         self.view.Bind(self.view.wx.EVT_MENU, 
-                       self.model.addNewProject,  
+                       self.actionAddNewProject,  
                        self.view.MenuItemAddProject)
         
         self.view.Bind(self.view.wx.EVT_MENU, 
@@ -188,15 +189,42 @@ class ProjectManagerController(makerController.SuperController):
         pass
         
         
+    def actionAddNewProject(self, event):
+        
+        projName = self.input("Enter a project name...", title="Create new project...")
+
+        if not projName: 
+            return 
+
+        if not verifyLatinChars(projName):
+            self.errorMessage("Please use only Latin characters for project names...")
+            if not self.testing:
+                self.actionAddNewProject(None)
+            else:
+                return
+        
+        tgt = os.path.join(self.model.getProjectDir(), projName)
+                
+        if os.path.isdir(tgt):
+            m  = "A project with the name '" + projName + "' already exists !"
+            self.errorMessage(m)
+            return
+        
+        else:    
+            if not self.testing:
+                self.showTemplateDialog(tgt, projName)        
+            
+        
     
-    def showTemplateDialog(self):
+    def showTemplateDialog(self, newProjectDir, newProjectName):
         """
-        Displays the template selection dialog for a new project and
-        performs all the bindings for the dialog events.    
-        Returns the template name as a string or None (if nothing selected).
+        
+        Displays the template selection dialog for a new project and calls
+        model.addProject on selection
+    
         """
         self.template = None
-        #tool = makerTemplateSelect.TemplateView(self.model.getTemplateDir(), self.model.getProjectDir())
+        
         selector = makerTemplateDialog.xrcDIALOG1(self.view)
         
         # customize 
@@ -212,26 +240,45 @@ class ProjectManagerController(makerController.SuperController):
         def loadTemplates():
         
             selector.wv.LoadURL("file:///Users/maker/Desktop/test.html")
-            
+            selector.Bind(theView.EVT_WEB_VIEW_NAVIGATING, onWebViewNavigating, selector.wv)
+        
+        
         def onWebViewNavigating(evt):
-            print "Navigating"
-            selector.selectedURL = evt.GetURL()
-            print selector.selectedURL
+            
+            url = evt.GetURL()
+            print "url is:", url 
+            self.template = re.compile('--(.+)--', re.IGNORECASE).findall(url)
+            
+            if self.template == []:
+                return
+            
+            template = self.template[0]
+            src = os.path.join(self.model.getSystemPath(), 'templates', template)
+            
+            if not os.path.isdir(src):
+                self.errorMessage("Template Error: Template does not exist...\n" + template)
+                return
+            
+            selector.Destroy()
+            
+            self.showProgress(limit = 1, Message="Creating project...", title="Creating project...")
+            
+            self.model.addNewProject(src, newProjectDir, newProjectName)
+                     
+            self.addProjectIconToTree(newProjectName)
+            self.killProgressBar()
+            
+            if not self.testing:
+                self.model.activeProject.makeAll()
 
 
          
         def cancel(event):
-            self.template = None
-            selector.Close()
+            
+            selector.Destroy()
             event.Skip()
         
-        def ok(event):
-            selector.Close()
-            event.Skip()
-        
-        selector.Bind(theView.EVT_WEB_VIEW_NAVIGATING, onWebViewNavigating, selector.wv)
-        
-        
+          
         loadTemplates()
         selector.ShowWindowModal()
         
@@ -402,47 +449,10 @@ class ProjectManager:
     
     
     
-    def addNewProject(self, event=None):
+    def addNewProject(self, templatePath, newProjectDir, newProjectName):
         
-        projName = self.controller.input("Enter a project name...", title="Create new project...")
-
-        if not projName: 
-            return 
-
-        if not verifyLatinChars(projName):
-            self.controller.errorMessage("Please use only Latin characters for project names...")
-            if not self.controller.testing:
-                self.addNewProject(None)
-            else:
-                return
-        
-        tgt = os.path.join(self.getProjectDir(), projName)
-                
-        if os.path.isdir(tgt):
-            m  = "A project with the name '" + projName + "' already exists !"
-            self.controller.errorMessage(m)
-            return
-        
-        else:    
-            
-            template = self.controller.showTemplateDialog()        
-            if not template: 
-                print "no template"
-                return
-            
-            src = os.path.join(self.getSystemPath(), 'templates', template)
-            
-            print "Source is:", src
-            
-            self.controller.showProgress(limit = 1, Message="Creating project...", title="Creating project...")
-            copyFileTree(src, tgt, self.controller.updateProgressPulse, 
-                         ("creating: " + projName))
-                     
-            self.controller.addProjectIconToTree(projName)
-            self.controller.killProgressBar()
-            
-            if not self.controller.testing:
-                self.activeProject.makeAll()
+        """ The actual project creation """
+        copyFileTree(templatePath, newProjectDir, self.controller.updateProgressPulse, ("creating: " + newProjectName))
     
     
     

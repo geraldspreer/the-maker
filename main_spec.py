@@ -25,10 +25,6 @@ class TestApp(wx.App):
 
 class ProjectManagerTestController(makerProjectManager.ProjectManagerController):
 
-   def showTemplateDialog(self):
-       """ return the Simple template for testing"""
-       print "Returning Template 'Simple'"
-       return "Simple"
 
    def showProgress(self, limit, Message, title):
        print Message
@@ -65,7 +61,7 @@ class TestView(spec_mockView.wxPythonGUI):
         return self.choiceReturnString
     
     
-    def Input(self, Question="?"):
+    def Input(self, Question="?", title = None):
     
         print "Input string was:", self.inputReturnString
         return self.inputReturnString
@@ -137,7 +133,7 @@ class MakerTest(unittest.TestCase):
         existingProjects = len(self.pm.getProjects())
         self.app.mainView.setInputReturnString(u"лывора")
         
-        self.pm.addNewProject()
+        self.pm.controller.actionAddNewProject(event = None)
         
         self.assertEqual(len(self.pm.getProjects()), existingProjects) 
         self.assertEqual(self.app.mainView._lastErrorMessage, "Please use only Latin characters for project names...") 
@@ -147,68 +143,55 @@ class MakerTest(unittest.TestCase):
     
         
 
-    def test_validCharsShouldCreateProject_IfNotExising(self):
-    
-        testProjectName = u"Test_Project"
-        existingProjects = len(self.pm.getProjects())
-        self.app.mainView.setInputReturnString(testProjectName)
-        testPath = os.path.join(self.projectPath, testProjectName)
+    def test_validCharsShouldNotGiveError(self):
 
-        if os.path.isdir(testPath):
-            shutil.rmtree(testPath)
-        
-        self.pm.addNewProject()
-        
-        self.assertEqual(len(self.pm.getProjects()), existingProjects + 1) 
-        
-        self.assertTrue(os.path.isdir(os.path.join(testPath, "parts")))
-        self.assertTrue(os.path.isdir(os.path.join(testPath, "templates")))
-        self.assertTrue(os.path.isdir(os.path.join(testPath, "setup")))
-        
-        # Test for not creating project if it exists
-        self.pm.addNewProject()
-        self.assertEqual(self.app.mainView._lastErrorMessage, "A project with the name '" + testProjectName + "' already exists !")
-
-        
         self.app.mainView.inputReturnString = None
-        print "Removing test project..."
+        self.app.mainView._lastErrorMessage = None
+            
+        testProjectName = u"Test_Project"
         
-        shutil.rmtree(testPath)
-    
-    
-    
-    
-    def test_deleteProject(self):
-    
-        return 
-        testProjectName = u"To_Delete_Project"
-        existingProjects = len(self.pm.getProjects())
         self.app.mainView.setInputReturnString(testProjectName)
-        testPath = os.path.join(self.projectPath, testProjectName)
         
-        if os.path.isdir(testPath):
-            shutil.rmtree(testPath)
+        self.pm.controller.actionAddNewProject(event = None)
         
-        self.pm.addNewProject()
+        self.assertEqual(self.app.mainView._lastErrorMessage, None)
         
-        #self.assertEqual(len(self.pm.getProjects()), existingProjects + 1) 
-        
-        self.assertTrue(os.path.isdir(os.path.join(testPath, "parts")))
-        self.assertTrue(os.path.isdir(os.path.join(testPath, "templates")))
-        self.assertTrue(os.path.isdir(os.path.join(testPath, "setup")))
-        
-        
-        self.pm.load(testProjectName)
-        
-        print "PROJECT IS:", self.pm.getActiveProject().getProject()
-        
-        self.app.mainView.choiceReturnString = "Yes"
-        
-        self.pm.deleteProject()
-        
-        self.assertTrue(testProjectName not in self.pm.getProjects())
 
-        self.app.mainView.choiceReturnString = None
+    
+    
+    
+    
+#    def test_deleteProject(self):
+#    
+#        return 
+#        testProjectName = u"To_Delete_Project"
+#        existingProjects = len(self.pm.getProjects())
+#        self.app.mainView.setInputReturnString(testProjectName)
+#        testPath = os.path.join(self.projectPath, testProjectName)
+#        
+#        if os.path.isdir(testPath):
+#            shutil.rmtree(testPath)
+#        
+#        self.pm.addNewProject()
+#        
+#        #self.assertEqual(len(self.pm.getProjects()), existingProjects + 1) 
+#        
+#        self.assertTrue(os.path.isdir(os.path.join(testPath, "parts")))
+#        self.assertTrue(os.path.isdir(os.path.join(testPath, "templates")))
+#        self.assertTrue(os.path.isdir(os.path.join(testPath, "setup")))
+#        
+#        
+#        self.pm.load(testProjectName)
+#        
+#        print "PROJECT IS:", self.pm.getActiveProject().getProject()
+#        
+#        self.app.mainView.choiceReturnString = "Yes"
+#        
+#        self.pm.deleteProject()
+#        
+#        self.assertTrue(testProjectName not in self.pm.getProjects())
+#
+#        self.app.mainView.choiceReturnString = None
         
         
     

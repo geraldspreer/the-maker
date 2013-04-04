@@ -2781,7 +2781,7 @@ class wxPythonGUI(wx.Frame):
     
     
 
-    def Input(self, Question="?"):
+    def Input(self, Question="?", title = None):
         """
         user input Dialog 
         returns a string or Null

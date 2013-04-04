@@ -6,10 +6,7 @@ TO DO / planned features											|
 																	|
 --------------------------------------------------------------------
 	
-	- also delete all content files for language
-	
 	- general editing
-	 
 	- user prefs
 	- switch to head button
 	- spell checker
@@ -26,6 +23,14 @@ TO DO / planned features											|
 -------------------------------------------------------------------------.		
 																	     |
 -------------------------------------------------------------------------'
+
+x.x.2013	- Gerald
+
+	- new template dialog for new projects
+	- refactoring project creation code
+	- deleted outdated templates
+	- updated specs
+
 
 
 March 15, 2013 		Gerald
