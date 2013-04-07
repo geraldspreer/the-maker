@@ -2617,9 +2617,8 @@ class wxPythonGUI(wx.Frame):
         self.publishButton.SetFont(theFont)
         self.saveButton.SetFont(theFont)
         self.tree.SetFont(theFont)
-        
-    
-       
+        self.tree.SetBackgroundColour('#e2e6ec')
+        self.tree.SetIndent(16)
     
     
     def CallController(self, event):
@@ -3402,8 +3401,7 @@ class MySplitter(wx.SplitterWindow):
     def __init__(self, parent, ID, log):
         wx.SplitterWindow.__init__(self, parent, ID,
                                    style = wx.SP_3D
-                                   | wx.SP_LIVE_UPDATE
-                                   )
+                                   | wx.SP_LIVE_UPDATE)
         
         
 class MyArtProvider(wx.ArtProvider):

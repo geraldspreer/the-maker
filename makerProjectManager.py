@@ -15,6 +15,8 @@ import makerTemplateDialog
 import makerProjectConverter
 import makerManageLinkedProjects
 import makerTemplateSelect
+import makerTemplateViewBuilder
+
 
 import wx.html2 as theView
 
@@ -288,6 +290,7 @@ class ProjectManagerController(makerController.SuperController):
         
         item = self.treeViewAppendItem(self.treeRoot, projectName, type="Project")
         self.rootAndProjectTreeItems.append(item)
+        
         # only not if not running test suite
         if not self.testing:
             self.treeView.SelectItem(item, True)
@@ -298,10 +301,16 @@ class ProjectManagerController(makerController.SuperController):
         self.treeView = self.view.tree
         
         
-    def treeViewAddRoot(self, rootName="makerProjects"):
+    def treeViewAddRoot(self, rootName="MAKER PROJECTS:"):
         self.treeRoot = self.treeView.AddRoot(rootName)
         
         self.rootAndProjectTreeItems.append(self.treeRoot)
+        
+        # style
+        
+        item = self.treeView.GetRootItem()
+        self.treeView.SetItemBold(item, True)
+        self.treeView.SetItemTextColour(item, "#555d6b")
             
 #        self.treeView.SetItemImage(self.treeRoot, self.view.fldridx, 
 #                                        self.view.wx.TreeItemIcon_Normal)

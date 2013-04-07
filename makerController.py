@@ -449,6 +449,10 @@ returns the instance of the progressbar that was last added to the stack
             self.view.tree.SetItemImage(newItem, 
                                            self.view.projidx, 
                                            self.view.wx.TreeItemIcon_Expanded)
+            
+            # make projects more distinct
+            self.view.tree.SetItemBold(newItem, True)
+            self.view.tree.SetItemTextColour(newItem, "#333333")
         
         
         else:

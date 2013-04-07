@@ -1,12 +1,14 @@
+from datetime import date
+
 def getCopyright():
     
     copyright  = """-------------------------------------------------------------------------------
 the maker - Content Management System
 -------------------------------------------------------------------------------
-Copyright (c) 2006 - 2012, the makerProject
+Copyright (c) 2006 - """ + str(date.today().year) + """, the makerProject
 
-developers:
-Gerald Spreer, Brinick Simmons, Ian Barrow
+Developers:
+Gerald Spreer, Ian Barrow and Brinick Simmons
 
 -------------------------------------------------------------------------------
 The maker is a CMS for websites. You use it on your Mac and after you 

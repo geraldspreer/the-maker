@@ -19,6 +19,7 @@ elif wx.Platform == '__WXMAC__':
               'other': 'Comic Sans MS',
               'size' : 13,
               'size2': 12,
+              'size3': 10,
              }
 else:
     faces = { 'times': 'Times',
@@ -179,7 +180,7 @@ class editorView:
             
             # Global default styles for all languages
             self.editor.StyleSetSpec(wx.stc.STC_STYLE_DEFAULT,     "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-            self.editor.StyleSetSpec(wx.stc.STC_STYLE_LINENUMBER,  "fore:#555555, back:#c0c0c0,face:%(other)s,size:%(size2)d" % faces)
+            self.editor.StyleSetSpec(wx.stc.STC_STYLE_LINENUMBER,  "fore:#777777,back:#eeeeee,face:%(mono)s,size:%(size3)d"  % faces)
             self.editor.StyleSetSpec(wx.stc.STC_STYLE_CONTROLCHAR, "fore:#ff0000, face:%(other)s" % faces)
             self.editor.StyleSetSpec(wx.stc.STC_STYLE_BRACELIGHT,  "fore:#FFFFFF,back:#0000FF,bold")
             self.editor.StyleSetSpec(wx.stc.STC_STYLE_BRACEBAD,    "fore:#000000,back:#FF0000,bold")
@@ -200,11 +201,11 @@ class editorView:
             self.editor.SetCaretLineBack(wx.Colour(240, 246, 254))
           
             self.editor.SetCaretForeground("BLUE")
-            
+            self.editor.SetSelBackground(True, "#b5d4ff")
             self.editor.SetMarginType(0, wx.stc.STC_MARGIN_NUMBER)
             # Text Margins    
             self.editor.SetMargins(10, 10)
-            self.editor.SetMarginWidth(0, 30)
+            self.editor.SetMarginWidth(0, 25)
             self.editor.SetMarginWidth(1, 5)
             
             self.editor.UsePopUp(0)   

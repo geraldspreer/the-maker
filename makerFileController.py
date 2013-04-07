@@ -1207,7 +1207,7 @@ class MakerFileController(makerController.SuperController):
                                      str(c) + 
                                      " ! Cannot encode using:" + self.model.core.encoding + 
                                      "\nPlease review and edit...")
-                    self.editor.SetSelBackground(True, self.view.wx.LIGHT_GREY)
+                    self.editor.SetSelBackground(True, "#b5d4ff")
                     return
             
             

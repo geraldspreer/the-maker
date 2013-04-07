@@ -504,7 +504,7 @@ class MakerProjectController(makerController.SuperController):
     def actionLoadFile(self, event):
                 
         item = event.GetItem()
-                
+        
         if item:
             itemParent = self.treeView.GetItemParent(item)
                       
