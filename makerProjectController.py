@@ -148,6 +148,11 @@ class MakerProjectController(makerController.SuperController):
         self.treeView.Bind(self.view.wx.EVT_TREE_SEL_CHANGED, 
                            self.actionLoadFile)
         
+    
+        self.treeView.Bind(self.view.wx.EVT_RIGHT_DOWN, 
+                           self.actionShowTreePopUp)
+        
+    
         
         # font zoom
         
@@ -385,6 +390,16 @@ class MakerProjectController(makerController.SuperController):
             item = self.treeViewAppendItem(g, "rss", type="item")
             self.treeView.SelectItem(item, True)     
         
+  
+  
+  
+  
+    def actionShowTreePopUp(self, event):
+        """ show tree popup tool """
+        self.treeView.PopupMenu(self.view.treePopUp, event.GetPosition())
+   
+  
+    
   
     def actionProjectSetup(self, event):
         

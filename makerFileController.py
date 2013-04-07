@@ -1363,7 +1363,7 @@ class MakerFileController(makerController.SuperController):
     def editorRightClick(self, event):
         """ shows popup menu """
         
-        self.view.PopupMenu(self.view.editorPopUp, event.GetPosition())
+        self.editor.PopupMenu(self.view.editorPopUp, event.GetPosition())
    
 
     def buildPopupMenu(self):

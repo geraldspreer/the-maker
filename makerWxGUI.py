@@ -17,35 +17,6 @@ from wx.lib.anchors import LayoutAnchors
 import wx.lib.flatnotebook as nb
 import wx.py as pyShell
 
-#wx.lib.flatnotebook.FlatNotebookEvent.
-
-
-#if wx.Platform == '__WXMSW__':
-#    faces = { 'times': 'Times New Roman',
-#              'mono' : 'Courier New',
-#              'helv' : 'Arial',
-#              'other': 'Comic Sans MS',
-#              'size' : 12,
-#              'size2': 8,
-#             }
-#elif wx.Platform == '__WXMAC__':
-#    faces = { 'times': 'Times New Roman',
-#              'mono' : 'Courier New',
-#              'helv' : 'Arial',
-#              'other': 'Comic Sans MS',
-#              'size' : 13,
-#              'size2': 10,
-#             }
-#else:
-#    faces = { 'times': 'Times',
-#              'mono' : 'Courier',
-#              'helv' : 'Helvetica',
-#              'other': 'Comic Sans MS',
-#              'size' : 10,
-#              'size2': 8,
-#             }
-
-
 def create(parent):
     
     return wxPythonGUI(parent)
@@ -58,16 +29,8 @@ class wxPythonGUI(wx.Frame):
         #this is actually a wxWindow
 
         parent.Add(self.topPanel, 0, border=0, flag=wx.FIXED_MINSIZE | wx.EXPAND)
-
-        #parent.Add(self.staticLine1, 0, border=0, flag=wx.EXPAND)
-        #parent.AddSpacer(wx.Size(8, 10), border=0, flag=wx.EXPAND)
-        #parent.AddSizer(self.logSizer, 1, border=0,flag=wx.EXPAND)
        
         parent.Add(self.splitter, 1, border=0, flag=wx.EXPAND | wx.GROW)
-        #parent.Add(self.text, 0, border=0, flag=wx.EXPAND)
-
-        #parent.Add(self.text, 0, border=0, flag=wx.GROW)
-        #parent.Add(self.logtext, 0, border=0, flag=wx.GROW)
       
 
     def _init_coll_boxSizer2_Items(self, parent):
@@ -720,13 +683,7 @@ class wxPythonGUI(wx.Frame):
                                               kind=wx.ITEM_NORMAL,
                                               text=u'HTML and CSS Resources'
                                               )
-       
 
-#        self.Bind(wx.EVT_MENU, 
-#                  self.CallController, 
-#                  self.MenuItemLearnHTMLandCSS
-#                  )
-       
        
         parent.AppendSeparator()
        
@@ -2482,11 +2439,7 @@ class wxPythonGUI(wx.Frame):
         self.tree.SetImageList(il)
         self.il = il
    
-
-        #self.listSizer.Add(self.listBox1, 1, border=0, flag=wx.EXPAND)
         self.listSizer.Add(self.tree, 1, border=0, flag=wx.EXPAND)
-      
-        
             
         self.listWindow.SetAutoLayout(True)
         self.listWindow.SetSizer(self.listSizer)
@@ -2505,31 +2458,20 @@ class wxPythonGUI(wx.Frame):
         self.saveButton = wx.Button(id=-1, label=u'save',
               name='saveButton', parent=self, pos=wx.Point(4, 10),
               style=0)
-#        self.saveButton.Bind(wx.EVT_BUTTON, self.OnSaveButton,
-#              self.saveButton)
 
         self.publishButton = wx.Button(id=-1, label=u'publish',
               name='publishButton', parent=self, pos=wx.Point(84, 10),
               style=0)
         
-#        self.publishButton.Bind(wx.EVT_BUTTON, self.OnUploadButton,
-#              self.publishButton)
-
         self.previewButton = wx.Button(id=-1, label=u'preview',
               name=u'preview', parent=self, pos=wx.Point(164, 10),
               style=0)
         
         
-#        self.preview.Bind(wx.EVT_BUTTON, self.OnPreviewButton,
-#              self.preview)
-
         self.makeAllButton = wx.Button(id=-1,
               label=u'make all', name=u'make_all_button', parent=self,
               pos=wx.Point(244, 10), style=0)
         
- 
-
-    
         
         self.search = wx.SearchCtrl(self, -1, pos=(750,10), size=(180,25), style=wx.TE_PROCESS_ENTER)
         
@@ -2547,9 +2489,6 @@ class wxPythonGUI(wx.Frame):
         self.topSizer.Add(self.searchStatus,0, wx.ALIGN_CENTER | wx.WEST | wx.EAST, 10)
         self.topSizer.Add(self.search,0, wx.ALIGN_CENTER | wx.EAST, 10)
         
-        
-
-       
 
         self.statusBar1 = wx.StatusBar(id=-1,
               name='statusBar1', parent=self, style=wx.ST_SIZEGRIP)
@@ -2594,7 +2533,7 @@ class wxPythonGUI(wx.Frame):
         else:
             self.interfaceSetFonts(10,0, special = True)
         
-        self.createPopUpMenu()
+        self.createPopUpMenus()
         
   
     
@@ -2618,7 +2557,7 @@ class wxPythonGUI(wx.Frame):
         self.saveButton.SetFont(theFont)
         self.tree.SetFont(theFont)
         self.tree.SetBackgroundColour('#e2e6ec')
-        self.tree.SetIndent(16)
+        self.tree.SetIndent(20)
     
     
     def CallController(self, event):
@@ -2631,7 +2570,15 @@ class wxPythonGUI(wx.Frame):
         self.controller.findActionForEvent(event)
          
     
-    def createPopUpMenu(self):
+    def createPopUpMenus(self):
+        
+        self.treePopUp = self.wx.Menu()
+        
+        self.treePopUpMenuItemCollapseAll = self.treePopUp.Append(help='Collapse All Items',
+                                         id=-1,
+                                         kind=self.wx.ITEM_NORMAL,
+                                         text=u'Collapse All'
+                                         )
         
         
         self.editorPopUp = self.wx.Menu()
@@ -2817,21 +2764,7 @@ class wxPythonGUI(wx.Frame):
 #    def OnActivate(self, event):
 #        event.Skip()
 
-    def OnRightDown(self, event):
-        pt = event.GetPosition();
-        item, flags = self.tree.HitTest(pt)
-        if item:
-            self.tree.SelectItem(item)
-    
-#    def OnSelChanged(self, event):
-#        try:      
-#            self.controller.actionTreeSelectItem(event)                  
-#        except:              
-#            pass     
-#        event.Skip()
-
-    def TreePopup(self,event):
-        self.ShowPopupTool("tree", event)
+  
 
     def OntreeEdit(self, event):
         self.controller.actionOnEditTreeItem(event)
