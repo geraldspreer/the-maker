@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 
 import webbrowser as webView
-#import urllib
-#import re
 import sys
-#import makerThread
 
 print "Checking dependencies...\n"
 
@@ -37,7 +34,7 @@ import makerCopyright
 import makerErrorHandler
 import makerBugReport
 import makerVersion
-#import makerCheckInternetConnection
+
 
 def afterThisUpdateStatusInfo(func):
     def wrapped(*args, **kwds):

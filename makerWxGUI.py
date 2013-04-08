@@ -621,7 +621,7 @@ class wxPythonGUI(wx.Frame):
                       )
         
         parent.Append(menu=self.ftp, 
-                      title=u'Ftp'
+                      title=u'FTP'
                       )
         
         

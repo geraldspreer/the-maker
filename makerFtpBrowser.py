@@ -142,7 +142,7 @@ class FTPBrowser(MakerDialog):
     
     def onHelpButton(self, event):
         m  = 'You can browse your server here as well as create/delete folders.'
-        m += "It is also possible to delete files..."
+        m += " It is also possible to delete files..."
         self.parent.Message(m)   
 
     

@@ -247,6 +247,8 @@ class ProjectManagerController(makerController.SuperController):
         model.addProject on selection
     
         """
+    
+        
         self.template = None
         
         selector = makerTemplateDialog.xrcDIALOG1(self.view)

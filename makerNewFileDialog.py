@@ -49,7 +49,7 @@ def __init_resources():
     newFile_xrc = '''\
 <?xml version="1.0" ?><resource>
   <object class="wxDialog" name="newFile">
-    <title>add new file</title>
+    <title>Add New File</title>
     <centered>1</centered>
     <pos>10,0</pos>
     <size>450, 140</size>
