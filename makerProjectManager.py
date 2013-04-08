@@ -14,7 +14,6 @@ import makerProject
 import makerTemplateDialog
 import makerProjectConverter
 import makerManageLinkedProjects
-import makerTemplateSelect
 import makerTemplateViewBuilder
 
 
