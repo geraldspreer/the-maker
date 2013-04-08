@@ -67,6 +67,7 @@ class MakerFileController(makerController.SuperController):
         
         self.view.previewButton.Bind(self.view.wx.EVT_BUTTON, self.preview)
         self.view.Bind(self.view.wx.EVT_MENU, self.preview,self.view.MenuItemPreview)
+        self.view.Bind(self.view.wx.EVT_MENU, self.preview,self.view.treePopUpMenuItemPreview)
         
                 
         self.view.saveButton.Bind(self.view.wx.EVT_BUTTON, self.model.save)
@@ -83,6 +84,22 @@ class MakerFileController(makerController.SuperController):
                   self.view.MenuItemDeleteFile
                   )
         
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                  self.findActionForEvent,
+                  self.view.treePopUpMenuItemDeleteFile
+                  )
+        
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                  self.findActionForEvent,
+                  self.view.treePopUpMenuItemRenameFile
+                  )
+        
+        
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                  self.findActionForEvent,
+                  self.view.treePopUpMenuItemCloseFile
+                  )
+        
         
         self.view.Bind(self.view.wx.EVT_MENU, 
                   self.findActionForEvent,
@@ -97,6 +114,7 @@ class MakerFileController(makerController.SuperController):
         
         
         self.view.Bind(self.view.wx.EVT_MENU, self.findActionForEvent, self.view.MenuItemPrint)
+        self.view.Bind(self.view.wx.EVT_MENU, self.findActionForEvent, self.view.treePopUpMenuItemPrint)
     
         # Markdown
         
@@ -1430,9 +1448,13 @@ class MakerFileController(makerController.SuperController):
        
         theActions = {
             self.view.MenuItemPrint.GetId() : (self.actionPrint, ),
+            self.view.treePopUpMenuItemPrint.GetId() : (self.actionPrint, ),
             self.view.MenuItemDeleteFile.GetId() : (self.model.delete, ),
+            self.view.treePopUpMenuItemDeleteFile.GetId() : (self.model.delete, ),
             self.view.MenuItemCloseFile.GetId() : (self.closeCurrentFile, ),
+            self.view.treePopUpMenuItemCloseFile.GetId() : (self.closeCurrentFile, ),
             self.view.MenuItemRenameFile.GetId() : (self.rename, ),
+            self.view.treePopUpMenuItemRenameFile.GetId() : (self.rename, ),
             self.view.MenuItemSaveAsTemplate.GetId() : (self.model.saveAsTemplate, ),
             self.view.editorPopUpMenuItemLine_through.GetId() : (self.actionFormatText, (event, "line-through")),
             self.view.editorPopUpMenuItemUnderline.GetId() : (self.actionFormatText, (event, "underline")),

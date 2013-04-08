@@ -239,6 +239,32 @@ class MakerProjectController(makerController.SuperController):
                   )
         
 
+        # tree popup menu
+        
+        
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                  self.actionTreeExpandAll, 
+                  self.view.treePopUpMenuItemExpandAll
+                  )
+        
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                  self.actionTreeCollapseAll, 
+                  self.view.treePopUpMenuItemCollapseAll
+                  )
+        
+    
+    
+    def actionTreeExpandAll(self, event):
+        
+        self.treeView.ExpandAll()
+    
+    def actionTreeCollapseAll(self, event):
+        
+        self.treeView.CollapseAllChildren(self.treeView.GetRootItem())
+        self.treeView.Expand(self.treeView.GetRootItem())
+    
+ 
+    
     
     
     def createAbstractNameForViewObjects(self):
@@ -396,9 +422,14 @@ class MakerProjectController(makerController.SuperController):
   
     def actionShowTreePopUp(self, event):
         """ show tree popup tool """
+   
+        pt = event.GetPosition();
+        item, flags = self.treeView.HitTest(pt)
+        if item:
+            self.selectTreeItemAndLoad(item)
+        
         self.treeView.PopupMenu(self.view.treePopUp, event.GetPosition())
    
-  
     
   
     def actionProjectSetup(self, event):
@@ -851,7 +882,9 @@ class MakerProjectController(makerController.SuperController):
         # enable make all 
         
         self.view.makeAllButton.Enable()    
-        
+                
+        # enable collapse others in tree view        
+        self.view.treePopUpMenuItemCollapseOther.Enable(True)
         
       
         
@@ -881,6 +914,12 @@ class MakerProjectController(makerController.SuperController):
                 else:
                     self.view.MenuItemWrapWord.Check(False)
             
+            
+                self.view.treePopUpMenuItemDeleteFile.Enable(True) 
+                self.view.treePopUpMenuItemRenameFile.Enable(True)
+                self.view.treePopUpMenuItemCloseFile.Enable(True) 
+                self.view.treePopUpMenuItemPreview.Enable(True) 
+                self.view.treePopUpMenuItemPrint.Enable(True)
                                             
                 # turn on search
                 
@@ -1011,6 +1050,11 @@ class MakerProjectController(makerController.SuperController):
             
             # self.view.SetTitle("The Maker - " + self.model.getProject())
         
+            self.view.treePopUpMenuItemDeleteFile.Enable(False) 
+            self.view.treePopUpMenuItemRenameFile.Enable(False)
+            self.view.treePopUpMenuItemCloseFile.Enable(False) 
+            self.view.treePopUpMenuItemPreview.Enable(False) 
+            self.view.treePopUpMenuItemPrint.Enable(False)
             
             self.saveButton.Disable()
             self.previewButton.Disable()

@@ -303,6 +303,17 @@ returns the instance of the progressbar that was last added to the stack
         # you can always quit
         self.view.MenuItemQuit.Enable(True)
         
+        # Tree Contextual Menu
+        
+        self.view.treePopUpMenuItemDeleteFile.Enable(False) 
+        self.view.treePopUpMenuItemRenameFile.Enable(False)
+        self.view.treePopUpMenuItemCloseFile.Enable(False) 
+        self.view.treePopUpMenuItemPreview.Enable(False) 
+        self.view.treePopUpMenuItemPrint.Enable(False)
+        self.view.treePopUpMenuItemCollapseOther.Enable(False)
+        
+        
+        
         
         # Insert Menu
         

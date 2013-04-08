@@ -72,6 +72,28 @@ class ProjectManagerController(makerController.SuperController):
                        self.model.manageLinkedProjects,  
                        self.view.MenuItemManageLinkedProjects)
         
+        
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                  self.actionTreeCollapseOtherProjects, 
+                  self.view.treePopUpMenuItemCollapseOther
+                  )
+        
+    
+    def actionTreeCollapseOtherProjects(self, event):
+        
+        currentItem = self.treeView.GetSelection()
+        
+        self.treeView.CollapseAllChildren(self.treeView.GetRootItem())
+        self.treeView.Expand(self.treeView.GetRootItem())
+        
+        currentProjName = self.model.getActiveProject().getProject()
+        
+        for item in self.rootAndProjectTreeItems:
+            if self.treeView.GetItemText(item) == currentProjName:
+                self.treeView.ExpandAllChildren(item)
+                self.model.getActiveProject().projectController.selectTreeItem(currentItem)
+                
+    
     
     def destroyView(self):
         

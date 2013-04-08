@@ -31,7 +31,12 @@ x.x.2013	- Gerald
 	- deleted outdated templates
 	- updated specs
 	- a lot of tree view improvements
-
+	- ui improvements
+	- added right click contextual menu to tree view
+	- delete and rename file and others right from contextual menu
+	- fixed bug in editor right click menu (now appears next to mouse pointer
+		as it should)
+	
 
 
 March 15, 2013 		Gerald

@@ -2574,12 +2574,76 @@ class wxPythonGUI(wx.Frame):
         
         self.treePopUp = self.wx.Menu()
         
+
+
+        
+        
+        # Bind this in Maker File Controller
+
+        self.treePopUpMenuItemDeleteFile = self.treePopUp.Append(help='Delete Current File',
+                                         id=-1,
+                                         kind=self.wx.ITEM_NORMAL,
+                                         text=u'Delete File'
+                                         )
+
+
+        self.treePopUpMenuItemRenameFile = self.treePopUp.Append(help='Rename Current File',
+                                         id=-1,
+                                         kind=self.wx.ITEM_NORMAL,
+                                         text=u'Rename File'
+                                         )
+        
+        self.treePopUpMenuItemCloseFile = self.treePopUp.Append(help='Close Current File',
+                                         id=-1,
+                                         kind=self.wx.ITEM_NORMAL,
+                                         text=u'Close File'
+                                         )
+
+        self.treePopUp.AppendSeparator()
+
+        self.treePopUpMenuItemPreview = self.treePopUp.Append(help='Preview File',
+                                         id=-1,
+                                         kind=self.wx.ITEM_NORMAL,
+                                         text=u'Preview'
+                                         )
+  
+        self.treePopUp.AppendSeparator()
+        
+
+        self.treePopUpMenuItemExpandAll = self.treePopUp.Append(help='Expand All Items',
+                                         id=-1,
+                                         kind=self.wx.ITEM_NORMAL,
+                                         text=u'Expand All Items'
+                                         )
+
         self.treePopUpMenuItemCollapseAll = self.treePopUp.Append(help='Collapse All Items',
                                          id=-1,
                                          kind=self.wx.ITEM_NORMAL,
-                                         text=u'Collapse All'
+                                         text=u'Collapse All Items'
+                                         )
+
+
+        self.treePopUpMenuItemCollapseOther = self.treePopUp.Append(help='Collapse Other Projects',
+                                         id=-1,
+                                         kind=self.wx.ITEM_NORMAL,
+                                         text=u'Collapse Other Projects'
                                          )
         
+        
+        
+  
+  
+        self.treePopUp.AppendSeparator()
+        
+        self.treePopUpMenuItemPrint = self.treePopUp.Append(help='Print File',
+                                         id=-1,
+                                         kind=self.wx.ITEM_NORMAL,
+                                         text=u'Print'
+                                         )
+        
+        
+        
+        # Editor 
         
         self.editorPopUp = self.wx.Menu()
                
