@@ -437,18 +437,27 @@ class wxPythonGUI(wx.Frame):
     
     def _init_coll_pages_Items(self, parent):
                 
-        self.MenuItemNewFiles = parent.AppendMenu(help='add new Files',
-                           id=-1,
-                           submenu = self.new_files, 
-                           text=u'New File'
-                           )
+
         
         self.MenuItemAddProject = parent.Append(help='create new project', 
                                                 id=-1,
                                                 kind=wx.ITEM_NORMAL, 
-                                                text=u'New Project...'
+                                                text=u'New Project\tCtrl+Shift+N'
                                                 )
         
+        self.MenuItemOpenProject = parent.Append(help='Open A Maker Project', 
+                                                   id=-1,
+                                                   kind=wx.ITEM_NORMAL, 
+                                                   text=u'Open Project\tCtrl+O')
+        
+        parent.AppendSeparator()
+        
+        self.MenuItemNewFiles = parent.AppendMenu(help='Add New File',
+                           id=-1,
+                           submenu = self.new_files, 
+                           text=u'New File'
+                           )
+
         
         self.MenuItemSaveFile = parent.Append(help=u'save File',
                                               id=-1, 
@@ -504,27 +513,26 @@ class wxPythonGUI(wx.Frame):
         
         parent.AppendSeparator()
         
-        self.MenuItemImportProject = parent.Append(help='import maker project', 
+#        self.MenuItemImportProject = parent.Append(help='import maker project', 
+#                                                   id=-1,
+#                                                   kind=wx.ITEM_NORMAL, 
+#                                                   text=u'Import Project')
+        
+#        
+#        self.MenuItemDeleteProject = parent.Append(help='Delete a maker project', 
+#                                                   id=-1,
+#                                                   kind=wx.ITEM_NORMAL, 
+#                                                   text=u'Delete Project')
+        
+        
+        
+
+        
+        
+        self.MenuItemManageProjects = parent.Append(help='Manage Projects', 
                                                    id=-1,
                                                    kind=wx.ITEM_NORMAL, 
-                                                   text=u'Import Project')
-        
-        self.MenuItemDeleteProject = parent.Append(help='Delete a maker project', 
-                                                   id=-1,
-                                                   kind=wx.ITEM_NORMAL, 
-                                                   text=u'Delete Project')
-        
-        
-        
-        self.MenuItemLinkToProject = parent.Append(help='link to external maker project', 
-                                                   id=-1,
-                                                   kind=wx.ITEM_NORMAL, 
-                                                   text=u'Link To Project')
-        
-        self.MenuItemManageLinkedProjects = parent.Append(help='manage linked projects', 
-                                                   id=-1,
-                                                   kind=wx.ITEM_NORMAL, 
-                                                   text=u'Manage Linked Projects')
+                                                   text=u'Manage Projects')
         
        
         parent.AppendSeparator()
@@ -2340,9 +2348,13 @@ class wxPythonGUI(wx.Frame):
 
 
 
-
-
-
+    def partArt(self, il, image_size):
+        # called in init ctrls 
+        # moved out here to make testing easier
+        
+        wx.ArtProvider.Push(MyArtProvider())
+        self.part     = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, image_size))
+        wx.ArtProvider.Pop()
 
 
     def _init_ctrls(self, prnt):
@@ -2432,10 +2444,9 @@ class wxPythonGUI(wx.Frame):
             
             self.filechange  = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, image_size))
         
-        wx.ArtProvider.Push(MyArtProvider())
-        self.part     = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, image_size))
-        wx.ArtProvider.Pop()
-
+        
+        self.partArt(il, image_size)
+        
         self.tree.SetImageList(il)
         self.il = il
    

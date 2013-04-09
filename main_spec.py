@@ -5,7 +5,7 @@ import unittest
 import os
 import shutil
 import makerProjectManager
-import spec_mockView
+import makerWxGUI
 import wx
 import sys
 import makerVersion
@@ -55,7 +55,7 @@ class TestProjectManager(makerProjectManager.ProjectManager):
         return os.path.join(os.getcwd(), "system/")
 
 
-class TestView(spec_mockView.wxPythonGUI):
+class TestView(makerWxGUI.wxPythonGUI):
     
     def Ask_YesOrNo(self, question):
         return self.choiceReturnString
@@ -66,6 +66,9 @@ class TestView(spec_mockView.wxPythonGUI):
         print "Input string was:", self.inputReturnString
         return self.inputReturnString
     
+    def partArt(self, il, image_size):
+        """ don't need no custom art in this mock class """
+        pass
 
     def Error(self, Message):
         
@@ -80,7 +83,8 @@ class TestView(spec_mockView.wxPythonGUI):
     def setChoiceReturnString(self, string):
 
         self.choiceReturnString = string
-    
+
+
 
 class MakerTest(unittest.TestCase):
     
@@ -157,45 +161,6 @@ class MakerTest(unittest.TestCase):
         self.assertEqual(self.app.mainView._lastErrorMessage, None)
         
 
-    
-    
-    
-    
-#    def test_deleteProject(self):
-#    
-#        return 
-#        testProjectName = u"To_Delete_Project"
-#        existingProjects = len(self.pm.getProjects())
-#        self.app.mainView.setInputReturnString(testProjectName)
-#        testPath = os.path.join(self.projectPath, testProjectName)
-#        
-#        if os.path.isdir(testPath):
-#            shutil.rmtree(testPath)
-#        
-#        self.pm.addNewProject()
-#        
-#        #self.assertEqual(len(self.pm.getProjects()), existingProjects + 1) 
-#        
-#        self.assertTrue(os.path.isdir(os.path.join(testPath, "parts")))
-#        self.assertTrue(os.path.isdir(os.path.join(testPath, "templates")))
-#        self.assertTrue(os.path.isdir(os.path.join(testPath, "setup")))
-#        
-#        
-#        self.pm.load(testProjectName)
-#        
-#        print "PROJECT IS:", self.pm.getActiveProject().getProject()
-#        
-#        self.app.mainView.choiceReturnString = "Yes"
-#        
-#        self.pm.deleteProject()
-#        
-#        self.assertTrue(testProjectName not in self.pm.getProjects())
-#
-#        self.app.mainView.choiceReturnString = None
-        
-        
-    
-    
         
               
 if __name__=="__main__":

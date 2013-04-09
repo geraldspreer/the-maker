@@ -3,16 +3,17 @@ from datetime import date
 def getCopyright():
     
     copyright  = """-------------------------------------------------------------------------------
-the maker - Content Management System
+TheMaker - Content Management System
 -------------------------------------------------------------------------------
-Copyright (c) 2006 - """ + str(date.today().year) + """, the makerProject
+Copyright (c) 2006 - """ + str(date.today().year) + """
 
 Developers:
 Gerald Spreer, Ian Barrow and Brinick Simmons
 
 -------------------------------------------------------------------------------
-The maker is a CMS for websites. You use it on your Mac and after you 
-made your changes you publish to your webhosting service via FTP. 
+The Maker is a Content Management System (CMS) for web sites.
+Create, edit and preview web sites on your Mac then publish when ready via FTP. 
+You stay creative, whilst TheMaker looks after your assets, links and page changes. 
 
 We hope you enjoy using this application as much as we do.
 

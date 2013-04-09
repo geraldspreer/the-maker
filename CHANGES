@@ -31,14 +31,24 @@ x.x.2013	- Gerald
 	- deleted outdated templates
 	- updated specs
 	- a lot of tree view improvements
-	- ui improvements
+	- UI improvements
 	- added right click contextual menu to tree view
 	- delete and rename file and others right from contextual menu
 	- fixed bug in editor right click menu (now appears next to mouse pointer
 		as it should)
 	- project info shown from "info.json" in template
-	- json file ignored at project creation 
-
+	- json file ignored at project creation
+	--
+	- we are now using bundles for projects
+	- bundles have the extension .makerProject
+	- Import Project removed
+	- "Link to Project" is now "Open Project"
+	- Manage Linked Project is now Manage Projects
+	- finally deleted the OLD Controller
+	- deleting projects disappeared again, do this from the Finder
+	- mock_View for testing -> gone, now were doing this with the original view
+	 class for the mainUI
+	 
 
 
 March 15, 2013 		Gerald
