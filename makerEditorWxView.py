@@ -2,7 +2,6 @@ import wx
 import wx.stc
 from wx.lib.anchors import LayoutAnchors
 
-#wx.LIGHT_GREY
 
 if wx.Platform == '__WXMSW__':
     faces = { 'times': 'Times New Roman',
