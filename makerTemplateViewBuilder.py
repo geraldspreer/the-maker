@@ -1,4 +1,5 @@
 from makerUtilities import writeFile
+from makerUtilities import readFile
 import os
 
 def scaffold(systemDir):
@@ -7,7 +8,7 @@ def scaffold(systemDir):
 <html>
     <head>
      <meta charset="utf-8" />
-         <script src=""" + os.path.join(systemDir, "jquery.min.js") + """"></script>
+         <script src='file://""" + os.path.join(systemDir, "jquery.min.js") + """'></script>
         
 
         
@@ -184,71 +185,7 @@ def scaffold(systemDir):
     <body>
 
 
-        <div class="row">
-        
-            FIRST ROW OF THUMBNAILS HERE
-        
-        
-        </div>
-
-
-        <div class="row">
-            <div class="thumbnail" data-info="#info-modern">
-    
-        <img src="/Applications/TheMaker.app/Contents/Resources/system/templates/Blue/parts/preview.jpg" />
-        <p>Modern</p>
-    </div>
-
-
-        <div class="thumbnail"  data-info="#info-simple">
-    
-            <img src="/Applications/TheMaker.app/Contents/Resources/system/templates/White/parts/preview.jpg" />
-                <p>Simple</p>
-
-        
-    </div>
-
-    <div class="thumbnail"  data-info="#info-simple-markdown">
-    
-        <img src="/Applications/TheMaker.app/Contents/Resources/system/templates/Simple-Markdown/parts/preview.jpg" />
-            <p>Simple Markdown</p>
-
-    </div>
-
-
-
-    <div class="thumbnail"  data-info="#info-modern">
-    
-        <img src="/Applications/TheMaker.app/Contents/Resources/system/templates/Simple-Markdown/parts/preview.jpg" />
-        
-    </div>
-
-        </div>
-
-        
-
-        <div class="info" id="info-modern">
-        <h5>Modern</h5>
-        <p>This is a modern template but we will not use it anymore... Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br /> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-        </div>
-
-
-        <div class="info" id="info-simple">
-        <h5>Simple</h5>
-        <p>This is a modern template but we will not use it anymore... Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br /> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-        </div>
-
-        <div class="info" id="info-simple-markdown">
-        <h5>Simple Markdown</h5>
-        <p>    <img src="/Applications/TheMaker.app/Contents/Resources/system/templates/Simple-Markdown/parts/preview.jpg" />
-This is a modern template but we will not use it anymore... Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br /> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-        
-
-
-        </div>
-
-
-
+""" + createThumbnails(systemDir) + createInfo(systemDir) + """
     </body>
 
 </html>
@@ -260,8 +197,54 @@ This is a modern template but we will not use it anymore... Lorem Ipsum is simpl
 def buildView(systemDir, viewPath):
     writeFile(os.path.join(viewPath,"yourTemplates.html"), scaffold(systemDir))
     
+    return os.path.join(viewPath,"yourTemplates.html")
     
     
+def createThumbnails(systemDir):
+    
+    thumbnails = "<div class='row'>\n"
+    
+    for template in os.listdir(os.path.join(systemDir, "templates")):
+        
+        thumbnails += makeThumbnail(systemDir, template)
+    
+    thumbnails += "</div>"     
+    return thumbnails
+    
+    
+def createInfo(systemDir):
+    
+    info = "<div class='row'>\n"
+    
+    for template in os.listdir(os.path.join(systemDir, "templates")):
+        
+        s = readFile(os.listdir(os.path.join(systemDir, "templates", template, "parts","info.json"))) 
+        print s
+        info += makeInfo(systemDir, template)
+    
+    info += "</div>"     
+    return info
+
+
+def makeInfo(systemDir, templateName, data):
+    
+    info = """
+    
+    <div class="info" id="info-""" + templateName + """">
+        <h5>""" + templateName + """</h5>
+        <p>THIS SHOULD COME FROM JSON: This is a modern template but we will not use it anymore...
+         Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br /> 
+         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+         when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        </div>
+    
+    
+    """
+    
+    return info
+
+
+
 def makeThumbnail(systemDir, templateName):
     
     previewImage = os.path.join(systemDir, "templates", templateName, "parts/preview.jpg")

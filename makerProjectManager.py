@@ -172,6 +172,10 @@ class ProjectManagerController(makerController.SuperController):
         setDefaults()
     
     
+    
+
+    
+    
     def saveInterfaceData(self, data):
         writeDataToFile(data, os.path.join(self.model.getProjectDir(), "../.makerUISettings"))
     
@@ -246,6 +250,8 @@ class ProjectManagerController(makerController.SuperController):
         model.addProject on selection
     
         """
+        
+        viewPath = makerTemplateViewBuilder.buildView(self.model.getSystemPath(), self.model.getApplicationSupportDir())
     
         
         self.template = None
@@ -262,9 +268,10 @@ class ProjectManagerController(makerController.SuperController):
         selector.Refresh()
         
         
-        def loadTemplates():
+        def loadTemplates(pathToView):
         
-            selector.wv.LoadURL("file:///Users/maker/Desktop/test.html")
+            # turn into proper URL and load
+            selector.wv.LoadURL("file://" + pathToView.replace(" ", "%20"))
             selector.Bind(theView.EVT_WEB_VIEW_NAVIGATING, onWebViewNavigating, selector.wv)
         
         
@@ -303,8 +310,8 @@ class ProjectManagerController(makerController.SuperController):
             selector.Destroy()
             event.Skip()
         
-          
-        loadTemplates()
+        
+        loadTemplates(viewPath)
         selector.ShowWindowModal()
         
         
@@ -391,6 +398,16 @@ class ProjectManager:
     def getApplicationPath(self):
         """ get path where the maker executable resides """
         return os.path.dirname(sys.argv[0])
+    
+    
+    def getApplicationSupportDir(self):
+    
+        try:
+            theDir = os.environ['HOME']
+        except:
+            theDir = os.environ['HOMEPATH']
+        
+        return os.path.join(theDir, "Library/Application Support/TheMaker/")
     
     
     def getSystemPath(self):

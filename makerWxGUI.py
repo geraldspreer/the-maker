@@ -3388,7 +3388,7 @@ class wxPythonGUI(wx.Frame):
         self.dirDialog = wx.DirDialog(self, message,
                                       style=wx.DD_DEFAULT_STYLE|
                                       wx.DD_NEW_DIR_BUTTON)
-    
+        print dir(self.dirDialog)
           
 # ------------------------------------------------------------------------
  
