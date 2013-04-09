@@ -12,8 +12,8 @@ def scaffold(systemDir):
         
 
         
-
-        <style type="text/css">
+        
+       <style type="text/css">
 
         html {
 
@@ -23,8 +23,8 @@ def scaffold(systemDir):
 
         body {
 
-                font-family: "Helvetica Neue";
-                font-size: 14px;
+            font-family: "Helvetica Neue";
+            font-size: 14px;
             width:auto;
             /* max-width:694px; */
             color:#fff;
@@ -35,7 +35,7 @@ def scaffold(systemDir):
 
         a {
 
-              text-decoration:none;
+            text-decoration:none;
             color:#000;
             cursor:default;
         }
@@ -60,7 +60,7 @@ def scaffold(systemDir):
             letter-spacing:0.050em;
             margin:-28px 0px 0px 8px;
             line-height:3em;
-            font-size:18px;
+            font-size:20px;
             
         
         }
@@ -79,7 +79,7 @@ def scaffold(systemDir):
         .row {
             
             width:100%;
-            margin:0px 0px 20px 10px;
+            margin:0px 0px 40px 10px;
             float:left;
             clear:both;
             
@@ -95,7 +95,8 @@ def scaffold(systemDir):
             float:left;
             clear:right;
             -webkit-border-radius:10px;
-            -webkit-transition: border-color, 1s;
+        -webkit-transition: border-color, 0.5s;
+      
             
 
         }
@@ -111,20 +112,28 @@ def scaffold(systemDir):
 
         .thumbnail:hover {
         
-            border-color: #ccc;
+            border-color: #aaa;
             padding:20px 20px 10px 20px;
-            -webkit-border-radius:10px;
-
+        -webkit-border-radius:10px;
+       
         }
 
 
         .info {
         
+            text-align:center;
             width:92%;
             float:left;
             clear:both;
             display:none;
-            margin:20px 10px 0px 24px;
+            margin:20px 10px 0px 10px;
+            border:1px solid #fff;
+        
+        }
+        
+        .info p {
+            
+            text-align:center;
         
         }
 
@@ -149,21 +158,10 @@ def scaffold(systemDir):
         }
 
 
-        .template {
-        
-            float:left;
-            clear:both;
-            margin-bottom:70px;
-        }
-
-
-        #foo {
-
-            display:none;
-        
-        }
 
     </style>
+
+
 
 
     <script type="text/javascript">
