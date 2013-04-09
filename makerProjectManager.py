@@ -476,7 +476,7 @@ class ProjectManager:
             self.controller.showProgress(4," ")
             self.controller.updateProgressPulse("importing: " + proj)
             
-            copyFileTree(project, os.path.join(projectFolder, proj), 
+            copyFileTree(project, os.path.join(projectFolder, proj), ["info.json"], 
                                         self.controller.updateProgressPulse, 
                                         ("importing: " + proj))
             
@@ -500,8 +500,12 @@ class ProjectManager:
     
     def addNewProject(self, templatePath, newProjectDir, newProjectName):
         
-        """ The actual project creation """
-        copyFileTree(templatePath, newProjectDir, self.controller.updateProgressPulse, ("creating: " + newProjectName))
+        """ 
+            The actual project creation 
+            The info.json file is ignored
+        
+        """
+        copyFileTree(templatePath, newProjectDir,["info.json"], self.controller.updateProgressPulse, ("creating: " + newProjectName))
     
     
     

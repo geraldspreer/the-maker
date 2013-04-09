@@ -569,7 +569,7 @@ class MakerProjectModel:
         
         src = self.getProjectPath()
         self.projectController.showProgress(limit=1, Message="Saving template...", title="Saving template...")
-        copyFileTree(src, fullTarget, self.projectController.updateProgressPulse, ("storing: " + self.getProject()))
+        copyFileTree(src, fullTarget, [], self.projectController.updateProgressPulse, ("storing: " + self.getProject()))
                      
         deleteHiddenFiles(root = fullTarget)
         resetProjectSetup(fullTarget)  

@@ -52,7 +52,7 @@ def writeFile(pathToFile, fileConts, asLines=False, binary=False, append=False):
 
 
 
-def copyFileTree(src, dst, callback = None, *args):
+def copyFileTree(src, dst, ignore = [], callback = None, *args):
     """
         
     is copying a tree of files one file at a time
@@ -93,7 +93,8 @@ def copyFileTree(src, dst, callback = None, *args):
                 callback(file)
             
             try:
-                shutil.copyfile(os.path.join(item[0], file), 
+                if file not in ignore:
+                    shutil.copyfile(os.path.join(item[0], file), 
                                 os.path.join(dst, aditionalPath, file))     
             except Exception, e:
                 print "\ncopy failed: ", str(e)

@@ -218,9 +218,11 @@ def createInfo(systemDir):
     
     for template in os.listdir(os.path.join(systemDir, "templates")):
         
-        s = readFile(os.listdir(os.path.join(systemDir, "templates", template, "parts","info.json"))) 
-        print s
-        info += makeInfo(systemDir, template)
+        
+        s = readFile(os.path.join(systemDir, "templates", template, "parts","info.json")) 
+        data = eval(s)
+        
+        info += makeInfo(systemDir, template, data)
     
     info += "</div>"     
     return info
@@ -230,12 +232,9 @@ def makeInfo(systemDir, templateName, data):
     
     info = """
     
-    <div class="info" id="info-""" + templateName + """">
-        <h5>""" + templateName + """</h5>
-        <p>THIS SHOULD COME FROM JSON: This is a modern template but we will not use it anymore...
-         Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br /> 
-         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-         when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+    <div class="info" id="info-""" + data["Title"] + """">
+        <h5>""" + data["Title"] + """</h5>
+        <p>""" + data["Description"] + """</p>
         </div>
     
     

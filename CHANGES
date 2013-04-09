@@ -36,7 +36,9 @@ x.x.2013	- Gerald
 	- delete and rename file and others right from contextual menu
 	- fixed bug in editor right click menu (now appears next to mouse pointer
 		as it should)
-	
+	- project info shown from "info.json" in template
+	- json file ignored at project creation 
+
 
 
 March 15, 2013 		Gerald
