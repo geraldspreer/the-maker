@@ -2466,21 +2466,21 @@ class wxPythonGUI(wx.Frame):
         self.topPanel.SetMinSize((0,50))
         self.topPanel.SetSizer(self.topSizer)
         
-        self.saveButton = wx.Button(id=-1, label=u'save',
+        self.saveButton = wx.Button(id=-1, label=u'Save',
               name='saveButton', parent=self, pos=wx.Point(4, 10),
               style=0)
 
-        self.publishButton = wx.Button(id=-1, label=u'publish',
+        self.publishButton = wx.Button(id=-1, label=u'Publish',
               name='publishButton', parent=self, pos=wx.Point(84, 10),
               style=0)
         
-        self.previewButton = wx.Button(id=-1, label=u'preview',
+        self.previewButton = wx.Button(id=-1, label=u'Preview',
               name=u'preview', parent=self, pos=wx.Point(164, 10),
               style=0)
         
         
         self.makeAllButton = wx.Button(id=-1,
-              label=u'make all', name=u'make_all_button', parent=self,
+              label=u'Make All', name=u'make_all_button', parent=self,
               pos=wx.Point(244, 10), style=0)
         
         

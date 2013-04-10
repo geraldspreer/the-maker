@@ -200,7 +200,7 @@ returns the instance of the progressbar that was last added to the stack
         returns a list(!) of pathnames or None when canceled
         
         """
-        return self.view.getFileFromUser(self.model.getProjectPath())
+        return self.view.getFileFromUser()
         
     def imageDialog(self, path):
         """

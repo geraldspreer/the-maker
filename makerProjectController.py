@@ -958,14 +958,14 @@ class MakerProjectController(makerController.SuperController):
                 
                 # quick fix for .py files
                 elif self.model.currentFile.getType() == ".py":
-                    self.previewButton.SetLabel("run")
+                    self.previewButton.SetLabel("Run")
                     self.previewMenu.SetText("Run Python Script")
                     self.previewButton.Enable()
                     self.previewMenu.Enable(True)
                     
                 
                 elif self.model.currentFile.getType() != ".py":
-                    self.previewButton.SetLabel("preview")
+                    self.previewButton.SetLabel("Preview")
                     self.previewMenu.SetText("Preview File")
                     self.previewButton.Enable()
                     self.previewMenu.Enable(True)
@@ -1138,7 +1138,7 @@ class MakerProjectController(makerController.SuperController):
         #self.view.MenuItemDeleteProject.Enable(True)
         
         if not self.model.getFtpQueue():
-            self.publishButton.SetLabel("publish")
+            self.publishButton.SetLabel("Publish")
             self.publishMenu.SetText("Publish")
             self.publishButton.Disable()
             self.publishMenu.Enable(False)

@@ -64,7 +64,7 @@ class ProjectManagerController(makerController.SuperController):
 #                       self.view.MenuItemDeleteProject)
         
         self.view.Bind(self.view.wx.EVT_MENU, 
-                       self.model.linkToProject,  
+                       self.model.openProject,  
                        self.view.MenuItemOpenProject)
     
         self.view.Bind(self.view.wx.EVT_MENU, 
@@ -538,21 +538,17 @@ class ProjectManager:
         makerManageLinkedProjects.Manager(self.controller.view, self)
     
     
-    def linkToProject(self, event=None):
-        path = self.controller.dirDialog(message="Select a project to link to:")
+    def openProject(self, event=None):
+        bundle = self.controller.fileDialog()
         
-        if not path:
+        
+        if not bundle:
             return
         
-        if self.projectDir in path:
-            self.controller.errorMessage("You cannot link to your makerProjects folder!")
-            return
-            
-        # verify if project settings are up to date
-        makerProjectConverter.Verify(path)
-
+        path = bundle[0]
+    
         if not os.path.isdir(os.path.join(path, 'parts')):
-            self.controller.errorMessage('%s is not a maker project !' % path)
+            self.controller.errorMessage('%s is not a TheMaker project !' % path)
             return
     
         if path not in self.linkedProjectPaths:
@@ -560,7 +556,7 @@ class ProjectManager:
             self.updateLinkedProjects()
             self.controller.addProjectIconToTree(os.path.basename(path))
         else:
-            self.controller.infoMessage("There is already a link to this project...")
+            self.controller.infoMessage("This project is already open...")
     
     def updateLinkedProjects(self):
         """ update list of linked projects """

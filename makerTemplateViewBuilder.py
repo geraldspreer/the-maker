@@ -54,13 +54,15 @@ def scaffold(systemDir):
 
         }
 
-
+        
+     
         h5 {
             font-weight:lighter;
             letter-spacing:0.050em;
             margin:-28px 0px 0px 8px;
             line-height:3em;
             font-size:20px;
+            cursor:default;
             
         
         }
@@ -111,6 +113,7 @@ def scaffold(systemDir):
             margin:-24px 0px 0px 0px;
             width:100%;
             font-size:14px;
+            cursor:default;
         
         }
 
@@ -138,20 +141,28 @@ def scaffold(systemDir):
             
             float:left;
             clear:right;
+            cursor:default;
         
         }
 
         .info img {
 
-            width:320px;
+            width:280px;
             height:auto;
             float:left;
             clear:right;
-            margin:10px 20px 0px 0px;
+            margin:0px 20px 0px 0px;
             -webkit-transform: perspective( 600px ) rotateY( 10deg );
+            -webkit-transition: width, 0.5s; 
                 
         }
 
+        .info img:hover {
+
+            width:320px;
+            -webkit-transform: perspective( 600px ) rotateY( 0deg ); 
+                
+        }
 
         a.button {
             
@@ -179,7 +190,7 @@ def scaffold(systemDir):
         $(document).ready(function(){
               $('.thumbnail').hover(function(){
                       $('.info').hide();
-        
+                      
                   $($(this).data('info')).show();
      
               });
@@ -193,7 +204,7 @@ def scaffold(systemDir):
     <body>
 
 
-""" + createThumbnails(systemDir) + createInfo(systemDir) + """
+""" + createThumbnails(systemDir) + createInfo(systemDir) + """ 
     </body>
 
 </html>
