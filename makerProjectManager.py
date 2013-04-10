@@ -121,7 +121,7 @@ class ProjectManagerController(makerController.SuperController):
             self.view.Center(self.view.wx.BOTH)
             
         
-        theFile = os.path.join(self.model.getProjectDir(), "../.makerUISettings")
+        theFile = os.path.join(self.model.getApplicationSupportDir(), ".makerUISettings")
         if os.path.isfile(theFile):
             try:
                 interfaceData = readDataFromFile(theFile)
@@ -177,7 +177,8 @@ class ProjectManagerController(makerController.SuperController):
     
     
     def saveInterfaceData(self, data):
-        writeDataToFile(data, os.path.join(self.model.getProjectDir(), "../.makerUISettings"))
+        
+        writeDataToFile(data, os.path.join(self.model.getApplicationSupportDir(), ".makerUISettings"))
     
            
     
@@ -229,8 +230,8 @@ class ProjectManagerController(makerController.SuperController):
                 self.actionAddNewProject(None)
             else:
                 return
-        
-        tgt = os.path.join(self.model.getProjectDir(), projName)
+        # use get dir then put together...
+        tgt = os.path.join(".", projName)
                 
         if os.path.isdir(tgt):
             m  = "A project with the name '" + projName + "' already exists !"
@@ -386,7 +387,7 @@ class ProjectManager:
     def __init__(self, view):
         
         self.controller = ProjectManagerController(self, view)
-        self.setProjectDir()
+        #self.setProjectDir()
         
         self.linkedProjectPaths = []
         self.loadLinkedProjects()
@@ -394,12 +395,56 @@ class ProjectManager:
         self.controller.listProjectsInTree(self.getProjects())
         self.openProjects = []
         self.openFiles = []
+        
+        self.projectConvertRepoName = "MakerProjects"
+        self.checkForSandboxedProjects()
        
+    
+    def checkForSandboxedProjects(self):
+        print "Checking sandbox for old projects..."
+        sandBoxProjects = os.path.join(self.getApplicationSupportDir(), "makerProjects")
+        converted = []
+        errors = False
+        
+        if not os.path.isdir(sandBoxProjects):
+            print "No projects in sandbox..."
+            return
+        
+        for item in os.listdir(sandBoxProjects):
+            if not item.startswith("."):
+                src = os.path.join(sandBoxProjects, item)
+                dst = os.path.join(self.getUserHomeDir(), self.projectConvertRepoName, item + ".makerProject") 
+                
+                if not os.path.isdir(dst):
+                    # this is just a safety check. This case should never occur...
+                    # 
+                    shutil.copytree(src, dst)
+                    converted.append(item + ".makerProject")
+                
+        
+        for bundle in converted:
+            if not bundle in os.listdir(os.path.join(self.getUserHomeDir(), self.projectConvertRepoName)):
+                errors = True
+                
+        if errors == True:
+            self.controller.errorMessage("Fatal Installation Error!\nPlease report this to info@makercms.org.\nWe will help you out!\nShutting down...")
+            sys.exit(0)
+        else:
+            shutil.rmtree(sandBoxProjects, True)
+            
     
     def getApplicationPath(self):
         """ get path where the maker executable resides """
         return os.path.dirname(sys.argv[0])
     
+    def getUserHomeDir(self):
+        """ get the users gome dir """    
+        try:
+            theDir = os.environ['HOME']
+        except:
+            theDir = os.environ['HOMEPATH']
+        
+        return theDir
     
     def getApplicationSupportDir(self):
     
@@ -522,7 +567,7 @@ class ProjectManager:
     
     def loadLinkedProjects(self):
     
-        theFile = os.path.join(self.getProjectDir(), "../.makerUISettings")
+        theFile = os.path.join(self.getApplicationSupportDir(), ".makerUISettings")
         if os.path.isfile(theFile):
             try:
                 interfaceData = readDataFromFile(theFile)
@@ -563,6 +608,7 @@ class ProjectManager:
         for path in self.linkedProjectPaths:
             self.linkedProjects[path] = os.path.basename(path) 
         
+        
            
     def getProjects(self):
         """Returns a list with projects from the Constants.PROJECTBASE folder"""
@@ -577,10 +623,10 @@ class ProjectManager:
         for project in self.linkedProjects.itervalues():
             projects.append(project)
         
-        for thing in os.listdir(self.getProjectDir()):
-            fullThing = os.path.join(self.getProjectDir(), thing)
-            if not thing.startswith('.') and os.path.isdir(fullThing):
-                projects.append(thing)
+#        for thing in os.listdir(self.getProjectDir()):
+#            fullThing = os.path.join(self.getProjectDir(), thing)
+#            if not thing.startswith('.') and os.path.isdir(fullThing):
+#                projects.append(thing)
 
         return projects
     
@@ -667,9 +713,9 @@ class ProjectManager:
 
     # ------------------------------------------------------------
         
-    def getProjectDir(self):
-        """Returns the project folder."""        
-        return self.projectDir
+#    def getProjectDir(self):
+#        """Returns the project folder."""        
+#        return self.projectDir
 
     # ------------------------------------------------------------
         
