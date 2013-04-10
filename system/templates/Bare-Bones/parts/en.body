@@ -1,0 +1,14 @@
+<body>
+
+
+	<!-- Primary Page Layout
+	================================================== -->
+
+	<!-- Delete everything in this .container and get started on your own site! -->
+
+	<div class="container">
+		<div class="sixteen columns">
+			<h1 class="remove-bottom" style="margin-top: 40px">Bare-Bones</h1>
+			<h5>Based on Skeleton Version 1.2</h5>
+			<hr />
+		</div>

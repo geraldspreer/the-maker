@@ -70,7 +70,7 @@ def scaffold(systemDir):
                 
             width:100%;
             height:100%;
-            -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(rgba(0,0,0,0.1)));
+            -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(rgba(0,0,0,0.2)));
             /* -webkit-transform: perspective( 600px ) rotateY( 20deg );        */    
             margin-bottom:40px;
                 }
@@ -96,9 +96,13 @@ def scaffold(systemDir):
             clear:right;
             -webkit-border-radius:10px;
         -webkit-transition: border-color, 0.5s;
-      
-            
+    
+        }
 
+        .thumbnail img {
+        
+            -webkit-border-radius:8px;
+        
         }
 
         .thumbnail p {
@@ -121,25 +125,31 @@ def scaffold(systemDir):
 
         .info {
         
-            text-align:center;
             width:92%;
             float:left;
             clear:both;
             display:none;
             margin:20px 10px 0px 10px;
-            border:1px solid #fff;
+            
         
         }
         
         .info p {
             
-            text-align:center;
+            float:left;
+            clear:right;
         
         }
 
         .info img {
 
-            display:none;        
+            width:320px;
+            height:auto;
+            float:left;
+            clear:right;
+            margin:10px 20px 0px 0px;
+            -webkit-transform: perspective( 600px ) rotateY( 10deg );
+                
         }
 
 
@@ -203,8 +213,8 @@ def createThumbnails(systemDir):
     thumbnails = "<div class='row'>\n"
     
     for template in os.listdir(os.path.join(systemDir, "templates")):
-        
-        thumbnails += makeThumbnail(systemDir, template)
+        if not template.startswith("."):
+            thumbnails += makeThumbnail(systemDir, template)
     
     thumbnails += "</div>"     
     return thumbnails
@@ -216,11 +226,12 @@ def createInfo(systemDir):
     
     for template in os.listdir(os.path.join(systemDir, "templates")):
         
+        if not template.startswith("."):
+            s = readFile(os.path.join(systemDir, "templates", template, "parts","info.json")) 
+            print "template is:", template
+            data = eval(s)
         
-        s = readFile(os.path.join(systemDir, "templates", template, "parts","info.json")) 
-        data = eval(s)
-        
-        info += makeInfo(systemDir, template, data)
+            info += makeInfo(systemDir, template, data)
     
     info += "</div>"     
     return info
@@ -228,11 +239,12 @@ def createInfo(systemDir):
 
 def makeInfo(systemDir, templateName, data):
     
+    previewImage = os.path.join(systemDir, "templates", templateName, "parts/preview.jpg")
     info = """
     
     <div class="info" id="info-""" + data["Title"] + """">
         <h5>""" + data["Title"] + """</h5>
-        <p>""" + data["Description"] + """</p>
+        <p><img src='""" + previewImage + """' />""" + data["Description"] + """</p>
         </div>
     
     
