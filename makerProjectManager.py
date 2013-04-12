@@ -493,66 +493,23 @@ class ProjectManager:
         doing several checks at the same time. Returns a boolean 
         indicating outcome.
         """
-        
-        self.controller.infoMessage("coming soon")
-        return
+
 
         project = self.controller.importProjectDialog()
         if not project: return
-        
-        projectFolder = self.getProjectDir()
 
-        # TO DO: Brinick is confused. Why do we bother calling the converter? 
-        # It seems the only thing that marks a folder as a makerProject 
-        # is the presence of a sub directory called 'parts'. 
-        # And commenting out the line below does not seem to prevent me from
-        # successfully importing a project. So what's its purpose?
-
-        # Gerald: We used to have a dist table for each language among other 
-        # odd things the newer project version avoids these
-        
-        # verify if project settings are up to date
-        makerProjectConverter.Verify(project)
-
+        #=======================================================================
+        # verify
+        #=======================================================================
         if not os.path.isdir(os.path.join(project, 'parts')):
-            self.controller.errorMessage('%s is not a maker project !' % project)
+            self.controller.errorMessage('%s is not a TheMaker project!' % project)
             return
 
-        print '%s is a maker project' % project
-        print 'importing: %s' % project
-        print "Project: %s" % project
-        print "ProjectFolder: %s" % projectFolder
-
-        proj = os.path.basename(project)
-        dest = os.path.join(projectFolder, proj)
-        if os.path.isdir(dest):
-            self.controller.errorMessage('A project named %s already exists!' % dest)
-            return
-        
-        try:
-            self.controller.showProgress(4," ")
-            self.controller.updateProgressPulse("importing: " + proj)
+        if not project.endswith(".makerProject"):
+            converted = project + ".makerProject"
+            os.rename(project, converted)
             
-            copyFileTree(project, os.path.join(projectFolder, proj), ["info.json"], 
-                                        self.controller.updateProgressPulse, 
-                                        ("importing: " + proj))
-            
-              
-            #m = "The project ' %s ' has been imported..." % proj
-            
-            self.controller.addProjectIconToTree(proj)
-            self.controller.killProgressBar()
-            
-            return
-        except Exception, e:
-            self.controller.killProgressBar()
-            m  = "Unable to import project: %s\n" % project
-            m += "Detailed Information:\n\n" + str(e)
-            
-            self.controller.errorMessage(m)
-            return
-     
-    
+        self.openThisProject(converted, verbose = False)        
     
     
     def addNewProject(self, templatePath, newProjectDir, newProjectName):
@@ -604,9 +561,14 @@ class ProjectManager:
             return
         
         path = bundle[0]
-    
+        
+        self.openThisProject(path)
+        
+    def openThisProject(self, path, verbose = True):
+        
         if not os.path.isdir(os.path.join(path, 'parts')):
-            self.controller.errorMessage('%s is not a TheMaker project !' % path)
+            if verbose:
+                self.controller.errorMessage('%s is not a TheMaker project !' % path)
             return
     
         if path not in self.linkedProjectPaths:
@@ -614,7 +576,11 @@ class ProjectManager:
             self.updateLinkedProjects()
             self.controller.addProjectIconToTree(os.path.basename(path))
         else:
-            self.controller.infoMessage("This project is already open...")
+            if verbose:
+                self.controller.infoMessage("This project is already open...")
+    
+    
+    
     
     def updateLinkedProjects(self):
         """ update list of linked projects """

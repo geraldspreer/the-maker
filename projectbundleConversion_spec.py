@@ -25,16 +25,27 @@ class TestApp(wx.App):
 
 class ProjectManagerTestController(makerProjectManager.ProjectManagerController):
 
+    def importProjectDialog(self):
+        project = self.view.getDirFromUser()
+        if not project: 
+            return None
+        else:
+            print "import Dialog returning:", project   
+            return project
 
-   def showProgress(self, limit, Message, title):
-       print Message
+    def showProgress(self, limit, Message, title):
+        print Message
        
-   def updateProgressPulse(self, foo):
+    def updateProgressPulse(self, foo):
 
-       print "updating progress pulse"
+        print "updating progress pulse"
        
-   def errorMessage(self, message):
+    def infoMessage(self, message):
        
+        print "Info Message:", message 
+       
+    def errorMessage(self, message):
+       self.view.Error(str(message))
        print "Error Message:", message 
        
 
@@ -43,7 +54,6 @@ class TestProjectManager(makerProjectManager.ProjectManager):
     def __init__(self, view):
         
         self.controller = ProjectManagerTestController(self, view)
-        self.setProjectDir()
         
         self.linkedProjectPaths = []
         self.loadLinkedProjects()
@@ -85,7 +95,12 @@ class TestView(makerWxGUI.wxPythonGUI):
     def partArt(self, il, image_size):
         """ don't need no custom art in this mock class """
         pass
+    
+    def getDirFromUser(self, dialogMessage = None):
 
+        return self.userSelectedDir 
+    
+    
     def Error(self, Message):
         
         self._lastErrorMessage = Message
@@ -100,16 +115,24 @@ class TestView(makerWxGUI.wxPythonGUI):
 
         self.choiceReturnString = string
 
+    def setUserSelectedDir(self, string):
 
+        self.userSelectedDir = string
+
+
+    def initError(self):
+
+        self._lastErrorMessage = ""
+        
 
 class MakerTest(unittest.TestCase):
     
-    def tearDown(self):
+    def tearMeDown(self):
         
         shutil.rmtree(self.convertedProjectsPath, True)
         self.app.Destroy()
     
-    def setUp(self):
+    def setMeUp(self):
        
         self.user_home = "/Users/maker"
          
@@ -119,7 +142,6 @@ class MakerTest(unittest.TestCase):
         
         self.projectPath = os.path.join(self.pm.getApplicationSupportDir(), "makerProjects")
         self.sandBox = self.projectPath
-       
         
         self.convertedProjectsPath = os.path.join(self.user_home, self.pm.projectConvertRepoName)
 
@@ -137,7 +159,53 @@ class MakerTest(unittest.TestCase):
         pass
     
 
+
+    def test_importAndConvertClassicProject(self):
+        
+        self.setMeUp()
+        
+        testProjectBefore = "/Users/maker/testing-makerProjects/testProject"
+        testProjectAfter = "/Users/maker/testing-makerProjects/testProject.makerProject"
+        notAProject = "/Users/maker/testing-makerProjects/"
+        
+        
+        if os.path.isdir(testProjectAfter):
+            os.rename(testProjectAfter, testProjectBefore)
+        
+        #=======================================================================
+        # not a project given but wrong dir
+        #=======================================================================
+        
+        self.app.mainView.initError()
+        self.app.mainView.setUserSelectedDir(notAProject)
+        
+        self.pm.importClassicProject(event = None)
+        self.assertTrue("not a TheMaker" in self.app.mainView._lastErrorMessage, "If wrong dir given - Error and return")
+        
+        #=======================================================================
+        # correct classic project given
+        #=======================================================================
+        
+        self.app.mainView.setUserSelectedDir(testProjectBefore)
+        
+        self.pm.importClassicProject(event = None)
+        
+        self.assertTrue(os.path.isdir(testProjectAfter), "Project has been renamed correctly...")
+        
+        self.assertTrue(testProjectAfter in self.pm.linkedProjectPaths, "Project has been linked correctly...")
+        
+        # cleaning up
+        
+        if os.path.isdir(testProjectAfter):
+            os.rename(testProjectAfter, testProjectBefore)
+        
+        self.tearMeDown()
+
+
+
     def test_ifProjectsInSandboxMoveToHomeAndConvert(self):
+        
+        self.setMeUp()
         
         # create Test Sandbox
         if not os.path.isdir(self.sandBox):
@@ -187,6 +255,7 @@ class MakerTest(unittest.TestCase):
 
         self.assertFalse(os.path.isdir(self.sandBox), "Sandbox project repo deleted...")
         
+        self.tearMeDown()
               
 if __name__=="__main__":
     unittest.main()
