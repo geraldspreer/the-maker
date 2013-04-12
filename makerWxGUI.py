@@ -512,11 +512,17 @@ class wxPythonGUI(wx.Frame):
                                                 )
         
         parent.AppendSeparator()
+
+        self.MenuItemManageProjects = parent.Append(help='Manage Projects', 
+                                                   id=-1,
+                                                   kind=wx.ITEM_NORMAL, 
+                                                   text=u'Manage Projects')
+
         
-#        self.MenuItemImportProject = parent.Append(help='import maker project', 
-#                                                   id=-1,
-#                                                   kind=wx.ITEM_NORMAL, 
-#                                                   text=u'Import Project')
+        self.MenuItemImportProject = parent.Append(help="Import 'Classic' Maker Project", 
+                                                   id=-1,
+                                                   kind=wx.ITEM_NORMAL, 
+                                                   text=u"Import 'Classic' Project")
         
 #        
 #        self.MenuItemDeleteProject = parent.Append(help='Delete a maker project', 
@@ -524,15 +530,6 @@ class wxPythonGUI(wx.Frame):
 #                                                   kind=wx.ITEM_NORMAL, 
 #                                                   text=u'Delete Project')
         
-        
-        
-
-        
-        
-        self.MenuItemManageProjects = parent.Append(help='Manage Projects', 
-                                                   id=-1,
-                                                   kind=wx.ITEM_NORMAL, 
-                                                   text=u'Manage Projects')
         
        
         parent.AppendSeparator()

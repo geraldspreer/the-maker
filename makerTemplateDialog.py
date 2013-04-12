@@ -68,7 +68,7 @@ def __init_resources():
           <object class="wxStaticText">
             <pos>20, 20</pos>
             <size>700, 40</size>
-            <label>Choose a template for your project:</label>
+            <label>Choose a template for your project</label>
             <style>wxALIGN_CENTRE</style>
             <XRCED>
               <assign_var>1</assign_var>

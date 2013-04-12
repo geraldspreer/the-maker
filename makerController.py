@@ -289,7 +289,7 @@ returns the instance of the progressbar that was last added to the stack
         self.view.MenuItemCloseFile.Enable(False) 
         self.view.MenuItemPreview.Enable(False) 
         self.view.MenuItemImportFile.Enable(False)
-        #self.view.MenuItemImportProject.Enable(True)
+        self.view.MenuItemImportProject.Enable(True)
         #self.view.MenuItemDeleteProject.Enable(False)
         self.view.MenuItemOpenProject.Enable(True)
         

@@ -55,9 +55,10 @@ class ProjectManagerController(makerController.SuperController):
                        self.actionAddNewProject,  
                        self.view.MenuItemAddProject)
         
-#        self.view.Bind(self.view.wx.EVT_MENU, 
-#                       self.model.importProject,  
-#                       self.view.MenuItemImportProject)
+        self.view.Bind(self.view.wx.EVT_MENU, 
+                       self.model.importClassicProject,  
+                       self.view.MenuItemImportProject)
+        
 #
 #        self.view.Bind(self.view.wx.EVT_MENU, 
 #                       self.model.deleteProject,  
@@ -219,7 +220,7 @@ class ProjectManagerController(makerController.SuperController):
         
     def actionAddNewProject(self, event):
         
-        projName = self.input("Enter a project name...", title="Create new project...")
+        projName = self.input("Project name...", title="Create new project:")
 
         if not projName: 
             return 
@@ -231,7 +232,7 @@ class ProjectManagerController(makerController.SuperController):
             else:
                 return
         # use get dir then put together...
-        fromUser = self.dirDialog("In which folder would you like to store your project?")
+        fromUser = self.dirDialog("Where would you like to keep your project?")
         if not fromUser:
             return
         
@@ -486,69 +487,72 @@ class ProjectManager:
         return os.path.join(self.getSystemPath(), 'templates')
         
     
-#    def importProject(self, event=None):        
-#        """
-#        Imports a project and converts it to actual settings, 
-#        doing several checks at the same time. Returns a boolean 
-#        indicating outcome.
-#        """
-#
-#        project = self.controller.importProjectDialog()
-#        if not project: return
-#        
-#        projectFolder = self.getProjectDir()
-#
-#        # TO DO: Brinick is confused. Why do we bother calling the converter? 
-#        # It seems the only thing that marks a folder as a makerProject 
-#        # is the presence of a sub directory called 'parts'. 
-#        # And commenting out the line below does not seem to prevent me from
-#        # successfully importing a project. So what's its purpose?
-#
-#        # Gerald: We used to have a dist table for each language among other 
-#        # odd things the newer project version avoids these
-#        
-#        # verify if project settings are up to date
-#        makerProjectConverter.Verify(project)
-#
-#        if not os.path.isdir(os.path.join(project, 'parts')):
-#            self.controller.errorMessage('%s is not a maker project !' % project)
-#            return
-#
-#        print '%s is a maker project' % project
-#        print 'importing: %s' % project
-#        print "Project: %s" % project
-#        print "ProjectFolder: %s" % projectFolder
-#
-#        proj = os.path.basename(project)
-#        dest = os.path.join(projectFolder, proj)
-#        if os.path.isdir(dest):
-#            self.controller.errorMessage('A project named %s already exists!' % dest)
-#            return
-#        
-#        try:
-#            self.controller.showProgress(4," ")
-#            self.controller.updateProgressPulse("importing: " + proj)
-#            
-#            copyFileTree(project, os.path.join(projectFolder, proj), ["info.json"], 
-#                                        self.controller.updateProgressPulse, 
-#                                        ("importing: " + proj))
-#            
-#              
-#            #m = "The project ' %s ' has been imported..." % proj
-#            
-#            self.controller.addProjectIconToTree(proj)
-#            self.controller.killProgressBar()
-#            
-#            return
-#        except Exception, e:
-#            self.controller.killProgressBar()
-#            m  = "Unable to import project: %s\n" % project
-#            m += "Detailed Information:\n\n" + str(e)
-#            
-#            self.controller.errorMessage(m)
-#            return
-#     
-#    
+    def importClassicProject(self, event=None):        
+        """
+        Imports a project and converts it to actual settings, 
+        doing several checks at the same time. Returns a boolean 
+        indicating outcome.
+        """
+        
+        self.controller.infoMessage("coming soon")
+        return
+
+        project = self.controller.importProjectDialog()
+        if not project: return
+        
+        projectFolder = self.getProjectDir()
+
+        # TO DO: Brinick is confused. Why do we bother calling the converter? 
+        # It seems the only thing that marks a folder as a makerProject 
+        # is the presence of a sub directory called 'parts'. 
+        # And commenting out the line below does not seem to prevent me from
+        # successfully importing a project. So what's its purpose?
+
+        # Gerald: We used to have a dist table for each language among other 
+        # odd things the newer project version avoids these
+        
+        # verify if project settings are up to date
+        makerProjectConverter.Verify(project)
+
+        if not os.path.isdir(os.path.join(project, 'parts')):
+            self.controller.errorMessage('%s is not a maker project !' % project)
+            return
+
+        print '%s is a maker project' % project
+        print 'importing: %s' % project
+        print "Project: %s" % project
+        print "ProjectFolder: %s" % projectFolder
+
+        proj = os.path.basename(project)
+        dest = os.path.join(projectFolder, proj)
+        if os.path.isdir(dest):
+            self.controller.errorMessage('A project named %s already exists!' % dest)
+            return
+        
+        try:
+            self.controller.showProgress(4," ")
+            self.controller.updateProgressPulse("importing: " + proj)
+            
+            copyFileTree(project, os.path.join(projectFolder, proj), ["info.json"], 
+                                        self.controller.updateProgressPulse, 
+                                        ("importing: " + proj))
+            
+              
+            #m = "The project ' %s ' has been imported..." % proj
+            
+            self.controller.addProjectIconToTree(proj)
+            self.controller.killProgressBar()
+            
+            return
+        except Exception, e:
+            self.controller.killProgressBar()
+            m  = "Unable to import project: %s\n" % project
+            m += "Detailed Information:\n\n" + str(e)
+            
+            self.controller.errorMessage(m)
+            return
+     
+    
     
     
     def addNewProject(self, templatePath, newProjectDir, newProjectName):
