@@ -231,7 +231,14 @@ class ProjectManagerController(makerController.SuperController):
             else:
                 return
         # use get dir then put together...
-        tgt = os.path.join(".", projName)
+        fromUser = self.dirDialog("In which folder would you like to store your project?")
+        if not fromUser:
+            return
+        
+        # set correct name
+        projName += ".makerProject"
+        
+        tgt = os.path.join(fromUser, projName)
                 
         if os.path.isdir(tgt):
             m  = "A project with the name '" + projName + "' already exists !"
@@ -552,8 +559,10 @@ class ProjectManager:
         
         """
         copyFileTree(templatePath, newProjectDir,["info.json"], self.controller.updateProgressPulse, ("creating: " + newProjectName))
-    
-    
+        if newProjectDir not in self.linkedProjectPaths:
+            self.linkedProjectPaths.append(newProjectDir)
+            self.updateLinkedProjects()
+            
     
     def removeFromOpenFiles(self, name, group, project):
         """ remove a certain file from openFiles especially after the file has
@@ -909,12 +918,8 @@ class ProjectManager:
                     pass
         
         else: 
-        
-            path = os.path.join(self.getProjectDir() , projectName)
-        
-        # ensuring backwards compatibility
-        # just in case that project has been around before 0.6
-        makerProjectConverter.Verify(path)
+            pass
+            #path = os.path.join(self.getProjectDir() , projectName)
         
         self.setActiveProject(makerProject.MakerProjectModel(path, 
                                                              self.controller.view,

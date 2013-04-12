@@ -68,7 +68,7 @@ def __init_resources():
           <object class="wxStaticText">
             <pos>20, 20</pos>
             <size>700, 40</size>
-            <label>Choose a template:</label>
+            <label>Choose a template for your project:</label>
             <style>wxALIGN_CENTRE</style>
             <XRCED>
               <assign_var>1</assign_var>
@@ -97,7 +97,7 @@ def __init_resources():
       <object class="sizeritem">
         <object class="wxPanel" name="BottomPanel">
           <object class="wxButton" name="Cancel">
-            <pos>740, 10</pos>
+            <pos>20, 10</pos>
             <label>Cancel</label>
             <style>wxBU_RIGHT</style>
             <XRCED>

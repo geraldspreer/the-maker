@@ -3394,12 +3394,13 @@ class wxPythonGUI(wx.Frame):
         
         
     
-    def getDirFromUser(self, message=None):
+    def getDirFromUser(self, dialogMessage = None):
 
-        self.dirDialog = wx.DirDialog(self, message,
+        self.dirDialog = wx.DirDialog(self, message = dialogMessage,
                                       style=wx.DD_DEFAULT_STYLE|
                                       wx.DD_NEW_DIR_BUTTON)
-        print dir(self.dirDialog)
+        
+        
           
 # ------------------------------------------------------------------------
  

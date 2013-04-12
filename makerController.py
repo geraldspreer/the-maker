@@ -371,6 +371,7 @@ returns the instance of the progressbar that was last added to the stack
         returns a path or None when canceled
         """
         self.view.getDirFromUser(message)
+
         if self.view.dirDialog.ShowModal() == self.view.wx.ID_OK:
             path = self.view.dirDialog.GetPath()
             self.view.dirDialog.Destroy()
