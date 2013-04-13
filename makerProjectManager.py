@@ -12,7 +12,6 @@ from makerUtilities import verifyLatinChars
 import makerController
 import makerProject
 import makerTemplateDialog
-import makerProjectConverter
 import makerManageLinkedProjects
 import makerTemplateViewBuilder
 
@@ -420,6 +419,7 @@ class ProjectManager:
         
         for item in os.listdir(sandBoxProjects):
             if not item.startswith("."):
+                print "converting:", item
                 src = os.path.join(sandBoxProjects, item)
                 dst = os.path.join(self.getUserHomeDir(), self.projectConvertRepoName, item + ".makerProject") 
                 
@@ -428,6 +428,9 @@ class ProjectManager:
                     # 
                     shutil.copytree(src, dst)
                     converted.append(item + ".makerProject")
+                    
+                    if dst not in self.linkedProjectPaths:
+                        self.openThisProject(dst, verbose = False)
                 
         
         for bundle in converted:

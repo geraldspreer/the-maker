@@ -217,6 +217,8 @@ class MakerTest(unittest.TestCase):
         for item in dummy:
             if not os.path.isdir(os.path.join(self.sandBox, item)):
                 os.mkdir(os.path.join(self.sandBox, item))
+                os.mkdir(os.path.join(self.sandBox, item, "parts"))
+                
         
         projectsInSandbox = [] 
         projectsInNewRepo = []
@@ -247,12 +249,16 @@ class MakerTest(unittest.TestCase):
         
         self.assertEqual(len(projectsInSandbox), 
                          len(getProjectsInCreatedRepo()), 
-                         "Projects from Sandbox should be all linked")
+                         "Projects from Sandbox should be converted")
         
         
         for item in getProjectsInCreatedRepo():
             self.assertTrue(item.endswith(".makerProject"), "projects in new repo should be bundles")
-
+            itemPath = os.path.join(self.convertedProjectsPath,item)
+            print self.pm.linkedProjectPaths
+            self.assertTrue(itemPath in self.pm.linkedProjectPaths, 
+                            "Project has been linked correctly...")
+        
         self.assertFalse(os.path.isdir(self.sandBox), "Sandbox project repo deleted...")
         
         self.tearMeDown()
