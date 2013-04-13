@@ -38,8 +38,8 @@ class ImageGUI(MakerDialog):
         self.res_x = self.add('textCtrl',
                               {'name'   : 'res_x',
                                'parent' : self,
-                               'pos'    : wx.Point(16, 480),
-                               'size'   : wx.Size(56, 21),
+                               'pos'    : wx.Point(16, 475),
+                               'size'   : wx.Size(56, 25),
                                'style'  : 0,
                                'value'  : '-'
                                })
@@ -47,25 +47,25 @@ class ImageGUI(MakerDialog):
         self.res_y = self.add('textCtrl',
                               {'name'   : 'res_y',
                                'parent' : self,
-                               'pos'    : wx.Point(82, 480),
-                               'size'   : wx.Size(48, 21),
+                               'pos'    : wx.Point(82, 475),
+                               'size'   : wx.Size(48, 25),
                                'style'  : 0,
                                'value'  : '-'
                                })
 
         self.staticText1 = self.add('staticText',
-                                    {'label'  : 'x',
+                                    {'label'  : 'Width',
                                      'name'   : 'staticText1',
                                      'parent' : self,
-                                     'pos'    : wx.Point(16, 456),
+                                     'pos'    : wx.Point(16, 445),
                                      'size'   : wx.Size(16, 25),
                                      'style'  : 0})        
         
         self.staticText2 = self.add('staticText',
-                                    {'label'  : 'y',
+                                    {'label'  : 'Weight',
                                      'name'   : 'staticText2',
                                      'parent' : self,
-                                     'pos'    : wx.Point(76, 456),
+                                     'pos'    : wx.Point(76, 445),
                                      'size'   : wx.Size(8, 25),
                                      'style'  : 0})        
         
@@ -73,7 +73,7 @@ class ImageGUI(MakerDialog):
                                     {'label'  : '',
                                      'name'   : 'warning',
                                      'parent' : self,
-                                     'pos'    : wx.Point(140, 456),
+                                     'pos'    : wx.Point(145, 445),
                                      'size'   : wx.Size(128, 25),
                                      'style'  : 0})   
         
@@ -85,7 +85,7 @@ class ImageGUI(MakerDialog):
         self.keepRatio = wx.CheckBox(self, 
                                      -1, 
                                      "Keep Proportions", 
-                                     pos=wx.Point(16, 422),
+                                     pos=wx.Point(16, 415),
                                      size=wx.Size(180, 25), 
                                      style=0)        
         
@@ -93,24 +93,24 @@ class ImageGUI(MakerDialog):
                                      {'label'   : 'Import',
                                       'name'    : 'buttonscale',
                                       'parent'  : self,
-                                      'pos'     : wx.Point(368, 480),
-                                      'size'    : wx.Size(112, 23),
+                                      'pos'     : wx.Point(380, 463),
+                                      'size'    : wx.Size(80, 40),
                                       'style'   : 0})
 
         self.cancel_button = self.add('buttonNoHandler',
                                       {'label'   : 'Cancel',
                                        'name'    : 'cancel_button',
                                        'parent'  : self,
-                                       'pos'     : wx.Point(280, 480),
-                                       'size'    : wx.Size(75, 23),
+                                       'pos'     : wx.Point(290, 463),
+                                       'size'    : wx.Size(80, 40),
                                        'style'   : 0})
 
 
         self.new_name = self.add('textCtrl',
                                  {'name'   : 'new_name',
                                   'parent' : self,
-                                  'pos'    : wx.Point(140, 480),
-                                  'size'   : wx.Size(128, 21),
+                                  'pos'    : wx.Point(145, 475),
+                                  'size'   : wx.Size(135, 25),
                                   'style'  : 0,
                                   'value'  : 'newName'
                                   })
