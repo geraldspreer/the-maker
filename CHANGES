@@ -49,7 +49,9 @@ x.x.2013	- Gerald
 	- mock_View for testing -> gone, now were doing this with the original view
 	 class for the mainUI
 	- deleted the OLD (0.6) makerProjectConverter.py
-	- Open Project now uses File Dialog
+	- Open Project now uses File dialog
+	- updated "Manage Projects" dialog
+	- existing projects from users sandbox are moved to chosen location
 
 
 March 15, 2013 		Gerald

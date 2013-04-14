@@ -230,7 +230,7 @@ class EditDistributionData:
     
     def cleanup(self, toCleanup):
         
-        self.controller.showProgress(len(toCleanup), "cleanup:")
+        self.controller.showProgress(limit = 1, Message="Please wait...", title="Cleaning Up")
         runs = 1
         for x in toCleanup:
             target = x[1]
@@ -244,7 +244,7 @@ class EditDistributionData:
             else:
                 finalTargetFolder = target[0]
             
-            self.controller.updateProgressMessage(runs, "cleanup:")
+            self.controller.updateProgressPulse("Please wait...")
             if self.project.checkIfRemoteDirIsDir(finalTargetFolder):
                 self.project.renameRemoteFile(urlparse.urljoin(finalSourceFolder, 
                                                                source[1]), 

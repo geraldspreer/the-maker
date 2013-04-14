@@ -402,7 +402,7 @@ class ProjectManager:
         self.controller.listProjectsInTree(self.getProjects())
         self.openProjects = []
         self.openFiles = []
-        self.projectConvertRepoName = "YourMakerProjects"
+        self.projectConvertRepoName = "MakerProjects"
         self.checkForSandboxedProjects()
        
     
@@ -451,7 +451,7 @@ class ProjectManager:
             if not item.startswith("."):
                 print "converting:", item
                 src = os.path.join(sandBoxProjects, item)
-                dst = os.path.join(targetDir, item + ".makerProject") 
+                dst = os.path.join(targetDir, self.projectConvertRepoName ,item + ".makerProject") 
                 
                 if not os.path.isdir(dst):
                     # this is just a safety check. This case should never occur...
@@ -464,7 +464,7 @@ class ProjectManager:
                 
         
         for bundle in converted:
-            if not bundle in os.listdir(targetDir):
+            if not bundle in os.listdir(os.path.join(targetDir, self.projectConvertRepoName)):
                 errors = True
                 
         if errors == True:
