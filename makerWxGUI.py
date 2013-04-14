@@ -3017,7 +3017,6 @@ class wxPythonGUI(wx.Frame):
     
     def Message(self,Message):    
         
-        
         dlg = wx.MessageDialog(self, Message,
           'Info', wx.OK | wx.ICON_INFORMATION)
         try:

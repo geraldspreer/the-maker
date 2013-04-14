@@ -402,12 +402,34 @@ class ProjectManager:
         self.controller.listProjectsInTree(self.getProjects())
         self.openProjects = []
         self.openFiles = []
-        
-        self.projectConvertRepoName = "MakerProjects"
+        self.projectConvertRepoName = "YourMakerProjects"
         self.checkForSandboxedProjects()
        
     
     def checkForSandboxedProjects(self):
+        
+        updateInfo = ""
+        
+        updateInfo += "Please read carefully:\n"
+        updateInfo += "We have improved the way TheMaker handles projects.\n"
+        updateInfo += "Now you can have projects as external files wherever you like.\n"
+        updateInfo += "But you need to choose where you would like to store your existing"
+        updateInfo += " projects.\n\n "
+        updateInfo += "Click OK to choose...\n "
+        
+        self.controller.view.Center()
+        self.controller.view.Show()
+        
+        
+        def getTargetDir(verbose = False):
+            target = None
+            if verbose:
+                self.controller.infoMessage(updateInfo)
+            
+            target = self.controller.dirDialog("Where would you like to store your existing projects?")
+            
+            return target
+        
         print "Checking sandbox for old projects..."
         sandBoxProjects = os.path.join(self.getApplicationSupportDir(), "makerProjects")
         converted = []
@@ -417,11 +439,19 @@ class ProjectManager:
             print "No projects in sandbox..."
             return
         
+        targetDir = getTargetDir(False)
+        
+        if not targetDir:
+            targetDir = getTargetDir(verbose = True)
+            if not targetDir:
+                return
+
+        
         for item in os.listdir(sandBoxProjects):
             if not item.startswith("."):
                 print "converting:", item
                 src = os.path.join(sandBoxProjects, item)
-                dst = os.path.join(self.getUserHomeDir(), self.projectConvertRepoName, item + ".makerProject") 
+                dst = os.path.join(targetDir, item + ".makerProject") 
                 
                 if not os.path.isdir(dst):
                     # this is just a safety check. This case should never occur...
@@ -434,7 +464,7 @@ class ProjectManager:
                 
         
         for bundle in converted:
-            if not bundle in os.listdir(os.path.join(self.getUserHomeDir(), self.projectConvertRepoName)):
+            if not bundle in os.listdir(targetDir):
                 errors = True
                 
         if errors == True:

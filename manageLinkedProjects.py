@@ -36,24 +36,7 @@ class xrcManageLinked(wx.Dialog):
         self.PostCreate(pre)
 
         # Define variables for the controls, bind event handlers
-        self.theList = xrc.XRCCTRL(self, "theList")
-        self.Unlink = xrc.XRCCTRL(self, "Unlink")
-        self.Cancel = xrc.XRCCTRL(self, "Cancel")
 
-        self.Bind(wx.EVT_BUTTON, self.OnButton_Unlink, self.Unlink)
-        self.Bind(wx.EVT_BUTTON, self.OnButton_Cancel, self.Cancel)
-
-#!XRCED:begin-block:xrcManageLinked.OnButton_Unlink
-    def OnButton_Unlink(self, evt):
-        # Replace with event handler code
-        print "OnButton_Unlink()"
-#!XRCED:end-block:xrcManageLinked.OnButton_Unlink        
-
-#!XRCED:begin-block:xrcManageLinked.OnButton_Cancel
-    def OnButton_Cancel(self, evt):
-        # Replace with event handler code
-        print "OnButton_Cancel()"
-#!XRCED:end-block:xrcManageLinked.OnButton_Cancel        
 
 
 
@@ -67,22 +50,24 @@ def __init_resources():
     wx.FileSystem.AddHandler(wx.MemoryFSHandler())
 
     manageLinkedProjects_xrc = '''\
-<?xml version="1.0" ?><resource class="wxPanel">
+<?xml version="1.0" ?><resource class="wxStaticText">
   <object class="wxDialog" name="ManageLinked">
     <object class="wxBoxSizer">
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
         <object class="wxBoxSizer">
           <orient>wxVERTICAL</orient>
-          
+          <object class="sizeritem">
+            <object class="wxPanel">
+              <size>40</size>
+            </object>
+            <flag>wxGROW</flag>
+          </object>
           <object class="sizeritem">
             <object class="wxListBox" name="theList">
               <pos>0,0</pos>
               <size>320, 240</size>
-              <style>wxBORDER_SIMPLE|wxFULL_REPAINT_ON_RESIZE</style>
-              <XRCED>
-                <assign_var>1</assign_var>
-              </XRCED>
+              <style>wxSIMPLE_BORDER|wxFULL_REPAINT_ON_RESIZE</style>
             </object>
             <option>1</option>
             <flag>wxGROW</flag>
@@ -96,27 +81,20 @@ def __init_resources():
       <object class="sizeritem">
         <object class="wxPanel">
           <object class="wxButton" name="Unlink">
-            <pos>515, 10</pos>
-            <label>Close Project</label>
-            <default>1</default>
-            <XRCED>
-              <events>EVT_BUTTON</events>
-              <assign_var>1</assign_var>
-            </XRCED>
+            <pos>550, 10</pos>
+            <size>80, 30</size>
+            <label>Close</label>
           </object>
           <object class="wxButton" name="Cancel">
-            <pos>420, 10</pos>
-            <label>Cancel</label>
-            <XRCED>
-              <events>EVT_BUTTON</events>
-              <assign_var>1</assign_var>
-            </XRCED>
+            <label>Close</label>
+            <default>1</default>
+            <pos>460, 10</pos>
+            <size>80, 30</size>
           </object>
-          <size>600, 40</size>
         </object>
         <option>0</option>
         <flag>wxEXPAND</flag>
-        <minsize>640, 50</minsize>
+        <minsize>640, 40</minsize>
       </object>
     </object>
     <pos>0,0</pos>
@@ -141,7 +119,7 @@ def __gettext_strings():
     
     def _(str): pass
     
-    _("Close Project")
-    _("Cancel")
+    _("Close")
+    _("Close")
     _("Manage Projects")
 

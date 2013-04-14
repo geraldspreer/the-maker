@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<resource class="wxDialog">
+<resource class="wxPanel">
   <object class="wxDialog" name="ManageLinked">
     <object class="wxBoxSizer">
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
         <object class="wxBoxSizer">
           <orient>wxVERTICAL</orient>
-          <object class="sizeritem">
-            <object class="wxPanel">
-              <object class="wxStaticBitmap">
-                <bitmap stock_id="wxART_INFORMATION"/>
-                <pos>10, 2</pos>
-              </object>
-              <object class="wxStaticText" name="Label1">
-                <label>Manage linked projects:</label>
-                <pos>48, 10</pos>
-                <size>400, 30</size>
-              </object>
-            </object>
-          </object>
+          
           <object class="sizeritem">
             <object class="wxListBox" name="theList">
               <pos>0,0</pos>
               <size>320, 240</size>
-              <style>wxSIMPLE_BORDER|wxFULL_REPAINT_ON_RESIZE</style>
+              <style>wxBORDER_SIMPLE|wxFULL_REPAINT_ON_RESIZE</style>
+              <XRCED>
+                <assign_var>1</assign_var>
+              </XRCED>
             </object>
             <option>1</option>
             <flag>wxGROW</flag>
@@ -37,26 +28,32 @@
       <object class="sizeritem">
         <object class="wxPanel">
           <object class="wxButton" name="Unlink">
-            <label>Unlink</label>
-            <default>0</default>
-            <pos>550, 10</pos>
-            <size>80, 30</size>
+            <pos>515, 10</pos>
+            <label>Close Project</label>
+            <default>1</default>
+            <XRCED>
+              <events>EVT_BUTTON</events>
+              <assign_var>1</assign_var>
+            </XRCED>
           </object>
           <object class="wxButton" name="Cancel">
-            <label>Close</label>
-            <default>1</default>
-            <pos>460, 10</pos>
-            <size>80, 30</size>
+            <pos>420, 10</pos>
+            <label>Cancel</label>
+            <XRCED>
+              <events>EVT_BUTTON</events>
+              <assign_var>1</assign_var>
+            </XRCED>
           </object>
+          <size>600, 40</size>
         </object>
         <option>0</option>
         <flag>wxEXPAND</flag>
-        <minsize>640, 40</minsize>
+        <minsize>640, 50</minsize>
       </object>
     </object>
     <pos>0,0</pos>
     <size>640, 320</size>
-    <title>Manage Linked Projects</title>
+    <title>Manage Projects</title>
     <centered>1</centered>
   </object>
 </resource>

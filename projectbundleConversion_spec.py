@@ -41,12 +41,16 @@ class ProjectManagerTestController(makerProjectManager.ProjectManagerController)
         print "updating progress pulse"
        
     def infoMessage(self, message):
-       
+        self.view.Message(message)
         print "Info Message:", message 
        
     def errorMessage(self, message):
        self.view.Error(str(message))
        print "Error Message:", message 
+       
+    def dirDialog(self, message):
+        
+        return self.view.getDirFromUser(message)
        
 
 class TestProjectManager(makerProjectManager.ProjectManager):
@@ -61,7 +65,7 @@ class TestProjectManager(makerProjectManager.ProjectManager):
         self.controller.listProjectsInTree(self.getProjects())
         self.openProjects = []
         self.openFiles = []
-        self.projectConvertRepoName = "Test-MakerProjects"
+        self.projectConvertRepoName = "Test-YourMakerProjects"
         
         # call converter manually for testing
         #self.checkForSandboxedProjects()
@@ -86,6 +90,8 @@ class TestView(makerWxGUI.wxPythonGUI):
     def Ask_YesOrNo(self, question):
         return self.choiceReturnString
     
+    def Message(self, message):
+        self._lastInfoMessage = message
     
     def Input(self, Question="?", title = None):
     
@@ -110,7 +116,6 @@ class TestView(makerWxGUI.wxPythonGUI):
 
         self.inputReturnString = string
 
-
     def setChoiceReturnString(self, string):
 
         self.choiceReturnString = string
@@ -134,7 +139,7 @@ class MakerTest(unittest.TestCase):
     
     def setMeUp(self):
        
-        self.user_home = "/Users/maker"
+        self.user_home = os.path.expanduser("~")
          
         self.app = TestApp()
         self.pm = TestProjectManager(self.app.mainView)
@@ -164,9 +169,14 @@ class MakerTest(unittest.TestCase):
         
         self.setMeUp()
         
-        testProjectBefore = "/Users/maker/testing-makerProjects/testProject"
-        testProjectAfter = "/Users/maker/testing-makerProjects/testProject.makerProject"
-        notAProject = "/Users/maker/testing-makerProjects/"
+        testProjectBefore = os.path.join(self.user_home,
+                                         "/Users/maker/testing-makerProjects/testProject")
+        testProjectAfter = os.path.join(self.user_home,
+                                        "/Users/maker/testing-makerProjects/testProject.makerProject")
+        notAProject = os.path.join(self.user_home,
+                                   "/Users/maker/testing-makerProjects/")
+        targetDir = os.path.join(self.user_home,
+                                 "/Users/maker/Desktop/")
         
         
         if os.path.isdir(testProjectAfter):
@@ -203,7 +213,7 @@ class MakerTest(unittest.TestCase):
 
 
 
-    def test_ifProjectsInSandboxMoveToHomeAndConvert(self):
+    def test_ifProjectsInSandboxMoveToSelectedAndConvert_withCorrectChoice(self):
         
         self.setMeUp()
         
@@ -241,6 +251,7 @@ class MakerTest(unittest.TestCase):
         
         projectsInSandbox = getProjectsInSandbox()
         
+        self.app.mainView.setUserSelectedDir(self.convertedProjectsPath)
         self.pm.checkForSandboxedProjects()
         
         self.assertTrue(os.path.isdir(self.convertedProjectsPath), "new Repo should have been created...")
@@ -262,6 +273,62 @@ class MakerTest(unittest.TestCase):
         self.assertFalse(os.path.isdir(self.sandBox), "Sandbox project repo deleted...")
         
         self.tearMeDown()
+
+
+        #===============================================================================
+        # No choice 
+        #===============================================================================
+
+
+    def test_ifProjectsInSandboxMoveToSelectedAndConvert_withNoChoice(self):
+        
+        self.setMeUp()
+        
+        # create Test Sandbox
+        if not os.path.isdir(self.sandBox):
+            os.mkdir(self.sandBox)
+        
+        
+        print "creating dummy projects"
+        dummy = ["Test_One","Test_Two","Test Three"," Test Four"]
+        for item in dummy:
+            if not os.path.isdir(os.path.join(self.sandBox, item)):
+                os.mkdir(os.path.join(self.sandBox, item))
+                os.mkdir(os.path.join(self.sandBox, item, "parts"))
+                
+        
+        projectsInSandbox = [] 
+        projectsInNewRepo = []
+        
+        def getProjectsInSandbox():
+            projects = []
+            for item in os.listdir(self.sandBox):
+                if not item.startswith("."):
+                    projects.append(item)
+            
+            return projects
+        
+        def getProjectsInCreatedRepo():
+            projects = []
+            for item in os.listdir(self.convertedProjectsPath):
+                if not item.startswith("."):
+                    projects.append(item)
+            
+            return projects
+        
+        projectsInSandbox = getProjectsInSandbox()
+        
+        self.app.mainView.setUserSelectedDir(None)
+        self.pm.checkForSandboxedProjects()
+        
+        self.assertFalse(os.path.isdir(self.convertedProjectsPath), "new Repo should NOT have been created...")
+        
+        self.assertTrue("" in self.app.mainView._lastInfoMessage, "Correct info message afer cancel is displayed...")
+        
+        self.assertTrue(os.path.isdir(self.sandBox), "Sandbox project repo still exists...")
+        
+        self.tearMeDown()
+
               
 if __name__=="__main__":
     unittest.main()

@@ -12,6 +12,7 @@ class Controller(makerController.SuperController):
 #
         self.dialog.Unlink.Bind(self.view.wx.EVT_BUTTON, 
                          self.unlink)
+
         
         self.dialog.Bind(self.view.wx.EVT_CLOSE, 
                          self.close)
@@ -21,6 +22,7 @@ class Controller(makerController.SuperController):
             self.dialog.theList.Append(item)
      
         self.pathList = []
+        self.dialog.theList.SetSelection(0)
         self.dialog.Show()
     
     
