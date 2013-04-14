@@ -404,6 +404,7 @@ class ProjectManager:
         self.openFiles = []
         self.projectConvertRepoName = "MakerProjects"
         self.checkForSandboxedProjects()
+        self.loadArgumentPassedProject()
        
     
     def checkForSandboxedProjects(self):
@@ -581,7 +582,17 @@ class ProjectManager:
                 print "unable to load linked projects:" , str(e)
                 
     
-
+    def loadArgumentPassedProject(self):
+        """ load project that has been clicked on outside the app"""
+        try:
+            path = sys.argv[1]
+        except:
+            return
+        
+        if os.path.isdir(path) and path.endswith(".makerProject"):
+            self.openThisProject(path, verbose = False)
+           
+    
     def manageLinkedProjects(self, event=None):
         makerManageLinkedProjects.Manager(self.controller.view, self)
     

@@ -52,6 +52,9 @@ x.x.2013	- Gerald
 	- Open Project now uses File dialog
 	- updated "Manage Projects" dialog
 	- existing projects from users sandbox are moved to chosen location
+	- Bug fixed in distribution table cleanup
+	- double click outside the application on .makerProject "file" opens that 
+	  project (if it's not already linked...)
 
 
 March 15, 2013 		Gerald
