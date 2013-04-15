@@ -66,6 +66,7 @@ class TestProjectManager(makerProjectManager.ProjectManager):
         self.openProjects = []
         self.openFiles = []
         self.projectConvertRepoName = "Test-YourMakerProjects"
+        self.loadArgumentPassedProject()
         
         # call converter manually for testing
         #self.checkForSandboxedProjects()
@@ -86,6 +87,9 @@ class TestProjectManager(makerProjectManager.ProjectManager):
 
 
 class TestView(makerWxGUI.wxPythonGUI):
+    
+    def Show(self):
+        pass
     
     def Ask_YesOrNo(self, question):
         return self.choiceReturnString
@@ -139,7 +143,7 @@ class MakerTest(unittest.TestCase):
     
     def setMeUp(self):
        
-        self.user_home = os.path.expanduser("~")
+        self.user_home = "/Users/maker/"
          
         self.app = TestApp()
         self.pm = TestProjectManager(self.app.mainView)
@@ -169,8 +173,20 @@ class MakerTest(unittest.TestCase):
         
         self.setMeUp()
         
+        
         testProjectBefore = os.path.join(self.user_home,
                                          "/Users/maker/testing-makerProjects/testProject")
+        
+        if os.path.isdir(testProjectBefore):
+            shutil.rmtree(testProjectBefore, ignore_errors = True)
+        
+        
+        if not os.path.isdir(testProjectBefore):
+            os.mkdir(testProjectBefore)
+            os.mkdir(os.path.join(testProjectBefore, "parts"))
+        
+        
+        
         testProjectAfter = os.path.join(self.user_home,
                                         "/Users/maker/testing-makerProjects/testProject.makerProject")
         notAProject = os.path.join(self.user_home,
@@ -246,17 +262,19 @@ class MakerTest(unittest.TestCase):
             for item in os.listdir(self.convertedProjectsPath):
                 if not item.startswith("."):
                     projects.append(item)
+                    print "In new repo:", item
             
             return projects
         
         projectsInSandbox = getProjectsInSandbox()
         
-        self.app.mainView.setUserSelectedDir(self.convertedProjectsPath)
+        self.app.mainView.setUserSelectedDir(self.user_home)
         self.pm.checkForSandboxedProjects()
         
         self.assertTrue(os.path.isdir(self.convertedProjectsPath), "new Repo should have been created...")
         
-        self.assertEqual(len(projectsInSandbox), len(getProjectsInCreatedRepo()), "All projects should have been moved...")
+        self.assertEqual(len(projectsInSandbox), 
+                         len(getProjectsInCreatedRepo()), "All projects should have been moved...")
         
         self.assertEqual(len(projectsInSandbox), 
                          len(getProjectsInCreatedRepo()), 
@@ -266,7 +284,7 @@ class MakerTest(unittest.TestCase):
         for item in getProjectsInCreatedRepo():
             self.assertTrue(item.endswith(".makerProject"), "projects in new repo should be bundles")
             itemPath = os.path.join(self.convertedProjectsPath,item)
-            print self.pm.linkedProjectPaths
+            
             self.assertTrue(itemPath in self.pm.linkedProjectPaths, 
                             "Project has been linked correctly...")
         

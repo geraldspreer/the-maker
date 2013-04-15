@@ -195,12 +195,12 @@ returns the instance of the progressbar that was last added to the stack
         else:   
             return project
        
-    def fileDialog(self):
+    def fileDialog(self, message = None):
         """
         returns a list(!) of pathnames or None when canceled
         
         """
-        return self.view.getFileFromUser()
+        return self.view.getFileFromUser(prompt = message)
         
     def imageDialog(self, path):
         """

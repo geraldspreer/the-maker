@@ -3355,10 +3355,13 @@ class wxPythonGUI(wx.Frame):
  # --------------------------------------------------------------------------
     
   
-    def getFileFromUser(self, dir=None):
+    def getFileFromUser(self, dir=None, prompt = None):
  
         if not dir:
             dir = os.getcwd()
+            
+        if not prompt:
+            prompt = "Choose a file..." 
         
         wildcard = "all files (*.*)|*.*|"                   \
              "content Files (*.content)|*.content|"           \
@@ -3370,7 +3373,7 @@ class wxPythonGUI(wx.Frame):
              "Quicktime movie (*.mov) | *.mov"
         
         dlg = wx.FileDialog(
-              self.topPanel, message="Choose a file", style=wx.OPEN | wx.CHANGE_DIR )
+              self.topPanel, message = prompt, style=wx.OPEN | wx.CHANGE_DIR )
   
               # If the user selects OK, then we process the dialog's data.
               # This is done by getting the path data from the dialog - BEFORE

@@ -22,7 +22,13 @@ class Controller(makerController.SuperController):
             self.dialog.theList.Append(item)
      
         self.pathList = []
-        self.dialog.theList.SetSelection(0)
+        try:
+            # there might be no projects
+            self.dialog.theList.SetSelection(0)
+            
+        except:
+            pass
+        
         self.dialog.Show()
     
     

@@ -598,7 +598,7 @@ class ProjectManager:
     
     
     def openProject(self, event=None):
-        bundle = self.controller.fileDialog()
+        bundle = self.controller.fileDialog(message = "Open A Project...")
         
         
         if not bundle:

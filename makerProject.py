@@ -1576,7 +1576,7 @@ class MakerProjectModel:
         theDate  = getFileCreationDate(thePath)
         creationDate = "created: %s" % str(theDate)
 
-        theData = {"!projectName!"  : str(self.getProject()),
+        theData = {"!projectName!"  : str(self.getProject()).replace(".makerProject", ""),
                    "!pageName!"     : self.currentFile.getRealName(),
                    "!creationDate!" : creationDate,
                    "!todaysDate!"   : str(time.ctime()),
