@@ -3,6 +3,7 @@ import wx.stc
 from wx.lib.anchors import LayoutAnchors
 
 
+
 if wx.Platform == '__WXMSW__':
     faces = { 'times': 'Times New Roman',
               'mono' : 'Courier New',
@@ -48,7 +49,6 @@ class editorView:
             
             self.editor.SetStyleBits(7)
         
-            self.editor.StyleSetSpec(wx.stc.STC_STYLE_DEFAULT, "face:%(other)s,size:%(size)d" % faces)
             self.editor.StyleClearAll()  # Reset all to be like the default
             
             self.editor.SetTabIndents(1)
@@ -90,99 +90,16 @@ class editorView:
                 ]
                 self.editor.SetLexer(wx.stc.STC_LEX_PYTHON)
                 self.editor.SetKeyWords(0, " ".join(kw))
-                #self.editor.StyleSetSpec(wx.stc.STC_P_DEFAULT, "fore:#cccccc,face:%(other)s,size:%(size)d" % faces)
-                
-                self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTLINE, "fore:#007f00,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_NUMBER, "fore:#007f7f,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_STRING, "fore:#7f007f,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_CHARACTER, "fore:#7f007f,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_WORD,  "fore:#00007F,bold,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLE, "fore:#7f0000,face:%(other)s,size:%(size)d" % faces)
-                
-                self.editor.StyleSetSpec(wx.stc.STC_P_DECORATOR, "fore:#777777,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLEDOUBLE, "fore:#7f0000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_CLASSNAME, "fore:#0000FF,bold, size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_DEFNAME, "fore:#007f7f,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_OPERATOR, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_IDENTIFIER, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTBLOCK, "fore:#7f7f7f,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_STRINGEOL, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-                
-        
-            elif fileType == ".content": 
-                
-                self.editor.SetLexer(wx.stc.STC_LEX_HTML)
-                self.editor.StyleSetSpec(wx.stc.STC_H_DEFAULT, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-                # HTML tags
-                self.editor.StyleSetSpec(wx.stc.STC_H_TAG, "fore:#882288,bold,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTE, "fore:#993300,bold,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTEUNKNOWN, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_TAGEND, "fore:#882288,bold,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_OTHER, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_COMMENT, "fore:#006600,face:%(other)s,size:%(size)d" % faces)
-                    
-                self.editor.StyleSetSpec(wx.stc.STC_H_SINGLESTRING, "fore:#2200bb,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_DOUBLESTRING, "fore:#2200bb,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_NUMBER, "fore:#00ff00,face:%(other)s,size:%(size)d" % faces)
-            
-            elif fileType == ".php": 
-                
-                self.editor.SetLexer(wx.stc.STC_LEX_HTML)
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_DEFAULT, "fore:#2200bb,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENT, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENTLINE, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
-                    # " foo "
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING_VARIABLE, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_NUMBER, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
-                    # {} () = 
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_OPERATOR, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_SIMPLESTRING, "fore:#2244bb,face:%(other)s,size:%(size)d" % faces)
-                    # $foo
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_VARIABLE, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
-                    
-                self.editor.StyleSetSpec(wx.stc.STC_HPHP_WORD, "fore:#ff0000,face:%(other)s,size:%(size)d" % faces)
-            
+                       
             elif fileType == ".css":
                 
                 self.editor.SetLexer(wx.stc.STC_LEX_CSS)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_DEFAULT, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_OPERATOR, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_TAG, "fore:#0000aa,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_DOUBLESTRING, "fore:#2200bb,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_SINGLESTRING, "fore:#2200bb,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_CLASS, "fore:#0000aa,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_COMMENT, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_ID, "fore:#0000aa,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_VALUE, "fore:#882288,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_IDENTIFIER, "fore:#882288,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_VALUE, "fore:#882288,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_ATTRIBUTE, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
-
 
             else: 
                 
                 self.editor.SetLexer(wx.stc.STC_LEX_HTML)
-                self.editor.StyleSetSpec(wx.stc.STC_H_DEFAULT, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-                # HTML tags
-                self.editor.StyleSetSpec(wx.stc.STC_H_TAG, "fore:#882288,bold,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTE, "fore:#993300,bold,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTEUNKNOWN, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_TAGEND, "fore:#882288,bold,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_OTHER, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_COMMENT, "fore:#006600,face:%(other)s,size:%(size)d" % faces)
-                    
-                self.editor.StyleSetSpec(wx.stc.STC_H_SINGLESTRING, "fore:#2200bb,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_DOUBLESTRING, "fore:#2200bb,face:%(mono)s,size:%(size2)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_H_NUMBER, "fore:#00ff00,face:%(other)s,size:%(size)d" % faces)
 
-            
-            # Global default styles for all languages
-            self.editor.StyleSetSpec(wx.stc.STC_STYLE_DEFAULT,     "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-            self.editor.StyleSetSpec(wx.stc.STC_STYLE_LINENUMBER,  "fore:#777777,back:#eeeeee,face:%(mono)s,size:%(size3)d"  % faces)
-            self.editor.StyleSetSpec(wx.stc.STC_STYLE_CONTROLCHAR, "fore:#ff0000, face:%(other)s" % faces)
-            self.editor.StyleSetSpec(wx.stc.STC_STYLE_BRACELIGHT,  "fore:#FFFFFF,back:#0000FF,bold")
-            self.editor.StyleSetSpec(wx.stc.STC_STYLE_BRACEBAD,    "fore:#000000,back:#FF0000,bold")
+            self.applyCodeStyle(style = None)
         
             # default word wrapping            
             self.editor.SetWrapMode(wx.stc.STC_WRAP_WORD)
@@ -208,6 +125,148 @@ class editorView:
             self.editor.SetMarginWidth(1, 5)
             
             self.editor.UsePopUp(0)   
+        
+        
+        def applyCodeStyle(self, style = None ):
+            # make use style passed to it.
+            
+            style = {'comment':{'color':'#bc9458','font-style':'italic'},
+                'constant.numeric':{'color':'#a5c261','font-weight':'normal'},
+                'constant.numeric.keyword':{'color':'#6d9cbe'},
+                'keyword':{'color':'#cc7833','font-strike-through':'none','font-weight':'normal'},
+                'keyword.control':{'color':'#cc7833'},
+                'keyword.type':{'color':'#cc7833'},
+                'language.function':{'color':'#fac56d'},
+                'language.operator':{'color':'#b96619'},
+                'language.variable':{'color':'#d0d1ff'},
+                'markup.comment':{'color':'#bc9458','font-style':'italic'},
+                'markup.constant.entity':{'color':'#6e9cbe'},
+                'markup.declaration':{'color':'#e8c06a'},
+                'markup.inline.cdata':{'color':'#e9c053'},
+                'markup.processing':{'color':'#68685b','font-weight':'bold'},
+                'markup.tag':{'color':'#e8c06a'},  #
+                'markup.tag.attribute.name':{'color':'#e8c06a'},
+                'markup.tag.attribute.value':{'color':'#a5c261','font-style':'italic'},
+                'meta.default':{'background-color':'#2b2b2b','color':'#e6e1dc'},
+                'meta.highlight.currentline':{'background-color':'#d9d9d9'},
+                'meta.important':{'color':'#b66418','font-style':'italic'},
+                'meta.invalid':{'background-color':'#990201','color':'#ffffff','font-weight':'bold'},
+                'meta.invisible.characters':{'color':'#404040'},
+                'meta.link':{'color':'#a5c261','font-style':'normal','font-underline':'none'},
+                'string':{'color':'#a5c261','font-style':'italic'},
+                'string.regex':{'color':'#99b93e'},
+                'string.regex.escaped':{'color':'#4b8928'},
+                'style.at-rule':{'color':'#b96619','font-weight':'bold'},
+                'style.comment':{'color':'#bc9458','font-style':'italic','font-weight':'normal'},
+                'style.property.name':{'color':'#6e9cbe'},
+                'style.value.color.rgb-value':{'color':'#6d9cbe'},
+                'style.value.keyword':{'color':'#a5c261'},
+                'style.value.numeric':{'color':'#99b62d'},
+                'style.value.string':{'color':'#a5c261','font-style':'italic'},
+                'support':{'color':'#da4939'}
+                }
+                
+#            self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTLINE, "fore:#007f00,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_NUMBER, "fore:#007f7f,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_STRING, "fore:#7f007f,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_CHARACTER, "fore:#7f007f,face:%(other)s,size:%(size)d" % faces)                
+#            self.editor.StyleSetSpec(wx.stc.STC_P_WORD,  "fore:#00007F,bold,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLE, "fore:#7f0000,face:%(other)s,size:%(size)d" % faces)
+#                
+#            self.editor.StyleSetSpec(wx.stc.STC_P_DECORATOR, "fore:#777777,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLEDOUBLE, "fore:#7f0000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_CLASSNAME, "fore:#0000FF,bold, size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_DEFNAME, "fore:#007f7f,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_OPERATOR, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_IDENTIFIER, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTBLOCK, "fore:#7f7f7f,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_P_STRINGEOL, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
+#                
+#        
+#                
+#            self.editor.StyleSetSpec(wx.stc.STC_H_DEFAULT, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
+#                # HTML tags
+#            self.editor.StyleSetSpec(wx.stc.STC_H_TAG, "fore:#882288,bold,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTE, "fore:#993300,bold,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTEUNKNOWN, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_TAGEND, "fore:#882288,bold,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_OTHER, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_COMMENT, "fore:#006600,face:%(other)s,size:%(size)d" % faces)
+#                    
+#            self.editor.StyleSetSpec(wx.stc.STC_H_SINGLESTRING, "fore:#2200bb,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_DOUBLESTRING, "fore:#2200bb,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_NUMBER, "fore:#00ff00,face:%(other)s,size:%(size)d" % faces)
+#            
+#                
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_DEFAULT, "fore:#2200bb,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENT, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENTLINE, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING_VARIABLE, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_NUMBER, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
+#                    # {} () = 
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_OPERATOR, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_SIMPLESTRING, "fore:#2244bb,face:%(other)s,size:%(size)d" % faces)
+#                    # $foo
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_VARIABLE, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
+#                    
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_WORD, "fore:#ff0000,face:%(other)s,size:%(size)d" % faces)
+#            
+#                
+#            self.editor.SetLexer(wx.stc.STC_LEX_CSS)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_DEFAULT, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_OPERATOR, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_TAG, "fore:#0000aa,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_DOUBLESTRING, "fore:#2200bb,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_SINGLESTRING, "fore:#2200bb,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_CLASS, "fore:#0000aa,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_COMMENT, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_ID, "fore:#0000aa,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_VALUE, "fore:#882288,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_IDENTIFIER, "fore:#882288,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_VALUE, "fore:#882288,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_CSS_ATTRIBUTE, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
+#
+#
+#                
+#                
+#            # HTML tags
+#            self.editor.StyleSetSpec(wx.stc.STC_H_TAG, "fore:#882288,bold,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTE, "fore:#993300,bold,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTEUNKNOWN, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_TAGEND, "fore:#882288,bold,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_OTHER, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_COMMENT, "fore:#006600,face:%(other)s,size:%(size)d" % faces)
+#                    
+#            self.editor.StyleSetSpec(wx.stc.STC_H_SINGLESTRING, "fore:#2200bb,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_DOUBLESTRING, "fore:#2200bb,face:%(mono)s,size:%(size2)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_H_NUMBER, "fore:#00ff00,face:%(other)s,size:%(size)d" % faces)
+
+            
+           
+            
+            # Global default styles for all languages
+            self.editor.StyleSetSpec(wx.stc.STC_STYLE_DEFAULT,     "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+            self.editor.StyleSetSpec(wx.stc.STC_STYLE_LINENUMBER,  "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size3)d" % faces)
+            
+            
+            # HTML
+            self.editor.StyleSetSpec(wx.stc.STC_H_DEFAULT,     "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+            self.editor.StyleSetSpec(wx.stc.STC_H_TAG, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+            #  'markup.tag.attribute.name':{'color':'#e8c06a'},
+            self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTE, "fore:" + style["markup.tag.attribute.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                                     
+                                     
+            
+            
+            
+            
+            self.editor.StyleSetSpec(wx.stc.STC_STYLE_CONTROLCHAR, "fore:#ff0000, face:%(other)s" % faces)
+            self.editor.StyleSetSpec(wx.stc.STC_STYLE_BRACELIGHT,  "fore:#FFFFFF,back:#0000FF,bold")
+            self.editor.StyleSetSpec(wx.stc.STC_STYLE_BRACEBAD,    "fore:#000000,back:#FF0000,bold")
+        
+        
+        
         
         def OnKeyDown(self, evt):
             """ keep current indent level """
