@@ -114,7 +114,10 @@ class MakerApp(wx.App):
         # Splash screen will show by itself
                     
         #wx.InitAllImageHandlers()
-        self.mainView = makerWxGUI.create(None)
+        self.mainView = makerWxGUI.create(self)
+        
+        # should application self-restart?
+        self.restart = False
         
                 
         self.appController = MakerAppController(self, self.mainView)
@@ -175,7 +178,10 @@ def main():
     
     application = MakerApp(0)
     application.MainLoop()
-        
+    
+    # restart ?
+    if application.restart == True:
+        main()
    
 if __name__ == '__main__':
     main()

@@ -17,9 +17,9 @@ from wx.lib.anchors import LayoutAnchors
 import wx.lib.flatnotebook as nb
 import wx.py as pyShell
 
-def create(parent):
+def create(app):
     
-    return wxPythonGUI(parent)
+    return wxPythonGUI(app)
 
 class wxPythonGUI(wx.Frame):
 
@@ -2514,7 +2514,7 @@ class wxPythonGUI(wx.Frame):
 
         
         
-    def __init__(self, parent):  
+    def __init__(self, app):  
         
         
         self.BoilerPlate = makerCopyright.getCopyright()
@@ -2523,7 +2523,9 @@ class wxPythonGUI(wx.Frame):
         
         self.ModifierBind = False
         
-        self._init_ctrls(parent)
+        self.application = app
+        
+        self._init_ctrls(None)
         self._init_sizers()
         self.wx = wx
         
