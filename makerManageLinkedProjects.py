@@ -48,7 +48,7 @@ class Controller(makerController.SuperController):
     
     def close(self, event=None):
         if self.pathList != []:
-            if self.askYesOrNo("You need to restart the maker for the changes to have effect. Would you like to do that?") == "Yes":
+            if self.askYesOrNo("TheMaker needs to restart for the changes to take effect. Would you like to do that?") == "Yes":
                 self.model.unlink(self.pathList)
         
 	self.dialog.Destroy()
@@ -69,6 +69,7 @@ class Manager:
             self.projectManager.linkedProjectPaths.remove(path)
         
         self.projectManager.closeOpenProjects()
+        self.controller.view.application.restart = True
         
     
     def getManagedProjectsList(self):
