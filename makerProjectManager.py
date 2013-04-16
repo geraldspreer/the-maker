@@ -418,10 +418,6 @@ class ProjectManager:
         updateInfo += " projects.\n\n "
         updateInfo += "Click OK to choose...\n "
         
-        self.controller.view.Center()
-        self.controller.view.Show()
-        
-        
         def getTargetDir(verbose = False):
             target = None
             if verbose:
@@ -439,6 +435,9 @@ class ProjectManager:
         if not os.path.isdir(sandBoxProjects):
             print "No projects in sandbox..."
             return
+        
+        self.controller.view.Center()
+        self.controller.view.Show()
         
         targetDir = getTargetDir(False)
         
