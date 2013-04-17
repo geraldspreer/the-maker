@@ -263,7 +263,14 @@ class AutoComplete(makerController.SuperController):
         
         if key == 62:
             autoCompleteHTML()
+        
+        elif key == self.view.wx.WXK_RETURN:
             
+            indentPrev = self.editor.GetLineIndentation(self.editor.GetCurrentLine()-1)
+            self.editor.SetLineIndentation(self.editor.GetCurrentLine(), indentPrev)
+            self.editor.GotoPos(self.editor.GetLineIndentPosition(self.editor.GetCurrentLine()))
+        
+                
         elif key == 60:
             
             autoCompleteTag()                                          

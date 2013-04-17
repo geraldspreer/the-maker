@@ -55,7 +55,8 @@ x.x.2013	- Gerald
 	- Bug fixed in distribution table cleanup
 	- double click outside the application on .makerProject "file" opens that 
 	  project (if it's not already linked...)
-
+	- editor is keeping indentation level!
+	
 
 March 15, 2013 		Gerald
 
