@@ -17,7 +17,7 @@
 'markup.tag.attribute.name':{'color':'#a0e100'},
 'markup.tag.attribute.value':{'color':'#e0d74f'},
 'meta.default':{'background-color':'#1d1e19','color':'#f6f7ee'},
-'meta.higlight.currentline':{'background-color':'#454640'},
+'meta.highlight.currentline':{'background-color':'#454640'},
 'meta.important':{'color':'#e4183c'},
 'meta.invalid':{'background-color':'#eb2672','color':'#f8f8f1','font-weight':'normal'},
 'meta.invisible.characters':{'color':'#454640'},

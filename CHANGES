@@ -56,7 +56,7 @@ x.x.2013	- Gerald
 	- double click outside the application on .makerProject "file" opens that 
 	  project (if it's not already linked...)
 	- editor is keeping indentation level!
-	
+	- editor styles change on menuItem highlight
 
 March 15, 2013 		Gerald
 

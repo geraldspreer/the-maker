@@ -17,7 +17,7 @@
 'markup.tag.attribute.name':{'color':'#ff7f58'},
 'markup.tag.attribute.value':{'color':'#ffca6b'},
 'meta.default':{'background-color':'#151515','color':'#ffffff'},
-'meta.higlight.currentline':{'background-color':'#555555'},
+'meta.highlight.currentline':{'background-color':'#555555'},
 'meta.important':{'color':'#ff0000'},
 'meta.invalid':{'color':'#ff0000','font-weight':'bold'},
 'meta.invisible.characters':{'color':'#555555'},
