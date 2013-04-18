@@ -128,41 +128,43 @@ class editorView:
         def applyCodeStyle(self, style = None ):
             # make use style passed to it.
             
-            style = {'comment':{'color':'#bc9458','font-style':'italic'},
-                'constant.numeric':{'color':'#a5c261','font-weight':'normal'},
-                'constant.numeric.keyword':{'color':'#6d9cbe'},
-                'keyword':{'color':'#cc7833','font-strike-through':'none','font-weight':'normal'},
-                'keyword.control':{'color':'#cc7833'},
-                'keyword.type':{'color':'#cc7833'},
-                'language.function':{'color':'#fac56d'},
-                'language.operator':{'color':'#b96619'},
-                'language.variable':{'color':'#d0d1ff'},
-                'markup.comment':{'color':'#bc9458','font-style':'italic'},
-                'markup.constant.entity':{'color':'#6e9cbe'},
-                'markup.declaration':{'color':'#e8c06a'},
-                'markup.inline.cdata':{'color':'#e9c053'},
-                'markup.processing':{'color':'#68685b','font-weight':'bold'},
-                'markup.tag':{'color':'#e8c06a'},  #
-                'markup.tag.attribute.name':{'color':'#e8c06a'},
-                'markup.tag.attribute.value':{'color':'#a5c261','font-style':'italic'},
-                'meta.default':{'background-color':'#2b2b2b','color':'#e6e1dc'},
-                'meta.highlight.currentline':{'background-color':'#d9d9d9'},
-                'meta.important':{'color':'#b66418','font-style':'italic'},
-                'meta.invalid':{'background-color':'#990201','color':'#ffffff','font-weight':'bold'},
-                'meta.invisible.characters':{'color':'#404040'},
-                'meta.link':{'color':'#a5c261','font-style':'normal','font-underline':'none'},
-                'string':{'color':'#a5c261','font-style':'italic'},
-                'string.regex':{'color':'#99b93e'},
-                'string.regex.escaped':{'color':'#4b8928'},
-                'style.at-rule':{'color':'#b96619','font-weight':'bold'},
-                'style.comment':{'color':'#bc9458','font-style':'italic','font-weight':'normal'},
-                'style.property.name':{'color':'#6e9cbe'},
-                'style.value.color.rgb-value':{'color':'#6d9cbe'},
-                'style.value.keyword':{'color':'#a5c261'},
-                'style.value.numeric':{'color':'#99b62d'},
-                'style.value.string':{'color':'#a5c261','font-style':'italic'},
-                'support':{'color':'#da4939'}
-                }
+            if not style:
+            
+                style = {'comment':{'color':'#bc9458','font-style':'italic'},
+                    'constant.numeric':{'color':'#a5c261','font-weight':'normal'},
+                    'constant.numeric.keyword':{'color':'#6d9cbe'},
+                    'keyword':{'color':'#cc7833','font-strike-through':'none','font-weight':'normal'},
+                    'keyword.control':{'color':'#cc7833'},
+                    'keyword.type':{'color':'#cc7833'},
+                    'language.function':{'color':'#fac56d'},
+                    'language.operator':{'color':'#b96619'},
+                    'language.variable':{'color':'#d0d1ff'},
+                    'markup.comment':{'color':'#bc9458','font-style':'italic'},
+                    'markup.constant.entity':{'color':'#6e9cbe'},
+                    'markup.declaration':{'color':'#e8c06a'},
+                    'markup.inline.cdata':{'color':'#e9c053'},
+                    'markup.processing':{'color':'#68685b','font-weight':'bold'},
+                    'markup.tag':{'color':'#e8c06a'},  #
+                    'markup.tag.attribute.name':{'color':'#e8c06a'},
+                    'markup.tag.attribute.value':{'color':'#a5c261','font-style':'italic'},
+                    'meta.default':{'background-color':'#2b2b2b','color':'#e6e1dc'},
+                    'meta.highlight.currentline':{'background-color':'#d9d9d9'},
+                    'meta.important':{'color':'#b66418','font-style':'italic'},
+                    'meta.invalid':{'background-color':'#990201','color':'#ffffff','font-weight':'bold'},
+                    'meta.invisible.characters':{'color':'#404040'},
+                    'meta.link':{'color':'#a5c261','font-style':'normal','font-underline':'none'},
+                    'string':{'color':'#a5c261','font-style':'italic'},
+                    'string.regex':{'color':'#99b93e'},
+                    'string.regex.escaped':{'color':'#4b8928'},
+                    'style.at-rule':{'color':'#b96619','font-weight':'bold'},
+                    'style.comment':{'color':'#bc9458','font-style':'italic','font-weight':'normal'},
+                    'style.property.name':{'color':'#6e9cbe'},
+                    'style.value.color.rgb-value':{'color':'#6d9cbe'},
+                    'style.value.keyword':{'color':'#a5c261'},
+                    'style.value.numeric':{'color':'#99b62d'},
+                    'style.value.string':{'color':'#a5c261','font-style':'italic'},
+                    'support':{'color':'#da4939'}
+                    }
                 
 #            self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTLINE, "fore:#007f00,face:%(other)s,size:%(size)d" % faces)
 #            self.editor.StyleSetSpec(wx.stc.STC_P_NUMBER, "fore:#007f7f,face:%(other)s,size:%(size)d" % faces)
@@ -236,7 +238,7 @@ class editorView:
             self.editor.StyleSetSpec(wx.stc.STC_H_TAGUNKNOWN, "fore:" + style["meta.invalid"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
             
             # <img src="foo" [/>]
-            self.editor.StyleSetSpec(wx.stc.STC_H_TAGEND, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+            self.editor.StyleSetSpec(wx.stc.STC_H_TAGEND, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
             
             # [href]
             self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTE, "fore:" + style["markup.tag.attribute.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)

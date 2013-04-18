@@ -36,29 +36,55 @@ class ProjectManagerController(makerController.SuperController):
         
         # This is a flag used to control unit tests
         self.testing = False
+    
+    def loadStyles(self):
         
-        
-    def createMenuForEditorStyles(self):
+        self.editorStyles = {}
         
         path = os.path.join(self.model.getApplicationPath(), "system/EditorStyles")
         for item in os.listdir(path):
             if item.endswith(".json"):
                 _s = item.replace(".json", "")
+                self.editorStyles[_s] = eval(readFile(os.path.join(path,item)))
+    
+        print self.editorStyles
+    
+        
+    def createMenuForEditorStyles(self):
+        self.styleMenus = {}
+        path = os.path.join(self.model.getApplicationPath(), "system/EditorStyles")
+        for item in os.listdir(path):
+            if item.endswith(".json"):
+                _s = item.replace(".json", "")
                 
-                newItem = self.view.subMenuEditorStyles.Append(help='Editor Style ' + _s,
+                x = self.view.subMenuEditorStyles.Append(help='Editor Style ' + _s,
                                               id=-1, 
                                               kind=self.view.wx.ITEM_CHECK, 
                                               text = _s)
-                self.view.Bind(self.view.wx.EVT_MENU_HIGHLIGHT, self.prevEditorStyle, newItem)
-                self.view.Bind(self.view.wx.EVT_MENU, self.setEditorStyle, newItem) 
+                
+                self.styleMenus[item] = x.GetId()
+                
+                self.view.Bind(self.view.wx.EVT_MENU_HIGHLIGHT, self.prevEditorStyle, x)
+                self.view.Bind(self.view.wx.EVT_MENU, self.setEditorStyle, x) 
     
-    
+                
+        
+        self.loadStyles()
     
     def setEditorStyle(self, event):
-        print "Setting editor style to:", event
-    
+        for key, value in self.styleMenus.iteritems():
+            
+            if value == event.GetMenuId():
+                print "Setting editor style to:", key
+        
+        
+        
     def prevEditorStyle(self, event):
-        print "Previewing editor style to:", event
+        for key, value in self.styleMenus.iteritems():
+            
+            if value == event.GetMenuId():
+                
+                self.model.getActiveProject().getCurrentFile().fileController.editorWrapper.applyCodeStyle(self.editorStyles[key.replace(".json","")])
         
     
     

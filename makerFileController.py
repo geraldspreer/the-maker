@@ -1123,7 +1123,8 @@ class MakerFileController(makerController.SuperController):
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSED)
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSING)
         
-        self.editor = makerEditorWxView.editorView(self.view, self.model.getType()).editor
+        self.editorWrapper = makerEditorWxView.editorView(self.view, self.model.getType())
+        self.editor = self.editorWrapper.editor
         
         self.setDefaultZoom()
         
