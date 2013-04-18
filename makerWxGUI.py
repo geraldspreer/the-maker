@@ -2390,6 +2390,7 @@ class wxPythonGUI(wx.Frame):
                 
 #the top splitter        
         self.splitter = MySplitter(self, -1,None)
+        #self.splitter.SetSashSize(10)
 
 
 
@@ -2423,7 +2424,7 @@ class wxPythonGUI(wx.Frame):
 
 #add widgets to the first splitter
 
-        self.listWindow = wx.Panel(self.splitter, -1)
+        self.listWindow = wx.Panel(self.splitter, -1, style = wx.NO_BORDER)
         #self.listWindow.SetBackgroundColour(wx.RED)
 
         self.listSizer = wx.BoxSizer(orient=wx.VERTICAL)
@@ -2433,8 +2434,7 @@ class wxPythonGUI(wx.Frame):
         self.tree = wx.TreeCtrl(self.listWindow, -1, 
                                 style=wx.TR_HAS_BUTTONS
                                 |wx.TR_LINES_AT_ROOT
-                                |wx.TR_DEFAULT_STYLE
-                                |wx.SUNKEN_BORDER)
+                                |wx.TR_DEFAULT_STYLE)
         
         
         
@@ -2465,7 +2465,7 @@ class wxPythonGUI(wx.Frame):
         self.splitter.SetMinimumPaneSize(200)
         self.splitter.SplitVertically(self.listWindow, self.noteBook, 180)    
 
-        self.topPanel = wx.Panel(self, -1, pos=(0,0), size=(180,50), style=wx.TB_FLAT)
+        self.topPanel = wx.Panel(self, -1, pos=(0,0), size=(180,50), style=wx.TB_HORIZONTAL)
         self.topPanel.SetAutoLayout(True)
 
         self.topSizer = wx.BoxSizer(wx.HORIZONTAL)

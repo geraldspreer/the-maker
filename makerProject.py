@@ -1678,8 +1678,7 @@ class MakerProjectModel:
 
 
     def importFiles(self, event=None):
-       	if event:
-		event.Skip()
+       	
         """Imports a MakerFile (handles all files, even binary)."""
 
         filesToImport = self.projectController.fileDialog()

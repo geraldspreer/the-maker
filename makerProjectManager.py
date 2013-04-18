@@ -14,6 +14,7 @@ import makerProject
 import makerTemplateDialog
 import makerManageLinkedProjects
 import makerTemplateViewBuilder
+import makerThread
 
 
 import wx.html2 as theView
@@ -260,14 +261,8 @@ class ProjectManagerController(makerController.SuperController):
                 project = self.treeView.GetItemText(item)
                 self.model.load(project)
                 
-        #self.view.wx.Yield()
-        #event.Skip()
-        
-        
-    def buildTemplateView(self):
-        
-        pass
-        
+
+
         
     def actionAddNewProject(self, event):
         
@@ -368,7 +363,7 @@ class ProjectManagerController(makerController.SuperController):
         def cancel(event):
             
             selector.Destroy()
-            event.Skip()
+            
         
         
         loadTemplates(viewPath)
@@ -454,7 +449,9 @@ class ProjectManager:
         self.openProjects = []
         self.openFiles = []
         self.projectConvertRepoName = "MakerProjects"
-        self.checkForSandboxedProjects()
+        
+        makerThread.newThread(self.checkForSandboxedProjects)
+        
         self.loadArgumentPassedProject()
        
     
@@ -527,6 +524,7 @@ class ProjectManager:
     
     def getApplicationPath(self):
         """ get path where the maker executable resides """
+        
         return os.path.dirname(sys.argv[0])
     
     def getUserHomeDir(self):

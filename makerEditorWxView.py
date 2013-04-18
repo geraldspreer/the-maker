@@ -17,8 +17,8 @@ elif wx.Platform == '__WXMAC__':
               'mono' : 'Monaco',
               'helv' : 'Helvetica',
               'other': 'Monaco',
-              'size' : 11,
-              'size2': 11,
+              'size' : 12,
+              'size2': 12,
               'size3': 10,
              }
 else:
@@ -36,7 +36,7 @@ class editorView:
         
             self.editor = wx.stc.StyledTextCtrl(id=-1,
                   name='makerEditorView', parent=parent, pos=wx.Point(192, 87),
-                  size=wx.Size(160, 120), style=wx.VSCROLL | wx.HSCROLL)
+                  size=wx.Size(160, 120), style=wx.VSCROLL | wx.HSCROLL )
             
       
             self.editor.SetAutoLayout(True)
@@ -44,8 +44,6 @@ class editorView:
                   True, True, True, True))
             #self.editor.SetText(self.BoilerPlate)
             self.editor.SetThemeEnabled(True)
-            
-            #self.editor.SetLexer(wx.stc.STC_LEX_HTML)
             
             self.editor.SetStyleBits(7)
         
@@ -327,19 +325,4 @@ class editorView:
             self.editor.StyleSetSpec(wx.stc.STC_STYLE_BRACEBAD,  "fore:#ff0000,back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size3)d" % faces)
             
         
-        
-        
-        def OnKeyDown(self, evt):
-            """ keep current indent level """
-            if evt.GetKeyCode() == wx.WXK_RETURN:
-                pass
-            evt.Skip()
-            return
-        
-        def OnCharAdded(self, evt):
-            """ keep current indent level """
-            for it in dir(evt):
-                print it 
-            
-            
         

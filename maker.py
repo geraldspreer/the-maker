@@ -112,8 +112,7 @@ class MakerApp(wx.App):
         self.mySplash = makerSplash.MySplashScreen()
                
         # Splash screen will show by itself
-                    
-        #wx.InitAllImageHandlers()
+        
         self.mainView = makerWxGUI.create(self)
         
         # should application self-restart?
