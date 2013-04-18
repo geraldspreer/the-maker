@@ -20,7 +20,7 @@ import wx.html2 as theView
 
 class ProjectManagerController(makerController.SuperController):
     def __init__(self, model , view):
-        #print "initializing:", self
+        
         self.view = view
         self.model = model
         self.createAbstractNameForViewObjects()
@@ -29,6 +29,8 @@ class ProjectManagerController(makerController.SuperController):
         self.bindActions()
         self.treeItems = []
         self.progressBars = []
+        self.createMenuForEditorStyles()
+        
         # format {NoteBookSelection[int], <makerFileController class>}
         self.noteBookPages = {}
         
@@ -36,6 +38,30 @@ class ProjectManagerController(makerController.SuperController):
         self.testing = False
         
         
+    def createMenuForEditorStyles(self):
+        
+        path = os.path.join(self.model.getApplicationPath(), "system/EditorStyles")
+        for item in os.listdir(path):
+            if item.endswith(".json"):
+                _s = item.replace(".json", "")
+                
+                newItem = self.view.subMenuEditorStyles.Append(help='Editor Style ' + _s,
+                                              id=-1, 
+                                              kind=self.view.wx.ITEM_CHECK, 
+                                              text = _s)
+                self.view.Bind(self.view.wx.EVT_MENU_HIGHLIGHT, self.prevEditorStyle, newItem)
+                self.view.Bind(self.view.wx.EVT_MENU, self.setEditorStyle, newItem) 
+    
+    
+    
+    def setEditorStyle(self, event):
+        print "Setting editor style to:", event
+    
+    def prevEditorStyle(self, event):
+        print "Previewing editor style to:", event
+        
+    
+    
     def bindActions(self):
         
         # this binding is overridden once a project is loaded
@@ -394,7 +420,6 @@ class ProjectManager:
     def __init__(self, view):
         
         self.controller = ProjectManagerController(self, view)
-        #self.setProjectDir()
         
         self.linkedProjectPaths = []
         self.loadLinkedProjects()

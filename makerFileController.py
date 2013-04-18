@@ -1148,7 +1148,6 @@ class MakerFileController(makerController.SuperController):
         self.model.core.projectManager.controller.noteBookPages[self.noteBook.GetSelection()] = self
         
         
-        
         self.view.Bind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CHANGED, 
                        self.model.core.projectController.noteBookPageChanged)
         

@@ -115,7 +115,7 @@ class editorView:
             self.editor.SetControlCharSymbol(0)
             self.editor.SetCaretLineVisible(True)
             
-
+            
             self.editor.SetMarginType(0, wx.stc.STC_MARGIN_NUMBER)
             # Text Margins    
             self.editor.SetMargins(10, 10)
@@ -216,6 +216,9 @@ class editorView:
 #                
             
            # misc stuff
+            self.editor.activeTabColor = style["meta.default"]['background-color']
+            self.editor.activeTabTextColor = style["meta.default"]['color']
+            
             self.editor.SetCaretLineBack(style["meta.default"]['background-color'])
             self.editor.SetCaretForeground(style["meta.highlight.currentline"]['background-color'])
             self.editor.SetSelBackground(True, "#b5d4ff")
