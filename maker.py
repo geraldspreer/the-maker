@@ -134,7 +134,7 @@ class MakerApp(wx.App):
         
         # display GUI
         
-        self.appController.showView()        
+        self.appController.showView()
         
         return True
     
