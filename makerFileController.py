@@ -1093,6 +1093,8 @@ class MakerFileController(makerController.SuperController):
         self.saveButton = self.view.saveButton
         self.saveMenu = self.view.MenuItemSaveFile
         
+        self.projectManager = self.model.core.projectManager
+        
         self.noteBook = self.view.noteBook
         self.openEditor()
         
@@ -1100,6 +1102,7 @@ class MakerFileController(makerController.SuperController):
         self.publishButton = self.view.publishButton
         
         self.search = self.view.search
+        
         
         
                 
@@ -1126,6 +1129,8 @@ class MakerFileController(makerController.SuperController):
         self.editorWrapper = makerEditorWxView.editorView(self.view, self.model.getType())
         self.editor = self.editorWrapper.editor
         
+        self.editorWrapper.applyCodeStyle(self.projectManager.controller.getCurrentEditorStyleData())
+        
         self.setDefaultZoom()
         
         # - - delete welcome message - -
@@ -1142,7 +1147,9 @@ class MakerFileController(makerController.SuperController):
         # - - - - - - - - - - - - - - -
         
         self.noteBook.AddPage(self.editor, self.model.getFileName(), select=True)
-                
+        
+        # style notebook tab
+        
         self.setReferringTreeItem(self.view.tree.GetSelection())
        
         # use fileController instance as value here

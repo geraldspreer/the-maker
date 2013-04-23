@@ -246,6 +246,7 @@ returns the instance of the progressbar that was last added to the stack
         self.view.MenuItemFontInc.Enable(False)
         self.view.MenuItemFontDec.Enable(False)
         self.view.MenuItemFontNormal.Enable(False)
+        self.view.MenuItemEditorStyles.Enable(False)
                 
         # Edit Menu
         

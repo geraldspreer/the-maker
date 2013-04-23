@@ -2174,8 +2174,6 @@ class MakerProjectModel:
         """Creates an new instance of a MakerFile"""    
         
         # check if group is supported if not use other classes
-        print "name:", name
-        print "group:", group
         
         existingInstance = self.findOpenFileInstByName(name + group)
         if existingInstance:

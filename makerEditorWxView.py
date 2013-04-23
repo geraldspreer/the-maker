@@ -187,7 +187,7 @@ class editorView:
 #            self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENT, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
 #            self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENTLINE, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
 #            self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING, "fore:#aaaa00,face:%(other)s,size:%(size)d" % faces)
-            self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING_VARIABLE, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING_VARIABLE, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
 #            self.editor.StyleSetSpec(wx.stc.STC_HPHP_NUMBER, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
 #                    # {} () = 
 #            self.editor.StyleSetSpec(wx.stc.STC_HPHP_OPERATOR, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)

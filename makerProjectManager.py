@@ -30,7 +30,8 @@ class ProjectManagerController(makerController.SuperController):
         self.bindActions()
         self.treeItems = []
         self.progressBars = []
-        self.createMenuForEditorStyles()
+        self.defaultEditorStyle = "Railscast"
+        self.loadEditorStylesAndCreateMenu()
         
         # format {NoteBookSelection[int], <makerFileController class>}
         self.noteBookPages = {}
@@ -39,6 +40,7 @@ class ProjectManagerController(makerController.SuperController):
         self.testing = False
     
     def loadStyles(self):
+        """ this creates self.editorStyles """
         
         self.editorStyles = {}
         
@@ -48,12 +50,24 @@ class ProjectManagerController(makerController.SuperController):
                 _s = item.replace(".json", "")
                 self.editorStyles[_s] = eval(readFile(os.path.join(path,item)))
     
-        print self.editorStyles
+        
     
         
-    def createMenuForEditorStyles(self):
+    def loadEditorStylesAndCreateMenu(self):
         self.styleMenus = {}
         path = os.path.join(self.model.getApplicationPath(), "system/EditorStyles")
+        
+        MenuItemDefaultStyle = self.view.subMenuEditorStyles.Append(help='Default Editor Style',
+                                              id=-1, 
+                                              kind=self.view.wx.ITEM_CHECK, 
+                                              text = "Default Style")
+        
+        self.styleMenus[None] = MenuItemDefaultStyle.GetId()
+        
+        self.view.subMenuEditorStyles.AppendSeparator()
+        
+        self.view.Bind(self.view.wx.EVT_MENU, self.resetEditorStyle, MenuItemDefaultStyle)
+        
         for item in os.listdir(path):
             if item.endswith(".json"):
                 _s = item.replace(".json", "")
@@ -66,20 +80,74 @@ class ProjectManagerController(makerController.SuperController):
                 self.styleMenus[item] = x.GetId()
                 
                 self.view.Bind(self.view.wx.EVT_MENU_HIGHLIGHT, self.prevEditorStyle, x)
-                self.view.Bind(self.view.wx.EVT_MENU, self.setEditorStyle, x) 
-    
+                self.view.Bind(self.view.wx.EVT_MENU, self.setEditorStyle, x)
                 
         
         self.loadStyles()
+        
+    
+    def toggleEditorStyleItems(self, itemId):
+        
+        for key, value in self.styleMenus.iteritems():
+                
+            if value == itemId:
+                
+                self.view.subMenuEditorStyles.FindItemById(value).Check(True) 
+            else:
+                self.view.subMenuEditorStyles.FindItemById(value).Check(False) 
+    
+    
+    def setCurrentEditorStyle(self, style = None):
+        
+        if not style:
+            self.currentEditorStyle = self.defaultEditorStyle
+        else:
+            self.currentEditorStyle = style
+        
+    
+    def getCurrentEditorStyle(self):
+        
+        return self.currentEditorStyle 
+    
+    
+    def getCurrentEditorStyleData(self):
+        return self.editorStyles[self.getCurrentEditorStyle()]
+    
+    def getEditorStyleData(self, styleName = None):
+        if not styleName:
+            style = self.defaultEditorStyle
+        else:
+            return self.editorStyles[styleName]
+    
+    def getEditorStyles(self):
+        """ returns the dict """
+    
+        return self.editorStyles
+    
+    
+    def resetEditorStyle(self, event):
+        """ reset editor style to default """
+        
+        editorWrapper = self.model.getActiveProject().getCurrentFile().fileController.editorWrapper
+        editorWrapper.applyCodeStyle(self.getEditorStyleData(self.defaultEditorStyle))
+        
+        self.setCurrentEditorStyle(self.defaultEditorStyle)
+        
+        self.toggleEditorStyleItems(event.GetId())
+    
     
     def setEditorStyle(self, event):
+        
         for key, value in self.styleMenus.iteritems():
             
-            if value == event.GetMenuId():
-                print "Setting editor style to:", key
+            if value == event.GetId():
+                print "setting to:", key.replace(".json","")
+                self.setCurrentEditorStyle(key.replace(".json",""))
         
-        
-        
+        self.toggleEditorStyleItems(event.GetId())
+    
+    
+    
     def prevEditorStyle(self, event):
         for key, value in self.styleMenus.iteritems():
             
@@ -172,7 +240,8 @@ class ProjectManagerController(makerController.SuperController):
             # set UI defaults
             self.view.SetClientSize(self.view.wx.Size(1200, 700))
             self.view.Center(self.view.wx.BOTH)
-            
+        
+        self.setCurrentEditorStyle("Github")
         
         theFile = os.path.join(self.model.getApplicationSupportDir(), ".makerUISettings")
         if os.path.isfile(theFile):

@@ -6,8 +6,6 @@ import sys
 import shutil
 import string
 
-#import wx
-#import wx.stc
 import makerEditorWxView
 import makerCopyright
 import wx.lib.buttons
@@ -884,8 +882,7 @@ class wxPythonGUI(wx.Frame):
         self._init_coll_sub_menu_markers(self.SubMenuMarkers)
         self._init_coll_sub_menu_languages(self.subMenuLanguages)
         
-        
-                # the submenus
+        # the submenus
         #---------
         #---------
         #---------
@@ -2407,6 +2404,7 @@ class wxPythonGUI(wx.Frame):
                                         style= wx.lib.flatnotebook.FNB_NODRAG | 
                                         wx.lib.flatnotebook.FNB_X_ON_TAB)
         self.noteBook.SetPadding(wx.Size(20))
+        self.noteBook.SetActiveTabColour("#000000")
         
         # add a welcome message to the noteBook        
         
