@@ -736,6 +736,7 @@ class MakerProjectController(makerController.SuperController):
             # we let dead end here since after this call another projectController will take over    
         
         else:
+            
             self.model.loadFile(theFile, group)    
         
         

@@ -244,10 +244,10 @@ class wxPythonGUI(wx.Frame):
         
         
         self.MenuItemEditorStyles =  parent.AppendMenu(help='Editor Styles',
-                                             id=-1,
-                                              submenu = self.subMenuEditorStyles,
-                                              text=u'Editor Styles'
-                                              )
+                                            id=-1,
+                                            submenu = self.subMenuEditorStyles,
+                                            text=u'Editor Styles'
+                                            )
          
         parent.AppendSeparator()
         

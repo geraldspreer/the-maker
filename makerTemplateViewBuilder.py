@@ -16,7 +16,7 @@ def scaffold(systemDir):
        <style type="text/css">
 
         html {
-
+            
             background: -webkit-gradient(linear, left top, left bottom, from(#000), to(rgb(93,94,120)));
             background-attachment:fixed;
         }
