@@ -14,7 +14,7 @@ import wx.lib.buttons
 import wx.gizmos
 import wx.lib.imagebrowser as ib
 from wx.lib.anchors import LayoutAnchors
-import wx.lib.flatnotebook as nb
+import makerNoteBook as nb
 import wx.py as pyShell
 
 #wx.lib.flatnotebook.FlatNotebookEvent.

@@ -92,7 +92,7 @@ class editorView:
             else: 
                 
                 self.editor.SetLexer(wx.stc.STC_LEX_HTML)
-<<<<<<< HEAD
+
                 
                 kw = ("a abbr acronym address applet area b base basefont bdo big"
                 " blockquote body br button caption center cite code col colgroup dd del"
@@ -124,10 +124,7 @@ class editorView:
                 self.editor.SetKeyWords(0, kw)
                 self.editor.SetLexerLanguage("hypertext")
 
-                
-=======
-                    
->>>>>>> code-styling
+            
             self.applyCodeStyle(style = None)
         
             # default word wrapping            
@@ -147,11 +144,6 @@ class editorView:
             self.editor.SetControlCharSymbol(0)
             self.editor.SetCaretLineVisible(True)
             
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> code-styling
             self.editor.SetMarginType(0, wx.stc.STC_MARGIN_NUMBER)
             # Text Margins    
             self.editor.SetMargins(10, 10)
@@ -160,7 +152,6 @@ class editorView:
             
             self.editor.UsePopUp(0)   
         
-<<<<<<< HEAD
         
         def applyCodeStyle(self, style = None ):
             # make use style passed to it.
@@ -336,9 +327,7 @@ class editorView:
                 pass
             evt.Skip()
             return 
-        
-=======
->>>>>>> code-styling
+
         
         def applyCodeStyle(self, style = None ):
             # make use style passed to it.
@@ -383,28 +372,7 @@ class editorView:
                     'support':{'color':'#da4939'}
                     }
                 
-      
-   
-#                
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_DEFAULT, "fore:#2200bb,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENT, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENTLINE, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING, "fore:#aaaa00,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING_VARIABLE, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_NUMBER, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
-#                    # {} () = 
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_OPERATOR, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_SIMPLESTRING, "fore:#2244bb,face:%(other)s,size:%(size)d" % faces)
-#                    # $foo
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_VARIABLE, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
-#                    
-#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_WORD, "fore:#ff0000,face:%(other)s,size:%(size)d" % faces)
-#            
-#                
-#            self.editor.SetLexer(wx.stc.STC_LEX_CSS)
 
-#
-#          
  
             self.editor.SetCaretLineBack(style["meta.highlight.currentline"]['background-color'])
             self.editor.SetCaretForeground(style["meta.default"]['color'])
