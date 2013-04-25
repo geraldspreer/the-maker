@@ -2403,6 +2403,7 @@ class wxPythonGUI(wx.Frame):
         self.noteBook = nb.FlatNotebook(self.splitter, wx.ID_ANY, agwStyle = wx.lib.flatnotebook.FNB_FF2,
                                         style= wx.lib.flatnotebook.FNB_NODRAG | 
                                         wx.lib.flatnotebook.FNB_X_ON_TAB)
+        
         self.noteBook.SetPadding(wx.Size(20))
         self.noteBook.SetActiveTabColour("#000000")
         
