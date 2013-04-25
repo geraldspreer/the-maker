@@ -1093,6 +1093,8 @@ class MakerFileController(makerController.SuperController):
         self.saveButton = self.view.saveButton
         self.saveMenu = self.view.MenuItemSaveFile
         
+        self.projectManager = self.model.core.projectManager
+        
         self.noteBook = self.view.noteBook
         self.openEditor()
         
@@ -1100,6 +1102,7 @@ class MakerFileController(makerController.SuperController):
         self.publishButton = self.view.publishButton
         
         self.search = self.view.search
+        
         
         
                 
@@ -1123,7 +1126,10 @@ class MakerFileController(makerController.SuperController):
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSED)
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSING)
         
-        self.editor = makerEditorWxView.editorView(self.view, self.model.getType()).editor
+        self.editorWrapper = makerEditorWxView.editorView(self.view, self.model.getType())
+        self.editor = self.editorWrapper.editor
+        
+        self.editorWrapper.applyCodeStyle(self.projectManager.controller.getCurrentEditorStyleData())
         
         self.setDefaultZoom()
         
@@ -1141,12 +1147,13 @@ class MakerFileController(makerController.SuperController):
         # - - - - - - - - - - - - - - -
         
         self.noteBook.AddPage(self.editor, self.model.getFileName(), select=True)
-                
+        
+        # style notebook tab
+        
         self.setReferringTreeItem(self.view.tree.GetSelection())
        
         # use fileController instance as value here
         self.model.core.projectManager.controller.noteBookPages[self.noteBook.GetSelection()] = self
-        
         
         
         self.view.Bind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CHANGED, 

@@ -22,4 +22,4 @@ class MySplashScreen(wx.SplashScreen):
 
     def onExit(self, evt):
         self.Hide()
-        evt.Skip()  
+        evt.Skip()

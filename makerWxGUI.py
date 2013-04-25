@@ -6,8 +6,6 @@ import sys
 import shutil
 import string
 
-#import wx
-#import wx.stc
 import makerEditorWxView
 import makerCopyright
 import wx.lib.buttons
@@ -244,6 +242,15 @@ class wxPythonGUI(wx.Frame):
 
         parent.AppendSeparator()
         
+        
+        self.MenuItemEditorStyles =  parent.AppendMenu(help='Editor Styles',
+                                            id=-1,
+                                            submenu = self.subMenuEditorStyles,
+                                            text=u'Editor Styles'
+                                            )
+         
+        parent.AppendSeparator()
+        
         self.MenuItemFontInc = parent.Append(help='Increase Font Size', 
                                              id=-1,
                                               kind=wx.ITEM_NORMAL,
@@ -341,7 +348,10 @@ class wxPythonGUI(wx.Frame):
                                                     kind=wx.ITEM_NORMAL, 
                                                     text=u'Creation Date - !creationDate!')
     
-        
+
+
+
+
     
     def _init_coll_sub_menu_languages(self, parent):
         
@@ -823,7 +833,7 @@ class wxPythonGUI(wx.Frame):
     
     
     def _init_utils(self):
-        # generated method, don't edit
+        
         self.mainMenuBar = wx.MenuBar()
 
         self.pages = wx.Menu(title=u'')
@@ -831,30 +841,28 @@ class wxPythonGUI(wx.Frame):
         self.edit = wx.Menu(title=u'')
         
         self.view = wx.Menu(title=u'')
-        
-      
 
         self.ftp = wx.Menu(title=u'')
 
         self.insert = wx.Menu(title=u'')
 
-       
-
         self.images = wx.Menu(title=u'')
 
         self.filetypes = wx.Menu(title=u'')
-
-       
 
         self.help = wx.Menu(title=u'')
 
         self.additional_projects = wx.Menu(title=u'')
 
-        self.advanced = wx.Menu(title=u'')
+        self.editorStyles = wx.Menu(title=u'')
+        
         self.new_files = wx.Menu(title=u'')
+        
         self.SubMenuMarkers = wx.Menu(title='')
         
         self.subMenuLanguages = wx.Menu(title='')
+        
+        self.subMenuEditorStyles = wx.Menu(title='')
         
         self._init_coll_mainMenuBar_Menus(self.mainMenuBar)
         self._init_coll_pages_Items(self.pages)
@@ -874,8 +882,7 @@ class wxPythonGUI(wx.Frame):
         self._init_coll_sub_menu_markers(self.SubMenuMarkers)
         self._init_coll_sub_menu_languages(self.subMenuLanguages)
         
-
-                # the submenus
+        # the submenus
         #---------
         #---------
         #---------
@@ -2380,6 +2387,7 @@ class wxPythonGUI(wx.Frame):
                 
 #the top splitter        
         self.splitter = MySplitter(self, -1,None)
+        #self.splitter.SetSashSize(10)
 
 
 
@@ -2392,10 +2400,11 @@ class wxPythonGUI(wx.Frame):
         # makerProjectController.py method noteBookPageClosed has to be
         # changed where the noteBoolPages dict is updated
         #
-        self.noteBook = nb.FlatNotebook(self.splitter, wx.ID_ANY, 
+        self.noteBook = nb.FlatNotebook(self.splitter, wx.ID_ANY, agwStyle = wx.lib.flatnotebook.FNB_FF2,
                                         style= wx.lib.flatnotebook.FNB_NODRAG | 
-                                        wx.lib.flatnotebook.FNB_X_ON_TAB )
-        
+                                        wx.lib.flatnotebook.FNB_X_ON_TAB)
+        self.noteBook.SetPadding(wx.Size(20))
+        self.noteBook.SetActiveTabColour("#000000")
         
         # add a welcome message to the noteBook        
         
@@ -2414,7 +2423,7 @@ class wxPythonGUI(wx.Frame):
 
 #add widgets to the first splitter
 
-        self.listWindow = wx.Panel(self.splitter, -1)
+        self.listWindow = wx.Panel(self.splitter, -1, style = wx.NO_BORDER)
         #self.listWindow.SetBackgroundColour(wx.RED)
 
         self.listSizer = wx.BoxSizer(orient=wx.VERTICAL)
@@ -2424,8 +2433,7 @@ class wxPythonGUI(wx.Frame):
         self.tree = wx.TreeCtrl(self.listWindow, -1, 
                                 style=wx.TR_HAS_BUTTONS
                                 |wx.TR_LINES_AT_ROOT
-                                |wx.TR_DEFAULT_STYLE
-                                |wx.SUNKEN_BORDER)
+                                |wx.TR_DEFAULT_STYLE)
         
         
         
@@ -2456,7 +2464,7 @@ class wxPythonGUI(wx.Frame):
         self.splitter.SetMinimumPaneSize(200)
         self.splitter.SplitVertically(self.listWindow, self.noteBook, 180)    
 
-        self.topPanel = wx.Panel(self, -1, pos=(0,0), size=(180,50), style=wx.TB_FLAT)
+        self.topPanel = wx.Panel(self, -1, pos=(0,0), size=(180,50), style=wx.TB_HORIZONTAL)
         self.topPanel.SetAutoLayout(True)
 
         self.topSizer = wx.BoxSizer(wx.HORIZONTAL)

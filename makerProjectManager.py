@@ -14,13 +14,14 @@ import makerProject
 import makerTemplateDialog
 import makerManageLinkedProjects
 import makerTemplateViewBuilder
+import makerThread
 
 
 import wx.html2 as theView
 
 class ProjectManagerController(makerController.SuperController):
     def __init__(self, model , view):
-        #print "initializing:", self
+        
         self.view = view
         self.model = model
         self.createAbstractNameForViewObjects()
@@ -29,13 +30,157 @@ class ProjectManagerController(makerController.SuperController):
         self.bindActions()
         self.treeItems = []
         self.progressBars = []
+        self.defaultEditorStyle = "Github"
+        self.loadEditorStylesAndCreateMenu()
+        
         # format {NoteBookSelection[int], <makerFileController class>}
         self.noteBookPages = {}
         
         # This is a flag used to control unit tests
         self.testing = False
+    
+    
+    def loadStyles(self):
+        """ this creates self.editorStyles """
+        
+        self.editorStyles = {}
+        
+        path = os.path.join(self.model.getApplicationPath(), "system/EditorStyles")
+        for item in os.listdir(path):
+            if item.endswith(".json"):
+                _s = item.replace(".json", "")
+                self.editorStyles[_s] = eval(readFile(os.path.join(path,item)))
+    
+        
+    
+        
+    def loadEditorStylesAndCreateMenu(self):
+        self.styleMenus = {}
+        path = os.path.join(self.model.getApplicationPath(), "system/EditorStyles")
+        
+        MenuItemDefaultStyle = self.view.subMenuEditorStyles.Append(help='Default Editor Style',
+                                              id=-1, 
+                                              kind=self.view.wx.ITEM_CHECK, 
+                                              text = "Default Style")
+        
+        self.styleMenus[None] = MenuItemDefaultStyle.GetId()
+        
+        self.view.subMenuEditorStyles.AppendSeparator()
+        
+        self.view.Bind(self.view.wx.EVT_MENU, self.resetEditorStyle, MenuItemDefaultStyle)
         
         
+        for item in os.listdir(path):
+            if item.endswith(".json"):
+                _s = item.replace(".json", "")
+                
+                x = self.view.subMenuEditorStyles.Append(help='Editor Style ' + _s,
+                                              id=-1, 
+                                              kind=self.view.wx.ITEM_CHECK, 
+                                              text = _s)
+                
+                self.styleMenus[item] = x.GetId()
+                
+                self.view.Bind(self.view.wx.EVT_MENU_HIGHLIGHT, self.prevEditorStyle, x)
+                self.view.Bind(self.view.wx.EVT_MENU, self.setEditorStyle, x)
+                
+        
+        self.loadStyles()
+    
+    
+    
+    def toggleMenuItemByStyleName(self, styleName = None):
+        
+        if not styleName:
+            return
+
+        for key, value in self.styleMenus.iteritems():
+                
+            if key == styleName + ".json":
+                
+                self.view.subMenuEditorStyles.FindItemById(value).Check(True) 
+            else:
+                self.view.subMenuEditorStyles.FindItemById(value).Check(False) 
+    
+
+    def toggleEditorStyleItems(self, itemId):
+        
+        for key, value in self.styleMenus.iteritems():
+                
+            if value == itemId:
+                
+                self.view.subMenuEditorStyles.FindItemById(value).Check(True) 
+            else:
+                self.view.subMenuEditorStyles.FindItemById(value).Check(False) 
+    
+    
+    def setCurrentEditorStyle(self, style = None):
+        
+        if not style:
+            self.currentEditorStyle = self.defaultEditorStyle
+        else:
+            self.currentEditorStyle = style
+            
+        # apply style to all open files
+        for theFile in self.model.openFiles:
+            
+            edWrapper = theFile.fileController.editorWrapper
+            edWrapper.applyCodeStyle(self.getCurrentEditorStyleData())
+            
+            
+    
+    def getCurrentEditorStyle(self):
+        
+        return self.currentEditorStyle 
+    
+    
+    def getCurrentEditorStyleData(self):
+        return self.editorStyles[self.getCurrentEditorStyle()]
+    
+    def getEditorStyleData(self, styleName = None):
+        if not styleName:
+            style = self.defaultEditorStyle
+        else:
+            return self.editorStyles[styleName]
+    
+    def getEditorStyles(self):
+        """ returns the dict """
+    
+        return self.editorStyles
+    
+    
+    def resetEditorStyle(self, event):
+        """ reset editor style to default """
+        print "now we are here..."
+        editorWrapper = self.model.getActiveProject().getCurrentFile().fileController.editorWrapper
+        editorWrapper.applyCodeStyle(self.getEditorStyleData(self.defaultEditorStyle))
+        
+        self.setCurrentEditorStyle(self.defaultEditorStyle)
+        
+        self.toggleEditorStyleItems(event.GetId())
+    
+    
+    def setEditorStyle(self, event):
+        
+        for key, value in self.styleMenus.iteritems():
+            
+            if value == event.GetId():
+                
+                self.setCurrentEditorStyle(key.replace(".json",""))
+        
+        self.toggleEditorStyleItems(event.GetId())
+    
+    
+    
+    def prevEditorStyle(self, event):
+        for key, value in self.styleMenus.iteritems():
+            
+            if value == event.GetMenuId():
+                
+                self.model.getActiveProject().getCurrentFile().fileController.editorWrapper.applyCodeStyle(self.editorStyles[key.replace(".json","")])
+        
+    
+    
     def bindActions(self):
         
         # this binding is overridden once a project is loaded
@@ -102,7 +247,8 @@ class ProjectManagerController(makerController.SuperController):
                           "Position" : self.view.GetPosition(),
                           "SplitterSashPosition" : self.view.splitter.GetSashPosition(),
                           "sessionFiles" : self.model.sessionFiles,
-                          "linkedProjects" : self.model.linkedProjectPaths}
+                          "linkedProjects" : self.model.linkedProjectPaths,
+                          "editorStyle" : self.getCurrentEditorStyle()}
                         
         # due to Sandbox on OS X linked projects to get saved for next session
         #"linkedProjects" : self.model.linkedProjectPaths}
@@ -119,7 +265,7 @@ class ProjectManagerController(makerController.SuperController):
             # set UI defaults
             self.view.SetClientSize(self.view.wx.Size(1200, 700))
             self.view.Center(self.view.wx.BOTH)
-            
+            self.setCurrentEditorStyle(self.defaultEditorStyle)
         
         theFile = os.path.join(self.model.getApplicationSupportDir(), ".makerUISettings")
         if os.path.isfile(theFile):
@@ -128,6 +274,8 @@ class ProjectManagerController(makerController.SuperController):
                 self.view.SetSize(interfaceData["Size"])
                 self.view.SetPosition(interfaceData["Position"])
                 self.view.splitter.SetSashPosition(interfaceData["SplitterSashPosition"])
+                self.setCurrentEditorStyle(interfaceData["editorStyle"])
+                self.toggleMenuItemByStyleName(interfaceData["editorStyle"])
                 
                 #linked projects
                 
@@ -137,7 +285,6 @@ class ProjectManagerController(makerController.SuperController):
                     # open all files that had been open in last session
                     for sessionFile in interfaceData["sessionFiles"]:
                         
-                        print "SessionFile:", sessionFile[2]
                         self.autoLoadProject(sessionFile[2])
                         #self.model.load(sessionFile[2])
                         item = (self.model.getActiveProject()).projectController.findTreeItem(sessionFile[0], sessionFile[1])
@@ -193,7 +340,6 @@ class ProjectManagerController(makerController.SuperController):
            
     def loadProject(self, event):
         
-        print "loading project"
         item = event.GetItem()
        
         if item:
@@ -208,14 +354,8 @@ class ProjectManagerController(makerController.SuperController):
                 project = self.treeView.GetItemText(item)
                 self.model.load(project)
                 
-        #self.view.wx.Yield()
-        #event.Skip()
-        
-        
-    def buildTemplateView(self):
-        
-        pass
-        
+
+
         
     def actionAddNewProject(self, event):
         
@@ -286,7 +426,7 @@ class ProjectManagerController(makerController.SuperController):
         def onWebViewNavigating(evt):
             
             url = evt.GetURL()
-            print "url is:", url 
+            
             self.template = re.compile('--(.+)--', re.IGNORECASE).findall(url)
             
             if self.template == []:
@@ -316,7 +456,7 @@ class ProjectManagerController(makerController.SuperController):
         def cancel(event):
             
             selector.Destroy()
-            event.Skip()
+            
         
         
         loadTemplates(viewPath)
@@ -394,7 +534,6 @@ class ProjectManager:
     def __init__(self, view):
         
         self.controller = ProjectManagerController(self, view)
-        #self.setProjectDir()
         
         self.linkedProjectPaths = []
         self.loadLinkedProjects()
@@ -403,7 +542,9 @@ class ProjectManager:
         self.openProjects = []
         self.openFiles = []
         self.projectConvertRepoName = "MakerProjects"
-        self.checkForSandboxedProjects()
+        
+        makerThread.newThread(self.checkForSandboxedProjects)
+        
         self.loadArgumentPassedProject()
        
     
@@ -418,10 +559,6 @@ class ProjectManager:
         updateInfo += " projects.\n\n "
         updateInfo += "Click OK to choose...\n "
         
-        self.controller.view.Center()
-        self.controller.view.Show()
-        
-        
         def getTargetDir(verbose = False):
             target = None
             if verbose:
@@ -431,14 +568,17 @@ class ProjectManager:
             
             return target
         
-        print "Checking sandbox for old projects..."
+        
         sandBoxProjects = os.path.join(self.getApplicationSupportDir(), "makerProjects")
         converted = []
         errors = False
         
         if not os.path.isdir(sandBoxProjects):
-            print "No projects in sandbox..."
+            
             return
+        
+        self.controller.view.Center()
+        self.controller.view.Show()
         
         targetDir = getTargetDir(False)
         
@@ -450,7 +590,7 @@ class ProjectManager:
         
         for item in os.listdir(sandBoxProjects):
             if not item.startswith("."):
-                print "converting:", item
+                
                 src = os.path.join(sandBoxProjects, item)
                 dst = os.path.join(targetDir, self.projectConvertRepoName ,item + ".makerProject") 
                 
@@ -477,6 +617,7 @@ class ProjectManager:
     
     def getApplicationPath(self):
         """ get path where the maker executable resides """
+        
         return os.path.dirname(sys.argv[0])
     
     def getUserHomeDir(self):

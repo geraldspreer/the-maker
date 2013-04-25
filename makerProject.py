@@ -1678,8 +1678,7 @@ class MakerProjectModel:
 
 
     def importFiles(self, event=None):
-       	if event:
-		event.Skip()
+       	
         """Imports a MakerFile (handles all files, even binary)."""
 
         filesToImport = self.projectController.fileDialog()
@@ -2175,8 +2174,6 @@ class MakerProjectModel:
         """Creates an new instance of a MakerFile"""    
         
         # check if group is supported if not use other classes
-        print "name:", name
-        print "group:", group
         
         existingInstance = self.findOpenFileInstByName(name + group)
         if existingInstance:

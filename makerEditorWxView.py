@@ -16,8 +16,8 @@ elif wx.Platform == '__WXMAC__':
     faces = { 'times': 'Times New Roman',
               'mono' : 'Monaco',
               'helv' : 'Helvetica',
-              'other': 'Comic Sans MS',
-              'size' : 13,
+              'other': 'Monaco',
+              'size' : 12,
               'size2': 12,
               'size3': 10,
              }
@@ -36,23 +36,17 @@ class editorView:
         
             self.editor = wx.stc.StyledTextCtrl(id=-1,
                   name='makerEditorView', parent=parent, pos=wx.Point(192, 87),
-                  size=wx.Size(160, 120), style=wx.VSCROLL | wx.HSCROLL)
+                  size=wx.Size(160, 120), style=wx.VSCROLL | wx.HSCROLL )
             
-      
             self.editor.SetAutoLayout(True)
             self.editor.SetConstraints(LayoutAnchors(self.editor,
                   True, True, True, True))
             #self.editor.SetText(self.BoilerPlate)
             self.editor.SetThemeEnabled(True)
             
-            #self.editor.SetLexer(wx.stc.STC_LEX_HTML)
-            
             self.editor.SetStyleBits(7)
         
             self.editor.StyleClearAll()  # Reset all to be like the default
-            
-            self.editor.SetTabIndents(1)
-            self.editor.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
             
             if fileType == ".py":
                                 
@@ -98,6 +92,7 @@ class editorView:
             else: 
                 
                 self.editor.SetLexer(wx.stc.STC_LEX_HTML)
+<<<<<<< HEAD
                 
                 kw = ("a abbr acronym address applet area b base basefont bdo big"
                 " blockquote body br button caption center cite code col colgroup dd del"
@@ -130,6 +125,9 @@ class editorView:
                 self.editor.SetLexerLanguage("hypertext")
 
                 
+=======
+                    
+>>>>>>> code-styling
             self.applyCodeStyle(style = None)
         
             # default word wrapping            
@@ -141,12 +139,19 @@ class editorView:
             self.editor.SetEdgeColumn(200)
             
             self.editor.SetHighlightGuide(1)
+            # indentation
             self.editor.SetIndentationGuides(False)
+            self.editor.SetIndent(4)
+            
             self.editor.SetCaretWidth(1)
             self.editor.SetControlCharSymbol(0)
             self.editor.SetCaretLineVisible(True)
             
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> code-styling
             self.editor.SetMarginType(0, wx.stc.STC_MARGIN_NUMBER)
             # Text Margins    
             self.editor.SetMargins(10, 10)
@@ -155,6 +160,7 @@ class editorView:
             
             self.editor.UsePopUp(0)   
         
+<<<<<<< HEAD
         
         def applyCodeStyle(self, style = None ):
             # make use style passed to it.
@@ -331,4 +337,268 @@ class editorView:
             evt.Skip()
             return 
         
+=======
+>>>>>>> code-styling
         
+        def applyCodeStyle(self, style = None ):
+            # make use style passed to it.
+            
+            self.editorCodeStyle = style
+            
+            if not style:
+            
+                style = {'comment':{'color':'#bc9458','font-style':'italic'},
+                    'constant.numeric':{'color':'#a5c261','font-weight':'normal'},
+                    'constant.numeric.keyword':{'color':'#6d9cbe'},
+                    'keyword':{'color':'#cc7833','font-strike-through':'none','font-weight':'normal'},
+                    'keyword.control':{'color':'#cc7833'},
+                    'keyword.type':{'color':'#cc7833'},
+                    'language.function':{'color':'#fac56d'},
+                    'language.operator':{'color':'#b96619'},
+                    'language.variable':{'color':'#d0d1ff'},
+                    'markup.comment':{'color':'#bc9458','font-style':'italic'},
+                    'markup.constant.entity':{'color':'#6e9cbe'},
+                    'markup.declaration':{'color':'#e8c06a'},
+                    'markup.inline.cdata':{'color':'#e9c053'},
+                    'markup.processing':{'color':'#68685b','font-weight':'bold'},
+                    'markup.tag':{'color':'#e8c06a'},  #
+                    'markup.tag.attribute.name':{'color':'#e8c06a'},
+                    'markup.tag.attribute.value':{'color':'#a5c261','font-style':'italic'},
+                    'meta.default':{'background-color':'#2b2b2b','color':'#e6e1dc'},
+                    'meta.highlight.currentline':{'background-color':'#d9d9d9'},
+                    'meta.important':{'color':'#b66418','font-style':'italic'},
+                    'meta.invalid':{'background-color':'#990201','color':'#ffffff','font-weight':'bold'},
+                    'meta.invisible.characters':{'color':'#404040'},
+                    'meta.link':{'color':'#a5c261','font-style':'normal','font-underline':'none'},
+                    'string':{'color':'#a5c261','font-style':'italic'},
+                    'string.regex':{'color':'#99b93e'},
+                    'string.regex.escaped':{'color':'#4b8928'},
+                    'style.at-rule':{'color':'#b96619','font-weight':'bold'},
+                    'style.comment':{'color':'#bc9458','font-style':'italic','font-weight':'normal'},
+                    'style.property.name':{'color':'#6e9cbe'},
+                    'style.value.color.rgb-value':{'color':'#6d9cbe'},
+                    'style.value.keyword':{'color':'#a5c261'},
+                    'style.value.numeric':{'color':'#99b62d'},
+                    'style.value.string':{'color':'#a5c261','font-style':'italic'},
+                    'support':{'color':'#da4939'}
+                    }
+                
+      
+   
+#                
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_DEFAULT, "fore:#2200bb,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENT, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENTLINE, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING, "fore:#aaaa00,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING_VARIABLE, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_NUMBER, "fore:#aa0000,face:%(other)s,size:%(size)d" % faces)
+#                    # {} () = 
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_OPERATOR, "fore:#00aa00,face:%(other)s,size:%(size)d" % faces)
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_SIMPLESTRING, "fore:#2244bb,face:%(other)s,size:%(size)d" % faces)
+#                    # $foo
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_VARIABLE, "fore:#993300,face:%(other)s,size:%(size)d" % faces)
+#                    
+#            self.editor.StyleSetSpec(wx.stc.STC_HPHP_WORD, "fore:#ff0000,face:%(other)s,size:%(size)d" % faces)
+#            
+#                
+#            self.editor.SetLexer(wx.stc.STC_LEX_CSS)
+
+#
+#          
+ 
+            self.editor.SetCaretLineBack(style["meta.highlight.currentline"]['background-color'])
+            self.editor.SetCaretForeground(style["meta.default"]['color'])
+            self.editor.SetCaretLineBackAlpha(10)
+            
+            self.editor.SetSelBackground(True, "#b5d4ff")
+            self.editor.SetSelAlpha(120)
+            
+            
+            if self.editor.GetLexer() == wx.stc.STC_LEX_HTML:
+                # HTML Styles
+                
+                # <p>[This is text]</p>
+                self.editor.StyleSetSpec(wx.stc.STC_H_DEFAULT,     "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # [<p>]This is text</p>
+                self.editor.StyleSetSpec(wx.stc.STC_H_TAG, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # ??
+                self.editor.StyleSetSpec(wx.stc.STC_H_TAGUNKNOWN, "fore:" + style["meta.invalid"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # <img src="foo" [/>]
+                self.editor.StyleSetSpec(wx.stc.STC_H_TAGEND, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # [href]
+                self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTE, "fore:" + style["markup.tag.attribute.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                #  ["doublestring"]
+                self.editor.StyleSetSpec(wx.stc.STC_H_DOUBLESTRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                #  ['singlestring'] 
+                self.editor.StyleSetSpec(wx.stc.STC_H_SINGLESTRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # [<!-- comment -->]
+                self.editor.StyleSetSpec(wx.stc.STC_H_COMMENT, "fore:" + style["markup.comment"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # vspace = [4] 
+                self.editor.StyleSetSpec(wx.stc.STC_H_NUMBER, "fore:" + style["markup.tag.attribute.value"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # vspace [=] 4
+                self.editor.StyleSetSpec(wx.stc.STC_H_OTHER, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # [&amp;]
+                self.editor.StyleSetSpec(wx.stc.STC_H_ENTITY, "fore:" + style["markup.constant.entity"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # [<?] xml version="1.0" encoding="ISO-8859-1" ?>
+                self.editor.StyleSetSpec(wx.stc.STC_H_XMLSTART, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # <?xml version="1.0" encoding="ISO-8859-1" [?>]
+                self.editor.StyleSetSpec(wx.stc.STC_H_XMLEND, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # [<?php ]  [?>]
+                self.editor.StyleSetSpec(wx.stc.STC_H_QUESTION, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # ??
+                self.editor.StyleSetSpec(wx.stc.STC_H_ATTRIBUTEUNKNOWN, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_H_CDATA, "fore:" + style["markup.inline.cdata"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_H_SCRIPT, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+             
+                self.editor.StyleSetSpec(wx.stc.STC_H_SGML_DEFAULT, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_H_SGML_ERROR, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_DEFAULT, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # <script>[ ]
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_START, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_WORD, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_SINGLESTRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_DOUBLESTRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_NUMBER, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_SYMBOLS, "fore:" + style["language.operator"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_STRINGEOL, "fore:" + style["keyword"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+             
+                
+                # php is part of the html lexer
+                # {} () = 
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_OPERATOR, "fore:" + style["language.operator"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+    
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_DEFAULT, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+     
+                                         
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENT, "fore:" + style["markup.comment"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_COMMENTLINE, "fore:" + style["markup.comment"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+     
+    
+    
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_SIMPLESTRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+     
+                
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_VARIABLE, "fore:" + style["language.variable"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_HSTRING_VARIABLE, "fore:" + style["language.variable"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+     
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_NUMBER, "fore:" + style["constant.numeric.keyword"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+      
+                                         
+                self.editor.StyleSetSpec(wx.stc.STC_HPHP_WORD, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+     
+            elif self.editor.GetLexer() == wx.stc.STC_LEX_CSS:
+ 
+                # CSS
+               
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_DEFAULT, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                # [img] {  
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_TAG, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                # { } : ;
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_OPERATOR, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                # /* Comment */
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_COMMENT, "fore:" + style["markup.comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                
+                # float:[left];
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_VALUE, "fore:" + style["style.value.numeric"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # input[ [type=checkbox] ]
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_ATTRIBUTE, "fore:" + style["style.value.keyword"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # Strings
+                
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_SINGLESTRING, "fore:" + style["style.value.string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_DOUBLESTRING, "fore:" + style["style.value.string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # [.class] {    }
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_CLASS, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # [#id] {    }
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_ID, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # ??
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_IDENTIFIER, "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_IDENTIFIER2, "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_IDENTIFIER3, "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # [float]: left;
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_UNKNOWN_IDENTIFIER, "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # img[:hover]
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_UNKNOWN_PSEUDOCLASS, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_PSEUDOCLASS, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_PSEUDOELEMENT, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # @import 
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_DIRECTIVE, "fore:" + style["style.at-rule"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                # p { color: #ff0000 ! [ important ] ; }
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_IMPORTANT, "fore:" + style["meta.important"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+    
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_EXTENDED_IDENTIFIER,     "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_EXTENDED_PSEUDOCLASS,  "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size3)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_EXTENDED_PSEUDOELEMENT,  "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size3)d" % faces)
+            
+            elif self.editor.GetLexer() == wx.stc.STC_LEX_PYTHON:
+
+                self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTLINE, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_NUMBER, "fore:" + style["constant.numeric"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_STRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_STRINGEOL, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLE, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLEDOUBLE, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_CHARACTER, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_WORD, "fore:" + style["keyword.control"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_WORD2, "fore:" + style["keyword.control"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_OPERATOR, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_DECORATOR, "fore:" + style["meta.important"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_DEFAULT, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTBLOCK, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_CLASSNAME, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_DEFNAME, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_IDENTIFIER, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                            
+            else:
+                pass
+
+         
+            # hack for unidentified entities
+            self.editor.SetBackgroundColour(style["meta.default"]['background-color'])
+            
+              # Global default styles for all languages
+            self.editor.StyleSetSpec(wx.stc.STC_STYLE_DEFAULT,     "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+            self.editor.StyleSetSpec(wx.stc.STC_STYLE_LINENUMBER,  "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size3)d" % faces)
+            self.editor.StyleSetSpec(wx.stc.STC_STYLE_BRACEBAD,  "fore:#ff0000,back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size3)d" % faces)
+            
+           

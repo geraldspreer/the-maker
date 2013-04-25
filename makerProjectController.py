@@ -736,6 +736,7 @@ class MakerProjectController(makerController.SuperController):
             # we let dead end here since after this call another projectController will take over    
         
         else:
+            
             self.model.loadFile(theFile, group)    
         
         
@@ -981,7 +982,8 @@ class MakerProjectController(makerController.SuperController):
                 
                 
                 self.view.MenuItemCloseFile.Enable(True)
-                
+                # turn editor styles on
+                self.view.MenuItemEditorStyles.Enable(True)
                 
                 # saved ?
                 if self.model.currentFile.saved:
@@ -1082,9 +1084,11 @@ class MakerProjectController(makerController.SuperController):
             self.view.MenuItemCSS.Enable(False)
             self.view.MenuItemMarkers.Enable(False)
             
-            # word wrap toggle
+            # View menu
         
             self.view.MenuItemWrapWord.Enable(False)
+            
+            self.view.MenuItemEditorStyles.Enable(False)
            
             # print 
             self.view.MenuItemPrint.Enable(False)

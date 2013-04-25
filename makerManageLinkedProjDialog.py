@@ -96,7 +96,7 @@ def __init_resources():
       <object class="sizeritem">
         <object class="wxPanel">
           <object class="wxButton" name="Unlink">
-            <pos>515, 10</pos>
+            <pos>420, 10</pos>
             <label>Close Project</label>
             <default>1</default>
             <XRCED>
@@ -105,8 +105,8 @@ def __init_resources():
             </XRCED>
           </object>
           <object class="wxButton" name="Cancel">
-            <pos>420, 10</pos>
-            <label>Cancel</label>
+            <pos>530, 10</pos>
+            <label>Ok</label>
             <XRCED>
               <events>EVT_BUTTON</events>
               <assign_var>1</assign_var>
