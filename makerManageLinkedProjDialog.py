@@ -106,7 +106,7 @@ def __init_resources():
           </object>
           <object class="wxButton" name="Cancel">
             <pos>530, 10</pos>
-            <label>Done</label>
+            <label>Ok</label>
             <XRCED>
               <events>EVT_BUTTON</events>
               <assign_var>1</assign_var>

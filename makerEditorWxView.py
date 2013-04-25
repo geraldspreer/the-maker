@@ -165,23 +165,7 @@ class editorView:
                     'support':{'color':'#da4939'}
                     }
                 
-#            self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTLINE, "fore:#007f00,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_NUMBER, "fore:#007f7f,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_STRING, "fore:#7f007f,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_CHARACTER, "fore:#7f007f,face:%(other)s,size:%(size)d" % faces)                
-#            self.editor.StyleSetSpec(wx.stc.STC_P_WORD,  "fore:#00007F,bold,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLE, "fore:#7f0000,face:%(other)s,size:%(size)d" % faces)
-#                
-#            self.editor.StyleSetSpec(wx.stc.STC_P_DECORATOR, "fore:#777777,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLEDOUBLE, "fore:#7f0000,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_CLASSNAME, "fore:#0000FF,bold, size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_DEFNAME, "fore:#007f7f,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_OPERATOR, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_IDENTIFIER, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTBLOCK, "fore:#7f7f7f,face:%(other)s,size:%(size)d" % faces)
-#            self.editor.StyleSetSpec(wx.stc.STC_P_STRINGEOL, "fore:#000000,face:%(other)s,size:%(size)d" % faces)
-#                
-#        
+      
    
 #                
 #            self.editor.StyleSetSpec(wx.stc.STC_HPHP_DEFAULT, "fore:#2200bb,face:%(other)s,size:%(size)d" % faces)
@@ -359,6 +343,34 @@ class editorView:
                 self.editor.StyleSetSpec(wx.stc.STC_CSS_EXTENDED_IDENTIFIER,     "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 self.editor.StyleSetSpec(wx.stc.STC_CSS_EXTENDED_PSEUDOCLASS,  "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size3)d" % faces)
                 self.editor.StyleSetSpec(wx.stc.STC_CSS_EXTENDED_PSEUDOELEMENT,  "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size3)d" % faces)
+            
+            elif self.editor.GetLexer() == wx.stc.STC_LEX_PYTHON:
+
+                self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTLINE, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_NUMBER, "fore:" + style["constant.numeric"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_STRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_STRINGEOL, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLE, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_TRIPLEDOUBLE, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_CHARACTER, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_WORD, "fore:" + style["keyword.control"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_WORD2, "fore:" + style["keyword.control"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_OPERATOR, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_DECORATOR, "fore:" + style["meta.important"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_DEFAULT, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_COMMENTBLOCK, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_CLASSNAME, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_P_DEFNAME, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_P_IDENTIFIER, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                            
             else:
                 pass
 
