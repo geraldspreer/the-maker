@@ -501,10 +501,10 @@ class editorView:
                 self.editor.StyleSetSpec(wx.stc.STC_CSS_DOUBLESTRING, "fore:" + style["style.value.string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
                 # [.class] {    }
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_CLASS, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_CLASS, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
                 # [#id] {    }
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_ID, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_ID, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
                 # ??
                 self.editor.StyleSetSpec(wx.stc.STC_CSS_IDENTIFIER, "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
@@ -515,10 +515,10 @@ class editorView:
                 self.editor.StyleSetSpec(wx.stc.STC_CSS_UNKNOWN_IDENTIFIER, "fore:" + style["style.property.name"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
                 # img[:hover]
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_UNKNOWN_PSEUDOCLASS, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_PSEUDOCLASS, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_UNKNOWN_PSEUDOCLASS, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_PSEUDOCLASS, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
-                self.editor.StyleSetSpec(wx.stc.STC_CSS_PSEUDOELEMENT, "fore:" + style["markup.processing"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_CSS_PSEUDOELEMENT, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
                 # @import 
                 self.editor.StyleSetSpec(wx.stc.STC_CSS_DIRECTIVE, "fore:" + style["style.at-rule"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
