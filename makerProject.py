@@ -545,9 +545,9 @@ class MakerProjectModel:
         
         
         
-        m = "If you are exporting a template, make sure that you have\n"
+        m = "If you are exporting a template, make sure that you have "
         m += "a current screenshot included.\n"
-        m += "Save this screenshot as 'preview.jpg' into your parts folder.\n"
+        m += "Save this screenshot as 'preview.jpg' into your parts folder. "
         m += "Dimensions should be 320x240 pixels."
         
         

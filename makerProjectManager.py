@@ -15,7 +15,7 @@ import makerTemplateDialog
 import makerManageLinkedProjects
 import makerTemplateViewBuilder
 import makerThread
-
+import webbrowser as web
 
 import wx.html2 as theView
 
@@ -400,9 +400,9 @@ class ProjectManagerController(makerController.SuperController):
         """
         
         viewPath = makerTemplateViewBuilder.buildView(self.model.getSystemPath(), self.model.getApplicationSupportDir())
-    
         
         self.template = None
+        self.selectedTemplate = None
         
         selector = makerTemplateDialog.xrcDIALOG1(self.view)
         
@@ -414,32 +414,52 @@ class ProjectManagerController(makerController.SuperController):
         selector.Sizer.Replace(selector.WebView, selector.wv)
         selector.Sizer.Layout()
         selector.Refresh()
-        
+    
+        selector.Create.SetDefault()
+        selector.Create.Enable(False)
         
         def loadTemplates(pathToView):
         
             # turn into proper URL and load
             selector.wv.LoadURL("file://" + pathToView.replace(" ", "%20"))
+            selector.Bind(theView.EVT_WEB_VIEW_NAVIGATED, onWebViewNavigated, selector.wv)
             selector.Bind(theView.EVT_WEB_VIEW_NAVIGATING, onWebViewNavigating, selector.wv)
+            
+            selector.Bind(self.view.wx.EVT_BUTTON, onCreateButton, selector.Create)
         
-        
+    
         def onWebViewNavigating(evt):
             
             url = evt.GetURL()
+            if not url.endswith("--"):
+                web.open(url)
+                evt.Veto()
             
+            
+        def onWebViewNavigated(evt):
+            
+            url = evt.GetURL()
             self.template = re.compile('--(.+)--', re.IGNORECASE).findall(url)
             
             if self.template == []:
                 return
             
-            template = self.template[0]
-            src = os.path.join(self.model.getSystemPath(), 'templates', template)
+            self.selectedTemplate = self.template[0]
             
-            if not os.path.isdir(src):
-                self.errorMessage("Template Error: Template does not exist...\n" + template)
+            selector.Create.Enable(True)
+
+        def onCreateButton(event):
+            event.Skip()
+            if not self.selectedTemplate:
                 return
             
-            selector.Destroy()
+            src = os.path.join(self.model.getSystemPath(), 'templates', self.selectedTemplate)
+            
+            if not os.path.isdir(src):
+                self.errorMessage("Template Error: Template does not exist...\n" + self.selectedTemplate)
+                return
+            
+            selector.Close() # Don't destroy here - only hide 
             
             self.showProgress(limit = 1, Message="Creating project...", title="Creating project...")
             
@@ -451,12 +471,7 @@ class ProjectManagerController(makerController.SuperController):
             if not self.testing:
                 self.model.activeProject.makeAll()
 
-
-         
-        def cancel(event):
-            
-            selector.Destroy()
-            
+            selector.Destroy() # Destroy dialog
         
         
         loadTemplates(viewPath)

@@ -2,7 +2,7 @@ from makerUtilities import writeFile
 from makerUtilities import readFile
 import os
 
-def scaffold(systemDir):
+def scaffold(systemDir, defaultTheme):
     
     return """<!DOCTYPE html>
 <html>
@@ -34,6 +34,12 @@ def scaffold(systemDir):
         }
 
         a {
+        
+            color: #ddd;
+            
+            }
+
+        .thumbnail a {
 
             text-decoration:none;
             color:#000;
@@ -91,19 +97,16 @@ def scaffold(systemDir):
         .thumbnail {
 
             width:17%;
-            border: 1px solid rgba(0,0,0,0);
             padding:20px 20px 10px 20px;
             margin:0px 20px 0px 0px;
             float:left;
             clear:right;
-            -webkit-border-radius:10px;
-        -webkit-transition: border-color, 0.5s;
+            background:none;
+            
     
         }
 
         .thumbnail img {
-        
-            -webkit-border-radius:8px;
         
         }
 
@@ -117,14 +120,15 @@ def scaffold(systemDir):
         
         }
 
-        .thumbnail:hover {
         
-            border-color: #aaa;
+           .thumbnail.selected {
+        
+            border:1px solid #777;
             padding:20px 20px 10px 20px;
-        -webkit-border-radius:10px;
+            -webkit-border-radius:10px;
+            background: -webkit-gradient(linear, left top, left bottom, from(rgba(140,140,140,0.1)), to(rgba(170,170,170,0.2)));
        
         }
-
 
         .info {
         
@@ -188,11 +192,21 @@ def scaffold(systemDir):
     <script type="text/javascript">
     
         $(document).ready(function(){
-              $('.thumbnail').hover(function(){
-                      $('.info').hide();
+            
+             $('#""" + defaultTheme + """').addClass('selected');
+             $('#info-""" + defaultTheme + """').show();
+                        
+        
+              $('.thumbnail').click(function(){
+                    
+                    $('.info').hide();
+                     
+                    $('.thumbnail').removeClass('selected') 
+                     
+                     $(this).addClass('selected');
                       
                   $($(this).data('info')).show();
-     
+                 
               });
         }); 
     
@@ -214,7 +228,7 @@ def scaffold(systemDir):
 
 
 def buildView(systemDir, viewPath):
-    writeFile(os.path.join(viewPath,"yourTemplates.html"), scaffold(systemDir))
+    writeFile(os.path.join(viewPath,"yourTemplates.html"), scaffold(systemDir, defaultTheme = "Bare-Bones"))
     
     return os.path.join(viewPath,"yourTemplates.html")
     
@@ -255,7 +269,11 @@ def makeInfo(systemDir, templateName, data):
     
     <div class="info" id="info-""" + data["Title"] + """">
         <h5>""" + data["Title"] + """</h5>
-        <p><img src='""" + previewImage + """' />""" + data["Description"] + """</p>
+        <p><img src='""" + previewImage + """' />""" + data["Description"] + """<br /><br />
+        Credit: """ + data["Credit"] + """<br />
+        Support: <a href='""" + data["Credit"] + """'>""" + data["Credit"] + """</a><br />
+        
+        </p>
         </div>
     
     
@@ -270,7 +288,7 @@ def makeThumbnail(systemDir, templateName):
     previewImage = os.path.join(systemDir, "templates", templateName, "parts/preview.jpg")
     thumbnail = """
     
-     <div class='thumbnail' data-info='#info-""" + templateName + """'>
+     <div class='thumbnail' id='""" + templateName + """' data-info='#info-""" + templateName + """'>
                 <a href='--""" + templateName + """--'>
         <img src='""" + previewImage + """' />
         <p>""" + templateName + """</p></a>

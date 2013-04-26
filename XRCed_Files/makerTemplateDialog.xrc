@@ -23,7 +23,7 @@
       <object class="sizeritem">
         <object class="wxHtmlWindow" name="WebView">
           <pos>10, 10</pos>
-          <size>320, 240</size>
+          <size>320, 800</size>
           <style>wxBORDER_SUNKEN</style>
           <XRCED>
             <assign_var>1</assign_var>
@@ -31,12 +31,12 @@
         </object>
         <option>1</option>
         <flag>wxEXPAND|wxGROW|wxADJUST_MINSIZE|wxFIXED_MINSIZE</flag>
-        <minsize>700, 500</minsize>
+        <minsize>800, 600</minsize>
       </object>
       <object class="sizeritem">
         <object class="wxPanel" name="BottomPanel">
           <object class="wxButton" name="Cancel">
-            <pos>740, 10</pos>
+            <pos>20, 10</pos>
             <label>Cancel</label>
             <style>wxBU_RIGHT</style>
             <XRCED>
@@ -46,6 +46,13 @@
           </object>
           <size>860, 50</size>
           <style>wxBORDER_SUNKEN</style>
+          <object class="wxButton" name="Create">
+            <pos>740, 10</pos>
+            <label>Create</label>
+            <XRCED>
+              <assign_var>1</assign_var>
+            </XRCED>
+          </object>
         </object>
         <flag>wxADJUST_MINSIZE</flag>
       </object>
@@ -55,9 +62,8 @@
       </XRCED>
     </object>
     <pos>10, 10</pos>
-    <size>860, 600</size>
+    <size>860, 800</size>
     <title>Create new project</title>
     <centered>1</centered>
-    <focused>1</focused>
   </object>
 </resource>

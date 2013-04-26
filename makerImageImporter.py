@@ -57,15 +57,15 @@ class ImageGUI(MakerDialog):
                                     {'label'  : 'Width',
                                      'name'   : 'staticText1',
                                      'parent' : self,
-                                     'pos'    : wx.Point(16, 445),
+                                     'pos'    : wx.Point(18, 445),
                                      'size'   : wx.Size(16, 25),
                                      'style'  : 0})        
         
         self.staticText2 = self.add('staticText',
-                                    {'label'  : 'Weight',
+                                    {'label'  : 'Height',
                                      'name'   : 'staticText2',
                                      'parent' : self,
-                                     'pos'    : wx.Point(76, 445),
+                                     'pos'    : wx.Point(78, 445),
                                      'size'   : wx.Size(8, 25),
                                      'style'  : 0})        
         

@@ -34,10 +34,11 @@ class xrcDIALOG1(wx.Dialog):
         self.PreCreate(pre)
         get_resources().LoadOnDialog(pre, parent, "DIALOG1")
         self.PostCreate(pre)
-
+        
         # Define variables for the controls, bind event handlers
         self.WebView = xrc.XRCCTRL(self, "WebView")
         self.Cancel = xrc.XRCCTRL(self, "Cancel")
+        self.Create = xrc.XRCCTRL(self, "Create")
 
         self.Bind(wx.EVT_BUTTON, self.OnButton_Cancel, self.Cancel)
 
@@ -68,7 +69,7 @@ def __init_resources():
           <object class="wxStaticText">
             <pos>20, 20</pos>
             <size>700, 40</size>
-            <label>Choose a template for your project</label>
+            <label>Choose a template:</label>
             <style>wxALIGN_CENTRE</style>
             <XRCED>
               <assign_var>1</assign_var>
@@ -84,7 +85,7 @@ def __init_resources():
       <object class="sizeritem">
         <object class="wxHtmlWindow" name="WebView">
           <pos>10, 10</pos>
-          <size>320, 240</size>
+          <size>320, 800</size>
           <style>wxBORDER_SUNKEN</style>
           <XRCED>
             <assign_var>1</assign_var>
@@ -92,7 +93,7 @@ def __init_resources():
         </object>
         <option>1</option>
         <flag>wxEXPAND|wxGROW|wxADJUST_MINSIZE|wxFIXED_MINSIZE</flag>
-        <minsize>700, 600</minsize>
+        <minsize>800, 600</minsize>
       </object>
       <object class="sizeritem">
         <object class="wxPanel" name="BottomPanel">
@@ -107,6 +108,13 @@ def __init_resources():
           </object>
           <size>860, 50</size>
           <style>wxBORDER_SUNKEN</style>
+          <object class="wxButton" name="Create">
+            <pos>740, 10</pos>
+            <label>Create</label>
+            <XRCED>
+              <assign_var>1</assign_var>
+            </XRCED>
+          </object>
         </object>
         <flag>wxADJUST_MINSIZE</flag>
       </object>
@@ -119,7 +127,6 @@ def __init_resources():
     <size>860, 800</size>
     <title>Create new project</title>
     <centered>1</centered>
-    <focused>1</focused>
   </object>
 </resource>'''
 
@@ -140,5 +147,6 @@ def __gettext_strings():
     
     _("Choose a template:")
     _("Cancel")
+    _("Create")
     _("Create new project")
 
