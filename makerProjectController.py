@@ -20,9 +20,12 @@ class MakerProjectController(makerController.SuperController):
 #                  self.view.MenuItemDeutsch
 #                  )
         
-        self.view.Bind(self.view.wx.EVT_BUTTON, 
-                  self.model.makeAll, 
-                  self.view.makeAllButton)
+#        self.view.Bind(self.view.wx.EVT_BUTTON, 
+#                  self.model.makeAll, 
+#                  self.view.makeAllButton)
+        
+        self.view.Bind(self.view.wx.EVT_TOOL, self.model.makeAll, id=40)
+        self.view.Bind(self.view.wx.EVT_TOOL_RCLICKED, self.model.makeAll, id=40)
         
         
         self.view.Bind(self.view.wx.EVT_MENU,
@@ -38,10 +41,16 @@ class MakerProjectController(makerController.SuperController):
                   self.view.MenuItemPublish
                   )
         
-        self.view.Bind(self.view.wx.EVT_BUTTON,
-                  self.model.publishQueuedFiles,
-                  self.view.publishButton
-                  )
+#        self.view.Bind(self.view.wx.EVT_BUTTON,
+#                  self.model.publishQueuedFiles,
+#                  self.view.publishButton
+#                  )
+#        
+        
+        self.view.Bind(self.view.wx.EVT_TOOL, self.model.publishQueuedFiles, id=20)
+        self.view.Bind(self.view.wx.EVT_TOOL_RCLICKED, self.model.publishQueuedFiles, id=20)
+        
+        
         
         
         # parts
@@ -275,15 +284,15 @@ class MakerProjectController(makerController.SuperController):
                 
         self.noteBook = self.view.noteBook
                 
-        self.saveButton = self.view.saveButton
+        #self.saveButton = self.view.saveButton
         self.saveMenu = self.view.MenuItemSaveFile
         
-        self.previewButton = self.view.previewButton
+        #self.previewButton = self.view.previewButton
         self.previewMenu = self.view.MenuItemPreview
                 
         self.deleteMenu = self.view.MenuItemDeleteFile
         
-        self.publishButton = self.view.publishButton
+        #self.publishButton = self.view.publishButton
         self.publishMenu = self.view.MenuItemPublish
         
         self.search = self.view.search
@@ -882,7 +891,8 @@ class MakerProjectController(makerController.SuperController):
         
         # enable make all 
         
-        self.view.makeAllButton.Enable()    
+        self.view.toolBar.EnableTool(40, True) # Make All Tool
+        #self.view.makeAllButton.Enable()    
                 
         # enable collapse others in tree view        
         self.view.treePopUpMenuItemCollapseOther.Enable(True)
@@ -952,30 +962,40 @@ class MakerProjectController(makerController.SuperController):
                 
                 if self.model.currentFile.getType() == ".head":
                     
-                    self.previewButton.Disable()
+                    #self.previewButton.Disable()
+                    self.view.toolBar.EnableTool(30, False)
+                    
                     self.previewMenu.Enable(False)
                     self.deleteMenu.Enable(False)
                     self.view.MenuItemRenameFile.Enable(False)
                 
                 # quick fix for .py files
                 elif self.model.currentFile.getType() == ".py":
-                    self.previewButton.SetLabel("Run")
+                    #self.previewButton.SetLabel("Run")
                     self.previewMenu.SetText("Run Python Script")
-                    self.previewButton.Enable()
+                    #self.previewButton.Enable()
+                    self.view.toolBar.EnableTool(30, True)
+                    
                     self.previewMenu.Enable(True)
                     
                 
                 elif self.model.currentFile.getType() != ".py":
-                    self.previewButton.SetLabel("Preview")
+                    #self.previewButton.SetLabel("Preview")
                     self.previewMenu.SetText("Preview File")
-                    self.previewButton.Enable()
+                    # preview tool
+                    self.view.toolBar.EnableTool(30, True)
+                    
+                    
                     self.previewMenu.Enable(True)
                     self.deleteMenu.Enable(True)
                     self.view.MenuItemRenameFile.Enable(True)
                                
                 else:
                             
-                    self.previewButton.Enable()
+                    #self.previewButton.Enable()
+                    # preview tool
+                    self.view.toolBar.EnableTool(30, True)
+                    
                     self.previewMenu.Enable(True)
                     self.deleteMenu.Enable(True)
                     self.view.MenuItemRenameFile.Enable(True)
@@ -987,12 +1007,15 @@ class MakerProjectController(makerController.SuperController):
                 
                 # saved ?
                 if self.model.currentFile.saved:
-                    self.saveButton.Disable()
+                    
+                    #self.saveButton.Disable()
+                    self.view.toolBar.EnableTool(10, False)
                     self.saveMenu.Enable(False)
                     # noteBook updates done in the makerFileController
                     
                 else:
-                    self.saveButton.Enable()
+                    #self.saveButton.Enable()
+                    self.view.toolBar.EnableTool(10, True)
                     self.saveMenu.Enable(True)
                         
                
@@ -1058,8 +1081,14 @@ class MakerProjectController(makerController.SuperController):
             self.view.treePopUpMenuItemPreview.Enable(False) 
             self.view.treePopUpMenuItemPrint.Enable(False)
             
-            self.saveButton.Disable()
-            self.previewButton.Disable()
+            
+#            self.saveButton.Disable()
+#            self.previewButton.Disable()
+#            
+            
+            self.view.toolBar.EnableTool(10, False)
+            self.view.toolBar.EnableTool(30, False)
+            
             self.previewMenu.Enable(False)
             
             self.deleteMenu.Enable(False)
@@ -1142,12 +1171,18 @@ class MakerProjectController(makerController.SuperController):
         #self.view.MenuItemDeleteProject.Enable(True)
         
         if not self.model.getFtpQueue():
-            self.publishButton.SetLabel("Publish")
+            
+            
             self.publishMenu.SetText("Publish")
-            self.publishButton.Disable()
+            
+            #self.publishButton.Disable()
+            self.view.toolBar.EnableTool(20, False)
+            
             self.publishMenu.Enable(False)
         else:
-            self.publishButton.Enable()
+            #self.publishButton.Enable()
+            self.view.toolBar.EnableTool(20, True)
+            
             self.publishMenu.Enable(True)
             
             self.publishMenu.SetText("Publish [" + str(len(self.model.getFtpQueue())) + " Files in Queue]")

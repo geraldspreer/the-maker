@@ -422,9 +422,8 @@ class ProjectManagerController(makerController.SuperController):
         
             # turn into proper URL and load
             selector.wv.LoadURL("file://" + pathToView.replace(" ", "%20"))
-            selector.Bind(theView.EVT_WEB_VIEW_NAVIGATED, onWebViewNavigated, selector.wv)
-            selector.Bind(theView.EVT_WEB_VIEW_NAVIGATING, onWebViewNavigating, selector.wv)
             
+            selector.Bind(theView.EVT_WEB_VIEW_NAVIGATING, onWebViewNavigating, selector.wv)
             selector.Bind(self.view.wx.EVT_BUTTON, onCreateButton, selector.Create)
         
     
@@ -434,6 +433,8 @@ class ProjectManagerController(makerController.SuperController):
             if not url.endswith("--"):
                 web.open(url)
                 evt.Veto()
+            else:
+                onWebViewNavigated(evt)
             
             
         def onWebViewNavigated(evt):

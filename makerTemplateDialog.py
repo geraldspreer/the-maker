@@ -34,9 +34,10 @@ class xrcDIALOG1(wx.Dialog):
         self.PreCreate(pre)
         get_resources().LoadOnDialog(pre, parent, "DIALOG1")
         self.PostCreate(pre)
-        
+
         # Define variables for the controls, bind event handlers
         self.WebView = xrc.XRCCTRL(self, "WebView")
+        self.BottomPanel = xrc.XRCCTRL(self, "BottomPanel")
         self.Cancel = xrc.XRCCTRL(self, "Cancel")
         self.Create = xrc.XRCCTRL(self, "Create")
 
@@ -98,7 +99,7 @@ def __init_resources():
       <object class="sizeritem">
         <object class="wxPanel" name="BottomPanel">
           <object class="wxButton" name="Cancel">
-            <pos>20, 10</pos>
+            <pos>20, 20</pos>
             <label>Cancel</label>
             <style>wxBU_RIGHT</style>
             <XRCED>
@@ -106,17 +107,20 @@ def __init_resources():
               <assign_var>1</assign_var>
             </XRCED>
           </object>
-          <size>860, 50</size>
-          <style>wxBORDER_SUNKEN</style>
           <object class="wxButton" name="Create">
-            <pos>740, 10</pos>
+            <pos>740, 20</pos>
             <label>Create</label>
             <XRCED>
               <assign_var>1</assign_var>
             </XRCED>
           </object>
+          <size>860, 70</size>
+          <style>wxBORDER_SUNKEN|wxFULL_REPAINT_ON_RESIZE</style>
+          <XRCED>
+            <assign_var>1</assign_var>
+          </XRCED>
         </object>
-        <flag>wxADJUST_MINSIZE</flag>
+        <flag>wxGROW|wxADJUST_MINSIZE</flag>
       </object>
       <orient>wxVERTICAL</orient>
       <XRCED>
@@ -127,6 +131,8 @@ def __init_resources():
     <size>860, 800</size>
     <title>Create new project</title>
     <centered>1</centered>
+    <enabled>0</enabled>
+    <style>wxSTAY_ON_TOP</style>
   </object>
 </resource>'''
 

@@ -217,12 +217,19 @@ returns the instance of the progressbar that was last added to the stack
         """
         # "resetting all views"
         
-        # Buttons
+        # tools 
         
-        self.view.saveButton.Disable()
-        self.view.publishButton.Disable()
-        self.view.previewButton.Disable()
-        self.view.makeAllButton.Disable()
+        self.view.toolBar.EnableTool(10, False) # Save
+        self.view.toolBar.EnableTool(20, False) # Publish
+        self.view.toolBar.EnableTool(30, False) # Preview
+        self.view.toolBar.EnableTool(40, False) # Make All
+        
+#        # Buttons
+#        
+#        self.view.saveButton.Disable()
+#        self.view.publishButton.Disable()
+#        self.view.previewButton.Disable()
+#        self.view.makeAllButton.Disable()
         
         # search
         

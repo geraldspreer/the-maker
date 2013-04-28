@@ -29,8 +29,13 @@ class MakerFileController(makerController.SuperController):
     def bindActions(self):
         
        
-        self.view.previewButton.Unbind(self.view.wx.EVT_BUTTON)
-        self.view.saveButton.Unbind(self.view.wx.EVT_BUTTON)
+       
+        self.view.Unbind(self.view.wx.EVT_TOOL,  id=30)
+        self.view.Unbind(self.view.wx.EVT_TOOL_RCLICKED, id=30)
+        
+        #self.view.previewButton.Unbind(self.view.wx.EVT_BUTTON)
+        #self.view.saveButton.Unbind(self.view.wx.EVT_BUTTON)
+        
         self.view.Unbind(self.view.wx.EVT_MENU, self.view.MenuItemSaveFile)
         self.view.Unbind(self.view.wx.EVT_MENU, self.view.MenuItemPrint)
         
@@ -65,12 +70,20 @@ class MakerFileController(makerController.SuperController):
         
         # preview
         
-        self.view.previewButton.Bind(self.view.wx.EVT_BUTTON, self.preview)
+        #self.view.previewButton.Bind(self.view.wx.EVT_BUTTON, self.preview)
+        self.view.Bind(self.view.wx.EVT_TOOL, self.preview, id = 30)
+        self.view.Bind(self.view.wx.EVT_TOOL_RCLICKED, self.preview, id = 30)
+        
+        
         self.view.Bind(self.view.wx.EVT_MENU, self.preview,self.view.MenuItemPreview)
         self.view.Bind(self.view.wx.EVT_MENU, self.preview,self.view.treePopUpMenuItemPreview)
         
                 
-        self.view.saveButton.Bind(self.view.wx.EVT_BUTTON, self.model.save)
+        #self.view.saveButton.Bind(self.view.wx.EVT_BUTTON, self.model.save)
+        self.view.Bind(self.view.wx.EVT_TOOL, self.model.save, id = 10)
+        self.view.Bind(self.view.wx.EVT_TOOL_RCLICKED, self.model.save, id = 10)
+        
+        
         self.view.Bind(self.view.wx.EVT_MENU, self.model.save, self.view.MenuItemSaveFile)
         
         self.view.Bind(self.view.wx.EVT_MENU, 
@@ -1090,7 +1103,7 @@ class MakerFileController(makerController.SuperController):
             
     def createAbstractNameForViewObjects(self):
         
-        self.saveButton = self.view.saveButton
+        #self.saveButton = self.view.saveButton
         self.saveMenu = self.view.MenuItemSaveFile
         
         self.projectManager = self.model.core.projectManager
@@ -1099,7 +1112,7 @@ class MakerFileController(makerController.SuperController):
         self.openEditor()
         
         self.publishMenu = self.view.MenuItemPublish
-        self.publishButton = self.view.publishButton
+        #self.publishButton = self.view.publishButton
         
         self.search = self.view.search
         
@@ -1676,7 +1689,10 @@ class MakerFileController(makerController.SuperController):
                    
                 
         if self.model.saved:
-            self.saveButton.Disable()
+            
+            #self.saveButton.Disable()
+            self.view.toolBar.EnableTool(10, False)
+            
             self.saveMenu.Enable(False)
             # noteBook
             if text.endswith("*"):
@@ -1692,7 +1708,8 @@ class MakerFileController(makerController.SuperController):
             
                         
         else:
-            self.saveButton.Enable()
+            #self.saveButton.Enable()
+            self.view.toolBar.EnableTool(10, True)
             self.saveMenu.Enable(True)
             # noteBook
             if not text.endswith("*"):

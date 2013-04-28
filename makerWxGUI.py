@@ -26,7 +26,7 @@ class wxPythonGUI(wx.Frame):
         
         #this is actually a wxWindow
 
-        parent.Add(self.topPanel, 0, border=0, flag=wx.FIXED_MINSIZE | wx.EXPAND)
+        #parent.Add(self.topPanel, 0, border=0, flag=wx.FIXED_MINSIZE | wx.EXPAND)
        
         parent.Add(self.splitter, 1, border=0, flag=wx.EXPAND | wx.GROW)
       
@@ -2386,11 +2386,10 @@ class wxPythonGUI(wx.Frame):
         #self.splitter2 = MySplitter(self, -1,None)
                 
 #the top splitter        
+        
         self.splitter = MySplitter(self, -1,None)
-        #self.splitter.SetSashSize(10)
-
-
-
+    
+        
 
 # and the stc is added to it
 
@@ -2436,8 +2435,26 @@ class wxPythonGUI(wx.Frame):
                                 |wx.TR_LINES_AT_ROOT
                                 |wx.TR_DEFAULT_STYLE)
         
-        
-        
+        def drawAfterPaint(evt):
+            
+            Size = self.tree.GetClientSizeTuple()
+
+            dc = wx.ClientDC(self.tree)
+            dc.SetPen(self.treePen)
+            dc.DrawLine(Size[0]-1, 0, 
+                        Size[0]-1, Size[1])
+           
+           
+        def onTreePaint(evt):
+            
+            wx.CallAfter(drawAfterPaint, evt)
+            
+            evt.Skip()
+            
+        self.treePen = wx.Pen('#666666', 1)
+        self.tree.Bind(wx.EVT_PAINT, onTreePaint)
+       
+               
         image_size = (16,16)
         il = wx.ImageList(image_size[0], image_size[1])
         self.projidx     = il.Add(wx.ArtProvider_GetBitmap(wx.ART_REMOVABLE, wx.ART_OTHER, image_size))
@@ -2465,48 +2482,64 @@ class wxPythonGUI(wx.Frame):
         self.splitter.SetMinimumPaneSize(200)
         self.splitter.SplitVertically(self.listWindow, self.noteBook, 180)    
 
-        self.topPanel = wx.Panel(self, -1, pos=(0,0), size=(180,50), style=wx.TB_HORIZONTAL)
-        self.topPanel.SetAutoLayout(True)
+        self.toolBar = self.CreateToolBar( style = wx.TB_HORIZONTAL
+            | wx.NO_BORDER
+            #| wx.TB_FLAT
+            | wx.TB_TEXT
+            | wx.TB_HORZ_LAYOUT
+             )
 
-        self.topSizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.topPanel.SetMinSize((0,50))
-        self.topPanel.SetSizer(self.topSizer)
-        
-        self.saveButton = wx.Button(id=-1, label=u'Save',
-              name='saveButton', parent=self, pos=wx.Point(4, 10),
-              style=0)
 
-        self.publishButton = wx.Button(id=-1, label=u'Publish',
-              name='publishButton', parent=self, pos=wx.Point(84, 10),
-              style=0)
         
-        self.previewButton = wx.Button(id=-1, label=u'Preview',
-              name=u'preview', parent=self, pos=wx.Point(164, 10),
-              style=0)
-        
-        
-        self.makeAllButton = wx.Button(id=-1,
-              label=u'Make All', name=u'make_all_button', parent=self,
-              pos=wx.Point(244, 10), style=0)
-        
-        
-        self.search = wx.SearchCtrl(self, -1, pos=(750,10), size=(180,25), style=wx.TE_PROCESS_ENTER)
+        self.search = wx.SearchCtrl(self.toolBar, id= -1,  pos=(750,-1), size=(180,25), style=wx.TE_PROCESS_ENTER)
         
         #extract the searchCtrl's textCtrl 
-        self.searchStatus = wx.StaticText(self, -1, pos=(750,10), size=(106,20),style=0)             
-        self.searchStatus.SetLabel("")
+        self.searchStatus = wx.StaticText(self.toolBar, -1, pos=(750,10), style=0)             
+        self.searchStatus.SetLabel("                         ")
+
+
+        tsize = (36,36)
+        
+        new_bmp =  wx.ArtProvider.GetBitmap(wx.ART_NEW, wx.ART_TOOLBAR, tsize)
+        
+        saveArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/187-pencil.png"), 
+                                 wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+
+        publishArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/57-download.png"), 
+                                 wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        
+        
+        previewArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/12-eye.png"), 
+                                 wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+
+        makeAllArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/20-gear2.png"), 
+                                 wx.BITMAP_TYPE_PNG).ConvertToBitmap()
 
         
+        self.toolBar.AddSeparator()
+        self.toolBar.AddLabelTool(10, "Save", saveArt)
         
-        self.topSizer.Add(self.saveButton,0,wx.ALIGN_CENTER | wx.WEST, 20)
-        self.topSizer.Add(self.publishButton,0, wx.ALIGN_CENTER | wx.WEST, 6)
-        self.topSizer.Add(self.previewButton,0, wx.ALIGN_CENTER | wx.WEST, 6)
-        self.topSizer.Add(self.makeAllButton,0, wx.ALIGN_CENTER | wx.WEST, 6)
-        self.topSizer.AddStretchSpacer(1)
-        self.topSizer.Add(self.searchStatus,0, wx.ALIGN_CENTER | wx.WEST | wx.EAST, 10)
-        self.topSizer.Add(self.search,0, wx.ALIGN_CENTER | wx.EAST, 10)
+        self.toolBar.AddLabelTool(20, "Publish", publishArt)
         
+        self.toolBar.AddLabelTool(30, "Preview", previewArt)
+        
+        self.toolBar.AddLabelTool(40, "Make All", makeAllArt)
+        
+        #self.tb.AddControl(self.saveButton)
+        #self.tb.AddControl(self.publishButton)
+        #self.tb.AddControl(self.previewButton)
+        #self.tb.AddControl(self.makeAllButton)
+        self.toolBar.AddSeparator()
+        self.toolBar.AddStretchableSpace()
+        self.toolBar.AddControl(self.searchStatus)
+        self.toolBar.AddControl(self.search)
 
+        self.toolBar.Realize()
+        
         self.statusBar1 = wx.StatusBar(id=-1,
               name='statusBar1', parent=self, style=wx.ST_SIZEGRIP)
         
@@ -2570,10 +2603,10 @@ class wxPythonGUI(wx.Frame):
 
         self.statusBar1.SetFont(theFont)
         self.SetFont(theFont)
-        self.makeAllButton.SetFont(theFont)
-        self.previewButton.SetFont(theFont)
-        self.publishButton.SetFont(theFont)
-        self.saveButton.SetFont(theFont)
+        #self.makeAllButton.SetFont(theFont)
+        #self.previewButton.SetFont(theFont)
+        #self.publishButton.SetFont(theFont)
+        #self.saveButton.SetFont(theFont)
         self.tree.SetFont(theFont)
         self.tree.SetBackgroundColour('#e2e6ec')
         self.tree.SetIndent(20)
@@ -2843,78 +2876,16 @@ class wxPythonGUI(wx.Frame):
         return value
 
 
-    # Tree functions 
-#    def OnActivate(self, event):
-#        event.Skip()
 
-  
-
-    def OntreeEdit(self, event):
-        self.controller.actionOnEditTreeItem(event)
-
-    def OntreeEditEnd(self, event):
-        self.controller.actionTreeEditFinish(event)
-
-#    def OnHelpItemsTutorial(self, event):
-#        self.look_busy()
-#        self.controller.actionHelp('#all')
-#        self.relax()
-
-    def OnRenameItem(self, event):
-        self.controller.actionEditTreeItemLabel()
-
-#    def OnCheckForUpdate(self, event):
-#        self.controller.actionCheckForUpdate()
-
-    def OnFeedbackMenu(self, event):
-        self.controller.actionFeedback()
-        
-    def OnPreviewButton(self, event):
-        self.controller.actionPreview()
-    
-#    def OnSaveButton(self, event):
-#        self.controller.actionSave(event)
-
-    def OnSystemSystemsetupMenu(self, event):
-        self.Message("this would be some code - code")
-        event.Skip()
-            
-   
-            
-    def OnExtraEditbodyMenu(self, event):
-        self.controller.actionEditBody()
-
-    def OnExtraEditfootMenu(self, event):
-        self.controller.actionEditFoot()
-
-    def OnFiletypesHeadMenu(self, event):
-        self.controller.editHead()
    
     def OnFtpDistributiontableMenu(self, event):
         self.controller.actionEditDistributionTable()
     
-    def OnFtpUploadMenu(self, event):
-        self.controller.actionPublish()
 
-    def OnProjectProject_setupMenu(self, event):
-        self.controller.actionProjectSetup()
-           
-#    def OnLanguagesEnglishMenu(self, event):
-#        try:
-#            self.controller.actionSwitchLanguage("en")
-#        except:
-#            pass
-#
-#    def OnLanguagesDeutschMenu(self, event):
-#        try:
-#            self.controller.actionSwitchLanguage("de")
-#        except:
-#            pass
     
-    def OnImagesAddimageMenu(self, event):
-        self.controller.actionAddImage()
-    
-    # several dialogs    
+    #===========================================================================
+    #  all kinds of dialogs
+    #===========================================================================
     
     
     def ImageDialogWithDir(self, dir):        
@@ -3384,7 +3355,7 @@ class wxPythonGUI(wx.Frame):
              "Quicktime movie (*.mov) | *.mov"
         
         dlg = wx.FileDialog(
-              self.topPanel, message = prompt, style=wx.OPEN | wx.CHANGE_DIR )
+              self, message = prompt, style=wx.OPEN | wx.CHANGE_DIR )
   
               # If the user selects OK, then we process the dialog's data.
               # This is done by getting the path data from the dialog - BEFORE
@@ -3419,9 +3390,15 @@ class wxPythonGUI(wx.Frame):
 class MySplitter(wx.SplitterWindow):
     def __init__(self, parent, ID, log):
         wx.SplitterWindow.__init__(self, parent, ID,
-                                   style = wx.SP_3D
-                                   | wx.SP_LIVE_UPDATE)
+                                   style = wx.SP_LIVE_UPDATE | wx.SP_3DSASH | wx.SP_THIN_SASH)
+
+#        def paintSplitter(evt):
+#            
+#            pass
+            
         
+        #self.Bind(wx.EVT_PAINT, paintSplitter)
+
         
 class MyArtProvider(wx.ArtProvider):
     def __init__(self):
