@@ -1,0 +1,46 @@
+
+<maker_dynamic:nav_en />
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>Lanyard</h1>
+        <p>Totally based on Twitter Bootstrap, but modified to work seemlessly with TheMaker&copy;, get to grips with with this powerful template and create your own unique masterpiece with a fully featured, responsive design.</p>
+        <p><a class="btn btn-primary btn-large" href="http://twitter.github.com/bootstrap/">Learn more at Twitter &raquo;</a></p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span11">
+          <h2>Fluid design</h2>
+           <p><b>Change</b> the size of your browser window and see how the page adjusts its content accordingly, watch how the menu bar dissapears and is replaced with a menu button on the right hand side, when clicked this reveals a vertical menu tray. </p>
+
+        </div>
+        <div class="span3">
+          <h2>Heading 1</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+<p><img class="thumbnail" src="umbrella.jpg" align="" alt="umbrella.jpg"/></p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="span3">
+          <h2>Heading 2</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+<p><img class="thumbnail" src="umbrella.jpg" align="" alt="umbrella.jpg"/></p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+       </div>
+        <div class="span3">
+          <h2>Heading 3</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+<p><img class="thumbnail" src="umbrella.jpg" align="" alt="umbrella.jpg"/></p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="span3">
+          <h2>Heading 4</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+<p><img class="thumbnail" src="umbrella.jpg" align="" alt="umbrella.jpg"/></p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>

@@ -1,0 +1,13 @@
+<!-- <body> -->
+
+ <div class="col_2">
+<a href="index_en.htm"  ><img  class="style3" src="maker_tags_80px_red.png" width ="80" height="76"align="left" alt="logo_red.png" /></a></div><!-- end div "col_2" -->
+
+<div class="col_5">
+ <h1><a href="index_en.htm" >!projectName!</a></h1> 
+<br />
+</div><!-- end div "col_5" (in body) -->
+
+<!-- <a href="#" ><img style="position: fixed; top: 90px; right: 0; border: 0;" src="blog.png"alt="Blog"class="opacity" /></a> -->
+
+<!-- removed this and put it in a maker dynamic -->

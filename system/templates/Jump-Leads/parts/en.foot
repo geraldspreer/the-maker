@@ -1,0 +1,22 @@
+<!-- </div>  end div "col_9" -->
+<!-- <maker_dynamic:nav_en />
+
+<!-- removed these two lines and put into .content files for better control -->
+
+<!-- ===================================== START FOOTER ===================================== -->
+
+<!-- </div> an extra unwanted end div has crept in? -->
+</div><!-- END WRAP -->
+<div id="footer">
+<div class="col_12">
+<p><img class="" src="maker_tags_40px02a.png"  alt="maker_tags_40px02a.jpg"/>
+created using
+<a href="http://www.makercms.org" target="_blank">The Maker</a> with <sup><span class="icon social" style="font-size:40px;text-shadow: 0px 1px 1px rgba(0,0,0,0.3);color:#949494;" data-icon="6"></span></sup>
+<a href="http://www.99lime.com/" target="_blank">HTML KickStart</a> </p>
+<!-- , follow itb.me at 
+<a href="https://twitter.com/ianbarrow"><sup><span class="icon social x-large gray" data-icon="e"></span></sup></a> -->
+</p>
+</div><!-- end div "col_12" -->
+</div><!-- end div "footer" -->
+
+</body></html>

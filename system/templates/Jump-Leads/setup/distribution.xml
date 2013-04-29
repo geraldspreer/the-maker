@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?><!-- file was created @: Sun Apr 28 20:38:01 2013 -->
+<distribution>
+<rule ftp_source="index_en.htm" remote_dir="." ftp_mode="lines" target="index.htm" ></rule>
+<rule ftp_source="kickstart.css" remote_dir="." ftp_mode="lines" target="kickstart.css" ></rule>
+<rule ftp_source="styleK.css" remote_dir="." ftp_mode="lines" target="styleK.css" ></rule>
+<rule ftp_source="kickstart.js" remote_dir="." ftp_mode="lines" target="kickstart.js" ></rule>
+<rule ftp_source="prettify.js" remote_dir="." ftp_mode="lines" target="prettify.js" ></rule>
+<rule ftp_source="kickstart-buttons.css" remote_dir="." ftp_mode="lines" target="kickstart-buttons.css" ></rule>
+<rule ftp_source="kickstart-forms.css" remote_dir="." ftp_mode="lines" target="kickstart-forms.css" ></rule>
+<rule ftp_source="kickstart-grid.css" remote_dir="." ftp_mode="lines" target="kickstart-grid.css" ></rule>
+<rule ftp_source="kickstart-icons.css" remote_dir="." ftp_mode="lines" target="kickstart-icons.css" ></rule>
+<rule ftp_source="kickstart-menus.css" remote_dir="." ftp_mode="lines" target="kickstart-menus.css" ></rule>
+<rule ftp_source="prettify.css" remote_dir="." ftp_mode="lines" target="prettify.css" ></rule>
+<rule ftp_source="tiptip.css" remote_dir="." ftp_mode="lines" target="tiptip.css" ></rule>
+<rule ftp_source="chosen.css" remote_dir="." ftp_mode="lines" target="chosen.css" ></rule>
+<rule ftp_source="jquery.fancybox-1.3.4.css" remote_dir="." ftp_mode="lines" target="jquery.fancybox-1.3.4.css" ></rule>
+<rule ftp_source="icomoon-webfont.eot" remote_dir="." ftp_mode="binary" target="icomoon-webfont.eot" ></rule>
+<rule ftp_source="icomoon-webfont.svg" remote_dir="." ftp_mode="lines" target="icomoon-webfont.svg" ></rule>
+<rule ftp_source="icomoon-webfont.ttf" remote_dir="." ftp_mode="binary" target="icomoon-webfont.ttf" ></rule>
+<rule ftp_source="icomoon-webfont.woff" remote_dir="." ftp_mode="binary" target="icomoon-webfont.woff" ></rule>
+<rule ftp_source="icomoonsocial-webfont.eot" remote_dir="." ftp_mode="binary" target="icomoonsocial-webfont.eot" ></rule>
+<rule ftp_source="icomoonsocial-webfont.svg" remote_dir="." ftp_mode="lines" target="icomoonsocial-webfont.svg" ></rule>
+<rule ftp_source="icomoonsocial-webfont.ttf" remote_dir="." ftp_mode="binary" target="icomoonsocial-webfont.ttf" ></rule>
+<rule ftp_source="icomoonsocial-webfont.woff" remote_dir="." ftp_mode="binary" target="icomoonsocial-webfont.woff" ></rule>
+<rule ftp_source="elements_en.htm" remote_dir="." ftp_mode="lines" target="elements_en.htm" ></rule>
+<rule ftp_source="elements_en.content" remote_dir="." ftp_mode="lines" target="elements_en.content" ></rule>
+</distribution>
