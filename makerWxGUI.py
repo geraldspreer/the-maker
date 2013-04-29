@@ -3525,6 +3525,21 @@ class MyPageContainer(nb.PageContainer):
 
 
 
+    def OnSetFocus(self, event=None):
+        """
+        Handles the ``wx.EVT_SET_FOCUS`` event for :class:`PageContainer`.
+
+        :param `event`: a :class:`FocusEvent` event to be processed.
+        """
+
+        if self._iActivePage < 0:
+            if evt:
+                event.Skip()
+            return
+
+        self.SetFocusedPage(self._iActivePage)
+
+
 
 # ---------------------------------------------------------------------------- #
 # Class FNBRendererMgr
@@ -3571,7 +3586,8 @@ class MakerRenderer(nb.FNBRenderer):
                 brush = wx.Brush(wx.BLACK)
                 brush.MacSetTheme(Carbon.Appearance.kThemeBrushFocusHighlight)
                 c = brush.GetColour()
-            self._focusPen = wx.Pen("#aa0000", 1)
+                
+            self._focusPen = wx.Pen(c, 3)
         
 
 
@@ -3583,25 +3599,23 @@ class MakerRenderer(nb.FNBRenderer):
         :param `pageContainer`: an instance of :class:`FlatNotebook`;
         :param `page`: an instance of :class:`PageInfo`, representing a page in the notebook.
         """
-        return 
+        
     
         if not page._hasFocus:
             return
 
         tabPos = wx.Point(*page.GetPosition())
-        if pageContainer.GetParent().GetAGWWindowStyleFlag() & FNB_VC8:
-            vc8ShapeLen = self.CalcTabHeight(pageContainer) - VERTICAL_BORDER_PADDING - 2
-            tabPos.x += vc8ShapeLen
+       
 
         rect = wx.RectPS(tabPos, page.GetSize())
-        rect = wx.Rect(rect.x+2, rect.y+2, rect.width-4, rect.height-8)
+        rect = wx.Rect(rect.x+2, rect.y, rect.width-2, rect.height-2)
 
         if wx.Platform == '__WXMAC__':
             rect.SetWidth(rect.GetWidth() + 1)
 
         dc.SetBrush(wx.TRANSPARENT_BRUSH)
         dc.SetPen(self._focusPen)
-        dc.DrawRoundedRectangleRect(rect, 2)
+        dc.DrawRoundedRectangleRect(rect, 4)
 
 
 

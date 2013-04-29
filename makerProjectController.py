@@ -610,6 +610,7 @@ class MakerProjectController(makerController.SuperController):
                             if (self.model.projectManager.controller.noteBookPages[key]).model.getName() == theFile:
                                 if (self.model.projectManager.controller.noteBookPages[key]).getReferringTreeItem() == self.view.tree.GetSelection():
                                     self.noteBook.SetSelection(key)
+                                    self.noteBook._pages.OnSetFocus(None)
                                
                     # and load the instance 
                 
