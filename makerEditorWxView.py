@@ -542,8 +542,14 @@ class editorView:
                 
                 
                 self.editor.StyleSetSpec(wx.stc.STC_P_CHARACTER, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_WORD, "fore:" + style["keyword.control"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
-                self.editor.StyleSetSpec(wx.stc.STC_P_WORD2, "fore:" + style["keyword.control"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                try:
+                    self.editor.StyleSetSpec(wx.stc.STC_P_WORD, "fore:" + style["keyword.control"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                    self.editor.StyleSetSpec(wx.stc.STC_P_WORD2, "fore:" + style["keyword.control"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                except:
+                    self.editor.StyleSetSpec(wx.stc.STC_P_WORD, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                    self.editor.StyleSetSpec(wx.stc.STC_P_WORD2, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                
                 
                 self.editor.StyleSetSpec(wx.stc.STC_P_OPERATOR, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 self.editor.StyleSetSpec(wx.stc.STC_P_DECORATOR, "fore:" + style["meta.important"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
