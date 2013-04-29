@@ -14,6 +14,12 @@ import wx.lib.imagebrowser as ib
 from wx.lib.anchors import LayoutAnchors
 import wx.lib.flatnotebook as nb
 import wx.py as pyShell
+import math
+
+# Used on OSX to get access to carbon api constants
+if wx.Platform == '__WXMAC__':
+    import Carbon.Appearance
+
 
 def create(app):
     
@@ -2400,10 +2406,8 @@ class wxPythonGUI(wx.Frame):
         # changed where the noteBoolPages dict is updated
         #
         
-        self.noteBook = nb.FlatNotebook(self.splitter, wx.ID_ANY, agwStyle = wx.lib.flatnotebook.FNB_FF2,
-                                        style= wx.lib.flatnotebook.FNB_NODRAG | 
-                                        wx.lib.flatnotebook.FNB_X_ON_TAB)
-        
+        self.noteBook = MyCustomNoteBook(self.splitter, -1, None, None)
+
         self.noteBook.SetPadding(wx.Size(20))
         
         # add a welcome message to the noteBook        
@@ -3385,6 +3389,397 @@ class wxPythonGUI(wx.Frame):
           
 # ------------------------------------------------------------------------
  
+
+#===============================================================================
+# Custom FlatNoteBook
+#===============================================================================
+
+class MyCustomNoteBook(nb.FlatNotebook):
+        
+    def __init__(self, parent, ID, 
+                 pos=wx.DefaultPosition, 
+                 size=wx.DefaultSize, 
+                 agwStyle = wx.lib.flatnotebook.FNB_FF2,
+                 style= wx.lib.flatnotebook.FNB_NODRAG | wx.lib.flatnotebook.FNB_X_ON_TAB):
+    
+    
+        self._bForceSelection = False
+        self._nPadding = 60
+        self._nFrom = 0
+            #style |= wx.TAB_TRAVERSAL
+        self._pages = None
+        self._windows = []
+        self._popupWin = None
+        self._naviIcon = None
+        self._agwStyle = agwStyle
+        self._orientation = None
+        self._customPanel = None
+    
+        wx.PyPanel.__init__(self, parent, ID, pos, size, style)
+        attr = self.GetDefaultAttributes()
+        self.SetOwnForegroundColour(attr.colFg)
+        self.SetOwnBackgroundColour(attr.colBg)
+    
+        self._pages = MyPageContainer(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, style)
+    
+        self.Bind(wx.EVT_NAVIGATION_KEY, self.OnNavigationKey)
+    
+        self.Init()
+        
+        
+class MyPageContainer(nb.PageContainer):
+    """
+    This class acts as a container for the pages you add to :class:`FlatNotebook`.
+    """
+
+    def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition,
+                 size=wx.DefaultSize, style=0):
+        """
+        Default class constructor.
+
+        Used internally, do not call it in your code!
+
+        :param `parent`: the :class:`PageContainer` parent;
+        :param `id`: an identifier for the control: a value of -1 is taken to mean a default;
+        :param `pos`: the control position. A value of (-1, -1) indicates a default position,
+         chosen by either the windowing system or wxPython, depending on platform;
+        :param `size`: the control size. A value of (-1, -1) indicates a default size,
+         chosen by either the windowing system or wxPython, depending on platform;
+        :param `style`: the window style.
+        """
+
+        self._ImageList = None
+        self._iActivePage = -1
+        self._pDropTarget = None
+        self._nLeftClickZone = nb.FNB_NOWHERE
+        self._iPreviousActivePage = -1
+
+        self._pRightClickMenu = None
+        self._nXButtonStatus = nb.FNB_BTN_NONE
+        self._nArrowDownButtonStatus = nb.FNB_BTN_NONE
+        self._pParent = parent
+        self._nRightButtonStatus = nb.FNB_BTN_NONE
+        self._nLeftButtonStatus = nb.FNB_BTN_NONE
+        self._nTabXButtonStatus = nb.FNB_BTN_NONE
+
+        self._nHoveringOverTabIndex = -1
+        self._nHoveringOverLastTabIndex = -1
+
+        self._setCursor = False
+
+        self._pagesInfoVec = []
+
+        self._colourTo = wx.SystemSettings_GetColour(wx.SYS_COLOUR_ACTIVECAPTION)
+        self._colourFrom = wx.WHITE
+        self._activeTabColour = wx.WHITE
+        self._activeTextColour = wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNTEXT)
+        self._nonActiveTextColour = wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNTEXT)
+        self._tabAreaColour = wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE)
+
+        self._nFrom = 0
+        self._isdragging = False
+
+        # Set default page height, this is done according to the system font
+        memDc = wx.MemoryDC()
+        memDc.SelectObject(wx.EmptyBitmap(1,1))
+
+        if "__WXGTK__" in wx.PlatformInfo:
+            boldFont = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
+            boldFont.SetWeight(wx.BOLD)
+            memDc.SetFont(boldFont)
+
+        height = memDc.GetCharHeight()
+        tabHeight = height + nb.FNB_HEIGHT_SPACER # We use 10 pixels as padding
+
+        wx.PyPanel.__init__(self, parent, id, pos, wx.Size(size.x, tabHeight),
+                            style|wx.NO_BORDER|wx.NO_FULL_REPAINT_ON_RESIZE|wx.WANTS_CHARS)
+
+        attr = self.GetDefaultAttributes()
+        self.SetOwnForegroundColour(attr.colFg)
+        self.SetOwnBackgroundColour(attr.colBg)
+
+        self._pDropTarget = nb.FNBDropTarget(self)
+        self.SetDropTarget(self._pDropTarget)
+        
+        #=======================================================================
+        #  Here we plug in our custom Renderer Manager
+        #=======================================================================
+        
+        self._mgr = MyRendererMgr()
+
+        self.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.Bind(wx.EVT_SIZE, self.OnSize)
+        self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
+        self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
+        self.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+        self.Bind(wx.EVT_MIDDLE_DOWN, self.OnMiddleDown)
+        self.Bind(wx.EVT_MOTION, self.OnMouseMove)
+        self.Bind(wx.EVT_MOUSEWHEEL, self.OnMouseWheel)
+        self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
+        self.Bind(wx.EVT_LEAVE_WINDOW, self.OnMouseLeave)
+        self.Bind(wx.EVT_ENTER_WINDOW, self.OnMouseEnterWindow)
+        self.Bind(wx.EVT_LEFT_DCLICK, self.OnLeftDClick)
+        self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
+        self.Bind(wx.EVT_KILL_FOCUS, self.OnKillFocus)
+        self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
+
+
+
+
+# ---------------------------------------------------------------------------- #
+# Class FNBRendererMgr
+# A manager that handles all the renderers defined below and calls the
+# appropriate one when drawing is needed
+# ---------------------------------------------------------------------------- #
+
+
+class MyRendererMgr(nb.FNBRendererMgr):
+    """
+    This class represents a manager that handles all the 6 renderers defined
+    and calls the appropriate one when drawing is needed.
+    """
+
+    def __init__(self):
+        """ Default class constructor. """
+
+        # overridden
+        # does nothing
+
+    def GetRenderer(self, style):
+
+        # Here we push our custom renderers
+        
+        return MakerRenderer()
+
+
+
+class MakerRenderer(nb.FNBRenderer):
+    
+    
+    def __init__(self):
+        """ Default class constructor. """
+
+        self._tabHeight = None
+
+        if wx.Platform == "__WXMAC__":
+            # Get proper highlight colour for focus rectangle from the
+            # current Mac theme.  kThemeBrushFocusHighlight is
+            # available on Mac OS 8.5 and higher
+            if hasattr(wx, 'MacThemeColour'):
+                c = wx.MacThemeColour(Carbon.Appearance.kThemeBrushFocusHighlight)
+            else:
+                brush = wx.Brush(wx.BLACK)
+                brush.MacSetTheme(Carbon.Appearance.kThemeBrushFocusHighlight)
+                c = brush.GetColour()
+            self._focusPen = wx.Pen("#aa0000", 1)
+        
+
+
+    def DrawFocusRectangle(self, dc, pageContainer, page):
+        """
+        Draws a focus rectangle like the native :class:`Notebook`.
+
+        :param `dc`: an instance of :class:`DC`;
+        :param `pageContainer`: an instance of :class:`FlatNotebook`;
+        :param `page`: an instance of :class:`PageInfo`, representing a page in the notebook.
+        """
+        return 
+    
+        if not page._hasFocus:
+            return
+
+        tabPos = wx.Point(*page.GetPosition())
+        if pageContainer.GetParent().GetAGWWindowStyleFlag() & FNB_VC8:
+            vc8ShapeLen = self.CalcTabHeight(pageContainer) - VERTICAL_BORDER_PADDING - 2
+            tabPos.x += vc8ShapeLen
+
+        rect = wx.RectPS(tabPos, page.GetSize())
+        rect = wx.Rect(rect.x+2, rect.y+2, rect.width-4, rect.height-8)
+
+        if wx.Platform == '__WXMAC__':
+            rect.SetWidth(rect.GetWidth() + 1)
+
+        dc.SetBrush(wx.TRANSPARENT_BRUSH)
+        dc.SetPen(self._focusPen)
+        dc.DrawRoundedRectangleRect(rect, 2)
+
+
+
+    
+    def DrawTabsLine(self, pageContainer, dc, selTabX1=-1, selTabX2=-1):
+        """
+        Draws a line over the tabs.
+
+        :param `pageContainer`: an instance of :class:`FlatNotebook`;
+        :param `dc`: an instance of :class:`DC`;
+        :param `selTabX1`: first x coordinate of the tab line;
+        :param `selTabX2`: second x coordinate of the tab line.
+        """
+        
+        pc = pageContainer
+
+        clntRect = pc.GetClientRect()
+        clientRect3 = wx.Rect(0, 0, clntRect.width, clntRect.height)
+
+        if pc.HasAGWFlag(nb.FNB_FF2):
+            if not pc.HasAGWFlag(nb.FNB_BOTTOM):
+                fillColour = wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE)
+            else:
+                fillColour = wx.WHITE
+
+            dc.SetPen(wx.Pen("#444444",1 ))
+            
+            dc.DrawLine(1, clntRect.height, clntRect.width-1, clntRect.height)
+            
+                #dc.DrawLine(1, clntRect.height-1, clntRect.width-1, clntRect.height-1)
+
+            # -> This is the shadow for all tabs
+            #dc.SetPen(wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW)))
+            #dc.DrawLine(1, clntRect.height-2, clntRect.width-1, clntRect.height-2)
+
+            #dc.SetPen(wx.Pen("#666666", 1))
+            #dc.DrawLine(selTabX1 + 2, clntRect.height-2, selTabX2-1, clntRect.height-2)
+            #dc.DrawLine(selTabX1 + 2, clntRect.height, selTabX2-1, clntRect.height)
+                
+        else:
+
+            if pc.HasAGWFlag(nb.FNB_BOTTOM):
+
+                clientRect = wx.Rect(0, 2, clntRect.width, clntRect.height - 2)
+                clientRect2 = wx.Rect(0, 1, clntRect.width, clntRect.height - 1)
+
+            else:
+
+                clientRect = wx.Rect(0, 0, clntRect.width, clntRect.height - 2)
+                clientRect2 = wx.Rect(0, 0, clntRect.width, clntRect.height - 1)
+
+            dc.SetBrush(wx.TRANSPARENT_BRUSH)
+            dc.SetPen(wx.Pen(pc.GetSingleLineBorderColour()))
+            dc.DrawRectangleRect(clientRect2)
+            dc.DrawRectangleRect(clientRect3)
+
+            dc.SetPen(wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW)))
+            dc.DrawRectangleRect(clientRect)
+
+
+
+
+    def DrawTab(self, pageContainer, dc, posx, tabIdx, tabWidth, tabHeight, btnStatus):
+        """
+        Draws a tab using the `Firefox 2` style.
+
+        :param `pageContainer`: an instance of :class:`FlatNotebook`;
+        :param `dc`: an instance of :class:`DC`;
+        :param `posx`: the x position of the tab;
+        :param `tabIdx`: the index of the tab;
+        :param `tabWidth`: the tab's width;
+        :param `tabHeight`: the tab's height;
+        :param `btnStatus`: the status of the 'X' button inside this tab.
+        """
+
+        
+        pc = pageContainer
+
+        if tabIdx == pc.GetSelection():
+            borderPen = wx.Pen("#111111",1)
+        else:
+            borderPen = wx.Pen("#888888",1)
+
+        tabPoints = [wx.Point() for indx in xrange(7)]
+        tabPoints[0].x = posx + 2
+        tabPoints[0].y = tabHeight
+
+        tabPoints[1].x = tabPoints[0].x
+        tabPoints[1].y = (pc.HasAGWFlag(nb.FNB_BOTTOM) and [tabHeight - (nb.VERTICAL_BORDER_PADDING+2)] or [(nb.VERTICAL_BORDER_PADDING+2)])[0]
+
+        tabPoints[2].x = tabPoints[1].x+2
+        tabPoints[2].y = (pc.HasAGWFlag(nb.FNB_BOTTOM) and [tabHeight - nb.VERTICAL_BORDER_PADDING] or [nb.VERTICAL_BORDER_PADDING])[0]
+
+        tabPoints[3].x = posx + tabWidth - 2
+        tabPoints[3].y = (pc.HasAGWFlag(nb.FNB_BOTTOM) and [tabHeight - nb.VERTICAL_BORDER_PADDING] or [nb.VERTICAL_BORDER_PADDING])[0]
+
+        tabPoints[4].x = tabPoints[3].x + 2
+        tabPoints[4].y = (pc.HasAGWFlag(nb.FNB_BOTTOM) and [tabHeight - (nb.VERTICAL_BORDER_PADDING+2)] or [(nb.VERTICAL_BORDER_PADDING+2)])[0]
+
+        tabPoints[5].x = tabPoints[4].x
+        tabPoints[5].y = tabHeight 
+
+        #------------------------------------
+        # Paint the tab with gradient
+        #------------------------------------
+        rr = wx.RectPP(tabPoints[2], tabPoints[5])
+        nb.DrawButton(dc, rr, pc.GetSelection() == tabIdx , not pc.HasAGWFlag(nb.FNB_BOTTOM))
+
+        #dc.SetBrush(wx.TRANSPARENT_BRUSH)
+        dc.SetPen(borderPen)
+
+        # Draw the tab as rounded rectangle
+        dc.DrawLine(tabPoints[0].x, tabPoints[0].y, tabPoints[1].x, tabPoints[1].y)
+        dc.DrawLine(tabPoints[1].x, tabPoints[1].y, tabPoints[2].x, tabPoints[2].y)
+        dc.DrawLine(tabPoints[2].x, tabPoints[2].y, tabPoints[3].x, tabPoints[3].y)
+        dc.DrawLine(tabPoints[3].x, tabPoints[3].y, tabPoints[4].x, tabPoints[4].y)
+        dc.DrawLine(tabPoints[4].x, tabPoints[4].y, tabPoints[5].x, tabPoints[5].y)
+
+
+        # -----------------------------------
+        # Text and image drawing
+        # -----------------------------------
+
+        # The width of the images are 16 pixels
+        padding = pc.GetParent().GetPadding()
+        shapePoints = int(tabHeight*math.tan(float(pc._pagesInfoVec[tabIdx].GetTabAngle())/180.0*math.pi))
+        hasImage = pc._pagesInfoVec[tabIdx].GetImageIndex() != -1
+        imageYCoord = (pc.HasAGWFlag(nb.FNB_BOTTOM) and [6] or [8])[0]
+
+        if hasImage:
+            textOffset = 2*padding + 16 + shapePoints/2
+        else:
+            textOffset = padding + shapePoints/2
+
+        textOffset += 2
+
+        if tabIdx != pc.GetSelection():
+
+            # Set the text background to be like the vertical lines
+            dc.SetTextForeground("#666666")
+
+        if hasImage:
+            imageXOffset = textOffset - 16 - padding
+            pc._ImageList.Draw(pc._pagesInfoVec[tabIdx].GetImageIndex(), dc,
+                               posx + imageXOffset, imageYCoord,
+                               wx.IMAGELIST_DRAW_TRANSPARENT, True)
+
+        pageTextColour = pc._pParent.GetPageTextColour(tabIdx)
+        if pageTextColour is not None:
+            dc.SetTextForeground(pageTextColour)
+
+        dc.DrawText(pc.GetPageText(tabIdx), posx + textOffset, imageYCoord)
+
+        # draw 'x' on tab (if enabled)
+        if pc.HasAGWFlag(nb.FNB_X_ON_TAB) and tabIdx == pc.GetSelection():
+
+            textWidth, textHeight = dc.GetTextExtent(pc.GetPageText(tabIdx))
+            tabCloseButtonXCoord = posx + textOffset + textWidth + 1
+
+            # take a bitmap from the position of the 'x' button (the x on tab button)
+            # this bitmap will be used later to delete old buttons
+            tabCloseButtonYCoord = imageYCoord
+            x_rect = wx.Rect(tabCloseButtonXCoord, tabCloseButtonYCoord, 16, 16)
+
+            # Draw the tab
+            self.DrawTabX(pc, dc, x_rect, tabIdx, btnStatus)
+
+
+
+
+
+#===============================================================================
+# 
+#    End Custom Flat Notebook
+#
+#===============================================================================
+
+
 
 
 class MySplitter(wx.SplitterWindow):
