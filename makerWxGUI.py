@@ -2406,6 +2406,9 @@ class wxPythonGUI(wx.Frame):
         # changed where the noteBoolPages dict is updated
         #
         
+#        self.noteBook = nb.FlatNotebook(self.splitter, -1, style= wx.lib.flatnotebook.FNB_NODRAG 
+#                                        | wx.lib.flatnotebook.FNB_X_ON_TAB)
+
         self.noteBook = MyCustomNoteBook(self.splitter, -1, None, None)
 
         self.noteBook.SetPadding(wx.Size(20))
