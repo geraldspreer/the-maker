@@ -53,8 +53,6 @@ x.x.2013	- Gerald
 	- updated "Manage Projects" dialog
 	- existing projects from users sandbox are moved to chosen location
 	- Bug fixed in distribution table cleanup
-	- double click outside the application on .makerProject "file" opens that 
-	  project (if it's not already linked...)
 	- editor code styles
 	- editor is keeping indentation level!
 	- editor styles change on menuItem highlight
