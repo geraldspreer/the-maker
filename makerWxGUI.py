@@ -2486,63 +2486,46 @@ class wxPythonGUI(wx.Frame):
         self.splitter.SetMinimumPaneSize(200)
         self.splitter.SplitVertically(self.listWindow, self.noteBook, 180)    
 
-        self.toolBar = self.CreateToolBar( style = wx.TB_HORIZONTAL
+        self.toolBar = self.CreateToolBar( style =  wx.TB_HORIZONTAL
             | wx.NO_BORDER
             #| wx.TB_FLAT
             | wx.TB_TEXT
-            | wx.TB_HORZ_LAYOUT
-             )
+            )
 
 
         
         self.search = wx.SearchCtrl(self.toolBar, id= -1,  pos=(750,-1), size=(180,25), style=wx.TE_PROCESS_ENTER)
         
         #extract the searchCtrl's textCtrl 
-        self.searchStatus = wx.StaticText(self.toolBar, -1, pos=(750,10), style=0)             
+        self.searchStatus = wx.StaticText(self.toolBar, -1, size=wx.DefaultSize, pos=wx.DefaultPosition, style=0)             
         self.searchStatus.SetLabel("                         ")
-
-
-        tsize = (36,36)
         
-        new_bmp =  wx.ArtProvider.GetBitmap(wx.ART_NEW, wx.ART_TOOLBAR, tsize)
+        saveArt = wx.Bitmap(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/media-floppy.png"))
         
-        saveArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
-                                 "./system/ToolBarIcons/187-pencil.png"), 
-                                 wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-
-        publishArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
-                                 "./system/ToolBarIcons/57-download.png"), 
-                                 wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        publishArt = wx.Bitmap(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/applications-internet.png"))
+        previewArt = wx.Bitmap(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/video-display.png"))
+        makeAllArt = wx.Bitmap(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/applications-system.png"))
         
-        
-        previewArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
-                                 "./system/ToolBarIcons/12-eye.png"), 
-                                 wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-
-        makeAllArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
-                                 "./system/ToolBarIcons/20-gear2.png"), 
-                                 wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-
         
         self.toolBar.AddSeparator()
+
         self.toolBar.AddLabelTool(10, "Save", saveArt)
-        
         self.toolBar.AddLabelTool(20, "Publish", publishArt)
-        
         self.toolBar.AddLabelTool(30, "Preview", previewArt)
-        
         self.toolBar.AddLabelTool(40, "Make All", makeAllArt)
         
-        #self.tb.AddControl(self.saveButton)
-        #self.tb.AddControl(self.publishButton)
-        #self.tb.AddControl(self.previewButton)
-        #self.tb.AddControl(self.makeAllButton)
-        self.toolBar.AddSeparator()
         self.toolBar.AddStretchableSpace()
+
         self.toolBar.AddControl(self.searchStatus)
         self.toolBar.AddControl(self.search)
-
+        
         self.toolBar.Realize()
+        
+
         
         self.statusBar1 = wx.StatusBar(id=-1,
               name='statusBar1', parent=self, style=wx.ST_SIZEGRIP)
