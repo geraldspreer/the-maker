@@ -67,7 +67,7 @@ def scaffold(systemDir, defaultTheme):
             letter-spacing:0.050em;
             margin:-28px 0px 0px 8px;
             line-height:3em;
-            font-size:20px;
+            font-size:22px;
             cursor:default;
             
         
@@ -136,7 +136,7 @@ def scaffold(systemDir, defaultTheme):
             float:left;
             clear:both;
             display:none;
-            margin:20px 10px 0px 10px;
+            margin:40px 10px 0px 10px;
             
         
         }
@@ -155,17 +155,34 @@ def scaffold(systemDir, defaultTheme):
             height:auto;
             float:left;
             clear:right;
-            margin:0px 20px 0px 0px;
+            margin:0px 48px 0px 8px;
             -webkit-transform: perspective( 600px ) rotateY( 10deg );
+            
+            /*
             -webkit-transition: width, 0.5s; 
-                
+            */  
         }
 
+        /*
         .info img:hover {
 
             width:320px;
             -webkit-transform: perspective( 600px ) rotateY( 0deg ); 
                 
+        }
+        */
+
+        .info h5 {
+             
+            margin-top:0px;
+        
+        }
+
+        .info h5, p {
+            
+            width:380px;
+            float:left;
+        
         }
 
         a.button {
@@ -268,8 +285,11 @@ def makeInfo(systemDir, templateName, data):
     info = """
     
     <div class="info" id="info-""" + data["Title"] + """">
+        
+        <img src='""" + previewImage + """' />
+        
         <h5>""" + data["Title"] + """</h5>
-        <p><img src='""" + previewImage + """' />""" + data["Description"] + """<br /><br />
+        <p>""" + data["Description"] + """<br /><br />
         Credit: """ + data["Credit"] + """<br />
         Support: <a href='""" + data["Credit"] + """'>""" + data["Credit"] + """</a><br />
         
