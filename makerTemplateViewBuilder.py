@@ -55,7 +55,7 @@ def scaffold(systemDir, defaultTheme):
             float:left;
             font-size:0.9em;
             line-height:1.45em;
-            text-align:justify;
+            text-align:left;
             margin:-6px 0px 24px 10px;
 
         }
@@ -291,7 +291,7 @@ def makeInfo(systemDir, templateName, data):
         <h5>""" + data["Title"] + """</h5>
         <p>""" + data["Description"] + """<br /><br />
         Credit: """ + data["Credit"] + """<br />
-        Support: <a href='""" + data["Credit"] + """'>""" + data["Credit"] + """</a><br />
+        Support: <a href='""" + data["Support"] + """'>www.makercms.org</a><br />
         
         </p>
         </div>

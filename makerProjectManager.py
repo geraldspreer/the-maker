@@ -657,7 +657,7 @@ class ProjectManager:
     
     def getSystemPath(self):
         """ get system path """
-        return os.path.join(os.path.dirname(sys.argv[0]), "system/")
+        return os.path.join(self.getApplicationPath(), "system/")
 
     # ------------------------------------------------------------    
     

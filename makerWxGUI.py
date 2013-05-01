@@ -2358,13 +2358,13 @@ class wxPythonGUI(wx.Frame):
 
 
 
-    def partArt(self, il, image_size):
-        # called in init ctrls 
-        # moved out here to make testing easier
-        
-        wx.ArtProvider.Push(MyArtProvider())
-        self.part     = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, image_size))
-        wx.ArtProvider.Pop()
+#    def partArt(self, il, image_size):
+#        # called in init ctrls 
+#        # moved out here to make testing easier
+#        
+#        wx.ArtProvider.Push(MyArtProvider())
+#        self.part     = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, image_size))
+#        wx.ArtProvider.Pop()
 
 
     def _init_ctrls(self, prnt):
@@ -2461,21 +2461,42 @@ class wxPythonGUI(wx.Frame):
         self.treePen = wx.Pen('#666666', 1)
         self.tree.Bind(wx.EVT_PAINT, onTreePaint)
        
-               
+ 
         image_size = (16,16)
+        
+        projectArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/114.png"), 
+                              wx.BITMAP_TYPE_PNG).Scale(16,16).ConvertToBitmap()
+        
+        folderArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/99.png"), 
+                              wx.BITMAP_TYPE_PNG).Scale(16,16).ConvertToBitmap()
+        
+        folderOpenArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/107.png"), 
+                              wx.BITMAP_TYPE_PNG).Scale(16,16).ConvertToBitmap()
+        
+        fileArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/93.png"), 
+                              wx.BITMAP_TYPE_PNG).Scale(16,16).ConvertToBitmap()
+        
+        fileChangeArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/118.png"), 
+                              wx.BITMAP_TYPE_PNG).Scale(16,16).ConvertToBitmap()
+        
+        partArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
+                                 "./system/ToolBarIcons/24-16.png"), 
+                              wx.BITMAP_TYPE_PNG).Scale(16,16).ConvertToBitmap()
+        
         il = wx.ImageList(image_size[0], image_size[1])
-        self.projidx     = il.Add(wx.ArtProvider_GetBitmap(wx.ART_REMOVABLE, wx.ART_OTHER, image_size))
-        self.fldridx     = il.Add(wx.ArtProvider_GetBitmap(wx.ART_FOLDER,  wx.ART_OTHER, image_size))
-        self.fldropenidx = il.Add(wx.ArtProvider_GetBitmap(wx.ART_FILE_OPEN, wx.ART_OTHER, image_size))
-        self.fileidx     = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, image_size))
-        try:
-            self.filechange  = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NEW, wx.ART_OTHER, image_size))
-        except:
-            
-            self.filechange  = il.Add(wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, image_size))
+        self.projidx     = il.Add(projectArt)
+        self.fldridx     = il.Add(folderArt)
+        self.fldropenidx = il.Add(folderOpenArt)
+        self.fileidx     = il.Add(fileArt)
+        self.filechange  = il.Add(fileChangeArt)
+        self.part = il.Add(partArt)
         
-        
-        self.partArt(il, image_size)
+        #self.partArt(il, image_size)
         
         self.tree.SetImageList(il)
         self.il = il
@@ -2504,14 +2525,14 @@ class wxPythonGUI(wx.Frame):
         self.searchStatus.SetLabel("                         ")
         
         saveArt = wx.Bitmap(os.path.join(os.path.dirname(sys.argv[0]), 
-                                 "./system/ToolBarIcons/media-floppy.png"))
+                                 "./system/ToolBarIcons/23.png"))
         
         publishArt = wx.Bitmap(os.path.join(os.path.dirname(sys.argv[0]), 
-                                 "./system/ToolBarIcons/applications-internet.png"))
+                                 "./system/ToolBarIcons/53.png"))
         previewArt = wx.Bitmap(os.path.join(os.path.dirname(sys.argv[0]), 
-                                 "./system/ToolBarIcons/video-display.png"))
+                                 "./system/ToolBarIcons/25.png"))
         makeAllArt = wx.Bitmap(os.path.join(os.path.dirname(sys.argv[0]), 
-                                 "./system/ToolBarIcons/applications-system.png"))
+                                 "./system/ToolBarIcons/24.png"))
         
         
         self.toolBar.AddSeparator()
@@ -2849,7 +2870,7 @@ class wxPythonGUI(wx.Frame):
         return value
     
 
-    def Input(self, Question="?", title=None):
+    def Input(self, Question="?", title=""):
         """
         user input Dialog 
         returns a string or Null
@@ -2857,7 +2878,7 @@ class wxPythonGUI(wx.Frame):
         value = None
         dlg = wx.TextEntryDialog(
                 self, Question,
-                title, '')
+                title, "")
 
         if dlg.ShowModal() == wx.ID_OK:
             value = dlg.GetValue()
@@ -3519,13 +3540,12 @@ class MyPageContainer(nb.PageContainer):
         """
 
         if self._iActivePage < 0:
-            if evt:
+            if event:
                 event.Skip()
             return
 
         self.SetFocusedPage(self._iActivePage)
-
-
+        
 
 # ---------------------------------------------------------------------------- #
 # Class FNBRendererMgr

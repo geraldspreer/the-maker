@@ -610,13 +610,14 @@ class MakerProjectController(makerController.SuperController):
                             if (self.model.projectManager.controller.noteBookPages[key]).model.getName() == theFile:
                                 if (self.model.projectManager.controller.noteBookPages[key]).getReferringTreeItem() == self.view.tree.GetSelection():
                                     self.noteBook.SetSelection(key)
-                                    self.noteBook._pages.OnSetFocus(None)
-                               
+                                    self.noteBook._pages.OnSetFocus(event)
+                                    
                     # and load the instance 
                 
                     fileType = self.treeView.GetItemText(itemParent)
                     self.model.loadFile(theFile, fileType)
-        
+                    
+                
       
 
     def selectTreeItemAndLoad(self, item):
@@ -819,6 +820,7 @@ class MakerProjectController(makerController.SuperController):
         
         else:
             # Hack the event
+            
             newSelection = self.view.noteBook.GetSelection()
             event.SetSelection(newSelection)
             # load new active file
