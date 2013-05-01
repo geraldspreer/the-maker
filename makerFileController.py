@@ -1350,9 +1350,12 @@ class MakerFileController(makerController.SuperController):
       
         self.editor.AddText(text)
         makerAutoComplete.AutoComplete(self.model, self.view, self.editor)
-	self.view.wx.Yield()
-	self.editor.Bind(self.view.wx.stc.EVT_STC_CHANGE, self.textChanged)
-
+        self.view.wx.Yield()
+        self.editor.Bind(self.view.wx.stc.EVT_STC_CHANGE, self.textChanged)
+ 
+        # newly opened file - edit at beginning
+        self.editor.SetSelection(0,0) # safer than SetCurrentPos
+        self.editor.SetFocus()
          
        
     def isCurrentFileSaved(self):

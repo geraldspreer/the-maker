@@ -557,7 +557,7 @@ class MakerProjectController(makerController.SuperController):
     
     
     def actionLoadFile(self, event):
-                
+        
         item = event.GetItem()
         
         if item:
@@ -610,12 +610,17 @@ class MakerProjectController(makerController.SuperController):
                             if (self.model.projectManager.controller.noteBookPages[key]).model.getName() == theFile:
                                 if (self.model.projectManager.controller.noteBookPages[key]).getReferringTreeItem() == self.view.tree.GetSelection():
                                     self.noteBook.SetSelection(key)
-                                    self.noteBook._pages.OnSetFocus(event)
+                                    self.noteBook._pages.OnSetFocus(None)
                                     
                     # and load the instance 
                 
                     fileType = self.treeView.GetItemText(itemParent)
                     self.model.loadFile(theFile, fileType)
+                    
+                    # this fixes focus issue [tab] for new open files
+                    self.noteBook._pages.OnSetFocus(None)
+                    
+                    
                     
                 
       
@@ -721,7 +726,11 @@ class MakerProjectController(makerController.SuperController):
         
         # change to current file
         # this is called when a tab is changed manually
-                
+        
+        # set focus on new active page
+        self.noteBook._pages.OnSetFocus(None)
+        
+        
         # data is instance of makerFileController
         data = (self.model.projectManager.controller.noteBookPages[event.GetSelection()])
                 

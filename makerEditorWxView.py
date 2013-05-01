@@ -270,9 +270,12 @@ class editorView:
                 
                 self.editor.StyleSetSpec(wx.stc.STC_HJ_COMMENTLINE, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
                 self.editor.StyleSetSpec(wx.stc.STC_HJ_COMMENT, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_COMMENTDOC, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
                 
                 self.editor.StyleSetSpec(wx.stc.STC_HJ_SINGLESTRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 self.editor.StyleSetSpec(wx.stc.STC_HJ_DOUBLESTRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJ_STRINGEOL, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
                 self.editor.StyleSetSpec(wx.stc.STC_HJ_NUMBER, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
                 

@@ -3532,20 +3532,51 @@ class MyPageContainer(nb.PageContainer):
 
 
 
+    def IsTabVisible(self, page):
+        """
+        Returns whether a tab is visible or not.
+
+        :param `page`: an integer specifying the page index.
+        """
+
+        iLastVisiblePage = self.GetLastVisibleTab()
+        
+        return page <= iLastVisiblePage and page >= self._nFrom
+
+
+    def GetLastVisibleTab(self):
+        """ Returns the last visible tab in the tab area. """
+
+        if self._nFrom < 0:
+            return -1
+
+        ii = 0
+
+        for ii in xrange(self._nFrom, len(self._pagesInfoVec)):
+            
+            if self._pagesInfoVec[ii].GetPosition() == wx.Point(-1, -1):
+                break
+
+        return ii-1
+
+
+
     def OnSetFocus(self, event=None):
         """
         Handles the ``wx.EVT_SET_FOCUS`` event for :class:`PageContainer`.
 
         :param `event`: a :class:`FocusEvent` event to be processed.
         """
-
+        
         if self._iActivePage < 0:
             if event:
                 event.Skip()
             return
 
         self.SetFocusedPage(self._iActivePage)
-        
+        # make selection advance
+        self.SetSelection(self._iActivePage)
+
 
 # ---------------------------------------------------------------------------- #
 # Class FNBRendererMgr
@@ -3595,6 +3626,9 @@ class MakerRenderer(nb.FNBRenderer):
                 
             self._focusPen = wx.Pen(c, 3)
         
+
+    
+
 
 
     def DrawFocusRectangle(self, dc, pageContainer, page):
