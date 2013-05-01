@@ -59,6 +59,7 @@ x.x.2013	- Gerald
 	- now using native tool bar
 	- improved editor tabs with custom drawing - ready for more in 1.9
 	- fixed editor focus bug
+	- faster and cleaner drawing code for tabs
 	- and a lot more
 	
 

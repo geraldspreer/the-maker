@@ -3612,7 +3612,8 @@ class MakerRenderer(nb.FNBRenderer):
         """ Default class constructor. """
 
         self._tabHeight = None
-
+        self.renderPen = wx.Pen("#444444",1 )
+        
         if wx.Platform == "__WXMAC__":
             # Get proper highlight colour for focus rectangle from the
             # current Mac theme.  kThemeBrushFocusHighlight is
@@ -3640,7 +3641,7 @@ class MakerRenderer(nb.FNBRenderer):
         :param `page`: an instance of :class:`PageInfo`, representing a page in the notebook.
         """
         
-    
+        return
         if not page._hasFocus:
             return
 
@@ -3669,52 +3670,15 @@ class MakerRenderer(nb.FNBRenderer):
         :param `selTabX1`: first x coordinate of the tab line;
         :param `selTabX2`: second x coordinate of the tab line.
         """
-        
+
         pc = pageContainer
 
         clntRect = pc.GetClientRect()
-        clientRect3 = wx.Rect(0, 0, clntRect.width, clntRect.height)
 
-        if pc.HasAGWFlag(nb.FNB_FF2):
-            if not pc.HasAGWFlag(nb.FNB_BOTTOM):
-                fillColour = wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE)
-            else:
-                fillColour = wx.WHITE
-
-            dc.SetPen(wx.Pen("#444444",1 ))
+        dc.SetPen(self.renderPen)
             
-            dc.DrawLine(1, clntRect.height, clntRect.width-1, clntRect.height)
+        dc.DrawLine(1, clntRect.height, clntRect.width-1, clntRect.height)
             
-                #dc.DrawLine(1, clntRect.height-1, clntRect.width-1, clntRect.height-1)
-
-            # -> This is the shadow for all tabs
-            #dc.SetPen(wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW)))
-            #dc.DrawLine(1, clntRect.height-2, clntRect.width-1, clntRect.height-2)
-
-            #dc.SetPen(wx.Pen("#666666", 1))
-            #dc.DrawLine(selTabX1 + 2, clntRect.height-2, selTabX2-1, clntRect.height-2)
-            #dc.DrawLine(selTabX1 + 2, clntRect.height, selTabX2-1, clntRect.height)
-                
-        else:
-
-            if pc.HasAGWFlag(nb.FNB_BOTTOM):
-
-                clientRect = wx.Rect(0, 2, clntRect.width, clntRect.height - 2)
-                clientRect2 = wx.Rect(0, 1, clntRect.width, clntRect.height - 1)
-
-            else:
-
-                clientRect = wx.Rect(0, 0, clntRect.width, clntRect.height - 2)
-                clientRect2 = wx.Rect(0, 0, clntRect.width, clntRect.height - 1)
-
-            dc.SetBrush(wx.TRANSPARENT_BRUSH)
-            dc.SetPen(wx.Pen(pc.GetSingleLineBorderColour()))
-            dc.DrawRectangleRect(clientRect2)
-            dc.DrawRectangleRect(clientRect3)
-
-            dc.SetPen(wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW)))
-            dc.DrawRectangleRect(clientRect)
-
 
 
 
@@ -3735,45 +3699,23 @@ class MakerRenderer(nb.FNBRenderer):
         pc = pageContainer
 
         if tabIdx == pc.GetSelection():
-            borderPen = wx.Pen("#111111",1)
+#            borderPen = wx.Pen("#111111",1)
+            borderPen = self._focusPen
         else:
             borderPen = wx.Pen("#888888",1)
-
-        tabPoints = [wx.Point() for indx in xrange(7)]
-        tabPoints[0].x = posx + 2
-        tabPoints[0].y = tabHeight
-
-        tabPoints[1].x = tabPoints[0].x
-        tabPoints[1].y = (pc.HasAGWFlag(nb.FNB_BOTTOM) and [tabHeight - (nb.VERTICAL_BORDER_PADDING+2)] or [(nb.VERTICAL_BORDER_PADDING+2)])[0]
-
-        tabPoints[2].x = tabPoints[1].x+2
-        tabPoints[2].y = (pc.HasAGWFlag(nb.FNB_BOTTOM) and [tabHeight - nb.VERTICAL_BORDER_PADDING] or [nb.VERTICAL_BORDER_PADDING])[0]
-
-        tabPoints[3].x = posx + tabWidth - 2
-        tabPoints[3].y = (pc.HasAGWFlag(nb.FNB_BOTTOM) and [tabHeight - nb.VERTICAL_BORDER_PADDING] or [nb.VERTICAL_BORDER_PADDING])[0]
-
-        tabPoints[4].x = tabPoints[3].x + 2
-        tabPoints[4].y = (pc.HasAGWFlag(nb.FNB_BOTTOM) and [tabHeight - (nb.VERTICAL_BORDER_PADDING+2)] or [(nb.VERTICAL_BORDER_PADDING+2)])[0]
-
-        tabPoints[5].x = tabPoints[4].x
-        tabPoints[5].y = tabHeight 
+        
 
         #------------------------------------
         # Paint the tab with gradient
         #------------------------------------
-        rr = wx.RectPP(tabPoints[2], tabPoints[5])
+        rr = wx.RectPP((posx + 4, nb.VERTICAL_BORDER_PADDING), (posx + tabWidth ,tabHeight))
         nb.DrawButton(dc, rr, pc.GetSelection() == tabIdx , not pc.HasAGWFlag(nb.FNB_BOTTOM))
 
         #dc.SetBrush(wx.TRANSPARENT_BRUSH)
         dc.SetPen(borderPen)
 
         # Draw the tab as rounded rectangle
-        dc.DrawLine(tabPoints[0].x, tabPoints[0].y, tabPoints[1].x, tabPoints[1].y)
-        dc.DrawLine(tabPoints[1].x, tabPoints[1].y, tabPoints[2].x, tabPoints[2].y)
-        dc.DrawLine(tabPoints[2].x, tabPoints[2].y, tabPoints[3].x, tabPoints[3].y)
-        dc.DrawLine(tabPoints[3].x, tabPoints[3].y, tabPoints[4].x, tabPoints[4].y)
-        dc.DrawLine(tabPoints[4].x, tabPoints[4].y, tabPoints[5].x, tabPoints[5].y)
-
+        dc.DrawRoundedRectangle(posx + 2, nb.VERTICAL_BORDER_PADDING, tabWidth-2, tabHeight, 4)
 
         # -----------------------------------
         # Text and image drawing
