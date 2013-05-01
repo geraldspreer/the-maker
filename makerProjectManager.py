@@ -634,7 +634,8 @@ class ProjectManager:
     def getApplicationPath(self):
         """ get path where the maker executable resides """
         
-        return os.path.dirname(sys.argv[0])
+        appPath = os.path.dirname(sys.argv[0])
+        return appPath
     
     def getUserHomeDir(self):
         """ get the users gome dir """    
@@ -657,8 +658,11 @@ class ProjectManager:
     
     def getSystemPath(self):
         """ get system path """
-        return os.path.join(self.getApplicationPath(), "system/")
-
+    
+        systemPath = os.path.join(os.getcwd(), "system/")
+    
+        return systemPath
+    
     # ------------------------------------------------------------    
     
     def getTemplates(self):
