@@ -884,7 +884,7 @@ class MakerFileContent(MakerFile):
             mdHTML = (markdown2.markdown(md.decode("latin-1"), extras=["wiki-tables","footnotes"])).encode("latin-1")
             
             text = text.replace('<markdown>' + md + '</markdown>', mdHTML)
-            print text
+            
                     
         writeFile(self.getFullName(), text)
         

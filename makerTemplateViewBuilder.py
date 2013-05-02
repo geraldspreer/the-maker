@@ -245,9 +245,20 @@ def scaffold(systemDir, defaultTheme):
 
 
 def buildView(systemDir, viewPath):
-    writeFile(os.path.join(viewPath,"yourTemplates.html"), scaffold(systemDir, defaultTheme = "Bare-Bones"))
+    
+    
+    writeFile(os.path.join(viewPath,"yourTemplates.html"), scaffold(systemDir, defaultTemplate()))
     
     return os.path.join(viewPath,"yourTemplates.html")
+
+
+def defaultTemplate():
+    
+    #===========================================================================
+    #  This is used to set the default template for the application
+    #===========================================================================
+    
+    return "Simple-Markdown"
     
     
 def createThumbnails(systemDir):
@@ -270,7 +281,7 @@ def createInfo(systemDir):
         
         if not template.startswith("."):
             s = readFile(os.path.join(systemDir, "templates", template, "parts","info.json")) 
-            print "template is:", template
+            #print "template is:", template
             data = eval(s)
         
             info += makeInfo(systemDir, template, data)

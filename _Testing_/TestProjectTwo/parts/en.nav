@@ -1,0 +1,11 @@
+<div class="col_5">
+<ul class="button-bar">
+<li><a href="#">Blog</a></li>
+<li><a href="elements_en.htm" >Elements</a></li>
+<li><a href="elements_en.htm">Learn</a></li>
+<li><a href=""> Contact</a></li>
+<li><a href="elements_en.htm"> About</a></li>
+</ul> 
+</div> <!-- end div "col_5" (in nav) -->
+
+ <div class="col_12">

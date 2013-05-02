@@ -293,7 +293,7 @@ class ProjectManagerController(makerController.SuperController):
                         # set scroll position
                         ed = ((self.model.getActiveProject()).getCurrentFile()).fileController.editor
                         ed.GotoPos(sessionFile[3])
-#                        
+                        
                         
                     # make last open file current file
                     for sessionFile in interfaceData["sessionFiles"]:
@@ -402,7 +402,8 @@ class ProjectManagerController(makerController.SuperController):
         viewPath = makerTemplateViewBuilder.buildView(self.model.getSystemPath(), self.model.getApplicationSupportDir())
         
         self.template = None
-        self.selectedTemplate = None
+        
+        self.selectedTemplate = makerTemplateViewBuilder.defaultTemplate()
         
         selector = makerTemplateDialog.xrcDIALOG1(self.view)
         
@@ -416,7 +417,7 @@ class ProjectManagerController(makerController.SuperController):
         selector.Refresh()
     
         selector.Create.SetDefault()
-        selector.Create.Enable(False)
+        selector.Create.Enable(True)
         
         def loadTemplates(pathToView):
         
@@ -559,77 +560,77 @@ class ProjectManager:
         self.openFiles = []
         self.projectConvertRepoName = "MakerProjects"
         
-        makerThread.newThread(self.checkForSandboxedProjects)
+        #makerThread.newThread(self.checkForSandboxedProjects)
         
-        self.loadArgumentPassedProject()
+        #self.loadArgumentPassedProject()
        
     
-    def checkForSandboxedProjects(self):
-        
-        updateInfo = ""
-        
-        updateInfo += "Please read carefully:\n"
-        updateInfo += "We have improved the way TheMaker handles projects.\n"
-        updateInfo += "Now you can have projects as external files wherever you like.\n"
-        updateInfo += "But you need to choose where you would like to store your existing"
-        updateInfo += " projects.\n\n "
-        updateInfo += "Click OK to choose...\n "
-        
-        def getTargetDir(verbose = False):
-            target = None
-            if verbose:
-                self.controller.infoMessage(updateInfo)
-            
-            target = self.controller.dirDialog("Where would you like to store your existing projects?")
-            
-            return target
-        
-        
-        sandBoxProjects = os.path.join(self.getApplicationSupportDir(), "makerProjects")
-        converted = []
-        errors = False
-        
-        if not os.path.isdir(sandBoxProjects):
-            
-            return
-        
-        self.controller.view.Center()
-        self.controller.view.Show()
-        
-        targetDir = getTargetDir(False)
-        
-        if not targetDir:
-            targetDir = getTargetDir(verbose = True)
-            if not targetDir:
-                return
-
-        
-        for item in os.listdir(sandBoxProjects):
-            if not item.startswith("."):
-                
-                src = os.path.join(sandBoxProjects, item)
-                dst = os.path.join(targetDir, self.projectConvertRepoName ,item + ".makerProject") 
-                
-                if not os.path.isdir(dst):
-                    # this is just a safety check. This case should never occur...
-                    # 
-                    shutil.copytree(src, dst)
-                    converted.append(item + ".makerProject")
-                    
-                    if dst not in self.linkedProjectPaths:
-                        self.openThisProject(dst, verbose = False)
-                
-        
-        for bundle in converted:
-            if not bundle in os.listdir(os.path.join(targetDir, self.projectConvertRepoName)):
-                errors = True
-                
-        if errors == True:
-            self.controller.errorMessage("Fatal Installation Error!\nPlease report this to info@makercms.org.\nWe will help you out!\nShutting down...")
-            sys.exit(0)
-        else:
-            shutil.rmtree(sandBoxProjects, True)
-            
+#    def checkForSandboxedProjects(self):
+#        
+#        updateInfo = ""
+#        
+#        updateInfo += "Please read carefully:\n"
+#        updateInfo += "We have improved the way TheMaker handles projects.\n"
+#        updateInfo += "Now you can have projects as external files wherever you like.\n"
+#        updateInfo += "But you need to choose where you would like to store your existing"
+#        updateInfo += " projects.\n\n "
+#        updateInfo += "Click OK to choose...\n "
+#        
+#        def getTargetDir(verbose = False):
+#            target = None
+#            if verbose:
+#                self.controller.infoMessage(updateInfo)
+#            
+#            target = self.controller.dirDialog("Where would you like to store your existing projects?")
+#            
+#            return target
+#        
+#        
+#        sandBoxProjects = os.path.join(self.getApplicationSupportDir(), "makerProjects")
+#        converted = []
+#        errors = False
+#        
+#        if not os.path.isdir(sandBoxProjects):
+#            
+#            return
+#        
+#        self.controller.view.Center()
+#        self.controller.view.Show()
+#        
+#        targetDir = getTargetDir(False)
+#        
+#        if not targetDir:
+#            targetDir = getTargetDir(verbose = True)
+#            if not targetDir:
+#                return
+#
+#        
+#        for item in os.listdir(sandBoxProjects):
+#            if not item.startswith("."):
+#                
+#                src = os.path.join(sandBoxProjects, item)
+#                dst = os.path.join(targetDir, self.projectConvertRepoName ,item + ".makerProject") 
+#                
+#                if not os.path.isdir(dst):
+#                    # this is just a safety check. This case should never occur...
+#                    # 
+#                    shutil.copytree(src, dst)
+#                    converted.append(item + ".makerProject")
+#                    
+#                    if dst not in self.linkedProjectPaths:
+#                        self.openThisProject(dst, verbose = False)
+#                
+#        
+#        for bundle in converted:
+#            if not bundle in os.listdir(os.path.join(targetDir, self.projectConvertRepoName)):
+#                errors = True
+#                
+#        if errors == True:
+#            self.controller.errorMessage("Fatal Installation Error!\nPlease report this to info@makercms.org.\nWe will help you out!\nShutting down...")
+#            sys.exit(0)
+#        else:
+#            shutil.rmtree(sandBoxProjects, True)
+#            
     
     def getApplicationPath(self):
         """ get path where the maker executable resides """
@@ -653,7 +654,12 @@ class ProjectManager:
         except:
             theDir = os.environ['HOMEPATH']
         
-        return os.path.join(theDir, "Library/Application Support/TheMaker/")
+        supportDir = os.path.join(theDir, "Library/Application Support/TheMaker/")
+        
+        if not os.path.isdir(supportDir):
+            os.mkdir(supportDir)
+        
+        return supportDir
     
     
     def getSystemPath(self):

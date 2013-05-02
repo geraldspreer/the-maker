@@ -34,6 +34,7 @@ import makerCopyright
 import makerErrorHandler
 import makerBugReport
 import makerVersion
+import makerUpdateSandboxedProjects
 
 
 def afterThisUpdateStatusInfo(func):
@@ -45,8 +46,7 @@ def afterThisUpdateStatusInfo(func):
             if self.projectController:
                 self.projectController.updateStatusInformation()
         except Exception, e:
-            print "makerApp"
-            print "unable to process: afterThisUpdateInfo", str(e)
+            pass
     
     return wrapped
 
@@ -174,6 +174,11 @@ class MakerApp(wx.App):
         
 
 def main():
+    
+    try:
+        makerUpdateSandboxedProjects.update()
+    except Exception, e:
+        sys.stderr.write("Unable to update 'sandboxed' projects: " + str(e) + "\n")
     
     application = MakerApp(0)
     application.MainLoop()

@@ -10,6 +10,7 @@ import wx
 import sys
 import makerVersion
 from random import randint
+import makerCopyright
 
 class TestApp(wx.App):
     
@@ -56,6 +57,7 @@ class TestProjectManager(makerProjectManager.ProjectManager):
 
 
 class TestView(makerWxGUI.wxPythonGUI):
+
     
     def Ask_YesOrNo(self, question):
         return self.choiceReturnString
@@ -97,6 +99,7 @@ class MakerTest(unittest.TestCase):
         self.app = TestApp()
         self.pm = TestProjectManager(self.app.mainView)
         self.pm.controller.testing = True
+       
 
 
     def test_mockViewErrorMessage(self):

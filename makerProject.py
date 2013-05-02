@@ -661,7 +661,7 @@ class MakerProjectModel:
         This method is not invoking any upload functions like in version < 0.91
         
         """
-        print "making all"   
+           
         def initForMakeAll(name, group):
                 
             theClass = self.getFileClassForSupportedGroup(group)
@@ -694,7 +694,7 @@ class MakerProjectModel:
                 step += 1
                 
             except:
-                print "make all failed for :" , i
+                print "Make all failed for :" , i
                 
         self.projectController.killProgressBar()
         

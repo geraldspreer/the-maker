@@ -1,0 +1,21 @@
+
+<div class="sixteen columns">
+    <nav>  
+        <ul>  
+            <li><a href="#">Blog</a></li>  
+            <li><a href="#">About</a></li>  
+            <li><a href="#">Archives</a></li>  
+            <li><a href="#">Contact</a></li>  
+            <li class="subscribe"><a href="#">Subscribe</a></li>  
+        </ul>  
+    </nav>  
+</div>
+<div class="sixteen columns">
+
+<hr />
+</div>
+
+
+
+
+

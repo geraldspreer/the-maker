@@ -2463,7 +2463,7 @@ class wxPythonGUI(wx.Frame):
        
  
         image_size = (16,16)
-        
+
         projectArt = wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
                                  "./system/ToolBarIcons/114.png"), 
                               wx.BITMAP_TYPE_PNG).Scale(16,16).ConvertToBitmap()
@@ -3575,8 +3575,11 @@ class MyPageContainer(nb.PageContainer):
 
         self.SetFocusedPage(self._iActivePage)
         # make selection advance
-        self.SetSelection(self._iActivePage)
-
+        try:
+            # don't complain if this does not work
+            self.SetSelection(self._iActivePage)
+        except:
+            pass
 
 # ---------------------------------------------------------------------------- #
 # Class FNBRendererMgr
