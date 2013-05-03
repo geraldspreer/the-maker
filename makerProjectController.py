@@ -454,7 +454,6 @@ class MakerProjectController(makerController.SuperController):
         
         # instance of view as parent and controller instance for communication  
         dlg.setValues(projectData)
-        
         dlg.ShowModal()
     
         if dlg.saved:
@@ -466,8 +465,13 @@ class MakerProjectController(makerController.SuperController):
             if firstSetup:
                 # since this is the first setup images need to be synchronized
                 self.model.setImageSyncNeeded(needed = True)
-                self.infoMessage("All settings are good...\nTo Publish your files go to FTP > Upload Everything. ")
-                self.model.uploadEverything(event = None)
+                m = "Congratulations! All FTP settings are good...\n"
+                m+= "Would you like to upload your files?"
+                
+                if self.askYesOrNo(m) == "Yes":
+                    self.model.uploadEverything(event = None)
+                
+                    
         dlg.Destroy()
 
 

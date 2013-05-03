@@ -108,6 +108,8 @@ def scaffold(systemDir, defaultTheme):
 
         .thumbnail img {
         
+            height:100px;
+        
         }
 
         .thumbnail p {
