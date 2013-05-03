@@ -14,7 +14,6 @@ import makerProject
 import makerTemplateDialog
 import makerManageLinkedProjects
 import makerTemplateViewBuilder
-import makerThread
 import webbrowser as web
 
 import wx.html2 as theView
@@ -271,13 +270,16 @@ class ProjectManagerController(makerController.SuperController):
         if os.path.isfile(theFile):
             try:
                 interfaceData = readDataFromFile(theFile)
+                
                 self.view.SetSize(interfaceData["Size"])
                 self.view.SetPosition(interfaceData["Position"])
                 self.view.splitter.SetSashPosition(interfaceData["SplitterSashPosition"])
-                self.setCurrentEditorStyle(interfaceData["editorStyle"])
-                self.toggleMenuItemByStyleName(interfaceData["editorStyle"])
+                try:
+                    self.setCurrentEditorStyle(interfaceData["editorStyle"])
+                    self.toggleMenuItemByStyleName(interfaceData["editorStyle"])
+                except:
+                    "No editor style"
                 
-                #linked projects
                 
                 
                 try:

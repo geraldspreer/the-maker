@@ -176,7 +176,9 @@ class MakerApp(wx.App):
 def main():
     
     try:
-        makerUpdateSandboxedProjects.update()
+        converter = makerUpdateSandboxedProjects.UpdateSandboxedProjects()
+        converter.update()
+    
     except Exception, e:
         sys.stderr.write("Unable to update 'sandboxed' projects: " + str(e) + "\n")
     

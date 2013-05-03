@@ -1,8 +1,24 @@
 import os
+import shutil
+import webbrowser as web
+import sys
+from makerUtilities import writeDataToFile, readDataFromFile
 
+TARGET_NAME = "MyMakerProjects"
 
 class UpdateSandboxedProjects():
 
+    
+    def patchUISettings(self, projects):
+        
+        theFile = os.path.join(self.getApplicationSupportDir(), ".makerUISettings")
+        interfaceData = readDataFromFile(theFile)
+        
+        interfaceData['linkedProjects'] = projects
+        interfaceData['sessionFiles'] = []
+        
+        writeDataToFile(interfaceData, theFile)
+    
     
     def getApplicationPath(self):
         """ get path where the maker executable resides """
@@ -34,6 +50,11 @@ class UpdateSandboxedProjects():
         return supportDir
     
     
+    def getConversionTargetDir(self):
+        
+        return os.path.join(self.getUserHomeDir(), TARGET_NAME)
+    
+    
     def getSystemPath(self):
         """ get system path """
     
@@ -41,44 +62,50 @@ class UpdateSandboxedProjects():
     
         return systemPath
     
+    def isProject(self, project):
+        if os.path.isdir(os.path.join(project, "parts")):
+            return True
+        else:
+            return False
+    
     
     def update(self):
         
         sandBoxProjects = os.path.join(self.getApplicationSupportDir(), "makerProjects")
         converted = []
+        # projects that need to be patched in the UI file
+        toPatch = []
         errors = False
         
         if not os.path.isdir(sandBoxProjects):
             return
         
-        targetDir = os.path.joi(self.getUserHomeDir(), "MyMakerProjects")
+        targetDir = os.path.join(self.getUserHomeDir(), "MyMakerProjects")
         
         for item in os.listdir(sandBoxProjects):
-            if not item.startswith("."):
+            if not item.startswith(".") and self.isProject(os.path.join(sandBoxProjects, item)):
                 
                 src = os.path.join(sandBoxProjects, item)
-                dst = os.path.join(targetDir, self.projectConvertRepoName ,item + ".makerProject") 
+                dst = os.path.join(targetDir ,item + ".makerProject") 
                 
                 if not os.path.isdir(dst):
                     # this is just a safety check. This case should never occur...
                     # 
                     shutil.copytree(src, dst)
                     converted.append(item + ".makerProject")
+                    toPatch.append(dst)
                     
-                    print "patch UISettings file here..."
-                    print thisWillBreakHere
-                    #if dst not in self.linkedProjectPaths:
-                    #    self.openThisProject(dst, verbose = False)
-                
         
         for bundle in converted:
-            if not bundle in os.listdir(os.path.join(targetDir, self.projectConvertRepoName)):
+            try:
+                if not bundle in os.listdir(targetDir):
+                    errors = True
+            except:
                 errors = True
                 
         if errors == True:
-            print thisWillBreakHere
-            "before app exits, take users to info website..." 
-            #self.controller.errorMessage("Fatal Installation Error!\nPlease report this to info@makercms.org.\nWe will help you out!\nShutting down...")
+            web.open("http://www.makercms.org/conversion-info/")
             sys.exit(0)
         else:
             shutil.rmtree(sandBoxProjects, True)
+            self.patchUISettings(toPatch)

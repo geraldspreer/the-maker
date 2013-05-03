@@ -15,5 +15,5 @@
 <rule ftp_source="bootstrap-transition.js" remote_dir="." ftp_mode="lines" target="bootstrap-transition.js" ></rule>
 <rule ftp_source="bootstrap-typeahead.js" remote_dir="." ftp_mode="lines" target="bootstrap-typeahead.js" ></rule>
 <rule ftp_source="jquery.js" remote_dir="." ftp_mode="lines" target="jquery.js" ></rule>
-<rule ftp_source="index_en.htm" remote_dir="." ftp_mode="lines" target="index_en.htm" ></rule>
+<rule ftp_source="index_en.htm" remote_dir="." ftp_mode="lines" target="index.htm" ></rule>
 </distribution>

@@ -369,8 +369,8 @@ class MakerTest(unittest.TestCase):
     # controller should not create central project dir !!!
 
     def test_ifNoProjectsInSandboxDoNothing(self):
-        pass
-    
+        
+        
 
     def test_ifProjectExistsInNewRepoAppendNumber(self):
         pass

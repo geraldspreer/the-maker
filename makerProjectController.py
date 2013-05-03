@@ -467,6 +467,7 @@ class MakerProjectController(makerController.SuperController):
                 # since this is the first setup images need to be synchronized
                 self.model.setImageSyncNeeded(needed = True)
                 self.infoMessage("All settings are good...\nTo Publish your files go to FTP > Upload Everything. ")
+                self.model.uploadEverything(event = None)
         dlg.Destroy()
 
 

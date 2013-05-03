@@ -281,7 +281,7 @@ def createInfo(systemDir):
         
         if not template.startswith("."):
             s = readFile(os.path.join(systemDir, "templates", template, "parts","info.json")) 
-            #print "template is:", template
+            
             data = eval(s)
         
             info += makeInfo(systemDir, template, data)

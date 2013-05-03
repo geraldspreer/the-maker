@@ -2,6 +2,6 @@
 <distribution>
 <rule ftp_source="markdown.css" remote_dir="." ftp_mode="lines" target="markdown.css" ></rule>
 <rule ftp_source="about_this_template_en.htm" remote_dir="." ftp_mode="lines" target="about_en.htm" ></rule>
-<rule ftp_source="index_en.htm" remote_dir="." ftp_mode="lines" target="index_en.htm" ></rule>
+<rule ftp_source="index_en.htm" remote_dir="." ftp_mode="lines" target="index.htm" ></rule>
 <rule ftp_source="aside_en.htm" remote_dir="." ftp_mode="lines" target="aside_en.htm" ></rule>
 </distribution>
