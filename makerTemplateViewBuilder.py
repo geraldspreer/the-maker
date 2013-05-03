@@ -29,6 +29,8 @@ def scaffold(systemDir, defaultTheme):
             /* max-width:694px; */
             color:#fff;
             padding:20px 20px;
+            -webkit-transform: perspective( 600px );
+            
 
 
         }
@@ -79,7 +81,7 @@ def scaffold(systemDir, defaultTheme):
             width:100%;
             height:100%;
             -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(rgba(0,0,0,0.2)));
-            /* -webkit-transform: perspective( 600px ) rotateY( 20deg );        */    
+            -webkit-transform: perspective( 600px ) rotateY( 0deg);    
             margin-bottom:40px;
                 }
 
@@ -158,9 +160,9 @@ def scaffold(systemDir, defaultTheme):
             float:left;
             clear:right;
             margin:0px 48px 0px 8px;
-            -webkit-transform: perspective( 600px ) rotateY( 10deg );
             
-            /*
+            -webkit-transform: perspective( 600px ) rotateY( 10deg );
+            /* 
             -webkit-transition: width, 0.5s; 
             */  
         }

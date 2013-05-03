@@ -33,6 +33,8 @@ class Controller(makerController.SuperController):
         if self.dlg.saved:
             
             if not self.model.project.checkIfProjectIsSetUp():
+                # save data
+                self.model.project.writeDistributionTable(self.dlg.data)
                 print "No cleanup necessary - project not set up"
                 return
             

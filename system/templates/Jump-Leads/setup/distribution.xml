@@ -23,5 +23,4 @@
 <rule ftp_source="icomoonsocial-webfont.ttf" remote_dir="." ftp_mode="binary" target="icomoonsocial-webfont.ttf" ></rule>
 <rule ftp_source="icomoonsocial-webfont.woff" remote_dir="." ftp_mode="binary" target="icomoonsocial-webfont.woff" ></rule>
 <rule ftp_source="elements_en.htm" remote_dir="." ftp_mode="lines" target="elements_en.htm" ></rule>
-<rule ftp_source="elements_en.content" remote_dir="." ftp_mode="lines" target="elements_en.content" ></rule>
 </distribution>
