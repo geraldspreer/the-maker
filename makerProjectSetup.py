@@ -108,7 +108,7 @@ class ProjectSetup(MakerDialog):
                                       {'label'   : 'Browse',
                                        'name'    : 'browse',
                                        'parent'  : self,
-                                       'pos'     : wx.Point(280, 196),
+                                       'pos'     : wx.Point(280, 190),
                                        'size'    : wx.Size(80, 23),
                                        'style'   : 0,
                                        'handler' : self.onBrowseButton

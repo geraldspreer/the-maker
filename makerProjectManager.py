@@ -278,7 +278,8 @@ class ProjectManagerController(makerController.SuperController):
                     self.setCurrentEditorStyle(interfaceData["editorStyle"])
                     self.toggleMenuItemByStyleName(interfaceData["editorStyle"])
                 except:
-                    "No editor style"
+                    # no editor style on file
+                    self.setCurrentEditorStyle(self.defaultEditorStyle)
                 
                 
                 
