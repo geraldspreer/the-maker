@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?><!-- file was created @: Tue Oct 30 20:35:05 2007 -->
-<distribution>
-<rule ftp_source="blog_en.htm" ftp_mode="lines" remote_dir="." target="blog.htm" ></rule>
-<rule ftp_source="index_en.htm" ftp_mode="lines" remote_dir="." target="index.html" ></rule>
-<rule ftp_source="main.css" ftp_mode="lines" remote_dir="styles/" target="main.css" ></rule>
-<rule ftp_source="page_eight_en.htm" ftp_mode="lines" remote_dir="." target="page_eight.htm" ></rule>
-<rule ftp_source="page_six_en.htm" ftp_mode="lines" remote_dir="." target="page_six.htm" ></rule>
-<rule ftp_source="white.css" ftp_mode="lines" remote_dir="." target="white.css" ></rule>
-</distribution>

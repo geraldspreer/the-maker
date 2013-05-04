@@ -1,1 +1,0 @@
-<h1>THE MAKER CMS EDU-TEMPLATE ..READ ...DIVE IN ..EDIT...ENJOY!</h1> <span class="makercomment">The line above is an example of maker 'dynamic' and it is a way of inserting repeating HTML by refering to it with a special maker tag: "&lt;maker_dynamic:file_name&gt;" this file is named tagline_en in the template. </span>
