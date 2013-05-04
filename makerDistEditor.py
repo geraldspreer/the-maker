@@ -31,6 +31,7 @@ class DistributionTableEditor(MakerDialog):
         styleValue = wx.LC_REPORT | wx.BORDER_NONE 
         self.listCtrl = DistListCtrl(self, -1, style=styleValue)
         self.parent = prnt
+        
 
 	# ----- TOOLBAR -----
         self.toolBar = self.add('toolbar', {'name'   : 'toolBar',
@@ -150,7 +151,7 @@ class DistributionTableEditor(MakerDialog):
                     return
                 else:
                     return
-        
+
         self.data = self.readData()                
         self.saved = True
         self.Close()   

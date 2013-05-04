@@ -31,10 +31,11 @@ class Controller(makerController.SuperController):
         #dlg.saved = False File was not saved
     
         if self.dlg.saved:
-            
+            # save data in any case
+            self.model.project.writeDistributionTable(self.dlg.data)
+                
             if not self.model.project.checkIfProjectIsSetUp():
                 # save data
-                self.model.project.writeDistributionTable(self.dlg.data)
                 print "No cleanup necessary - project not set up"
                 return
             
@@ -43,7 +44,7 @@ class Controller(makerController.SuperController):
                 self.dlg.Destroy()
             
             else:
-                self.model.project.writeDistributionTable(self.dlg.data)
+                
                 self.model.compareDataForCleanup(self.dlg.oldDistData, self.dlg.data)
                 # Task compare date sets for changes
                 self.dlg.Destroy()
@@ -76,6 +77,7 @@ class Controller(makerController.SuperController):
         # we bind it only after the edit has been made otherwise it will
         # seriously slow down the app
         #self.validateColumn(evt)
+        
         self.dlg.Bind(self.view.wx.EVT_UPDATE_UI, self.checkAgain)
         # after markConflicts is finished this event is unbound
        
@@ -84,6 +86,7 @@ class Controller(makerController.SuperController):
     
     def validateColumn(self, evt):
         print 'validating column'
+        
         m = "You may only edit the 'Remote Dir' and the 'Remote File' column!"
         if evt.GetColumn() == 0:
             self.infoMessage(m)
@@ -106,9 +109,6 @@ class Controller(makerController.SuperController):
     def readOldData(self):
         return self.dlg.oldDistData
         
-        
-   
-    
     
     def markConflicts(self, event=None):
         # unbind until the next edit
@@ -122,7 +122,6 @@ class Controller(makerController.SuperController):
             self.dlg.listCtrl.SetItemBackgroundColour(item, self.view.wx.RED)
             
         self.dlg.markedItems = markedItems
-        
             
     
     def getFilesWithConflicts(self):
