@@ -87,10 +87,12 @@ class Server:
         try:
             self.home()
             self.ftp.rename(oldName, newName)
+            
             return True
         except Exception, e:
-            self.core.projectController.errorMessage("Unable to rename remote file: " + 
-                                                     oldName + "\nReason:" + str(e))
+            self.server_link_message("Unable to rename file:" + str(e))
+        
+            # return exception
             return str(e)
 
     
