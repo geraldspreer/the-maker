@@ -111,6 +111,9 @@ class Controller(makerController.SuperController):
     
     
     def markConflicts(self, event=None):
+        # unbind until the next edit
+        self.dlg.Unbind(self.view.wx.EVT_UPDATE_UI)
+        
         markedItems = []
         for conflict in self.getFilesWithConflicts():
             item = self.dlg.listCtrl.FindItem(0, conflict)
@@ -120,8 +123,6 @@ class Controller(makerController.SuperController):
             
         self.dlg.markedItems = markedItems
         
-        # unbind until the next edit
-        self.dlg.Unbind(self.view.wx.EVT_UPDATE_UI)
             
     
     def getFilesWithConflicts(self):

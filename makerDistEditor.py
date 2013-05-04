@@ -122,6 +122,7 @@ class DistributionTableEditor(MakerDialog):
         # HACK trigger another select event so the data is checked before we go on
         
         if self.listCtrl.GetFocusedItem() != -1:
+            
             self.listCtrl.Select(self.listCtrl.GetFocusedItem(), False)
             self.listCtrl.Select(self.listCtrl.GetFocusedItem(), True)
         # HACK END
@@ -149,10 +150,11 @@ class DistributionTableEditor(MakerDialog):
                     return
                 else:
                     return
+        
         self.data = self.readData()                
         self.saved = True
         self.Close()   
-        #event.Skip()
+        event.Skip()
 
     # ------------------------------------------------------------    
         
