@@ -376,7 +376,7 @@ returns the instance of the progressbar that was last added to the stack
         model class
         
         """
-        
+    
     
     def singleChoice(self, choices, title="", message=""):
         

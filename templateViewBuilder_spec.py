@@ -22,7 +22,7 @@ class TemplateTest(unittest.TestCase):
         
         self.assertTrue(contents.find(os.path.join(self.sysPath,"jquery.min.js")) != -1, "Correct jquery reference found in view...")
         
-        print makerTemplateViewBuilder.createThumbnails(self.sysPath)
+    
          
         
     def test_paths(self):

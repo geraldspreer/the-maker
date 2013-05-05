@@ -15,7 +15,7 @@ from random import randint
 class TestApp(wx.App):
     
     def OnInit(self):
-
+    
         self.mainView = self.create(None)
         return True
        
@@ -363,18 +363,7 @@ class MakerTest(unittest.TestCase):
         self.convertedProjectsPath = os.path.join(self.user_home, self.pm.projectConvertRepoName)
 
 
-    def test_todo(self):
-        pass
-    
-    # controller should not create central project dir !!!
 
-    def test_ifNoProjectsInSandboxDoNothing(self):
-        
-        
-
-    def test_ifProjectExistsInNewRepoAppendNumber(self):
-        pass
-    
 
 
     def test_importAndConvertClassicProject(self):
@@ -437,123 +426,6 @@ class MakerTest(unittest.TestCase):
 
 
 
-    def test_ifProjectsInSandboxMoveToSelectedAndConvert_withCorrectChoice(self):
-        
-        self.setMeUp()
-        
-        # create Test Sandbox
-        if not os.path.isdir(self.sandBox):
-            os.mkdir(self.sandBox)
-        
-        
-        print "creating dummy projects"
-        dummy = ["Test_One","Test_Two","Test Three"," Test Four"]
-        for item in dummy:
-            if not os.path.isdir(os.path.join(self.sandBox, item)):
-                os.mkdir(os.path.join(self.sandBox, item))
-                os.mkdir(os.path.join(self.sandBox, item, "parts"))
-                
-        
-        projectsInSandbox = [] 
-        projectsInNewRepo = []
-        
-        def getProjectsInSandbox():
-            projects = []
-            for item in os.listdir(self.sandBox):
-                if not item.startswith("."):
-                    projects.append(item)
-            
-            return projects
-        
-        def getProjectsInCreatedRepo():
-            projects = []
-            for item in os.listdir(self.convertedProjectsPath):
-                if not item.startswith("."):
-                    projects.append(item)
-                    print "In new repo:", item
-            
-            return projects
-        
-        projectsInSandbox = getProjectsInSandbox()
-        
-        self.app.mainView.setUserSelectedDir(self.user_home)
-        self.pm.checkForSandboxedProjects()
-        
-        self.assertTrue(os.path.isdir(self.convertedProjectsPath), "new Repo should have been created...")
-        
-        self.assertEqual(len(projectsInSandbox), 
-                         len(getProjectsInCreatedRepo()), "All projects should have been moved...")
-        
-        self.assertEqual(len(projectsInSandbox), 
-                         len(getProjectsInCreatedRepo()), 
-                         "Projects from Sandbox should be converted")
-        
-        
-        for item in getProjectsInCreatedRepo():
-            self.assertTrue(item.endswith(".makerProject"), "projects in new repo should be bundles")
-            itemPath = os.path.join(self.convertedProjectsPath,item)
-            
-            self.assertTrue(itemPath in self.pm.linkedProjectPaths, 
-                            "Project has been linked correctly...")
-        
-        self.assertFalse(os.path.isdir(self.sandBox), "Sandbox project repo deleted...")
-        
-        self.tearMeDown()
-
-
-        #===============================================================================
-        # No choice 
-        #===============================================================================
-
-
-    def test_ifProjectsInSandboxMoveToSelectedAndConvert_withNoChoice(self):
-        
-        self.setMeUp()
-        
-        # create Test Sandbox
-        if not os.path.isdir(self.sandBox):
-            os.mkdir(self.sandBox)
-        
-        
-        print "creating dummy projects"
-        dummy = ["Test_One","Test_Two","Test Three"," Test Four"]
-        for item in dummy:
-            if not os.path.isdir(os.path.join(self.sandBox, item)):
-                os.mkdir(os.path.join(self.sandBox, item))
-                os.mkdir(os.path.join(self.sandBox, item, "parts"))
-                
-        
-        projectsInSandbox = [] 
-        projectsInNewRepo = []
-        
-        def getProjectsInSandbox():
-            projects = []
-            for item in os.listdir(self.sandBox):
-                if not item.startswith("."):
-                    projects.append(item)
-            
-            return projects
-        
-        def getProjectsInCreatedRepo():
-            projects = []
-            for item in os.listdir(self.convertedProjectsPath):
-                if not item.startswith("."):
-                    projects.append(item)
-            
-            return projects
-        
-        projectsInSandbox = getProjectsInSandbox()
-        
-        self.app.mainView.setUserSelectedDir(None)
-        self.pm.checkForSandboxedProjects()
-        
-        self.assertFalse(os.path.isdir(self.convertedProjectsPath), "new Repo should NOT have been created...")
-        
-        self.assertTrue("" in self.app.mainView._lastInfoMessage, "Correct info message afer cancel is displayed...")
-        
-        self.assertTrue(os.path.isdir(self.sandBox), "Sandbox project repo still exists...")
-        
-        self.tearMeDown()
 
               
 if __name__=="__main__":
