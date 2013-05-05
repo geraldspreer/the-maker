@@ -231,7 +231,7 @@ class editorView:
                 self.editor.StyleSetSpec(wx.stc.STC_H_SINGLESTRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
                 # [<!-- comment -->]
-                self.editor.StyleSetSpec(wx.stc.STC_H_COMMENT, "fore:" + style["markup.comment"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_H_COMMENT, "fore:" + style["markup.comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
                 
                 # vspace = [4] 
                 self.editor.StyleSetSpec(wx.stc.STC_H_NUMBER, "fore:" + style["markup.tag.attribute.value"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
@@ -247,6 +247,7 @@ class editorView:
                 
                 # <?xml version="1.0" encoding="ISO-8859-1" [?>]
                 self.editor.StyleSetSpec(wx.stc.STC_H_XMLEND, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_H_VALUE, "fore:" + style["markup.tag"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
                 # [<?php ]  [?>]
                 self.editor.StyleSetSpec(wx.stc.STC_H_QUESTION, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
@@ -285,7 +286,39 @@ class editorView:
                 self.editor.StyleSetSpec(wx.stc.STC_HJ_STRINGEOL, "fore:" + style["keyword"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 self.editor.StyleSetSpec(wx.stc.STC_HJ_REGEX, "fore:" + style["keyword"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
-                
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_DEFAULT, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_DOUBLESTRING, 'fore:' + style['string']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_KEYWORD, 'fore:' + style['keyword']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_NUMBER, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_REGEX, 'fore:' + style['string']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_SINGLESTRING, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_START, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_STRINGEOL, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_SYMBOLS, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HJA_WORD, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+              
+           
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_CHARACTER, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_CLASSNAME, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_COMMENTLINE, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HPA_DEFAULT, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_DEFNAME, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_IDENTIFIER, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_NUMBER, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_OPERATOR, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HPA_START, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_STRING, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_TRIPLE, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+#                self.editor.StyleSetSpec(wx.stc.STC_HPA_TRIPLEDOUBLE, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_HPA_WORD, 'fore:' + style['keyword']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+
+
+                #===============================================================================
+                # 
+                #===============================================================================
+                self.editor.StyleSetSpec(wx.stc.STC_H_ASP, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
+
+
                 
                 # php is part of the html lexer
                 # {} () = 
