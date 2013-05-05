@@ -21,6 +21,15 @@ class SuperController:
                 
         self.progressBars = []
         
+        # important 'cause of the custom drawing code
+        # this needs to be done in general so its in this super controller
+        self.view.tree.Bind(self.view.wx.EVT_TREE_ITEM_COLLAPSED, 
+                           self.treeFixAfterProjectCollapsed)
+        
+        
+    def treeFixAfterProjectCollapsed(self, event):
+        """ refresh tree view """
+        self.view.tree.Refresh()
         
         
     def bindActions(self):

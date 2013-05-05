@@ -2450,7 +2450,7 @@ class wxPythonGUI(wx.Frame):
             dc.SetPen(self.treePen)
             dc.DrawLine(Size[0]-1, 0, 
                         Size[0]-1, Size[1])
-           
+            
            
         def onTreePaint(evt):
             
