@@ -69,6 +69,11 @@ class UpdateSandboxedProjects():
             return False
     
     
+    def exportOnManageProjectsClose(self, oldProject, targetDir):
+        
+        pass
+        
+    
     def update(self):
         
         sandBoxProjects = os.path.join(self.getApplicationSupportDir(), "makerProjects")

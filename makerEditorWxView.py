@@ -124,7 +124,6 @@ class editorView:
                 self.editor.SetKeyWords(0, kw)
                 self.editor.SetLexerLanguage("hypertext")
 
-            
             self.applyCodeStyle(style = None)
         
             # default word wrapping            

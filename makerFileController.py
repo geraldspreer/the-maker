@@ -1346,18 +1346,21 @@ class MakerFileController(makerController.SuperController):
         self.editor.GotoPos(pos + 1)
     
     
-    def loadTextIntoEditor(self, text):
+    def loadTextIntoEditor(self, text, binary = False):
       
         self.editor.AddText(text)
         makerAutoComplete.AutoComplete(self.model, self.view, self.editor)
         self.view.wx.Yield()
-        self.editor.Bind(self.view.wx.stc.EVT_STC_CHANGE, self.textChanged)
- 
-        # newly opened file - edit at beginning
-        self.editor.SetSelection(0,0) # safer than SetCurrentPos
-        self.editor.SetFocus()
-         
-       
+        
+        if not binary:
+            self.editor.Bind(self.view.wx.stc.EVT_STC_CHANGE, self.textChanged)
+            
+            # newly opened file - edit at beginning
+            self.editor.SetSelection(0,0) # safer than SetCurrentPos
+            self.editor.SetFocus()
+      
+    
+    
     def isCurrentFileSaved(self):
         
         return self.model.getSaved()

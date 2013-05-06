@@ -233,7 +233,7 @@ class MakerFile:
         #return readFile(self.getFullName())
         
     def unEditableFileMessage(self):
-        m  = '    %s \n\n    can not be edited with the maker\n ' % self.getRealName()
+        m  = '    %s \n\n    cannot be edited with TheMaker\n ' % self.getRealName()
         m += '    as it is a binary (%s) file.\n\n' % self.getType()
         m += '    You may only preview and publish it.'
         return m
@@ -635,7 +635,7 @@ class MakerFileMov(MakerFile):
         self.type = ".mov"
     
     def load(self):
-        self.fileController.loadTextIntoEditor(self.unEditableFileMessage())
+        self.fileController.loadTextIntoEditor(self.unEditableFileMessage(), binary = True)
         self.fileController.disableEditor()
 
         
@@ -660,7 +660,7 @@ class MakerFilePdf(MakerFile):
         pass
 
     def load(self):
-        self.fileController.loadTextIntoEditor(self.unEditableFileMessage())
+        self.fileController.loadTextIntoEditor(self.unEditableFileMessage(), binary = True)
         self.fileController.disableEditor()
 
    
@@ -685,7 +685,7 @@ class MakerFileZip(MakerFile):
         self.type = ".zip"
 
     def load(self):
-        self.fileController.loadTextIntoEditor(self.unEditableFileMessage())
+        self.fileController.loadTextIntoEditor(self.unEditableFileMessage(), binary = True)
         self.fileController.disableEditor()
 
      
@@ -1335,7 +1335,7 @@ class MakerFileUnsupportedBinaryFile(MakerFile):
         self.printable = False
         
     def load(self):
-        self.fileController.loadTextIntoEditor(self.unEditableFileMessage())
+        self.fileController.loadTextIntoEditor(self.unEditableFileMessage(), binary = True)
         self.fileController.disableEditor()
 
      
