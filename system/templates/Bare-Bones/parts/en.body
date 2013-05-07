@@ -8,7 +8,7 @@
 
 	<div class="container">
 		<div class="sixteen columns">
-			<h1 class="remove-bottom" style="margin-top: 40px">!projectName!</h1>
+			<h1 class="remove-bottom" style="margin-top: 40px"><a href="index_en.htm" >!projectName!</a></h1>
 			<h5>Based on Skeleton Version 1.2</h5>
 			<hr />
 		</div>

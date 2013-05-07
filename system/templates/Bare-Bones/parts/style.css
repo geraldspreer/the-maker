@@ -1,5 +1,8 @@
 /* Before entering a new definition make sure it is not already defined below */
 
+h1 a {text-decoration: none; }
+h1 a:hover {color: rgb(255, 128, 0); }
+
     nav {  
         /*position: absolute;  */
         left: 0;  

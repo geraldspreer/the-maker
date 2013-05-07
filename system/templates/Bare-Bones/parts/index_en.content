@@ -17,10 +17,10 @@
 			<h3>Get Started</h3>
 			<p>The easiest way to really get started with Skeleton is to use this template, study its HTML and CSS code and you will soon be flying. for full documentation check the info at <a href="http://www.getskeleton.com">www.getskeleton.com.</a>. Skeleton is  open-source and has a <a href="https://github.com/dhgamache/skeleton">project on git</a>. If you every need to update anything in Bare-Bones use the Import File(s) menu item in TheMaker  (after you have downloaded from git) ...Simple!
 </p>
-<a href="#" class="button">Click Me</a>
+
 		</div>
 
-	</div><!-- container -->
+
 
 
 <!-- End Document

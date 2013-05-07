@@ -210,8 +210,16 @@ class Server:
     
     def delete(self, aRemoteFolder, aFile):        
         self.server_link_message('Deleting remote file...' + aRemoteFolder + "/" + aFile)
-                
-        self.ftp.cwd(aRemoteFolder)	    # ins Verzeichnis wechseln
+        try:
+            self.ftp.cwd(aRemoteFolder)	    # ins Verzeichnis wechseln
+        except Exception, e:
+            # this remote folder does not seem to exist
+            # so we assume the file in it does not exist either
+            # There is no need to delete.
+            #print str(e)
+            return True
+            
+       
        
         try:
             self.ftp.delete(aFile)

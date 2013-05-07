@@ -1,19 +1,20 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?><!-- file was created @: Sun Apr 28 13:48:11 2013 -->
+<?xml version="1.0" encoding="ISO-8859-1" ?><!-- file was created @: Mon May  6 23:22:36 2013 -->
 <distribution>
-<rule ftp_source="bootstrap-responsive.css" remote_dir="." ftp_mode="lines" target="bootstrap-responsive.css" ></rule>
-<rule ftp_source="bootstrap.css" remote_dir="." ftp_mode="lines" target="bootstrap.css" ></rule>
-<rule ftp_source="bootstrap-collapse.js" remote_dir="." ftp_mode="lines" target="bootstrap-collapse.js" ></rule>
-<rule ftp_source="application.js" remote_dir="." ftp_mode="lines" target="application.js" ></rule>
-<rule ftp_source="bootstrap-alert.js" remote_dir="." ftp_mode="lines" target="bootstrap-alert.js" ></rule>
-<rule ftp_source="bootstrap-button.js" remote_dir="." ftp_mode="lines" target="bootstrap-button.js" ></rule>
-<rule ftp_source="bootstrap-dropdown.js" remote_dir="." ftp_mode="lines" target="bootstrap-dropdown.js" ></rule>
-<rule ftp_source="bootstrap-modal.js" remote_dir="." ftp_mode="lines" target="bootstrap-modal.js" ></rule>
-<rule ftp_source="bootstrap-popover.js" remote_dir="." ftp_mode="lines" target="bootstrap-popover.js" ></rule>
-<rule ftp_source="bootstrap-scrollspy.js" remote_dir="." ftp_mode="lines" target="bootstrap-scrollspy.js" ></rule>
-<rule ftp_source="bootstrap-tab.js" remote_dir="." ftp_mode="lines" target="bootstrap-tab.js" ></rule>
-<rule ftp_source="bootstrap-tooltip.js" remote_dir="." ftp_mode="lines" target="bootstrap-tooltip.js" ></rule>
-<rule ftp_source="bootstrap-transition.js" remote_dir="." ftp_mode="lines" target="bootstrap-transition.js" ></rule>
-<rule ftp_source="bootstrap-typeahead.js" remote_dir="." ftp_mode="lines" target="bootstrap-typeahead.js" ></rule>
-<rule ftp_source="jquery.js" remote_dir="." ftp_mode="lines" target="jquery.js" ></rule>
-<rule ftp_source="index_en.htm" remote_dir="." ftp_mode="lines" target="index.htm" ></rule>
+<rule ftp_source="bootstrap-responsive.css" ftp_mode="lines" remote_dir="." target="bootstrap-responsive.css" ></rule>
+<rule ftp_source="bootstrap.css" ftp_mode="lines" remote_dir="." target="bootstrap.css" ></rule>
+<rule ftp_source="bootstrap-collapse.js" ftp_mode="lines" remote_dir="." target="bootstrap-collapse.js" ></rule>
+<rule ftp_source="application.js" ftp_mode="lines" remote_dir="." target="application.js" ></rule>
+<rule ftp_source="bootstrap-alert.js" ftp_mode="lines" remote_dir="." target="bootstrap-alert.js" ></rule>
+<rule ftp_source="bootstrap-button.js" ftp_mode="lines" remote_dir="." target="bootstrap-button.js" ></rule>
+<rule ftp_source="bootstrap-dropdown.js" ftp_mode="lines" remote_dir="." target="bootstrap-dropdown.js" ></rule>
+<rule ftp_source="bootstrap-modal.js" ftp_mode="lines" remote_dir="." target="bootstrap-modal.js" ></rule>
+<rule ftp_source="bootstrap-popover.js" ftp_mode="lines" remote_dir="." target="bootstrap-popover.js" ></rule>
+<rule ftp_source="bootstrap-scrollspy.js" ftp_mode="lines" remote_dir="." target="bootstrap-scrollspy.js" ></rule>
+<rule ftp_source="bootstrap-tab.js" ftp_mode="lines" remote_dir="." target="bootstrap-tab.js" ></rule>
+<rule ftp_source="bootstrap-tooltip.js" ftp_mode="lines" remote_dir="." target="bootstrap-tooltip.js" ></rule>
+<rule ftp_source="bootstrap-transition.js" ftp_mode="lines" remote_dir="." target="bootstrap-transition.js" ></rule>
+<rule ftp_source="bootstrap-typeahead.js" ftp_mode="lines" remote_dir="." target="bootstrap-typeahead.js" ></rule>
+<rule ftp_source="jquery.js" ftp_mode="lines" remote_dir="." target="jquery.js" ></rule>
+<rule ftp_source="index_en.htm" ftp_mode="lines" remote_dir="." target="index.html" ></rule>
+<rule ftp_source="blank_en.htm" ftp_mode="lines" remote_dir="." target="blank_en.htm" ></rule>
 </distribution>
