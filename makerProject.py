@@ -672,6 +672,7 @@ class MakerProjectModel:
             nowFile = self.getCurrentFile()
         else:
             nowFile = None
+        
         pagelist = self.getFilesByExtension(".content")
         #pagelist = []
         
@@ -683,7 +684,7 @@ class MakerProjectModel:
         
         self.projectController.showProgress(len(pagelist),"rebuilding websites")
         # the counter for the progress dialog
-        step = range(len(pagelist))[0]     
+        step = xrange(len(pagelist))[0]     
 
         for i in pagelist:
             try:
@@ -692,6 +693,7 @@ class MakerProjectModel:
                 x.makeWebSite()
                 self.projectController.updateProgressMessage(step,"making page: "+ x.getName())
                 step += 1
+                
                 
             except:
                 print "Make all failed for :" , i
