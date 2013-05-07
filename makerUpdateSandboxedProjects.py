@@ -67,12 +67,7 @@ class UpdateSandboxedProjects():
             return True
         else:
             return False
-    
-    
-    def exportOnManageProjectsClose(self, oldProject, targetDir):
-        
-        pass
-        
+
     
     def update(self):
         

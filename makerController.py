@@ -162,6 +162,9 @@ returns the instance of the progressbar that was last added to the stack
         self.view.MessageNotModal(str(message))
     
     
+    def warningMessage(self, error):
+        self.view.Warning(str(error))
+    
     
     def errorMessage(self, error):
         self.view.Error(str(error))
