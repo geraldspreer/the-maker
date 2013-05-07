@@ -160,7 +160,7 @@ class MakerApp(wx.App):
         makerBugReport.report()
         
     def userFeedback(self, event):
-        webView.open('http://sourceforge.net/tracker/?func=add&group_id=167680&atid=843919')
+        webView.open('http://www.makercms.org/feedback/')
 
     def openProjectWebsite(self, event):
         webView.open('http://www.makercms.org')
