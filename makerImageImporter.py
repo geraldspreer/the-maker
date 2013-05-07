@@ -346,7 +346,12 @@ class Controller(makerController.SuperController):
 
     def destroyView(self):
         self.view.Destroy()
-	
+
+    def disableScaling(self):
+	""" quick fix for gifs """
+	self.view.res_x.Enable(False)
+	self.view.res_y.Enable(False)
+
     
 
 class MakerImageImporter:
@@ -375,7 +380,9 @@ class MakerImageImporter:
         if imgExt not in self.projectModel.supportedImages:
             self.projectController.errorMessage("This is not an image file...")
             return
-                     
+	
+
+
         self.original = imageFile[0]
                 
         self.setInputFile(imageFile[0])
@@ -383,7 +390,10 @@ class MakerImageImporter:
         
         self.imageController = Controller(self, imageView)
         self.imageController.setPreviewBitmap(self.getPreview())
-        
+
+	if imgExt.lower() == ".gif":
+		self.imageController.disableScaling()
+
         
         
     
