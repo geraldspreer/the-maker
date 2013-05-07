@@ -23,7 +23,10 @@ class SuperController:
         
         # important 'cause of the custom drawing code
         # this needs to be done in general so its in this super controller
-        self.view.tree.Bind(self.view.wx.EVT_TREE_ITEM_COLLAPSED, 
+        
+        # just do this in the "right" controllers 
+        if hasattr(self.view, 'tree'):
+            self.view.tree.Bind(self.view.wx.EVT_TREE_ITEM_COLLAPSED, 
                            self.treeFixAfterProjectCollapsed)
         
         

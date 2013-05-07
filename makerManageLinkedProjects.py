@@ -49,6 +49,7 @@ class Controller(makerController.SuperController):
         path = self.dialog.theList.GetStringSelection()
         
         if path != "":
+            
             if "Containers/com.barnhouse.maker" in path:
                 self.forceRestart = True
                 m = "This project has been created with a previous version of TheMaker.\n\n"
@@ -102,8 +103,14 @@ class Manager:
         for path in pathsToUnlink:
             self.projectManager.linkedProjectPaths.remove(path)
         
-        self.projectManager.closeOpenProjects()
+
         self.controller.view.application.restart = True
+        
+        if self.controller.forceRestart == True:
+        
+            self.projectManager.exitApplicationForced()
+        else:
+            self.projectManager.closeOpenProjects()
         
     
     def getManagedProjectsList(self):

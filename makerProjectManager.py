@@ -979,6 +979,13 @@ class ProjectManager:
         self.closeOpenProjects(None)
     
  
+    def exitApplicationForced(self):
+        
+        self.controller.view.Destroy()
+    
+ 
+ 
+ 
     def closeOpenProjects(self, event=None):
         """ called when the App is closed """
         
