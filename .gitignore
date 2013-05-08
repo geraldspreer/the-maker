@@ -6,10 +6,14 @@ the-maker-*-src
 setup_app_store.py
 compile.sh
 Entitlements.plist
-
+*.py~
 *.pkg
 *.pyc
 *.zip
+
+Python
+Resources
+
 .DS_Store
 .project
 .pydevproject
