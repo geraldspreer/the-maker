@@ -3,6 +3,8 @@ import sys
 import shutil
 import re
 
+# security bookmarks
+
 from makerConstants import Constants
 from makerUtilities import readFile, writeFile
 from makerUtilities import writeDataToFile, readDataFromFile
