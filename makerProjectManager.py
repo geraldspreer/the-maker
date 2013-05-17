@@ -916,26 +916,6 @@ class ProjectManager:
         """Creates the project folder."""
         os.mkdir(self.getProjectDir())
     
-    
-    def isProjectPathSandboxAccessible(self, projectPath):
-        
-        accessible = ["/Desktop", "/Documents", "/MakerProjects", "/Dropbox"]
-        
-        for item in accessible:
-            if item in projectPath:
-                return True
-        
-        return False
-    
-    
-    
-    def verifyLinkedProjects(self):
-        
-        paths = self.linkedProjectPaths[:] # copy
-        for path in paths:
-            if not self.isProjectPathSandboxAccessible(path):
-                self.linkedProjectPaths.remove(path)
-                print "removing unsafe path:", path
 
     def saveSessionFiles(self):
         
@@ -946,23 +926,22 @@ class ProjectManager:
         self.sessionFiles = []
         
         for theFile in self.openFiles:
-            # if project is not sandbox accessible don't store to session
             obj = []
             obj.append(theFile.getName())
             obj.append(theFile.getType())
-                # save project that the file belongs to
+            # save project that the file belongs to
             obj.append(theFile.getProject())
-                # save current scroll position
+            # save current scroll position
             ed = theFile.fileController.editor
             obj.append(ed.GetCurrentPos())
-                
+            
             if theFile.getName() + theFile.getType() == (self.getActiveProject()).getCurrentFileName():
                 obj.append("True")
             else:
                 obj.append("False")
-                
-            self.sessionFiles.append(obj)
             
+            self.sessionFiles.append(obj)
+        
         
         
     
@@ -1011,9 +990,6 @@ class ProjectManager:
         """ called when the App is closed """
         
         self.saveSessionFiles()
-        
-        # check for Sandbox support
-        self.verifyLinkedProjects()
         
         for theFile in self.openFiles:
         

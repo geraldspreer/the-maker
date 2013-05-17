@@ -425,13 +425,6 @@ class MakerTest(unittest.TestCase):
         self.tearMeDown()
 
 
-        
-    def test_sandboxAccessibleCeck(self):
-        
-        self.setMeUp()
-        self.assertFalse(self.pm.isProjectSandboxAccessible("/Users/maker"), "This project is NOT sandbox safe")
-        self.assertTrue(self.pm.isProjectSandboxAccessible("/Users/maker/Desktop/my.makerProject"), "This project is sandbox safe")
-        self.tearMeDown()
 
 
               
