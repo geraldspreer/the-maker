@@ -1,3 +1,14 @@
+try:
+    from Foundation import *
+    print "PyObjC - OK"
+except:
+    print "You need to have PyObjC installed !"
+    print "Download it at: http://pythonhosted.org/pyobjc/"
+    print "TheMaker does not run without it !"
+    print "Leaving...."    
+    sys.exit()
+    
+
 class SuperController:
     """
     A super class for all makerControllers 
@@ -215,7 +226,21 @@ returns the instance of the progressbar that was last added to the stack
         returns a list(!) of pathnames or None when canceled
         
         """
-        return self.view.getFileFromUser(prompt = message)
+        path = self.view.getFileFromUser(prompt = message)
+        
+        if path:
+            # create bookmark
+            
+            dirURL = NSURL.alloc().initFileURLWithPath_(path[0])
+            
+            myData = dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope, 
+                                                                                                        None,
+                                                                                                        None,
+                                                                                                        None)
+      
+            print "NsData is", myData
+            
+        return path
         
     def imageDialog(self, path):
         """
@@ -398,6 +423,13 @@ returns the instance of the progressbar that was last added to the stack
         if self.view.dirDialog.ShowModal() == self.view.wx.ID_OK:
             path = self.view.dirDialog.GetPath()
             self.view.dirDialog.Destroy()
+            
+            # create bookmark
+            
+            dirURL = NSURL.fileURLWithPath_(path)
+            myData = myData = NSData.alloc().initWithData_(dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope, None, None, None))
+            print "NsData is", myData
+            
             return path
         else:
             return None

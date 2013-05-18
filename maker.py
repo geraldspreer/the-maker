@@ -14,6 +14,7 @@ except:
     print "the maker does not run without it !"
     print "Leaving...."    
     sys.exit()
+    
 
 try:
     import markdown2
@@ -182,7 +183,7 @@ def main():
     except Exception, e:
         sys.stderr.write("Unable to update 'sandboxed' projects: " + str(e) + "\n")
     
-    application = MakerApp(0)
+    application = MakerApp(1)
     application.MainLoop()
     
     # restart ?
