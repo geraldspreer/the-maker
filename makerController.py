@@ -1,13 +1,3 @@
-try:
-    from Foundation import *
-    print "PyObjC - OK"
-except:
-    print "You need to have PyObjC installed !"
-    print "Download it at: http://pythonhosted.org/pyobjc/"
-    print "TheMaker does not run without it !"
-    print "Leaving...."    
-    sys.exit()
-    
 
 class SuperController:
     """
@@ -227,19 +217,7 @@ returns the instance of the progressbar that was last added to the stack
         
         """
         path = self.view.getFileFromUser(prompt = message)
-        
-        if path:
-            # create bookmark
-            
-            dirURL = NSURL.alloc().initFileURLWithPath_(path[0])
-            
-            myData = dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope, 
-                                                                                                        None,
-                                                                                                        None,
-                                                                                                        None)
-      
-            print "NsData is", myData
-            
+
         return path
         
     def imageDialog(self, path):

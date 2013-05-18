@@ -3,6 +3,17 @@ import sys
 import shutil
 import re
 
+try:
+    from Foundation import *
+    print "PyObjC - OK"
+except:
+    print "You need to have PyObjC installed !"
+    print "Download it at: http://pythonhosted.org/pyobjc/"
+    print "TheMaker does not run without it !"
+    print "Leaving...."    
+    sys.exit()
+
+
 from makerConstants import Constants
 from makerUtilities import readFile, writeFile
 from makerUtilities import writeDataToFile, readDataFromFile
@@ -247,7 +258,8 @@ class ProjectManagerController(makerController.SuperController):
                           "SplitterSashPosition" : self.view.splitter.GetSashPosition(),
                           "sessionFiles" : self.model.sessionFiles,
                           "linkedProjects" : self.model.linkedProjectPaths,
-                          "editorStyle" : self.getCurrentEditorStyle()}
+                          "editorStyle" : self.getCurrentEditorStyle(),
+                          "bookmarks": self.model.bookmarks}
                         
         # due to Sandbox on OS X linked projects to get saved for next session
         #"linkedProjects" : self.model.linkedProjectPaths}
@@ -284,6 +296,19 @@ class ProjectManagerController(makerController.SuperController):
                 
                 
                 try:
+                    # just a test
+                    
+                    for item in interfaceData["bookmarks"]:
+                        url = NSURL.alloc().init()
+                        nsdata = NSData.alloc().initWithBytes_length_(item, len(item))
+                        url = NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_(nsdata, 
+                                                                                                                NSURLBookmarkResolutionWithSecurityScope, 
+                                                                                                                None, 
+                                                                                                                None, 
+                                                                                                                None) 
+                        url[0].startAccessingSecurityScopedResource()
+                        # append to bookmarks again
+                    
                     
                     # open all files that had been open in last session
                     for sessionFile in interfaceData["sessionFiles"]:
@@ -561,6 +586,10 @@ class ProjectManager:
         self.controller.listProjectsInTree(self.getProjects())
         self.openProjects = []
         self.openFiles = []
+        
+        # storage for security-scoped-bookmarks
+        self.bookmarks = []
+        
         self.projectConvertRepoName = "MakerProjects"
         
         #makerThread.newThread(self.checkForSandboxedProjects)
@@ -775,6 +804,20 @@ class ProjectManager:
             return
         
         path = bundle[0]
+        
+        if path:
+            # create bookmark
+            
+            dirURL = NSURL.alloc().initFileURLWithPath_(path)
+            
+            myData = dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope,
+                                                                                                        None,
+                                                                                                        None,
+                                                                                                        None) 
+            theBytes = myData[0].bytes().tobytes()
+            
+            self.bookmarks.append(theBytes)
+        
         
         self.openThisProject(path)
         
