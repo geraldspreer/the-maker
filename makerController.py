@@ -402,12 +402,6 @@ returns the instance of the progressbar that was last added to the stack
             path = self.view.dirDialog.GetPath()
             self.view.dirDialog.Destroy()
             
-            # create bookmark
-            
-            dirURL = NSURL.fileURLWithPath_(path)
-            myData = myData = NSData.alloc().initWithData_(dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope, None, None, None))
-            print "NsData is", myData
-            
             return path
         else:
             return None

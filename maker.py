@@ -183,7 +183,7 @@ def main():
     except Exception, e:
         sys.stderr.write("Unable to update 'sandboxed' projects: " + str(e) + "\n")
     
-    application = MakerApp(1)
+    application = MakerApp(0)
     application.MainLoop()
     
     # restart ?

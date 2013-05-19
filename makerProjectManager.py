@@ -4,7 +4,7 @@ import shutil
 import re
 
 try:
-    from Foundation import *
+    from Foundation import NSURL, NSData, NSURLBookmarkResolutionWithSecurityScope, NSURLBookmarkCreationWithSecurityScope 
     print "PyObjC - OK"
 except:
     print "You need to have PyObjC installed !"
@@ -42,6 +42,7 @@ class ProjectManagerController(makerController.SuperController):
         self.progressBars = []
         self.defaultEditorStyle = "Github"
         self.loadEditorStylesAndCreateMenu()
+        
         
         # format {NoteBookSelection[int], <makerFileController class>}
         self.noteBookPages = {}
@@ -251,6 +252,16 @@ class ProjectManagerController(makerController.SuperController):
     
     def destroyView(self):
         
+        
+        # stop using security scoped urls
+        
+        for resource in self.model.securityScopedResources:
+            try:
+                resource.stopAccessingSecurityScopedResource()
+            except Exception, e:
+                print "Unable to stop using security scoped urls:", str(e)
+        
+        
         # save UI data and session info...
         
         interfaceData = {"Size" : self.view.GetSize(),
@@ -296,18 +307,25 @@ class ProjectManagerController(makerController.SuperController):
                 
                 
                 try:
-                    # just a test
                     
+                    # enable security-scoped-bookmarks for use in this session
                     for item in interfaceData["bookmarks"]:
-                        url = NSURL.alloc().init()
+                        
                         nsdata = NSData.alloc().initWithBytes_length_(item, len(item))
                         url = NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_(nsdata, 
                                                                                                                 NSURLBookmarkResolutionWithSecurityScope, 
                                                                                                                 None, 
                                                                                                                 None, 
                                                                                                                 None) 
-                        url[0].startAccessingSecurityScopedResource()
-                        # append to bookmarks again
+                        
+                        theURL = url[0]
+                        #  save again to bookmarks but only if this project 
+                        #  is still linked
+                        if theURL.path() in self.model.linkedProjectPaths:
+                            self.model.bookmarks.append(item)
+                            theURL.startAccessingSecurityScopedResource()
+                            self.model.securityScopedResources.append(theURL)
+
                     
                     
                     # open all files that had been open in last session
@@ -589,6 +607,8 @@ class ProjectManager:
         
         # storage for security-scoped-bookmarks
         self.bookmarks = []
+        self.securityScopedResources = [] 
+        
         
         self.projectConvertRepoName = "MakerProjects"
         
@@ -739,9 +759,13 @@ class ProjectManager:
             return
 
         if not project.endswith(".makerProject"):
-            converted = project + ".makerProject"
-            os.rename(project, converted)
-            
+            pass
+            #converted = project + ".makerProject"
+            #os.rename(project, converted)
+        
+        # prompt for new path here
+        # pass new path to open method
+         
         self.openThisProject(converted, verbose = False)        
     
     
@@ -804,21 +828,7 @@ class ProjectManager:
             return
         
         path = bundle[0]
-        
-        if path:
-            # create bookmark
-            
-            dirURL = NSURL.alloc().initFileURLWithPath_(path)
-            
-            myData = dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope,
-                                                                                                        None,
-                                                                                                        None,
-                                                                                                        None) 
-            theBytes = myData[0].bytes().tobytes()
-            
-            self.bookmarks.append(theBytes)
-        
-        
+
         self.openThisProject(path)
         
     def openThisProject(self, path, verbose = True):
@@ -828,9 +838,31 @@ class ProjectManager:
                 self.controller.errorMessage('%s is not a TheMaker project !' % path)
             return
     
+    
         if path not in self.linkedProjectPaths:
             self.linkedProjectPaths.append(path)
             self.updateLinkedProjects()
+        
+        
+        #=======================================================================
+        #  Security Scoped Bookmark
+        #=======================================================================
+        
+            dirURL = NSURL.alloc().initFileURLWithPath_(path)
+            
+            myData = dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope,
+                                                                                                        None,
+                                                                                                        None,
+                                                                                                        None) 
+            theBytes = myData[0].bytes().tobytes()
+            
+            self.bookmarks.append(theBytes)
+            
+        #===================================================================
+        # 
+        #===================================================================
+            
+            
             self.controller.addProjectIconToTree(os.path.basename(path))
         else:
             if verbose:
