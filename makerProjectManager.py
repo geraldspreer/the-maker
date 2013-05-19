@@ -425,7 +425,7 @@ class ProjectManagerController(makerController.SuperController):
         projName += ".makerProject"
         
         tgt = os.path.join(fromUser, projName)
-                
+        print tgt
         if os.path.isdir(tgt):
             m  = "A project with the name '" + projName + "' already exists !"
             self.errorMessage(m)
@@ -433,6 +433,7 @@ class ProjectManagerController(makerController.SuperController):
         
         else:    
             if not self.testing:
+                
                 self.showTemplateDialog(tgt, projName)        
             
         
@@ -759,15 +760,22 @@ class ProjectManager:
             return
 
         if not project.endswith(".makerProject"):
-            pass
-            #converted = project + ".makerProject"
-            #os.rename(project, converted)
-        
-        # prompt for new path here
-        # pass new path to open method
-         
-        self.openThisProject(converted, verbose = False)        
-    
+            
+            newPath = self.controller.dirDialog("Where would you like to save this project?")
+            if newPath:
+                
+                projName = os.path.split(project)[-1]
+                converted = os.path.join(newPath, projName + ".makerProject")
+                
+                shutil.copytree(project, converted)
+            
+                self.openThisProject(converted, verbose = False)        
+            
+            else:
+                return
+            
+            
+            
     
     def addNewProject(self, templatePath, newProjectDir, newProjectName):
         
@@ -781,6 +789,9 @@ class ProjectManager:
             self.linkedProjectPaths.append(newProjectDir)
             self.updateLinkedProjects()
             
+            # do the Sanbox stuff
+            self.setSecurityScopedBookmark(newProjectDir)
+                
     
     def removeFromOpenFiles(self, name, group, project):
         """ remove a certain file from openFiles especially after the file has
@@ -830,7 +841,30 @@ class ProjectManager:
         path = bundle[0]
 
         self.openThisProject(path)
+    
+    
+    def setSecurityScopedBookmark(self, path):
+
+        #=======================================================================
+        #  Security Scoped Bookmark
+        #=======================================================================
         
+        dirURL = NSURL.alloc().initFileURLWithPath_(path)
+            
+        myData = dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope,
+                                                                                                        None,
+                                                                                                        None,
+                                                                                                        None) 
+        theBytes = myData[0].bytes().tobytes()
+            
+        self.bookmarks.append(theBytes)
+            
+        #===================================================================
+        # 
+        #===================================================================
+        
+        
+    
     def openThisProject(self, path, verbose = True):
         
         if not os.path.isdir(os.path.join(path, 'parts')):
@@ -843,32 +877,13 @@ class ProjectManager:
             self.linkedProjectPaths.append(path)
             self.updateLinkedProjects()
         
-        
-        #=======================================================================
-        #  Security Scoped Bookmark
-        #=======================================================================
-        
-            dirURL = NSURL.alloc().initFileURLWithPath_(path)
-            
-            myData = dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope,
-                                                                                                        None,
-                                                                                                        None,
-                                                                                                        None) 
-            theBytes = myData[0].bytes().tobytes()
-            
-            self.bookmarks.append(theBytes)
-            
-        #===================================================================
-        # 
-        #===================================================================
-            
+            # 'cause of Apple's Sandbox 
+            self.setSecurityScopedBookmark(path)
             
             self.controller.addProjectIconToTree(os.path.basename(path))
         else:
             if verbose:
                 self.controller.infoMessage("This project is already open...")
-    
-    
     
     
     def updateLinkedProjects(self):
