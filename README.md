@@ -11,7 +11,7 @@ you are welcome to contact us at [info at makercms dot org] .
    
 You will find a tutorial and videos at: [http://www.makercms.org/tutorial]
 
-__________________________________________
+### Requirements
 
 To run TheMaker from source using Python you need:
 
@@ -20,13 +20,13 @@ To run TheMaker from source using Python you need:
 + python-markdown2 http://code.google.com/p/python-markdown2/  
 + PyObjC http://pythonhosted.org/pyobjc/install.html
 
-------------------------------------------
+### How To Build
 
 To build "TheMaker" you will need:
 
 - py2app on OS X
 
-To build, you just need to run: 
+To build run: 
 
 $ ./compile_mac.sh
 
