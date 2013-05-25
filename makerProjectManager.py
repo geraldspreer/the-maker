@@ -326,7 +326,10 @@ class ProjectManagerController(makerController.SuperController):
                             theURL.startAccessingSecurityScopedResource()
                             self.model.securityScopedResources.append(theURL)
 
-                    
+                except:
+                    print "Unable to resolve security-scoped-bookmarks"
+                
+                try:
                     
                     # open all files that had been open in last session
                     for sessionFile in interfaceData["sessionFiles"]:
@@ -848,17 +851,22 @@ class ProjectManager:
         #=======================================================================
         #  Security Scoped Bookmark
         #=======================================================================
+        try:
+            dirURL = NSURL.alloc().initFileURLWithPath_(path)
+                
+            myData = dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope,
+                                                                                                            None,
+                                                                                                            None,
+                                                                                                            None) 
+            theBytes = myData[0].bytes().tobytes()
+                
+            self.bookmarks.append(theBytes)
         
-        dirURL = NSURL.alloc().initFileURLWithPath_(path)
-            
-        myData = dirURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_(NSURLBookmarkCreationWithSecurityScope,
-                                                                                                        None,
-                                                                                                        None,
-                                                                                                        None) 
-        theBytes = myData[0].bytes().tobytes()
-            
-        self.bookmarks.append(theBytes)
-            
+        except Exception, e:
+        
+            print "Unable to create security-scoped-bookmarks"
+            print str(e)
+            print "------------------------------------------"
         #===================================================================
         # 
         #===================================================================
