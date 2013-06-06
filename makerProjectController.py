@@ -998,7 +998,7 @@ class MakerProjectController(makerController.SuperController):
                 
                 elif self.model.currentFile.getType() != ".py":
                     #self.previewButton.SetLabel("Preview")
-                    self.previewMenu.SetText("Preview File")
+                    self.previewMenu.SetText("Preview File\tF5")
                     # preview tool
                     self.view.toolBar.EnableTool(30, True)
                     
