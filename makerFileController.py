@@ -1229,6 +1229,8 @@ class MakerFileController(makerController.SuperController):
     
     
     def getTextFromEditor(self):
+        """ returns text as string or 'Encoding Error'"""
+        
         try:
             text = self.editor.GetText().encode(self.model.core.encoding)
             return text
@@ -1241,12 +1243,16 @@ class MakerFileController(makerController.SuperController):
                 except:
                     
                     self.editor.SetSelBackground(True, self.view.wx.RED)
+                    self.editor.GotoPos(c)
+                    self.editor.SetSelection(c, c +1)
+                    
                     self.infoMessage("Bad charcater found at position " + 
                                      str(c) + 
                                      " ! Cannot encode using:" + self.model.core.encoding + 
                                      "\nPlease review and edit...")
-                    self.editor.SetSelBackground(True, "#b5d4ff")
-                    return
+                    
+                    self.editor.SetSelBackground(True, self.view.wx.RED)
+                    return "Encoding Error"
             
             
         

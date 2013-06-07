@@ -19,7 +19,7 @@
 'meta.default':{'background-color':'#ffffff','color':'#000000'},
 'meta.highlight.currentline':{'background-color':'#e5e5e5'},
 'meta.important':{'color':'#990201','font-style':'italic'},
-'meta.invalid':{'background-color':'#990201','color':'#ffffff','font-weight':'normal'},
+'meta.invalid':{'background-color':'#990201','color':'#990201','font-weight':'normal'},
 'meta.invisible.characters':{'color':'#bfc0bf'},
 'meta.link':{'color':'#1f6a08','font-style':'italic','font-underline':'underline'},
 'string':{'color':'#1f6a08','font-style':'italic'},

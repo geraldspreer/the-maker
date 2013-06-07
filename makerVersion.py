@@ -1,6 +1,6 @@
 import sys
 
-appVersion = "1.8"
+appVersion = "1.81"
 
 
 def main():

@@ -241,11 +241,11 @@ class MakerFile:
     
     def save(self, event=None):
         text = self.fileController.getTextFromEditor()
-        if not text:
-            
-            return
-        writeFile(os.path.join(self.core.getPathParts(), self.getName() + self.type), text)
         
+        if text == "Encoding Error":
+            return
+        
+        writeFile(os.path.join(self.core.getPathParts(), self.getName() + self.type), text)
         self.setSaved()
         
         self.core.addToFtpQueue(self.getFileName())
@@ -543,7 +543,7 @@ class MakerFileHeadTemplate(MakerFile):
     
     def save(self, event=None):
         text = self.fileController.getTextFromEditor()
-        if not text:
+        if text == "Encoding Error":
             return
         writeFile(self.getFullName(), text)
         self.setSaved()
@@ -812,7 +812,7 @@ class MakerFileContent(MakerFile):
     def save(self, event=None):
         
         text = self.fileController.getTextFromEditor()
-        if not text:
+        if text == "Encoding Error":
             return
         writeFile(os.path.join(self.core.getPathParts(), self.getName() + self.type), text)
         self.setSaved()
@@ -1218,7 +1218,7 @@ class MakerFileDynamic(MakerFile):
     def save(self, event=None):
         
         text = self.fileController.getTextFromEditor()
-        if not text:
+        if text == "Encoding Error":
             return
         writeFile(os.path.join(self.core.getPathParts(), self.getName() + self.type), text)
                 
@@ -1388,7 +1388,7 @@ class MakerFileNav(MakerFile):
 
     def save(self, event=None):
         text = self.fileController.getTextFromEditor()
-        if not text:
+        if text == "Encoding Error":
             return
         
         writeFile(os.path.join(self.core.getPathParts(), self.getName() + self.type), text)
@@ -1419,7 +1419,7 @@ class MakerFileBody(MakerFile):
     def save(self, event=None):
         
         text = self.fileController.getTextFromEditor()
-        if not text:
+        if text == "Encoding Error":
             return
         writeFile(os.path.join(self.core.getPathParts(), self.getName() + self.type), text)
         self.setSaved()
@@ -1445,7 +1445,7 @@ class MakerFileFoot(MakerFile):
     def save(self, event=None):
         
         text = self.fileController.getTextFromEditor()
-        if not text:
+        if text == "Encoding Error":
             return
         writeFile(os.path.join(self.core.getPathParts(), self.getName() + self.type), text)
         self.setSaved()
@@ -1470,7 +1470,7 @@ class MakerFileHead(MakerFile):
     def save(self, event=None):
         
         text = self.fileController.getTextFromEditor()
-        if not text:
+        if text == "Encoding Error":
             return
         writeFile(os.path.join(self.core.getPathParts(), self.getName() + self.type), text)
         self.setSaved()
@@ -1479,7 +1479,13 @@ class MakerFileHead(MakerFile):
             self.core.addToFtpQueue(self.getName() + ".content")
         
     def saveAsTemplate(self):
-        writeFile(os.path.join(self.core.getProjectPath(),"templates", self.getLanguage() + self.type), self.fileController.getTextFromEditor())
+        
+        # check if valid 
+        text = self.fileController.getTextFromEditor()
+        if text == "Encoding Error":
+            return
+        
+        writeFile(os.path.join(self.core.getProjectPath(),"templates", self.getLanguage() + self.type), text)
         self.setSaved()
         
     

@@ -27,7 +27,9 @@ TO DO / planned features											|
 June x. 2013	- Gerald
 
 	- Fixed bug where Preview was NOT on F5 (Thanks Randal)
-	- 
+	- Fixed bug where <markdown> was invisible in Mac Classic Theme
+	- Bug Reports are now filed at GitHub
+	- Fixed bug where empty files could not be saved
 
 
 Mai 4. 2013	- Gerald
