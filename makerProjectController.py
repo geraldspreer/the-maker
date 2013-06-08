@@ -735,7 +735,6 @@ class MakerProjectController(makerController.SuperController):
         # set focus on new active page
         self.noteBook._pages.OnSetFocus(None)
         
-        
         # data is instance of makerFileController
         data = (self.model.projectManager.controller.noteBookPages[event.GetSelection()])
                 

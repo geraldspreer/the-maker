@@ -2399,14 +2399,14 @@ class wxPythonGUI(wx.Frame):
 
 # and the stc is added to it
 
-        # it is very importat to keep the NODRAG style
+        # it is very important to keep the NODRAG style
         #
         # if dragging is added at some point the 
         # makerProjectController.py method noteBookPageClosed has to be
         # changed where the noteBoolPages dict is updated
         #
         
-#        self.noteBook = nb.FlatNotebook(self.splitter, -1, style= wx.lib.flatnotebook.FNB_NODRAG 
+#        self.noteBook = nb.FlatNotebook(self.splitter, -1, agwStyle = wx.lib.flatnotebook.FNB_FF2, style= wx.lib.flatnotebook.FNB_NODRAG 
 #                                        | wx.lib.flatnotebook.FNB_X_ON_TAB)
 
         self.noteBook = MyCustomNoteBook(self.splitter, -1, None, None)
@@ -3531,7 +3531,7 @@ class MyPageContainer(nb.PageContainer):
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
 
 
-
+        
     def IsTabVisible(self, page):
         """
         Returns whether a tab is visible or not.
@@ -3567,7 +3567,7 @@ class MyPageContainer(nb.PageContainer):
 
         :param `event`: a :class:`FocusEvent` event to be processed.
         """
-        
+
         if self._iActivePage < 0:
             if event:
                 event.Skip()
@@ -3580,6 +3580,8 @@ class MyPageContainer(nb.PageContainer):
             self.SetSelection(self._iActivePage)
         except:
             pass
+   
+        
 
 # ---------------------------------------------------------------------------- #
 # Class FNBRendererMgr
@@ -3631,7 +3633,171 @@ class MakerRenderer(nb.FNBRenderer):
             self._focusPen = wx.Pen(c, 3)
         
 
-    
+    def DrawTabs(self, pageContainer, dc):
+        """
+        Actually draws the tabs in :class:`FlatNotebook`.
+
+        :param `pageContainer`: an instance of :class:`FlatNotebook`;
+        :param `dc`: an instance of :class:`DC`.
+        """
+        
+        pc = pageContainer
+        if "__WXMAC__" in wx.PlatformInfo:
+            # Works well on MSW & GTK, however this lines should be skipped on MAC
+            if not pc._pagesInfoVec or pc._nFrom >= len(pc._pagesInfoVec):
+                pc.Hide()
+                return
+
+        # Get the text hight
+        tabHeight = self.CalcTabHeight(pageContainer)
+        agwStyle = pc.GetParent().GetAGWWindowStyleFlag()
+
+        # Calculate the number of rows required for drawing the tabs
+        rect = pc.GetClientRect()
+        clientWidth = rect.width
+
+        # Set the maximum client size
+        pc.SetSizeHints(self.GetButtonsAreaLength(pc), tabHeight)
+        borderPen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+
+        backBrush = wx.Brush(pc._tabAreaColour)
+
+        noselBrush = wx.Brush(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE))
+        selBrush = wx.Brush(pc._activeTabColour)
+
+        size = pc.GetSize()
+
+        # Background
+        dc.SetTextBackground(pc.GetBackgroundColour())
+        dc.SetTextForeground(pc._activeTextColour)
+        dc.SetBrush(backBrush)
+
+        # If border style is set, set the pen to be border pen
+
+        colr = pc.GetBackgroundColour()
+        dc.SetPen(wx.Pen(colr))
+
+#        if pc.HasAGWFlag(FNB_FF2):
+#            lightFactor = (pc.HasAGWFlag(FNB_BACKGROUND_GRADIENT) and [70] or [0])[0]
+#            PaintStraightGradientBox(dc, pc.GetClientRect(), pc._tabAreaColour, LightColour(pc._tabAreaColour, lightFactor))
+#            dc.SetBrush(wx.TRANSPARENT_BRUSH)
+
+        dc.DrawRectangle(0, 0, size.x, size.y)
+
+        # We always draw the bottom/upper line of the tabs
+        # regradless the style
+        dc.SetPen(borderPen)
+
+#        if not pc.HasAGWFlag(FNB_FF2):
+#            self.DrawTabsLine(pc, dc)
+
+        # Restore the pen
+        dc.SetPen(borderPen)
+
+#        if pc.HasAGWFlag(FNB_VC71):
+#
+#            greyLineYVal  = (pc.HasAGWFlag(FNB_BOTTOM) and [0] or [size.y - 2])[0]
+#            whiteLineYVal = (pc.HasAGWFlag(FNB_BOTTOM) and [3] or [size.y - 3])[0]
+#
+#            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE))
+#            dc.SetPen(pen)
+#
+#            # Draw thik grey line between the windows area and
+#            # the tab area
+#            for num in xrange(3):
+#                dc.DrawLine(0, greyLineYVal + num, size.x, greyLineYVal + num)
+#
+#            wbPen = (pc.HasAGWFlag(FNB_BOTTOM) and [wx.BLACK_PEN] or [wx.WHITE_PEN])[0]
+#            dc.SetPen(wbPen)
+#            dc.DrawLine(1, whiteLineYVal, size.x - 1, whiteLineYVal)
+#
+#            # Restore the pen
+#            dc.SetPen(borderPen)
+
+        # Draw labels
+        normalFont = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
+        boldFont = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
+        boldFont.SetWeight(wx.FONTWEIGHT_BOLD)
+        dc.SetFont(boldFont)
+
+        posx = pc._pParent.GetPadding()
+
+        # Update all the tabs from 0 to 'pc._nFrom' to be non visible
+        for i in xrange(pc._nFrom):
+
+            pc._pagesInfoVec[i].SetPosition(wx.Point(-1, -1))
+            pc._pagesInfoVec[i].GetRegion().Clear()
+
+        count = pc._nFrom
+
+        #----------------------------------------------------------
+        # Go over and draw the visible tabs
+        #----------------------------------------------------------
+        x1 = x2 = -1
+        for i in xrange(pc._nFrom, len(pc._pagesInfoVec)):
+
+            dc.SetPen(borderPen)
+
+#            if not pc.HasAGWFlag(FNB_FF2):
+#                dc.SetBrush((i==pc.GetSelection() and [selBrush] or [noselBrush])[0])
+
+            # Now set the font to the correct font
+            dc.SetFont((i==pc.GetSelection() and [boldFont] or [normalFont])[0])
+
+            # Add the padding to the tab width
+            # Tab width:
+            # +-----------------------------------------------------------+
+            # | PADDING | IMG | IMG_PADDING | TEXT | PADDING | x |PADDING |
+            # +-----------------------------------------------------------+
+            tabWidth = self.CalcTabWidth(pageContainer, i, tabHeight)
+
+            # Check if we can draw more
+            if posx + tabWidth + self.GetButtonsAreaLength(pc) >= clientWidth:
+                break
+
+            count = count + 1
+
+            # By default we clean the tab region
+            pc._pagesInfoVec[i].GetRegion().Clear()
+
+            # Clean the 'x' buttn on the tab.
+            # A 'Clean' rectangle, is a rectangle with width or height
+            # with values lower than or equal to 0
+            pc._pagesInfoVec[i].GetXRect().SetSize(wx.Size(-1, -1))
+
+            # Draw the tab (border, text, image & 'x' on tab)
+            self.DrawTab(pc, dc, posx, i, tabWidth, tabHeight, pc._nTabXButtonStatus)
+
+            if pc.GetSelection() == i:
+                x1 = posx
+                x2 = posx + tabWidth + 2
+
+            # Restore the text forground
+            dc.SetTextForeground(pc._activeTextColour)
+
+            # Update the tab position & size
+            posy = (pc.HasAGWFlag(wx.lib.flatnotebook.FNB_BOTTOM) and [0] or [wx.lib.flatnotebook.VERTICAL_BORDER_PADDING])[0]
+
+            pc._pagesInfoVec[i].SetPosition(wx.Point(posx, posy))
+            pc._pagesInfoVec[i].SetSize(wx.Size(tabWidth, tabHeight))
+            self.DrawFocusRectangle(dc, pc, pc._pagesInfoVec[i])
+
+            posx += tabWidth
+
+        # Update all tabs that can not fit into the screen as non-visible
+        for i in xrange(count, len(pc._pagesInfoVec)):
+            pc._pagesInfoVec[i].SetPosition(wx.Point(-1, -1))
+            pc._pagesInfoVec[i].GetRegion().Clear()
+
+        # Draw the left/right/close buttons
+        # Left arrow
+        self.DrawLeftArrow(pc, dc)
+        self.DrawRightArrow(pc, dc)
+        self.DrawX(pc, dc)
+        self.DrawDropDownArrow(pc, dc)
+
+        if pc.HasAGWFlag(wx.lib.flatnotebook.FNB_FF2):
+            self.DrawTabsLine(pc, dc, x1, x2)
 
 
 
@@ -3645,21 +3811,7 @@ class MakerRenderer(nb.FNBRenderer):
         """
         
         return
-        if not page._hasFocus:
-            return
-
-        tabPos = wx.Point(*page.GetPosition())
-       
-
-        rect = wx.RectPS(tabPos, page.GetSize())
-        rect = wx.Rect(rect.x+2, rect.y, rect.width-2, rect.height-2)
-
-        if wx.Platform == '__WXMAC__':
-            rect.SetWidth(rect.GetWidth() + 1)
-
-        dc.SetBrush(wx.TRANSPARENT_BRUSH)
-        dc.SetPen(self._focusPen)
-        dc.DrawRoundedRectangleRect(rect, 4)
+                
 
 
 
@@ -3673,7 +3825,7 @@ class MakerRenderer(nb.FNBRenderer):
         :param `selTabX1`: first x coordinate of the tab line;
         :param `selTabX2`: second x coordinate of the tab line.
         """
-
+        
         pc = pageContainer
 
         clntRect = pc.GetClientRect()
@@ -3681,8 +3833,7 @@ class MakerRenderer(nb.FNBRenderer):
         dc.SetPen(self.renderPen)
             
         dc.DrawLine(1, clntRect.height, clntRect.width-1, clntRect.height)
-            
-
+        
 
 
     def DrawTab(self, pageContainer, dc, posx, tabIdx, tabWidth, tabHeight, btnStatus):
@@ -3698,7 +3849,6 @@ class MakerRenderer(nb.FNBRenderer):
         :param `btnStatus`: the status of the 'X' button inside this tab.
         """
 
-        
         pc = pageContainer
 
         if tabIdx == pc.GetSelection():
@@ -3767,9 +3917,10 @@ class MakerRenderer(nb.FNBRenderer):
 
             # Draw the tab
             self.DrawTabX(pc, dc, x_rect, tabIdx, btnStatus)
-
-
-
+        
+        
+        
+        
 
 
 #===============================================================================
