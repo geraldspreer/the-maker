@@ -1,33 +1,10 @@
 
-<!--this is now nav section -->
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="index_en.htm">Lanyard</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li><!--make sure active is set for the page in context -->
-              <li><a href="blank_en.htm" >Blank</a></li>
-              <li><a href="#" >About</a></li>	      
-              <li><a href="#" >Contact</a></li>
-	      <li><a href="#" >Archives</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div> 
-      </div>
-    </div>
-<!--this is the end of the nav section -->
 
     <div class="container">
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
-        <h1>Lanyard</h1>
+        <h1>!projectName!</h1>
         <p>Totally based on Twitter Bootstrap, but modified to work seemlessly with TheMaker&copy;, get to grips with with this powerful template and create your own unique masterpiece with a fully featured, responsive design.</p>
         <p><a class="btn btn-primary btn-large" href="http://twitter.github.com/bootstrap/">Learn more at Twitter &raquo;</a></p>
       </div>

@@ -1,28 +1,3 @@
-
-<!--this is now nav section -->
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="index_en.htm" >Lanyard</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li><a href="index_en.htm">Home</a></li>
-              <li class="active"><a href="blank_en.htm">Blank</a></li><!--make sure active is set for the page in context -->
-              <li><a href="#" >About</a></li>	      
-              <li><a href="#" >Contact</a></li>
-	      <li><a href="#" >Archives</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div> 
-      </div>
-    </div>
-<!--this is the end of the nav section -->
-
     <div class="container">
     <p>This page is blank for you to quickly try out the features of Lanyard.</p> 
     <p><i>Please note we have included the navigation in the <code>.content</code> file instead of the usual Maker <code>.nav</code> file so that you can use the "active" class in "Bootstrap" navbar to show the user where they are in the navigation.</i></p> 

@@ -24,7 +24,7 @@ TO DO / planned features											|
 																	     |
 -------------------------------------------------------------------------'
 
-June x. 2013	- Gerald
+June 8. 2013	- Gerald
 
 	- Fixed bug where Preview was NOT on F5 (Thanks Randal)
 	- Fixed bug where <markdown> was invisible in Mac Classic Theme
@@ -32,8 +32,10 @@ June x. 2013	- Gerald
 	- Fixed bug where empty files could not be saved
 	- Fixed bug where code style was not set after re-start
 	- Fixed bug where closed tabs were "fading" out
-	-  
-
+	- Fixed bug where on system without sandboxing files were not opened on launch
+	- Fixed bug where Lanyard template is not using !projectName! marker
+	- Moved navigation on Lanyard template to .nav 
+	
 
 Mai 4. 2013	- Gerald
 

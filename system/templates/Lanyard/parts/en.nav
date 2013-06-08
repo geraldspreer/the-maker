@@ -1,6 +1,27 @@
-<!--navigation is being handled in the .content file (within body..) to be able to set the 'active' class to the page in context -->
 
-
+<!--this is now nav section -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="index_en.htm">!projectName!</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="#">Home</a></li><!--make sure active is set for the page in context -->
+              <li><a href="blank_en.htm" >Blank</a></li>
+              <li><a href="#" >About</a></li>	      
+              <li><a href="#" >Contact</a></li>
+	      <li><a href="#" >Archives</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div> 
+      </div>
+    </div>
+<!--this is the end of the nav section -->
 
 
 
