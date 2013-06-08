@@ -162,7 +162,7 @@ class ProjectManagerController(makerController.SuperController):
     
     def resetEditorStyle(self, event):
         """ reset editor style to default """
-        print "now we are here..."
+        
         editorWrapper = self.model.getActiveProject().getCurrentFile().fileController.editorWrapper
         editorWrapper.applyCodeStyle(self.getEditorStyleData(self.defaultEditorStyle))
         
@@ -283,11 +283,27 @@ class ProjectManagerController(makerController.SuperController):
     
     def loadAndSetInterfaceData(self):
         
-        def setDefaults():
-            # set UI defaults
-            self.view.SetClientSize(self.view.wx.Size(1200, 700))
-            self.view.Center(self.view.wx.BOTH)
-            self.setCurrentEditorStyle(self.defaultEditorStyle)
+        def setDefaults(interfaceData):
+            
+            try:
+                self.view.SetSize(interfaceData["Size"])
+                self.view.SetPosition(interfaceData["Position"])
+                self.view.splitter.SetSashPosition(interfaceData["SplitterSashPosition"])
+            
+            except:
+                # set UI defaults
+                self.view.SetClientSize(self.view.wx.Size(1200, 700))
+                self.view.Center(self.view.wx.BOTH)
+            
+            # at least try to set the editor style
+            try:
+                self.setCurrentEditorStyle(interfaceData["editorStyle"])
+                self.toggleMenuItemByStyleName(interfaceData["editorStyle"])
+            except:
+                # no editor style on file
+                self.setCurrentEditorStyle(self.defaultEditorStyle)
+                
+                    
         
         theFile = os.path.join(self.model.getApplicationSupportDir(), ".makerUISettings")
         if os.path.isfile(theFile):
@@ -365,7 +381,7 @@ class ProjectManagerController(makerController.SuperController):
             except Exception, e:
                 print str(e)
                 
-        setDefaults()
+        setDefaults(interfaceData)
     
     
     
