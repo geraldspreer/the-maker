@@ -285,6 +285,15 @@ class ProjectManagerController(makerController.SuperController):
         
         def setDefaults(interfaceData):
             
+            if not interfaceData:
+                # first start ever
+                self.view.SetClientSize(self.view.wx.Size(1200, 700))
+                self.view.Center(self.view.wx.BOTH)
+                self.setCurrentEditorStyle(self.defaultEditorStyle)
+                return
+            
+            
+            # fine grain tuning
             try:
                 self.view.SetSize(interfaceData["Size"])
                 self.view.SetPosition(interfaceData["Position"])
@@ -302,10 +311,13 @@ class ProjectManagerController(makerController.SuperController):
             except:
                 # no editor style on file
                 self.setCurrentEditorStyle(self.defaultEditorStyle)
+            
                 
-                    
+        # Needs to be None
+        interfaceData = None
         
         theFile = os.path.join(self.model.getApplicationSupportDir(), ".makerUISettings")
+        
         if os.path.isfile(theFile):
             try:
                 interfaceData = readDataFromFile(theFile)
@@ -381,9 +393,9 @@ class ProjectManagerController(makerController.SuperController):
             except Exception, e:
                 print str(e)
                 
+        
         setDefaults(interfaceData)
-    
-    
+        
     
 
     
