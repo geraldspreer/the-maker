@@ -1012,7 +1012,7 @@ class wxPythonGUI(wx.Frame):
         self.MenuItemHTML_div = self.subMenuStructure.Append(help='Division. Defines a block of HTML',
         id=-1,
         kind=wx.ITEM_NORMAL,
-        text=u'<div>   Division. Defines a block of HTML')
+        text=u'<div>   Division. Defines a block of HTML\tCtrl+Shift+D')
         
         
         

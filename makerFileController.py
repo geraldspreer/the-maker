@@ -1577,7 +1577,7 @@ class MakerFileController(makerController.SuperController):
             self.view.MenuItemHTML_tt.GetId() : (self.insertHtmlTags, ['<tt>', '</tt>']),
             self.view.MenuItemHTML_del.GetId() : (self.insertHtmlTags, ['<del>', '</del>']),
             self.view.MenuItemHTML_button.GetId() : (self.insertHtmlTags, ['<button>', '</button>']),
-            self.view.MenuItemHTML_div.GetId() : (self.insertHtmlTags, ['<div id="">', '</div>']),
+            self.view.MenuItemHTML_div.GetId() : (self.insertHtmlTags, ['<div class="">', '</div>']),
             self.view.MenuItemHTML_col.GetId() : (self.insertHtmlTags, ['<col>', '</col>']),
             self.view.MenuItemHTML_ul.GetId() : (self.insertHtmlTags, ['<ul>', '</ul>']),
             self.view.MenuItemCSS_background.GetId() : (self.actionInsertCSS, "background: ;"),
