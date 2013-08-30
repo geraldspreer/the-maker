@@ -1353,10 +1353,11 @@ class MakerFileController(makerController.SuperController):
     
     
     def loadTextIntoEditor(self, text, binary = False):
-      
+    
         self.editor.AddText(text)
         makerAutoComplete.AutoComplete(self.model, self.view, self.editor)
-        self.view.wx.Yield()
+        # this fixes " wxYield called recursively errors..."
+        self.view.wx.SafeYield()
         
         if not binary:
             self.editor.Bind(self.view.wx.stc.EVT_STC_CHANGE, self.textChanged)
@@ -1365,8 +1366,7 @@ class MakerFileController(makerController.SuperController):
             self.editor.SetSelection(0,0) # safer than SetCurrentPos
             self.editor.SetFocus()
       
-    
-    
+        
     def isCurrentFileSaved(self):
         
         return self.model.getSaved()
