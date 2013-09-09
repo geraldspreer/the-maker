@@ -24,9 +24,23 @@ TO DO / planned features											|
 																	     |
 -------------------------------------------------------------------------'
 
+September 8, 2013	- Gerald
+
+	- in local links you can now use parameters for example for php and the 
+	file base is still updated correctly 
+	for example "index.htm?params=foo" will become 
+				"http://base.com/index.htm?params=foo"
+
+
+
 August 29, 2013	- Gerald
 
 	- fixed bug #4 wxYield called recursively if many tabs opened too quickly
+
+
+-------------------------------------------------------------------------.		
+Release 1.81															 |		     |
+-------------------------------------------------------------------------'
 
 
 June 8. 2013	- Gerald

@@ -1026,38 +1026,19 @@ class MakerFileContent(MakerFile):
             if text.find(i.encode(self.core.encoding))==-1:
                 print "DEBUG: cannot find ",i," in file..."
             else:
-                #print "replacing ",i
                 
                 loc = self.core.getPageLocationsBySource(i)
                 location = urlparse.urljoin(self.core.url,loc[0])
-                #print location,i
                 
-                this = '"'+i.encode(self.core.encoding)+'"'
-                that = '"'+location.encode(self.core.encoding)+'"'
-                newtext = text.replace(this, that)
-                text = newtext
-        
-        bar = text
-        imagelist = self.core.getImageFiles()
-        
-        for image in imagelist:
-            image = image.encode(self.core.encoding)
-                    
-            #print " inside Update Filebase: image is:",image
-                    
-            if bar.find('"'+image+'"')==-1:
-                pass
-                #print "image is not referenced in file"
-            else:
-                #print "inside Update Filebase: replacing : ", image
-                this = '"'+image+'"'
-                that = '"'+urlparse.urljoin(self.core.getProjectURL(),
-                                            self.core.getRemoteGfxFolder())
-                that += image+'"'
-                that = str(that).encode(self.core.encoding)
-                new = bar.replace(this, that)
-                bar = new        
-                text = new
+                toReplace = [['"','"'],["'","'"],['"','?'],["'","?"]]
+                
+                for quotes in toReplace:
+                
+                    this = quotes[0] + i.encode(self.core.encoding) + quotes[1]
+                    that = quotes[0] + location.encode(self.core.encoding) + quotes[1]
+                    newtext = text.replace(this, that)
+                    text = newtext
+
         
         writeFile(self.core.getPathParts()+self.name+".htm", text)
              
