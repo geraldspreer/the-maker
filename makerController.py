@@ -1,3 +1,4 @@
+from Cocoa import NSOpenPanel, NSOKButton
 
 class SuperController:
     """
@@ -210,7 +211,22 @@ returns the instance of the progressbar that was last added to the stack
             return None
         else:   
             return project
-       
+    
+    
+    def _fileDialog(self, message = None):
+        
+        panel = NSOpenPanel.openPanel()
+        panel.setCanCreateDirectories_(False)
+        panel.setCanChooseDirectories_(False)
+        panel.setCanChooseFiles_(True)
+        panel.setAllowsMultipleSelection_(True)
+
+        if panel.runModal() == NSOKButton:
+            for item in panel.URLs():
+                print item
+        return panel.URLs()
+        
+    
     def fileDialog(self, message = None):
         """
         returns a list(!) of pathnames or None when canceled

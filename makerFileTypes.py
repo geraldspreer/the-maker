@@ -1038,7 +1038,28 @@ class MakerFileContent(MakerFile):
                     that = quotes[0] + location.encode(self.core.encoding) + quotes[1]
                     newtext = text.replace(this, that)
                     text = newtext
-
+        
+        bar = text
+        imagelist = self.core.getImageFiles()
+        
+        for image in imagelist:
+            image = image.encode(self.core.encoding)
+                    
+            #print " inside Update Filebase: image is:",image
+                    
+            if bar.find('"'+image+'"')==-1:
+                pass
+                #print "image is not referenced in file"
+            else:
+                #print "inside Update Filebase: replacing : ", image
+                this = '"'+image+'"'
+                that = '"'+urlparse.urljoin(self.core.getProjectURL(),
+                                            self.core.getRemoteGfxFolder())
+                that += image+'"'
+                that = str(that).encode(self.core.encoding)
+                new = bar.replace(this, that)
+                bar = new
+                text = new
         
         writeFile(self.core.getPathParts()+self.name+".htm", text)
              

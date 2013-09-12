@@ -1683,10 +1683,17 @@ class MakerProjectModel:
        	
         """Imports a MakerFile (handles all files, even binary)."""
 
-        filesToImport = self.projectController.fileDialog()
+        files = self.projectController._fileDialog()
         
-        if not filesToImport: return
-      
+        filesToImport = []
+        
+        for item in files:
+            print item.path()
+            # these are NSUrls so we need to call path() 
+            filesToImport.append(item.path())
+        
+        if filesToImport == []: return
+        
         # just making sure that no images are imported this way
         
         for possibleImage in filesToImport:
@@ -1698,6 +1705,7 @@ class MakerProjectModel:
                                "Use 'Import Image' instead!\n\n" + 
                                "Import canceled!")
                 return
+        
         
         # This might seem a little odd. Here is why it is dome this way.
         # In the file selector we need to enable all files because there is no
