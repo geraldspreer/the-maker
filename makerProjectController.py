@@ -1189,7 +1189,7 @@ class MakerProjectController(makerController.SuperController):
         if not self.model.getFtpQueue():
             
             
-            self.publishMenu.SetText("Publish")
+            self.publishMenu.SetText("Publish\tCtrl+u")
             
             #self.publishButton.Disable()
             self.view.toolBar.EnableTool(20, False)
@@ -1201,7 +1201,7 @@ class MakerProjectController(makerController.SuperController):
             
             self.publishMenu.Enable(True)
             
-            self.publishMenu.SetText("Publish [" + str(len(self.model.getFtpQueue())) + " Files in Queue]")
+            self.publishMenu.SetText("Publish [" + str(len(self.model.getFtpQueue())) + " Files in Queue]\tCtrl+u")
             
             self.view.statusBar1.SetStatusText(number=4,
                                            text="FTP Queue: " + str(len(self.model.getFtpQueue())) 

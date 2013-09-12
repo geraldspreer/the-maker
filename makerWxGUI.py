@@ -100,7 +100,7 @@ class wxPythonGUI(wx.Frame):
         self.MenuItemPublish = parent.Append(help='',
                                                  id=-1,
                                                  kind=wx.ITEM_NORMAL,
-                                                 text=u'Publish'
+                                                 text=u'Publish\tCtrl+u'
                                                  )
 
 
