@@ -1685,6 +1685,9 @@ class MakerProjectModel:
 
         files = self.projectController._fileDialog()
         
+        if not files:
+            return
+        
         filesToImport = []
         
         for item in files:
