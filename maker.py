@@ -2,6 +2,7 @@
 
 import webbrowser as webView
 import sys
+import platform
 
 print "Checking dependencies...\n"
 

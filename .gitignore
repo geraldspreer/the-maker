@@ -5,6 +5,7 @@ the-maker-*-src
 
 setup_app_store.py
 compile.sh
+compile_new.sh
 Entitlements.plist
 *.py~
 *.pkg
