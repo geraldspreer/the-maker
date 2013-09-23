@@ -133,6 +133,11 @@ class MakerFileController(makerController.SuperController):
         
         self.view.Bind(self.view.wx.EVT_MENU, self.insertMarkdown, self.view.MenuItemMarkdown)
     
+        # Comments
+        
+        self.view.Bind(self.view.wx.EVT_MENU, self.insertComment, self.view.MenuItemComment)
+    
+    
         
         # Markers
         self.view.Bind(self.view.wx.EVT_MENU, self.findActionForEvent, self.view.MenuItemMarkerTodaysDate)
@@ -1309,6 +1314,12 @@ class MakerFileController(makerController.SuperController):
     def insertMarkdown(self, event):
         # inserts a markdown area
         self.insertHtmlTags(["<markdown>", "</markdown>"])
+    
+    
+    def insertComment(self, event):
+        # inserts a comment depending on the filetype 
+        commentTags = self.model.getCommentTags()
+        self.insertHtmlTags(commentTags)
     
     
     def insertHtmlTags(self, tags):

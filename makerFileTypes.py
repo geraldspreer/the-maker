@@ -80,7 +80,14 @@ class MakerFile:
                                self.getName() + self.type), 
                                self.getNewFileTemplate())
         
-      
+    
+    def getCommentTags(self):
+        """ tags for comments used in this file type """
+        return ["<!--  ","  -->"]
+    
+    
+    
+    
     def publish(self):
         
         if self.getEditable():
@@ -594,7 +601,11 @@ class MakerFilePython(MakerFile):
     
     def setEditable(self):
         self.editable = True
-        
+    
+    def getCommentTags(self):
+        """ tags for comments used in this file type """
+        return ['#','']
+    
         
     def preview(self, content = None):
         """ in this case == Run """
@@ -616,6 +627,12 @@ class MakerFilePhp(MakerFile):
     def setEditable(self):
         self.editable = True
         
+  
+    def getCommentTags(self):
+        """ tags for comments used in this file type """
+        return ["/*  ","  */"]
+    
+    
   
 
 # ------------------------------------------------------------ 
@@ -1117,7 +1134,12 @@ class MakerFileCss(MakerFile):
     def setType(self):
         self.type = ".css"
 
-        
+    
+    def getCommentTags(self):
+        """ tags for comments used in this file type """
+        return ["/*  "," */"]
+    
+    
      
     def preview(self, theContent):
         
@@ -1182,6 +1204,13 @@ class MakerFileCgi(MakerFile):
 class MakerFileJs(MakerFile):
     def setType(self):
         self.type =".js"
+
+    def getCommentTags(self):
+        """ tags for comments used in this file type """
+        return ["/*  ","  */"]
+    
+    
+
 
 # ------------------------------------------------------------ 
 # ------------------------------------------------------------   
@@ -1298,7 +1327,10 @@ class MakerFileUnsupportedTextFile(MakerFile):
         else:
             self.fileController = None
     
-        
+    def getCommentTags(self):
+        """ tags for comments used in this file type """
+        return ["#",""]
+    
               
     def setType(self, typeOfFile):
         self.output('Setting type')

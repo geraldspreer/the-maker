@@ -1051,11 +1051,14 @@ class MakerProjectController(makerController.SuperController):
                     else:
                         self.view.MenuItemMarkdown.Enable(False)
                         
+                    self.view.MenuItemComment.Enable(True)
                     self.view.MenuItemHTML.Enable(True)
                     self.view.MenuItemCSS.Enable(True)
                     self.view.MenuItemMarkers.Enable(True)
                 
                 else:
+                    self.view.MenuItemMarkdown.Enable(False)
+                    self.view.MenuItemComment.Enable(False)
                     self.view.MenuItemHTML.Enable(False)
                     self.view.MenuItemCSS.Enable(False)
                     self.view.MenuItemMarkers.Enable(False)

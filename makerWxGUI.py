@@ -78,12 +78,20 @@ class wxPythonGUI(wx.Frame):
         
         parent.AppendSeparator()
         
+        self.MenuItemComment = parent.Append(help='Insert Comment !',
+                           id=-1,
+                           kind=wx.ITEM_NORMAL, 
+                           text=u'Comment\tCtrl+Shift+c'
+                           )
+           
+           
+        parent.AppendSeparator()
+        
         self.MenuItemMarkdown = parent.Append(help='Markdown !',
                            id=-1,
                            kind=wx.ITEM_NORMAL, 
                            text=u'Markdown\tCtrl+Shift+m'
                            )
-           
         
 
     def _init_coll_ftp_Items(self, parent):
