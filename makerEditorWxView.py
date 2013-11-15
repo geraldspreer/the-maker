@@ -89,6 +89,33 @@ class editorView:
                 
                 self.editor.SetLexer(wx.stc.STC_LEX_CSS)
 
+            elif fileType == ".js":
+                """ 
+                    The .js lexer is based on the .cpp lexer so 
+                    we are just using that one...
+                
+                """
+                self.editor.SetLexer(wx.stc.STC_LEX_CPP)
+                
+                js_kw = ("abstract else instanceof super"   
+                         " boolean enum int switch"
+                         " break export interface synchronized"
+                         " byte extends let this"
+                         " case false long throw"
+                         " catch final native throws"
+                         " char finally new transient"
+                         " class float null true"
+                         " const for package try"
+                         " continue function private typeof"
+                         " debugger goto protected var"
+                         " default if public void"
+                         " delete implements return volatile"
+                         " do import short while"
+                         " double in static with")
+
+                self.editor.SetKeyWords(0, js_kw)
+                
+                
             else: 
                 
                 self.editor.SetLexer(wx.stc.STC_LEX_HTML)
@@ -423,7 +450,37 @@ class editorView:
                 
                 self.editor.StyleSetSpec(wx.stc.STC_P_IDENTIFIER, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
                 
-                            
+            
+            
+            elif self.editor.GetLexer() == wx.stc.STC_LEX_CPP:
+                # This is for javascript
+                
+                self.editor.StyleSetSpec(wx.stc.STC_C_DEFAULT, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_C_COMMENTLINE, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_C_COMMENTLINEDOC, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_C_COMMENT, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_C_COMMENTDOC, "fore:" + style["comment"]['color'] +",back:"+style["meta.default"]['background-color']+",italic,face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_C_NUMBER, "fore:" + style["constant.numeric"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_C_STRING, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_C_STRINGEOL, "fore:" + style["string"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_C_CHARACTER, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                try:
+                    self.editor.StyleSetSpec(wx.stc.STC_C_WORD, "fore:" + style["keyword"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                    self.editor.StyleSetSpec(wx.stc.STC_C_WORD2, "fore:" + style["keyword.control"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                except:
+                    self.editor.StyleSetSpec(wx.stc.STC_C_WORD, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                    self.editor.StyleSetSpec(wx.stc.STC_C_WORD2, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_C_OPERATOR, "fore:" + style["language.operator"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_C_GLOBALCLASS, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                #self.editor.StyleSetSpec(wx.stc.STC_C_DEFNAME, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                self.editor.StyleSetSpec(wx.stc.STC_C_IDENTIFIER, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                self.editor.StyleSetSpec(wx.stc.STC_C_REGEX, "fore:" + style["string.regex"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
+                
+                        
             else:
                 pass
 
