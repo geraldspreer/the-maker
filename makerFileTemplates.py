@@ -23,28 +23,9 @@ def getTemplate(type=None):
     
     elif type == ".php":
         return """ <?php\n\n  echo "Hello World"; \n\n?> """
-      
-    elif type == ".css":
-        theTemplate  = '/* Before entering a new definition '
-        theTemplate += 'make sure it is not already defined below */\n\n'
-        for t in tags():
-            theTemplate +=  t + '{\n\n}\n\n'
-
-        return theTemplate
-    
+          
     else: 
         return ""
     
     
     
-    
-def tags():
-        return ['html', 'body', 'div', 'span', 'applet', 'object',
-                'iframe', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 
-                'blockquote', 'pre', 'a', 'abbr', 'acronym', 'address',
-                'big', 'cite', 'code', 'del', 'dfn', 'em', 'font', 'img',
-                'ins', 'kbd', 'q', 's', 'samp', 'small', 'strike', 'strong',
-                'sub', 'sup', 'tt', 'var', 'dl', 'dt', 'dd', 'ol', 'ul', 'li',
-                'fieldset', 'form', 'label', 'legend', 'table', 'caption',
-                'tbody', 'tfoot', 'thead', 'tr', 'th', 'td'
-                ]
