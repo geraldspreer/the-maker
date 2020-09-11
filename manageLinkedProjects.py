@@ -6,6 +6,7 @@ import wx.xrc as xrc
 
 __res = None
 
+
 def get_resources():
     """ This function provides access to the XML resources in this module."""
     global __res
@@ -14,19 +15,17 @@ def get_resources():
     return __res
 
 
-
-
 class xrcManageLinked(wx.Dialog):
-#!XRCED:begin-block:xrcManageLinked.PreCreate
+    #!XRCED:begin-block:xrcManageLinked.PreCreate
     def PreCreate(self, pre):
-        """ This function is called during the class's initialization.
-        
+        """This function is called during the class's initialization.
+
         Override it for custom setup before the window is created usually to
         set additional window styles using SetWindowStyle() and SetExtraStyle().
         """
         pass
-        
-#!XRCED:end-block:xrcManageLinked.PreCreate
+
+    #!XRCED:end-block:xrcManageLinked.PreCreate
 
     def __init__(self, parent):
         # Two stage creation (see http://wiki.wxpython.org/index.cgi/TwoStageCreation)
@@ -38,10 +37,8 @@ class xrcManageLinked(wx.Dialog):
         # Define variables for the controls, bind event handlers
 
 
-
-
-
 # ------------------------ Resource data ----------------------
+
 
 def __init_resources():
     global __res
@@ -49,7 +46,7 @@ def __init_resources():
 
     wx.FileSystem.AddHandler(wx.MemoryFSHandler())
 
-    manageLinkedProjects_xrc = '''\
+    manageLinkedProjects_xrc = """\
 <?xml version="1.0" ?><resource class="wxStaticText">
   <object class="wxDialog" name="ManageLinked">
     <object class="wxBoxSizer">
@@ -102,24 +99,27 @@ def __init_resources():
     <title>Manage Projects</title>
     <centered>1</centered>
   </object>
-</resource>'''
+</resource>"""
 
-    wx.MemoryFSHandler.AddFile('XRC/manageLinkedProjects/manageLinkedProjects_xrc', manageLinkedProjects_xrc)
-    __res.Load('memory:XRC/manageLinkedProjects/manageLinkedProjects_xrc')
+    wx.MemoryFSHandler.AddFile(
+        "XRC/manageLinkedProjects/manageLinkedProjects_xrc", manageLinkedProjects_xrc
+    )
+    __res.Load("memory:XRC/manageLinkedProjects/manageLinkedProjects_xrc")
 
 
 # ----------------------- Gettext strings ---------------------
+
 
 def __gettext_strings():
     # This is a dummy function that lists all the strings that are used in
     # the XRC file in the _("a string") format to be recognized by GNU
     # gettext utilities (specificaly the xgettext utility) and the
     # mki18n.py script.  For more information see:
-    # http://wiki.wxpython.org/index.cgi/Internationalization 
-    
-    def _(str): pass
-    
+    # http://wiki.wxpython.org/index.cgi/Internationalization
+
+    def _(str):
+        pass
+
     _("Close")
     _("Close")
     _("Manage Projects")
-

@@ -1,11 +1,15 @@
 from datetime import date
 
+
 def getCopyright():
-    
-    copyright  = """-------------------------------------------------------------------------------
+
+    copyright = (
+        """-------------------------------------------------------------------------------
 TheMaker - Content Management System
 -------------------------------------------------------------------------------
-Copyright (c) 2006 - """ + str(date.today().year) + """
+Copyright (c) 2006 - """
+        + str(date.today().year)
+        + """
 
 Developers:
 Gerald Spreer, Ian Barrow and Brinick Simmons
@@ -24,4 +28,5 @@ The possibilities are endless.
 Visit http://www.makercms.org for more information.
 
 """
+    )
     return copyright

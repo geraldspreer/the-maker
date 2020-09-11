@@ -6,6 +6,7 @@ import wx.xrc as xrc
 
 __res = None
 
+
 def get_resources():
     """ This function provides access to the XML resources in this module."""
     global __res
@@ -16,8 +17,8 @@ def get_resources():
 
 class xrcFindReplace(wx.Dialog):
     def PreCreate(self, pre):
-        """ This function is called during the class's initialization.
-        
+        """This function is called during the class's initialization.
+
         Override it for custom setup before the window is created usually to
         set additional window styles using SetWindowStyle() and SetExtraStyle()."""
         pass
@@ -41,8 +42,8 @@ class xrcFindReplace(wx.Dialog):
         self.OK = xrc.XRCCTRL(self, "OK")
 
 
-
 # ------------------------ Resource data ----------------------
+
 
 def __init_resources():
     global __res
@@ -50,7 +51,7 @@ def __init_resources():
 
     wx.FileSystem.AddHandler(wx.MemoryFSHandler())
 
-    FindReplace = '''\
+    FindReplace = """\
 <?xml version="1.0" ?><resource class="wxDialog">
   <object class="wxDialog" name="FindReplace">
     <object class="wxBoxSizer">
@@ -174,23 +175,25 @@ def __init_resources():
     <title>Replace</title>
     <centered>1</centered>
   </object>
-</resource>'''
+</resource>"""
 
-    wx.MemoryFSHandler.AddFile('XRC/FindReplace/FindReplace', FindReplace)
-    __res.Load('memory:XRC/FindReplace/FindReplace')
+    wx.MemoryFSHandler.AddFile("XRC/FindReplace/FindReplace", FindReplace)
+    __res.Load("memory:XRC/FindReplace/FindReplace")
 
 
 # ----------------------- Gettext strings ---------------------
+
 
 def __gettext_strings():
     # This is a dummy function that lists all the strings that are used in
     # the XRC file in the _("a string") format to be recognized by GNU
     # gettext utilities (specificaly the xgettext utility) and the
     # mki18n.py script.  For more information see:
-    # http://wiki.wxpython.org/index.cgi/Internationalization 
-    
-    def _(str): pass
-    
+    # http://wiki.wxpython.org/index.cgi/Internationalization
+
+    def _(str):
+        pass
+
     _("Find")
     _("Replace With")
     _("In Current File")
@@ -199,4 +202,3 @@ def __gettext_strings():
     _("Cancel")
     _("OK")
     _("Replace")
-

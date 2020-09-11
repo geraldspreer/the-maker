@@ -8,23 +8,25 @@ print "Checking dependencies...\n"
 
 try:
     import wx
-    print "wxPython - OK  ","wxVersion:", wx.__version__
+
+    print "wxPython - OK  ", "wxVersion:", wx.__version__
 except:
     print "you need to have wxPython installed !"
     print "Download it at: http://www.wxpython.org/download.php"
     print "the maker does not run without it !"
-    print "Leaving...."    
+    print "Leaving...."
     sys.exit()
-    
+
 
 try:
     import markdown2
+
     print "Markdown2 - OK"
 except:
     print "You need to have Markdown2 installed !"
     print "Download it at: http://code.google.com/p/python-markdown2/"
     print "The maker does not run without it !"
-    print "Leaving...."    
+    print "Leaving...."
     sys.exit()
 
 import makerWxGUI
@@ -49,110 +51,111 @@ def afterThisUpdateStatusInfo(func):
                 self.projectController.updateStatusInformation()
         except Exception, e:
             pass
-    
+
     return wrapped
 
 
 class MakerAppController(makerController.SuperController):
-         
     def bindActions(self):
-        
-        self.view.Bind(self.view.wx.EVT_MENU, self.model.viewLicense,  
-                       self.view.MenuItemLicense)
-            
-        self.view.Bind(self.view.wx.EVT_MENU,self.showAboutDialog, 
-                  id= self.view.wx.ID_ABOUT)
-        
-        self.view.Bind(self.view.wx.EVT_MENU, self.model.bugReport,  
-                  self.view.MenuItemBugReport)
-        
-        self.view.Bind(self.view.wx.EVT_MENU, self.model.userFeedback,
-                  self.view.MenuItemFeedback)
-        
-        self.view.Bind(self.view.wx.EVT_MENU, self.model.openProjectWebsite, 
-                  self.view.MenuItemWebsite)
-        
-        self.view.Bind(self.view.wx.EVT_MENU, self.model.getHelp, 
-                  self.view.MenuItemTutorial)
-        
-        self.view.Bind(self.view.wx.EVT_MENU, self.model.learnHTMLandCSS, 
-                  self.view.MenuItemLearnHTMLandCSS
-                  )
-        
-                
+
+        self.view.Bind(
+            self.view.wx.EVT_MENU, self.model.viewLicense, self.view.MenuItemLicense
+        )
+
+        self.view.Bind(
+            self.view.wx.EVT_MENU, self.showAboutDialog, id=self.view.wx.ID_ABOUT
+        )
+
+        self.view.Bind(
+            self.view.wx.EVT_MENU, self.model.bugReport, self.view.MenuItemBugReport
+        )
+
+        self.view.Bind(
+            self.view.wx.EVT_MENU, self.model.userFeedback, self.view.MenuItemFeedback
+        )
+
+        self.view.Bind(
+            self.view.wx.EVT_MENU,
+            self.model.openProjectWebsite,
+            self.view.MenuItemWebsite,
+        )
+
+        self.view.Bind(
+            self.view.wx.EVT_MENU, self.model.getHelp, self.view.MenuItemTutorial
+        )
+
+        self.view.Bind(
+            self.view.wx.EVT_MENU,
+            self.model.learnHTMLandCSS,
+            self.view.MenuItemLearnHTMLandCSS,
+        )
+
     def showView(self):
-        
+
         # this is done in the project manager so we can access all
         # info that is needed... especially when saving
         self.model.pm.controller.loadAndSetInterfaceData()
-        
+
         self.view.Show(True)
         self.view.SetTitle("The Maker for OS X - " + str(self.model.getVersion()))
-        
+
         # this following works since model is a wxApp
-        self.model.SetTopWindow(self.view)   
-        
-        
-        
+        self.model.SetTopWindow(self.view)
+
     def showAboutDialog(self, evt):
         dlg = makerAbout.MakerAbout(self.view, self.model.getVersion())
         try:
             dlg.ShowModal()
         finally:
-            dlg.Destroy() 
-    
+            dlg.Destroy()
 
 
 class MakerApp(wx.App):
-
     def OnInit(self):
         self.showCopyRight()
-        
-        self.version  = makerVersion.appVersion
-        self.author = ['Gerald Spreer', 'Brinick Simmons', 'Ian Barrow']
+
+        self.version = makerVersion.appVersion
+        self.author = ["Gerald Spreer", "Brinick Simmons", "Ian Barrow"]
 
         self.mySplash = makerSplash.MySplashScreen()
-               
+
         # Splash screen will show by itself
-        
+
         self.mainView = makerWxGUI.create(self)
-        
+
         # should application self-restart?
         self.restart = False
-        
-                
+
         self.appController = MakerAppController(self, self.mainView)
         self.appController.resetAllViews()
-        
+
         # error Handler
-        
+
         self.errorHandler = makerErrorHandler.ErrorHandler(self.mainView)
         sys.stderr = self.errorHandler
-        
+
         # init projectManager
-        
+
         self.pm = makerProjectManager.ProjectManager(self.mainView)
-        
+
         # display GUI
-        
+
         self.appController.showView()
-        
+
         return True
-    
-    
+
     def viewLicense(self, event):
-        webView.open('http://www.makercms.org/license/index.htm')
-        
-    # ------------------------------------------------------------    
-    
+        webView.open("http://www.makercms.org/license/index.htm")
+
+    # ------------------------------------------------------------
+
     def getVersion(self):
         return self.version
 
-    # ------------------------------------------------------------    
+    # ------------------------------------------------------------
 
     def getAuthors(self):
         return self.author
-
 
     def getHelp(self, event=None, topic="#all"):
         """Show http://www.makercms.org/tutorial/#topic in a browser."""
@@ -160,42 +163,36 @@ class MakerApp(wx.App):
 
     def bugReport(self, event):
         makerBugReport.report()
-        
+
     def userFeedback(self, event):
-        webView.open('http://www.makercms.org/feedback/')
+        webView.open("http://www.makercms.org/feedback/")
 
     def openProjectWebsite(self, event):
-        webView.open('http://www.makercms.org')
+        webView.open("http://www.makercms.org")
 
     def learnHTMLandCSS(self, event):
-        webView.open('http://www.makercms.org/resources/')
+        webView.open("http://www.makercms.org/resources/")
 
-   
     def showCopyRight(self):
         print makerCopyright.getCopyright()
-        
+
 
 def main():
-    
+
     try:
         converter = makerUpdateSandboxedProjects.UpdateSandboxedProjects()
         converter.update()
-    
+
     except Exception, e:
         sys.stderr.write("Unable to update 'sandboxed' projects: " + str(e) + "\n")
-    
+
     application = MakerApp(0)
     application.MainLoop()
-    
+
     # restart ?
     if application.restart == True:
         main()
-   
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     main()
-    
-    
-
-    
-        
-
