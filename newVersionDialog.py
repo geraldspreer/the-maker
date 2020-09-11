@@ -6,6 +6,7 @@ import wx.xrc as xrc
 
 __res = None
 
+
 def get_resources():
     """ This function provides access to the XML resources in this module."""
     global __res
@@ -16,8 +17,8 @@ def get_resources():
 
 class xrcNewVersionDialog(wx.Dialog):
     def PreCreate(self, pre):
-        """ This function is called during the class's initialization.
-        
+        """This function is called during the class's initialization.
+
         Override it for custom setup before the window is created usually to
         set additional window styles using SetWindowStyle() and SetExtraStyle()."""
         pass
@@ -36,8 +37,8 @@ class xrcNewVersionDialog(wx.Dialog):
         self.Cancel = xrc.XRCCTRL(self, "Cancel")
 
 
-
 # ------------------------ Resource data ----------------------
+
 
 def __init_resources():
     global __res
@@ -45,7 +46,7 @@ def __init_resources():
 
     wx.FileSystem.AddHandler(wx.MemoryFSHandler())
 
-    newVersionDialog_xrc = '''\
+    newVersionDialog_xrc = """\
 <?xml version="1.0" ?><resource>
   <object class="wxDialog" name="NewVersionDialog">
     <title>Update Info</title>
@@ -99,25 +100,28 @@ def __init_resources():
     </object>
     <exstyle/>
   </object>
-</resource>'''
+</resource>"""
 
-    wx.MemoryFSHandler.AddFile('XRC/newVersionDialog/newVersionDialog_xrc', newVersionDialog_xrc)
-    __res.Load('memory:XRC/newVersionDialog/newVersionDialog_xrc')
+    wx.MemoryFSHandler.AddFile(
+        "XRC/newVersionDialog/newVersionDialog_xrc", newVersionDialog_xrc
+    )
+    __res.Load("memory:XRC/newVersionDialog/newVersionDialog_xrc")
 
 
 # ----------------------- Gettext strings ---------------------
+
 
 def __gettext_strings():
     # This is a dummy function that lists all the strings that are used in
     # the XRC file in the _("a string") format to be recognized by GNU
     # gettext utilities (specificaly the xgettext utility) and the
     # mki18n.py script.  For more information see:
-    # http://wiki.wxpython.org/index.cgi/Internationalization 
-    
-    def _(str): pass
-    
+    # http://wiki.wxpython.org/index.cgi/Internationalization
+
+    def _(str):
+        pass
+
     _("Update Info")
     _("This is some information about the new features")
     _("Download")
     _("Cancel")
-

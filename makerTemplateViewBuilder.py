@@ -2,13 +2,17 @@ from makerUtilities import writeFile
 from makerUtilities import readFile
 import os
 
+
 def scaffold(systemDir, defaultTheme):
-    
-    return """<!DOCTYPE html>
+
+    return (
+        """<!DOCTYPE html>
 <html>
     <head>
      <meta charset="utf-8" />
-         <script src='file://""" + os.path.join(systemDir, "jquery.min.js") + """'></script>
+         <script src='file://"""
+        + os.path.join(systemDir, "jquery.min.js")
+        + """'></script>
         
 
         
@@ -214,8 +218,12 @@ def scaffold(systemDir, defaultTheme):
     
         $(document).ready(function(){
             
-             $('#""" + defaultTheme + """').addClass('selected');
-             $('#info-""" + defaultTheme + """').show();
+             $('#"""
+        + defaultTheme
+        + """').addClass('selected');
+             $('#info-"""
+        + defaultTheme
+        + """').show();
                         
         
               $('.thumbnail').click(function(){
@@ -239,97 +247,132 @@ def scaffold(systemDir, defaultTheme):
     <body>
 
 
-""" + createThumbnails(systemDir) + createInfo(systemDir) + """ 
+"""
+        + createThumbnails(systemDir)
+        + createInfo(systemDir)
+        + """ 
     </body>
 
 </html>
 
 """
-
+    )
 
 
 def buildView(systemDir, viewPath):
-    
-    
-    writeFile(os.path.join(viewPath,"yourTemplates.html"), scaffold(systemDir, defaultTemplate()))
-    
-    return os.path.join(viewPath,"yourTemplates.html")
+
+    writeFile(
+        os.path.join(viewPath, "yourTemplates.html"),
+        scaffold(systemDir, defaultTemplate()),
+    )
+
+    return os.path.join(viewPath, "yourTemplates.html")
 
 
 def defaultTemplate():
-    
-    #===========================================================================
+
+    # ===========================================================================
     #  This is used to set the default template for the application
-    #===========================================================================
-    
+    # ===========================================================================
+
     return "Simple-Markdown"
-    
-    
+
+
 def createThumbnails(systemDir):
-    
+
     thumbnails = "<div class='row'>\n"
-    
+
     for template in os.listdir(os.path.join(systemDir, "templates")):
         if not template.startswith("."):
             thumbnails += makeThumbnail(systemDir, template)
-    
-    thumbnails += "</div>"     
+
+    thumbnails += "</div>"
     return thumbnails
-    
-    
+
+
 def createInfo(systemDir):
-    
+
     info = "<div class='row'>\n"
-    
+
     for template in os.listdir(os.path.join(systemDir, "templates")):
-        
+
         if not template.startswith("."):
-            s = readFile(os.path.join(systemDir, "templates", template, "parts","info.json")) 
-            
+            s = readFile(
+                os.path.join(systemDir, "templates", template, "parts", "info.json")
+            )
+
             data = eval(s)
-        
+
             info += makeInfo(systemDir, template, data)
-    
-    info += "</div>"     
+
+    info += "</div>"
     return info
 
 
 def makeInfo(systemDir, templateName, data):
+
+    previewImage = os.path.join(
+        systemDir, "templates", templateName, "parts/preview.jpg"
+    )
+    info = (
+        """
     
-    previewImage = os.path.join(systemDir, "templates", templateName, "parts/preview.jpg")
-    info = """
-    
-    <div class="info" id="info-""" + data["Title"] + """">
+    <div class="info" id="info-"""
+        + data["Title"]
+        + """">
         
-        <img src='""" + previewImage + """' />
+        <img src='"""
+        + previewImage
+        + """' />
         
-        <h5>""" + data["Title"] + """</h5>
-        <p>""" + data["Description"] + """<br /><br />
-        Credit: """ + data["Credit"] + """<br />
-        Support: <a href='""" + data["Support"] + """'>www.makercms.org</a><br />
+        <h5>"""
+        + data["Title"]
+        + """</h5>
+        <p>"""
+        + data["Description"]
+        + """<br /><br />
+        Credit: """
+        + data["Credit"]
+        + """<br />
+        Support: <a href='"""
+        + data["Support"]
+        + """'>www.makercms.org</a><br />
         
         </p>
         </div>
     
     
     """
-    
+    )
+
     return info
 
 
-
 def makeThumbnail(systemDir, templateName):
+
+    previewImage = os.path.join(
+        systemDir, "templates", templateName, "parts/preview.jpg"
+    )
+    thumbnail = (
+        """
     
-    previewImage = os.path.join(systemDir, "templates", templateName, "parts/preview.jpg")
-    thumbnail = """
-    
-     <div class='thumbnail' id='""" + templateName + """' data-info='#info-""" + templateName + """'>
-                <a href='--""" + templateName + """--'>
-        <img src='""" + previewImage + """' />
-        <p>""" + templateName + """</p></a>
+     <div class='thumbnail' id='"""
+        + templateName
+        + """' data-info='#info-"""
+        + templateName
+        + """'>
+                <a href='--"""
+        + templateName
+        + """--'>
+        <img src='"""
+        + previewImage
+        + """' />
+        <p>"""
+        + templateName
+        + """</p></a>
     </div>
     
     """
-    
-    
+    )
+
     return thumbnail

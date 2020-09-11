@@ -6,6 +6,7 @@ import wx.xrc as xrc
 
 __res = None
 
+
 def get_resources():
     """ This function provides access to the XML resources in this module."""
     global __res
@@ -14,19 +15,17 @@ def get_resources():
     return __res
 
 
-
-
 class xrcDIALOG1(wx.Dialog):
-#!XRCED:begin-block:xrcDIALOG1.PreCreate
+    #!XRCED:begin-block:xrcDIALOG1.PreCreate
     def PreCreate(self, pre):
-        """ This function is called during the class's initialization.
-        
+        """This function is called during the class's initialization.
+
         Override it for custom setup before the window is created usually to
         set additional window styles using SetWindowStyle() and SetExtraStyle().
         """
         pass
-        
-#!XRCED:end-block:xrcDIALOG1.PreCreate
+
+    #!XRCED:end-block:xrcDIALOG1.PreCreate
 
     def __init__(self, parent):
         # Two stage creation (see http://wiki.wxpython.org/index.cgi/TwoStageCreation)
@@ -43,17 +42,17 @@ class xrcDIALOG1(wx.Dialog):
 
         self.Bind(wx.EVT_BUTTON, self.OnButton_Cancel, self.Cancel)
 
-#!XRCED:begin-block:xrcDIALOG1.OnButton_Cancel
+    #!XRCED:begin-block:xrcDIALOG1.OnButton_Cancel
     def OnButton_Cancel(self, evt):
         # Replace with event handler code
         self.Destroy()
-        
-#!XRCED:end-block:xrcDIALOG1.OnButton_Cancel        
 
 
+#!XRCED:end-block:xrcDIALOG1.OnButton_Cancel
 
 
 # ------------------------ Resource data ----------------------
+
 
 def __init_resources():
     global __res
@@ -61,7 +60,7 @@ def __init_resources():
 
     wx.FileSystem.AddHandler(wx.MemoryFSHandler())
 
-    makerTemplateDialog_xrc = '''\
+    makerTemplateDialog_xrc = """\
 <?xml version="1.0" ?><resource class="wxStaticText">
   <object class="wxDialog" name="DIALOG1">
     <object class="wxBoxSizer">
@@ -134,25 +133,28 @@ def __init_resources():
     <enabled>0</enabled>
     <style>wxSTAY_ON_TOP</style>
   </object>
-</resource>'''
+</resource>"""
 
-    wx.MemoryFSHandler.AddFile('XRC/makerTemplateDialog/makerTemplateDialog_xrc', makerTemplateDialog_xrc)
-    __res.Load('memory:XRC/makerTemplateDialog/makerTemplateDialog_xrc')
+    wx.MemoryFSHandler.AddFile(
+        "XRC/makerTemplateDialog/makerTemplateDialog_xrc", makerTemplateDialog_xrc
+    )
+    __res.Load("memory:XRC/makerTemplateDialog/makerTemplateDialog_xrc")
 
 
 # ----------------------- Gettext strings ---------------------
+
 
 def __gettext_strings():
     # This is a dummy function that lists all the strings that are used in
     # the XRC file in the _("a string") format to be recognized by GNU
     # gettext utilities (specificaly the xgettext utility) and the
     # mki18n.py script.  For more information see:
-    # http://wiki.wxpython.org/index.cgi/Internationalization 
-    
-    def _(str): pass
-    
+    # http://wiki.wxpython.org/index.cgi/Internationalization
+
+    def _(str):
+        pass
+
     _("Choose a template:")
     _("Cancel")
     _("Create")
     _("Create new project")
-

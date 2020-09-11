@@ -6,6 +6,7 @@ import wx.xrc as xrc
 
 __res = None
 
+
 def get_resources():
     """ This function provides access to the XML resources in this module."""
     global __res
@@ -16,8 +17,8 @@ def get_resources():
 
 class xrcErrorDialog(wx.Dialog):
     def PreCreate(self, pre):
-        """ This function is called during the class's initialization.
-        
+        """This function is called during the class's initialization.
+
         Override it for custom setup before the window is created usually to
         set additional window styles using SetWindowStyle() and SetExtraStyle()."""
         pass
@@ -36,8 +37,8 @@ class xrcErrorDialog(wx.Dialog):
         self.Cancel = xrc.XRCCTRL(self, "Cancel")
 
 
-
 # ------------------------ Resource data ----------------------
+
 
 def __init_resources():
     global __res
@@ -45,7 +46,7 @@ def __init_resources():
 
     wx.FileSystem.AddHandler(wx.MemoryFSHandler())
 
-    makerErrorDialog_xrc = '''\
+    makerErrorDialog_xrc = """\
 <?xml version="1.0" ?><resource>
   <object class="wxDialog" name="ErrorDialog">
     <title>Error Report</title>
@@ -105,25 +106,28 @@ def __init_resources():
       </object>
     </object>
   </object>
-</resource>'''
+</resource>"""
 
-    wx.MemoryFSHandler.AddFile('XRC/makerErrorDialog/makerErrorDialog_xrc', makerErrorDialog_xrc)
-    __res.Load('memory:XRC/makerErrorDialog/makerErrorDialog_xrc')
+    wx.MemoryFSHandler.AddFile(
+        "XRC/makerErrorDialog/makerErrorDialog_xrc", makerErrorDialog_xrc
+    )
+    __res.Load("memory:XRC/makerErrorDialog/makerErrorDialog_xrc")
 
 
 # ----------------------- Gettext strings ---------------------
+
 
 def __gettext_strings():
     # This is a dummy function that lists all the strings that are used in
     # the XRC file in the _("a string") format to be recognized by GNU
     # gettext utilities (specificaly the xgettext utility) and the
     # mki18n.py script.  For more information see:
-    # http://wiki.wxpython.org/index.cgi/Internationalization 
-    
-    def _(str): pass
-    
+    # http://wiki.wxpython.org/index.cgi/Internationalization
+
+    def _(str):
+        pass
+
     _("Error Report")
     _("Here are the details:")
     _("Report")
     _("Close")
-

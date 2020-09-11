@@ -1,6 +1,6 @@
 def getTemplate(type=None):
     """ returns a string containing the template text """
-    
+
     if type == ".html":
         return """
  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -20,12 +20,9 @@ def getTemplate(type=None):
                 """
     elif type == ".xml":
         return '<?xml version="1.0" encoding="ISO-8859-1" ?>\n'
-    
+
     elif type == ".php":
         return """ <?php\n\n  echo "Hello World"; \n\n?> """
-          
-    else: 
+
+    else:
         return ""
-    
-    
-    
