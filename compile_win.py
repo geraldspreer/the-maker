@@ -14,14 +14,12 @@ import py2exe
 path = "system"
 dst_root = ".\\dist\\"
 
-
 def moveFiles(dirList, src_path_string, dst_path_string):
     if dirList != []:
         print "     copying files:"
         for files in dirList:
             shutil.copy(src_path_string + files, dst_path_string + files)
             print src_path_string + files + " To " + dst_path_string + files
-
 
 def createDirectory(dirEntry):
     src_path_string = dirEntry[0] + "\\"
@@ -33,7 +31,6 @@ def createDirectory(dirEntry):
         moveFiles(dirEntry[2], src_path_string, dst_path_string)
     elif ".svn" in src_path_string:
         print "ignoring " + src_path_string
-
 
 print "deleting " + dst_root + " folder tree and files"
 shutil.rmtree(dst_root, 1)  # ,1 to ignor any errors ie no folders to remove
