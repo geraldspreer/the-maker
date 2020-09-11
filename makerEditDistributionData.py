@@ -25,11 +25,8 @@ class Controller(makerController.SuperController):
         )
 
         self.dlg.ShowModal()
-        # dlg.saved = True File was saved
-        # dlg.saved = False File was not saved
 
         if self.dlg.saved:
-            # save data in any case
             self.model.project.writeDistributionTable(self.dlg.data)
 
             if not self.model.project.checkIfProjectIsSetUp():
@@ -40,36 +37,26 @@ class Controller(makerController.SuperController):
             self.model.project.serverLogin()
             if not self.model.project.server.status == "connected":
                 self.dlg.Destroy()
-
             else:
-
                 self.model.compareDataForCleanup(self.dlg.oldDistData, self.dlg.data)
-                # Task compare date sets for changes
+                # Task compare data sets for changes
                 self.dlg.Destroy()
         else:
             self.dlg.Destroy()
 
     def editDefaultRemoteFolders(self, event):
-
         data = self.model.project.readDefaultFoldersFile()
-
         default = makerDefaultRemoteFolderEditor.DefRemFolderEditor(self.view, data)
-
         default.ShowModal()
-        # dlg.saved = True File was saved
-        # dlg.saved = False File was not saved
 
         if default.saved:
-
             self.model.project.writeDefaultFoldersFile(default.data)
-
             default.Destroy()
-
         else:
             default.Destroy()
 
     def endEdit(self, evt):
-        # we bind it only after the edit has been made otherwise it will
+        # we bind the evnt only after the edit has been made otherwise it will
         # seriously slow down the app
         # self.validateColumn(evt)
 
@@ -88,7 +75,6 @@ class Controller(makerController.SuperController):
             evt.Veto()
 
     def checkAgain(self, evt):
-
         self.resetItemBackgrounds()
         self.markConflicts()
 
@@ -99,7 +85,7 @@ class Controller(makerController.SuperController):
         return self.dlg.oldDistData
 
     def markConflicts(self, event=None):
-        # unbind until the next edit
+        # unbind event until the next edit
         self.dlg.Unbind(self.view.wx.EVT_UPDATE_UI)
 
         markedItems = []
@@ -130,7 +116,6 @@ class Controller(makerController.SuperController):
         return listOfFolders
 
     def getConflictFilesForFolder(self, folder):
-
         conflictFiles = []
         files = []
 
@@ -153,8 +138,8 @@ class Controller(makerController.SuperController):
     def resetItemBackgrounds(self):
 
         for item in self.dlg.markedItems:
-            # due to some odd behavior in wx we have to set to white first
-            # before we can use another esp. custom color
+            # due to some odd behavior in wxPython we have to set to white first
+            # before we can use another custom color
             self.dlg.listCtrl.SetItemBackgroundColour(item, self.view.wx.WHITE)
             self.dlg.listCtrl.SetItemBackgroundColour(item, self.itemsColors[item])
             # ----
@@ -200,16 +185,9 @@ class EditDistributionData:
                             )
                         )
 
-        #        info = ""
-        #        for item in toCleanup:
-        #            info += str(item) + "\n"
-        #
-        #        print "Files to cleanup: " , info
-
         self.cleanup(toCleanup)
 
     def cleanup(self, toCleanup):
-
         self.controller.showProgress(
             limit=1, Message="Please wait...", title="Cleaning Up"
         )
