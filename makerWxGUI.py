@@ -16,10 +16,8 @@ import wx.lib.flatnotebook as nb
 import wx.py as pyShell
 import math
 
-# Used on OSX to get access to carbon api constants
 if wx.Platform == '__WXMAC__':
     import Carbon.Appearance
-
 
 def create(app):
     
@@ -28,364 +26,219 @@ def create(app):
 class wxPythonGUI(wx.Frame):
 
     def _init_coll_boxSizer1_Items(self, parent):
-        
-        
-        #this is actually a wxWindow
-
-        #parent.Add(self.topPanel, 0, border=0, flag=wx.FIXED_MINSIZE | wx.EXPAND)
-       
         parent.Add(self.splitter, 1, border=0, flag=wx.EXPAND | wx.GROW)
-      
 
     def _init_coll_boxSizer2_Items(self, parent):
-        
-
         pass
-        #parent.Add(self.notebook1, 0, border=0, flag=wx.EXPAND)
-        #parent.Add(self.styledTextCtrl1, 1, border=0, flag=wx.EXPAND)
-        
-
-
-#this is some menu items
-       
 
     def _init_coll_code_Items(self, parent):
-        
         self.MenuItemHTML = parent.AppendMenu(help='(X)HTML Tags',
                            id=-1,
                            submenu = self.subMenuHTML, 
                            text=u'HTML'
                            )
-        
-        
         parent.AppendSeparator()
-        
         self.MenuItemCSS = parent.AppendMenu(help='CSS',
                            id=-1,
                            submenu = self.subMenuCSS, 
                            text=u'CSS'
                            )
-        
-        
-        
         parent.AppendSeparator()
-        
         self.MenuItemMarkers = parent.AppendMenu(help='insert a marker',
                            id=-1,
                            submenu = self.SubMenuMarkers, 
                            text=u'Markers'
                            )
-        
         parent.AppendSeparator()
-        
         self.MenuItemComment = parent.Append(help='Insert Comment !',
                            id=-1,
                            kind=wx.ITEM_NORMAL, 
                            text=u'Comment\tCtrl+Shift+c'
                            )
-           
-           
         parent.AppendSeparator()
-        
         self.MenuItemMarkdown = parent.Append(help='Markdown !',
                            id=-1,
                            kind=wx.ITEM_NORMAL, 
                            text=u'Markdown\tCtrl+Shift+m'
                            )
-        
 
     def _init_coll_ftp_Items(self, parent):
-        
-
         self.MenuItemEditDist = parent.Append(help='edit the distribution table',
                                               id=-1,
                                               kind=wx.ITEM_NORMAL,
                                               text=u'Edit Distribution Table'
                                               )
-        
         parent.AppendSeparator()
-        
         self.MenuItemPublish = parent.Append(help='',
                                                  id=-1,
                                                  kind=wx.ITEM_NORMAL,
                                                  text=u'Publish\tCtrl+u'
                                                  )
-
-
         self.MenuItemFullUpload = parent.Append(help='upload everything',
                                                  id=-1,
                                                  kind=wx.ITEM_NORMAL,
                                                  text=u'Upload Everything'
                                                  )
-
-
-
-
-
-
         self.MenuItemBrowseFtp = parent.Append(help='',
                                                id=-1,
                                                kind=wx.ITEM_NORMAL,
                                                text=u'Browse Server'
                                                )
         parent.AppendSeparator() 
-        
         self.MenuItemSetupFTP = parent.Append(help='setup your project',
                                                 id=-1,
                                                 kind=wx.ITEM_NORMAL,
                                                 text=u'Setup FTP Connection'
                                                 )
-        
-        
-        
-               
         self.Bind(wx.EVT_MENU,
                   self.OnFtpDistributiontableMenu,
                   self.MenuItemEditDist
                   )
-        
-#        self.Bind(wx.EVT_MENU,
-#                  self.OnFtpUploadMenu,
-#                  self.MenuItemUploadFile                  
-#                  )
-        
         self.Bind(wx.EVT_MENU,
                   self.CallController,
-                  self.MenuItemFullUpload                  
+                  self.MenuItemFullUpload
                   )
-        
-        
-
-
-
-
 
     def _init_coll_edit_Items(self, parent):
-        
         self.MenuItemUndo = parent.Append(help='undo',
                                          id=-1,
                                          kind=wx.ITEM_NORMAL,
                                          text=u'Undo\tCtrl+z'
                                          )
-        
         self.MenuItemRedo = parent.Append(help=u'copy selection',
                                           id=-1,
                                           kind=wx.ITEM_NORMAL,
                                           text=u'Redo\tCtrl+y'
                                           )
-      
-        
         parent.AppendSeparator()
-        
         self.MenuItemCut = parent.Append(help='cut',
                                          id=-1,
                                          kind=wx.ITEM_NORMAL,
                                          text=u'Cut\tCtrl+x'
                                          )
-        
         self.MenuItemCopy = parent.Append(help=u'copy selection',
                                           id=-1,
                                           kind=wx.ITEM_NORMAL,
                                           text=u'Copy\tCtrl+c'
                                           )
-        
         self.MenuItemPaste = parent.Append(help='paste selection',
                                            id=-1,
                                            kind=wx.ITEM_NORMAL,
                                            text=u'Paste\tCtrl+v'
                                            )
-        
         parent.AppendSeparator()
-        
-        
         self.MenuItemReplace = parent.Append(help='Replace',
                                            id=-1,
                                            kind=wx.ITEM_NORMAL,
                                            text=u'Replace\tCtrl+r'
                                            )
-        
         self.MenuItemFind = parent.Append(help='Find',
                                            id=-1,
                                            kind=wx.ITEM_NORMAL,
                                            text=u'Find\tCtrl+f'
                                            )
-        
         self.MenuItemFindNext = parent.Append(help='Find Next',
                                            id=-1,
                                            kind=wx.ITEM_NORMAL,
                                            text=u'Find Next\tCtrl+g'
                                            )
-        
-        
-        
-                
-        
-              
-#        
-#        self.Bind(wx.EVT_MENU,
-#                  self.CallController,
-#                  self.MenuItemFind
-#                  )
-#        
-#        self.Bind(wx.EVT_MENU,
-#                  self.CallController,
-#                  self.MenuItemFindNext
-#                  )
-#        
-#        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnEditEnlargeMenu, 
-#                  self.MenuItemFontInc
-#                  )
-#        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnEditReduceMenu, 
-#                  self.MenuItemFontDec
-#                  )
-#   
-   
+
     def _init_coll_view_Items(self, parent):
-        
-        
         self.MenuItemWrapWord = parent.Append(help='Wrap Words In Editor',
-                                              id=-1, 
-                                              kind=wx.ITEM_CHECK, 
+                                              id=-1,
+                                              kind=wx.ITEM_CHECK,
                                               text=u'Wrap Words In Editor\tCtrl+Shift+w')
-
-
-
         parent.AppendSeparator()
-        
-        
         self.MenuItemEditorStyles =  parent.AppendMenu(help='Editor Styles',
                                             id=-1,
                                             submenu = self.subMenuEditorStyles,
                                             text=u'Editor Styles'
                                             )
-         
         parent.AppendSeparator()
-        
         self.MenuItemFontInc = parent.Append(help='Increase Font Size', 
                                              id=-1,
                                               kind=wx.ITEM_NORMAL,
                                               text=u'Increase Font Size\tCtrl+='
                                               )
-        
         self.MenuItemFontDec = parent.Append(help='reduce Font Size',
-                                             id=-1, 
+                                             id=-1,
                                              kind=wx.ITEM_NORMAL,
                                              text=u'Decrease Font Size\tCtrl+-'
                                              )
-
-
         self.MenuItemFontNormal = parent.Append(help='Font Size to default',
-                                             id=-1, 
+                                             id=-1,
                                              kind=wx.ITEM_NORMAL,
                                              text=u'Font Size To Normal\tCtrl+0'
                                              )
 
 
-
     def _init_coll_filetypes_Items(self, parent):
-        
-
         self.MenuItemEditHead = parent.Append(help='',
-                                              id=-1, 
-                                              kind=wx.ITEM_NORMAL, 
+                                              id=-1,
+                                              kind=wx.ITEM_NORMAL,
                                               text=u'Edit .head')
-        
-        self.MenuItemEditRssHead = parent.Append(help='edit title for RSS feed', 
+        self.MenuItemEditRssHead = parent.Append(help='edit title for RSS feed',
                                                 id=-1,
-                                                kind=wx.ITEM_NORMAL, 
+                                                kind=wx.ITEM_NORMAL,
                                                 text=u'Edit RSS Title'
                                                 )
-        
-        
         self.MenuItemLanguages = parent.AppendMenu(help='manage project languages',
                            id=-1,
                            submenu = self.subMenuLanguages, 
                            text=u'Project Languages'
                            )
-        
         parent.AppendSeparator()
-        
         self.MenuItemSelectColor = parent.Append(help='Choose a color',
-                                              id=-1, 
-                                              kind=wx.ITEM_NORMAL, 
+                                              id=-1,
+                                              kind=wx.ITEM_NORMAL,
                                               text=u'Select Color')
-        
         parent.AppendSeparator()
-        
-                
         self.MenuItemUnderline = parent.Append(help='Underline',
-                                              id=-1, 
-                                              kind=wx.ITEM_NORMAL, 
+                                              id=-1,
+                                              kind=wx.ITEM_NORMAL,
                                               text=u'Underline')
-        
         self.MenuItemOblique = parent.Append(help='Oblique',
-                                              id=-1, 
-                                              kind=wx.ITEM_NORMAL, 
+                                              id=-1,
+                                              kind=wx.ITEM_NORMAL,
                                               text=u'Oblique')
-        
         self.MenuItemBold = parent.Append(help='Bold',
-                                              id=-1, 
-                                              kind=wx.ITEM_NORMAL, 
+                                              id=-1,
+                                              kind=wx.ITEM_NORMAL,
                                               text=u'Bold')
-        
         self.MenuItemLine_through = parent.Append(help='Line Through',
-                                              id=-1, 
-                                              kind=wx.ITEM_NORMAL, 
+                                              id=-1,
+                                              kind=wx.ITEM_NORMAL,
                                               text=u'Line Through')
-        
-        
-  
-    
+
     def _init_coll_sub_menu_markers(self, parent):
-        
-        self.MenuItemMarkerTodaysDate = parent.Append(help='', 
+        self.MenuItemMarkerTodaysDate = parent.Append(help='',
                                                     id=-1,
-                                                    kind=wx.ITEM_NORMAL, 
+                                                    kind=wx.ITEM_NORMAL,
                                                     text=u'Todays date - !todaysDate!')
-    
         self.MenuItemMarkerProjectName = parent.Append(help='', 
                                                     id=-1,
                                                     kind=wx.ITEM_NORMAL, 
                                                     text=u'Project Name - !projectName!')
-    
         self.MenuItemMarkerPageName = parent.Append(help='', 
                                                     id=-1,
                                                     kind=wx.ITEM_NORMAL, 
                                                     text=u'Page Name - !pageName!')
-        
         self.MenuItemMarkerCreationDate = parent.Append(help='', 
                                                     id=-1,
                                                     kind=wx.ITEM_NORMAL, 
                                                     text=u'Creation Date - !creationDate!')
-    
 
-
-
-
-    
     def _init_coll_sub_menu_languages(self, parent):
-        
-        self.MenuItemAddLanguage = parent.Append(help='add a language to this project', 
+        self.MenuItemAddLanguage = parent.Append(help='add a language to this project',
                                                     id=-1,
-                                                    kind=wx.ITEM_NORMAL, 
+                                                    kind=wx.ITEM_NORMAL,
                                                     text=u'Add Language')
-    
-        self.MenuItemRemoveLanguage = parent.Append(help='remove language from project', 
+        self.MenuItemRemoveLanguage = parent.Append(help='remove language from project',
                                                     id=-1,
-                                                    kind=wx.ITEM_NORMAL, 
+                                                    kind=wx.ITEM_NORMAL,
                                                     text=u'Remove Language')
-    
 
-        
-    
-    
     def _init_coll_new_files_Items(self, parent):
-       
-
         self.MenuItemNewContentFile = parent.Append(help='', 
                                                     id=-1,
                                                     kind=wx.ITEM_NORMAL, 
@@ -414,11 +267,6 @@ class wxPythonGUI(wx.Frame):
                                                 kind=wx.ITEM_NORMAL, 
                                                 text=u'.txt'
                                                 )
-        
-
-
-# added by Gerald July 7th 07
-        
 
         self.MenuItemNewHtmlFile = parent.Append(help='add new .html file', 
                                                  id=-1,
@@ -455,10 +303,7 @@ class wxPythonGUI(wx.Frame):
                                                     kind=wx.ITEM_NORMAL, 
                                                     text=u'other...'
                                                     )
-      
-      
- 
-    
+
     def _init_coll_pages_Items(self, parent):
                 
 
@@ -547,289 +392,91 @@ class wxPythonGUI(wx.Frame):
                                                    id=-1,
                                                    kind=wx.ITEM_NORMAL, 
                                                    text=u"Import 'Classic' Project")
-        
-#        
-#        self.MenuItemDeleteProject = parent.Append(help='Delete a maker project', 
-#                                                   id=-1,
-#                                                   kind=wx.ITEM_NORMAL, 
-#                                                   text=u'Delete Project')
-        
-        
-       
         parent.AppendSeparator()
-        
-        
         self.MenuItemSaveProjectAsTemplate = parent.Append(help='Save project as template', 
                                                    id=-1,
                                                    kind=wx.ITEM_NORMAL, 
                                                    text=u'Save Project As Template')
-        
-        
         parent.AppendSeparator()
-        
-        
-        
         self.MenuItemPrint = parent.Append(help='Print file', 
                                                    id=-1,
                                                    kind=wx.ITEM_NORMAL, 
                                                    text=u'Print '
                                                    )
-        
         parent.AppendSeparator()
-        
         self.MenuItemQuit = parent.Append(help=u'leave program', 
                                           id=wx.ID_EXIT,
                                           kind=wx.ITEM_NORMAL, 
                                           text=u'Exit'
                                           )
-        
-        
-#        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnDeleteFile, 
-#                  self.MenuItemDeleteFile
-#                  )
-#        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnPagesAddprojectMenu, 
-#                  self.MenuItemAddProject
-#                  )
-#        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnPagesImportProject, 
-#                  self.MenuItemImportProject
-#                  )
-#        
-#        
-#        
-        
-        
-        
-
-
-#    def _init_coll_languages_Items(self, parent):
-#        
-#
-#        self.MenuItemDeutsch = parent.Append(help='', 
-#                                             id=-1,
-#                                             kind=wx.ITEM_NORMAL, 
-#                                             text=u'German (de)'
-#                                             )
-#        
-#        self.MenuItemEnglish = parent.Append(help='', 
-#                                             id=-1,
-#                                             kind=wx.ITEM_NORMAL, 
-#                                             text=u'English (en)'
-#                                             )
-#        
-#    
 
     def _init_coll_mainMenuBar_Menus(self, parent):
-        
+        parent.Append(menu=self.pages, title=u'Files')
+        parent.Append(menu=self.edit, title=u'Edit')
+        parent.Append(menu=self.view, title=u'View')
+        parent.Append(menu=self.images, title=u'Images')
+        parent.Append(menu=self.ftp, title=u'FTP')
+        parent.Append(menu=self.filetypes, title=u'Tools')
+        parent.Append(menu=self.insert, title=u'Insert')
+        parent.Append(menu=self.help, title=u'Help')
 
-        parent.Append(menu=self.pages, 
-                      title=u'Files'
-                      )
-        
-        parent.Append(menu=self.edit, 
-                      title=u'Edit'
-                      )
-        
-        
-        parent.Append(menu=self.view, 
-                      title=u'View'
-                      )
-        
-        
-#        parent.Append(menu=self.parts, 
-#                      title=u'Parts'
-#                      )
-        
-        parent.Append(menu=self.images, 
-                      title=u'Images'
-                      )
-        
-        parent.Append(menu=self.ftp, 
-                      title=u'FTP'
-                      )
-        
-        
-        parent.Append(menu=self.filetypes, 
-                      title=u'Tools'
-                      )
-        
-                
-        parent.Append(menu=self.insert, 
-                      title=u'Insert'
-                      )
-        
-        parent.Append(menu=self.help, 
-                      title=u'Help'
-                      )
-        
-
-#    def _init_coll_parts_Items(self, parent):
-#
-#        
-#        self.MenuItemEditNav = parent.Append(help='', 
-#                                             id=-1,
-#                                             kind=wx.ITEM_NORMAL, 
-#                                             text=u'Edit Navigation'
-#                                             )
-#        
-#        self.MenuItemEditBody = parent.Append(help='', 
-#                                         id=-1, 
-#                                         kind=wx.ITEM_NORMAL,
-#                                         text=u'Edit Top of Page'
-#                                         )
-#        
-#        self.MenuItemEditFoot = parent.Append(help='', 
-#                                              id=-1, 
-#                                              kind=wx.ITEM_NORMAL,
-#                                              text=u'Edit Foot'
-#                                              )
-#        parent.AppendSeparator()
-#       
-       
-     
-    
-    
     def _init_coll_help_Items(self, parent):
-       
         parent.AppendSeparator() 
-
         self.MenuItemTutorial = parent.Append(help='', 
                                               id=-1, 
                                               kind=wx.ITEM_NORMAL,
                                               text=u'Tutorial'
                                               )
-        
         parent.AppendSeparator()
-        
-        
         self.MenuItemLearnHTMLandCSS = parent.Append(help='', 
                                               id=-1, 
                                               kind=wx.ITEM_NORMAL,
                                               text=u'HTML and CSS Resources'
                                               )
 
-       
         parent.AppendSeparator()
-       
-        
         self.MenuItemFeedback = parent.Append(help='', 
                                               id=-1, 
                                               kind=wx.ITEM_NORMAL,
                                               text=u'Feedback'
                                               )
-        
         self.MenuItemBugReport = parent.Append(help='', 
                                                id=-1,
                                                kind=wx.ITEM_NORMAL, 
                                                text=u'Bugreport'
                                                )
-        
         self.MenuItemWebsite = parent.Append(help='', 
                                              id=-1, 
                                              kind=wx.ITEM_NORMAL,
                                              text=u'Visit Project Website'
                                              )
-       
         parent.AppendSeparator()
         self.MenuItemLicense = parent.Append(help='', 
                                               id=-1, 
                                               kind=wx.ITEM_NORMAL,
                                               text=u'License')
-  
-# this part is for the Mac App About Dialog is putting the About on Win in the
-# Help menu
-#------------------------------------------
-       
         parent.Append(wx.ID_ABOUT,   "&About")
-       
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnHelpItemsAbout, 
-#                  id=wx.ID_ABOUT
-#                  )
-    
-# ------------------------------------------
-        
-#        self.MenuItemAbout = parent.Append(help='',id = -1, kind=wx.ITEM_NORMAL, text=u'About')
-#        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnHelpItemsAbout, 
-#                  self.MenuItemAbout
-#                  )
-        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnHelpItemsTutorial, 
-#                  self.MenuItemTutorial
-#                  )
-        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnCheckForUpdate, 
-#                  self.MenuItemUpdate
-#                  )
-        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnFeedbackMenu, 
-#                  self.MenuItemFeedback
-#                  )
-#        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnHelpWebsiteMenu, 
-#                  self.MenuItemWebsite
-#                  )
-        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnHelpReport_a_bugMenu,  
-#                  self.MenuItemBugReport
-#                  )
-        
-#        self.Bind(wx.EVT_MENU, 
-#                  self.OnHelpDonateMenu, 
-#                  self.MenuItemDonation
-#                  )
-
-
 
     def _init_coll_images_Items(self, parent):
-        
-
         self.MenuItemImportImage = parent.Append(help='', 
                                                  id=-1,
                                                  kind=wx.ITEM_NORMAL, 
                                                  text=u'Import Image'
                                                  )
-        
         self.MenuItemDeleteImage = parent.Append(help='', 
                                                  id=-1,
                                                  kind=wx.ITEM_NORMAL, 
                                                  text=u'Delete Image'
                                                  )
-        
-        
         parent.AppendSeparator()
-        
         self.MenuItemSyncImages = parent.Append(help='sync images', 
                                                  id=-1,
                                                  kind=wx.ITEM_NORMAL, 
                                                  text=u'Sync Images With Server'
                                                  )
-        
-        
-        
-        
-
-
-
-#status bar
-
 
     def _init_coll_statusBar1_Fields(self, parent):
-        
         parent.SetFieldsCount(5)
-
         parent.SetStatusText(number=0, text=u'Status')
         parent.SetStatusText(number=1, text=u'Current Project')
         parent.SetStatusText(number=2, text=u'Language')
@@ -837,315 +484,141 @@ class wxPythonGUI(wx.Frame):
         parent.SetStatusText(number=4, text=u'Files in queue ')
         parent.SetStatusWidths([-1, -1, -1, -1, 200])
 
-
-
-
-
-
-
-
-    
-    
     def _init_utils(self):
-        
         self.mainMenuBar = wx.MenuBar()
-
         self.pages = wx.Menu(title=u'')
-
         self.edit = wx.Menu(title=u'')
-        
         self.view = wx.Menu(title=u'')
-
         self.ftp = wx.Menu(title=u'')
-
         self.insert = wx.Menu(title=u'')
-
         self.images = wx.Menu(title=u'')
-
         self.filetypes = wx.Menu(title=u'')
-
         self.help = wx.Menu(title=u'')
-
         self.additional_projects = wx.Menu(title=u'')
-
         self.editorStyles = wx.Menu(title=u'')
-        
         self.new_files = wx.Menu(title=u'')
-        
         self.SubMenuMarkers = wx.Menu(title='')
-        
         self.subMenuLanguages = wx.Menu(title='')
-        
         self.subMenuEditorStyles = wx.Menu(title='')
-        
         self._init_coll_mainMenuBar_Menus(self.mainMenuBar)
         self._init_coll_pages_Items(self.pages)
         self._init_coll_edit_Items(self.edit)
         self._init_coll_view_Items(self.view)
-        
         self._init_coll_ftp_Items(self.ftp)
-        
-        
         self._init_coll_images_Items(self.images)
         self._init_coll_filetypes_Items(self.filetypes)
-       
         self._init_coll_help_Items(self.help)
-       
-        
         self._init_coll_new_files_Items(self.new_files)
         self._init_coll_sub_menu_markers(self.SubMenuMarkers)
         self._init_coll_sub_menu_languages(self.subMenuLanguages)
-        
-        # the submenus
-        #---------
-        #---------
-        #---------
         self.subMenuStructure = wx.Menu(title=u'')
-        
-        #---------
-        #---------
-        #---------
         self.subMenuMeta_Information = wx.Menu(title=u'')
-        
-        #---------
-        #---------
-        #---------
         self.subMenuText = wx.Menu(title=u'')
-        
-        #---------
-        #---------
-        #---------
         self.subMenuLinks = wx.Menu(title=u'')
-        
-        #---------
-        #---------
-        #---------
         self.subMenuImages_and_Objects = wx.Menu(title=u'')
-        
-        #---------
-        #---------
-        #---------
         self.subMenuLists = wx.Menu(title=u'')
-        
-        #---------
-        #---------
-        #---------
         self.subMenuTables = wx.Menu(title=u'')
-        
-        #---------
-        #---------
-        #---------
         self.subMenuForms = wx.Menu(title=u'')
-        
-        #---------
-        #---------
-        #---------
         self.subMenuScripting = wx.Menu(title=u'')
-        
-        #---------
-        #---------
-        #---------
         self.subMenuPresentational = wx.Menu(title=u'')
-        
         self.subMenuHTML = wx.Menu(title=u'')
-        
         self.subMenuCSS = wx.Menu(title=u'')
-        
-#--------
-#--------
-        
-        self.subMenuHTML.AppendMenu(help='Structure', 
-        id=-1, 
-        submenu = self.subMenuStructure, 
-        text=u'Structure')
-        
-        self.subMenuHTML.AppendMenu(help='Meta_Information', 
-        id=-1, 
-        submenu = self.subMenuMeta_Information, 
-        text=u'Meta_Information')
-        
-        self.subMenuHTML.AppendMenu(help='Text', 
-        id=-1, 
-        submenu = self.subMenuText, 
-        text=u'Text')
-        
-        self.subMenuHTML.AppendMenu(help='Links', 
-        id=-1, 
-        submenu = self.subMenuLinks, 
-        text=u'Links')
-        
-        self.subMenuHTML.AppendMenu(help='Images_and_Objects', 
-        id=-1, 
-        submenu = self.subMenuImages_and_Objects, 
-        text=u'Images_and_Objects')
-        
-        self.subMenuHTML.AppendMenu(help='Lists', 
-        id=-1, 
-        submenu = self.subMenuLists, 
-        text=u'Lists')
-        
-        self.subMenuHTML.AppendMenu(help='Tables', 
-        id=-1, 
-        submenu = self.subMenuTables, 
-        text=u'Tables')
-        
-        self.subMenuHTML.AppendMenu(help='Forms', 
-        id=-1, 
-        submenu = self.subMenuForms, 
-        text=u'Forms')
-        
-        self.subMenuHTML.AppendMenu(help='Scripting', 
-        id=-1, 
-        submenu = self.subMenuScripting, 
-        text=u'Scripting')
-        
-        self.subMenuHTML.AppendMenu(help='Presentational', 
-        id=-1, 
-        submenu = self.subMenuPresentational, 
-        text=u'Presentational')
+        self.subMenuHTML.AppendMenu(help='Structure', id=-1, submenu = self.subMenuStructure, text=u'Structure')
+        self.subMenuHTML.AppendMenu(help='Meta_Information', id=-1, submenu = self.subMenuMeta_Information, text=u'Meta_Information')
+        self.subMenuHTML.AppendMenu(help='Text', id=-1, submenu = self.subMenuText, text=u'Text')
+        self.subMenuHTML.AppendMenu(help='Links', id=-1, submenu = self.subMenuLinks, text=u'Links')
+        self.subMenuHTML.AppendMenu(help='Images_and_Objects', id=-1, submenu = self.subMenuImages_and_Objects, text=u'Images_and_Objects')
+        self.subMenuHTML.AppendMenu(help='Lists', id=-1, submenu = self.subMenuLists, text=u'Lists')
+        self.subMenuHTML.AppendMenu(help='Tables', id=-1, submenu = self.subMenuTables, text=u'Tables')
+        self.subMenuHTML.AppendMenu(help='Forms', id=-1, submenu = self.subMenuForms, text=u'Forms')
+        self.subMenuHTML.AppendMenu(help='Scripting', id=-1, submenu = self.subMenuScripting, text=u'Scripting')
+        self.subMenuHTML.AppendMenu(help='Presentational', id=-1, submenu = self.subMenuPresentational, text=u'Presentational')
 
-
-# Menu Items
-        
-                
         self.MenuItemHTML_body = self.subMenuStructure.Append(help='The main body of an HTML document',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<body>   The main body of an HTML document')
-        
-        
-        
-        
-        
+
         self.MenuItemHTML_div = self.subMenuStructure.Append(help='Division. Defines a block of HTML',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<div>   Division. Defines a block of HTML\tCtrl+Shift+D')
-        
-        
-        
-        
-        
+
         self.MenuItemHTML_head = self.subMenuStructure.Append(help='The header of an HTML document',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<head>   The header of an HTML document')
-        
-        
-        
-        
-        
+
         self.MenuItemHTML_html = self.subMenuStructure.Append(help='The root element of the (X)HTML document',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<html>   The root element of the (X)HTML document')
-        
-        
+
         self.MenuItemHTML_span = self.subMenuStructure.Append(help='Used to group in-line HTML',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<span>   Used to group in-line HTML')
-        
-        
-        
-        
-        
-        # menu items
-        
+
         self.MenuItemHTML_DOCTYPE = self.subMenuMeta_Information.Append(help='Document type declaration',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<DOCTYPE>   Document type declaration')
-        
-        
-        
-        
+
         self.MenuItemHTML_link = self.subMenuMeta_Information.Append(help='Defines a link to an external resource',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<link>   Defines a link to an external resource')
-        
-        
-        
+
         self.MenuItemHTML_meta = self.subMenuMeta_Information.Append(help='Meta information',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<meta>   Meta information')
-        
-      
-        
-        
+
         self.MenuItemHTML_style = self.subMenuMeta_Information.Append(help='Used to define CSS at a page-level ',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<style>   Used to define CSS at a page-level ')
-        
-        
-        
-        
+
         self.MenuItemHTML_title = self.subMenuMeta_Information.Append(help='The title of a page',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<title>   The title of a page')
-        
-       
-        
-        # menu items
-        
+
         self.MenuItemHTML_abbr = self.subMenuText.Append(help='Abbreviation',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<abbr>   Abbreviation')
-       
-        
+
         self.MenuItemHTML_acronym = self.subMenuText.Append(help='Acronym',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<acronym>   Acronym')
-        
-       
-        
-        
+
         self.MenuItemHTML_address = self.subMenuText.Append(help='Address',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<address>   Address')
-        
-       
-        
+
         self.MenuItemHTML_bdo = self.subMenuText.Append(help='Bi-directional text',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<bdo>   Bi-directional text')
-        
-        
-        
+
         self.MenuItemHTML_blockquote = self.subMenuText.Append(help='A large quotation',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<blockquote>   A large quotation')
-        
-       
-        
-        
-        
+
         self.MenuItemHTML_br = self.subMenuText.Append(help='A line break',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<br />   A line break\tCtrl+Return')
-        
-        
-        
-        
-        
+
         self.MenuItemHTML_cite = self.subMenuText.Append(help='in-line citation',
         id=-1,
         kind=wx.ITEM_NORMAL,
         text=u'<cite>   in-line citation')
-      
-        
-        
-        
+
         self.MenuItemHTML_code = self.subMenuText.Append(help='Computer code',
         id=-1,
         kind=wx.ITEM_NORMAL,
@@ -2576,24 +2049,16 @@ class wxPythonGUI(wx.Frame):
         
         
     def __init__(self, app):  
-        
-        
         self.BoilerPlate = makerCopyright.getCopyright()
-              
         self.ProgressBars = [] # this is a stack for progress bars
-        
         self.ModifierBind = False
-        
         self.application = app
-        
         self._init_ctrls(None)
         self._init_sizers()
         self.wx = wx
-        
         self.saved= True
         self.selection= None
-        
-        # set interface fonts
+
         if wx.Platform == '__WXMSW__':
             self.interfaceSetFonts(10,-2)
             
@@ -2842,11 +2307,8 @@ class wxPythonGUI(wx.Frame):
             value = dlg.GetValue()
 
         dlg.Destroy()
-        #print "PASSW VALUE ", value
         return value
-    
-    
-    
+
     def InputWithValue(self, question="?", value=""):
         """
         user input Dialog 
@@ -2860,23 +2322,16 @@ class wxPythonGUI(wx.Frame):
 
         dlg.Destroy()
         return value
-    
-    
+
     def SingleChoiceDialog(self, choices, title="", message="Please choose..."):
-        
         value = None
-        dlg = wx.SingleChoiceDialog(
-                self, message, title,
-                choices, 
-                wx.CHOICEDLG_STYLE
-                )
+        dlg = wx.SingleChoiceDialog( self, message, title, choices, wx.CHOICEDLG_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             value = dlg.GetStringSelection()
 
         dlg.Destroy()
         return value
-    
 
     def Input(self, Question="?", title=""):
         """
@@ -2894,19 +2349,13 @@ class wxPythonGUI(wx.Frame):
         dlg.Destroy()
         return value
 
-
-
-   
     def OnFtpDistributiontableMenu(self, event):
         self.controller.actionEditDistributionTable()
-    
 
-    
     #===========================================================================
-    #  all kinds of dialogs
+    #  Various dialogs
     #===========================================================================
-    
-    
+
     def ImageDialogWithDir(self, dir):        
         """
         Display an image select dialog
@@ -2914,29 +2363,18 @@ class wxPythonGUI(wx.Frame):
         returns None if no image was selected
         """
         dlg = ib.ImageDialog(self, dir)
-        
         dlg.Centre()
 
         if dlg.ShowModal() == wx.ID_OK:            
-            
             if dlg.GetDirectory() == dir:
-            
                 Image = dlg.GetFile()
-            
             else:
                 self.Error("Image is not in the project folder ! Please import first...")
                 Image = None
-            
         else:
-           
            Image = None
-        
         dlg.Destroy()
-        
         return Image
- 
- 
- 
 
     def ImageDialog(self):
         """
@@ -2944,10 +2382,7 @@ class wxPythonGUI(wx.Frame):
         returns filename of image
         returns None if no image was selected
         """
-                
         dlg = ib.ImageDialog(self)
-        
-
         dlg.Centre()
 
         if dlg.ShowModal() == wx.ID_OK:
@@ -2955,9 +2390,8 @@ class wxPythonGUI(wx.Frame):
         else:
             Image=None
         dlg.Destroy()
-        
         return Image
-        
+
     def Ask_YesOrNo(self,Message):
         """Returns Yes or No."""
 
@@ -2967,26 +2401,17 @@ class wxPythonGUI(wx.Frame):
             ret = dlg.ShowModal()
         finally:
             dlg.Destroy()
-        
         if ret == wx.ID_YES:
             Answer = 'Yes'
         elif ret == wx.ID_NO:
             Answer = 'No'
-           
-        
         return Answer
 
-    
     def doShell(self, frame, nb=None, log=None):
-        
         frame = ShellFrame(self, -1, "Python Shell", size=(700, 400), pos=(150,150),
         style = wx.DEFAULT_FRAME_STYLE)
-        
         frame.Show(True)
-        
         return frame.getShell()
-    
-    
 
     def Ask(self,Message):
         """
@@ -2998,163 +2423,61 @@ class wxPythonGUI(wx.Frame):
             ret = dlg.ShowModal()
         finally:
             dlg.Destroy()
-        
         if ret == wx.ID_OK:
             Answer = 'Ok'
         elif ret == wx.ID_CANCEL:
             Answer = 'Cancel'
-           
-        
         return Answer
-        
-    
-    def MessageNotModal(self, Message):    
-        
-        
+
+    def MessageNotModal(self, Message):
         dlg = wx.MessageDialog(self, Message,
           'Info', wx.OK | wx.ICON_INFORMATION)
         dlg.Show()
-          
-    
-    def Message(self,Message):    
-        
+
+    def Message(self,Message):
         dlg = wx.MessageDialog(self, Message,
           'Info', wx.OK | wx.ICON_INFORMATION)
         try:
             dlg.ShowModal()
         finally:
             dlg.Destroy()
-      
         return
  
     def Warning (self,Message):
-        
-        #self.errorhandler.write(Message)
         dlg = wx.MessageDialog(self, Message,
           'Alert', wx.OK | wx.ICON_EXCLAMATION)
         try:
             dlg.ShowModal()
         finally:
             dlg.Destroy()
-        
-        
-        
         return
-       
-          
+
     def Error(self,Message):
-        
-        #sys.stderr.write(Message)
         dlg = wx.MessageDialog(self, Message,
           'Error', wx.OK | wx.ICON_ERROR)
         try:
             dlg.ShowModal()
         finally:
             dlg.Destroy()
-        
-        
-        
         return
-        
-    # -------
-    #
-    # some functions for a pulsing progress bar
-    #
-    
-        
+
     def PulseProgress(self, Message=""):
-                
         self.PulseBar = self.GetLastProgressBar()
         self.PulseBar.Pulse(Message)
         self.fitRefreshAndCenter(self.PulseBar)
 
-        
-    
-    # ------- Pulse stuff end -----------------------------------------------
-    
-#    def ShowProgress(self,max,Message):
-#        
-#
-#        self.Progress = wx.ProgressDialog("Progress...",
-#                               Message,
-#                               maximum = max,
-#                               parent=self,
-#                               style = wx.PD_APP_MODAL | wx.PD_AUTO_HIDE)
-#        self.AddProgressBar(self.Progress)
-#
-#
-#    def UpdateProgress(self,count):
-#        #print self.Progress.max
-#        Bar = self.GetLastProgressBar()
-#        Bar.Update(count)
-#        self.fitRefreshAndCenter(Bar)
-#
-#        
-#    
-#    def UpdateProgressMessage(self,count,message):
-#        Bar = self.GetLastProgressBar()
-#        Bar.Update(count,message)
-#        self.fitRefreshAndCenter(Bar)
-        
-    
+
     def fitRefreshAndCenter(self, widget):
         """
         is calling .Fit(), .Refresh() and .CenterOnScreen() for the widget
         """
-        
         widget.Fit()
         widget.Refresh()
         widget.CenterOnScreen()
-    
-    
-    
-#    def KillProgress(self):
-#        try:
-#          Bar = self.GetLastProgressBar()
-#          self.DeleteProgressBar(Bar)
-#          Bar.Destroy()
-#          if self.keepGoing:
-#              self.StopPulse()
-#        except:
-#          print "unable to Kill Progress Bar"
-#    
-#    def DeleteProgressBar(self,ThisOne):
-#        """
-#        ! is deleting the instance from the stack 
-#                
-#        """                        
-#        self.ProgressBars.remove(ThisOne)
-#        
-#                               
-#    def AddProgressBar(self,ThisOne):
-#        """
-#        ThisOne is an instance of a wxProgressbar
-#        """
-#        self.ProgressBars.append(ThisOne)                       
-#    
-#    
-#    def GetLastProgressBar(self):
-#        """
-#        returns the instance of the progressbar that was last added to the stack
-#        """
-#        
-#        return self.ProgressBars[-1]
-#    
-#    
-#    def GetAllProgressBars(self):    
-#        return self.ProgressBars
-#    
-#    
-    
-    
-    
+
     def OnDeleteFile(self, event):        
         self.controller.actionDeleteCurrentFile()
 
-
-    
-
-    # here are the tag tools
     def OnP_buttonButton(self, event):
         self.insert_xhtml_tag(['<p>','</p>'])
 
@@ -3172,198 +2495,101 @@ class wxPythonGUI(wx.Frame):
 
     def Onul_buttonButton(self, event):
         self.insert_xhtml_tag(['<ul>','</ul>'])
-        #event.Skip()
-
 
     def Onli_buttonButton(self, event):
         self.insert_xhtml_tag(['<li>','</li>'])
-        #event.Skip()
-        
+
     def Onol_buttonButton(self, event):
         self.insert_xhtml_tag(['<ol>','</ol>'])
-        #event.Skip()
-
-
-   
 
     def OnImageButton(self, event):
-        
         dir = self.cms.path_parts+'gfx/'
-        #print dir
-        # set the initial directory for the demo bitmaps
         initial_dir = os.path.join(dir, 'bitmaps')
-
-        # open the image browser dialog
         dlg = ib.ImageDialog(self, dir)
-
         dlg.Centre()
-
         if dlg.ShowModal() == wx.ID_OK:
-            
-            # show the selected file
-            #print "You Selected File: " + dlg.GetFile()
             Image=dlg.GetFile()
-            
         else:
            pass
         dlg.Destroy()
-        
-        
-        
         try:
             Image=os.path.split(Image)
             Image=Image[1]
             self.styledTextCtrl1.AddText('<img src="'+self.cms.url+self.cms.gfxFolder+Image+'" align="left" alt="'+Image+' " />')
             self.saved= False
-            #self.saveButton.Enable()
-            #self.publishButton.Enable()
         except:
             pass
-    
-    
-    
+
     def OnProjectEdittemplatesMenu(self, event):
         self.controller.actionEditTemplate()
 
     def OnImagesDelete_imageMenu(self, event):
         self.controller.actionDeleteImage()
 
-          
-    
     def OnPagesAddprojectMenu(self, event):
         self.controller.addNewProject()
 
-    
-
     def OnFtpBrowseServerMenu(self, event):        
         self.look_busy()
-        
         path = self.controller.actionBrowseServer() 
-        #print "this is the returned path", path
-        self.relax()        
+        self.relax()
 
     def look_busy(self):
-        #print 'getting busy'
         cursor = wx.StockCursor(wx.CURSOR_WATCH)
         wx.BeginBusyCursor(cursor)
-        
-   
+
     def busy(self):
         #print 'getting busy'
         cursor = wx.StockCursor(wx.CURSOR_WATCH)
         wx.BeginBusyCursor(cursor)
-   
-   
+
     def relax(self):
-        
         if wx.IsBusy()==True:
             wx.EndBusyCursor()
         else:
             pass
-        
         print 'done...'
-        
 
-  
-
-    
-    
-    
     def OnEditReduceMenu(self,event):
-        #size = str((self.tree.GetFont()).GetPointSize())
         """
         reduce the editor font
         """
-        
         zoom = self.styledTextCtrl1.GetZoom()
-        
-        
         newZoom=int(zoom)-1
         try:
             self.styledTextCtrl1.SetZoom(newZoom)
         except:
             self.Error("You cannot reduce the Font size any further...")
-        #event.Skip()
-        
-        
-   
 
-
-
-
-    
     def OnaddToListButton(self,event):
         self.Message("this is not working")
-        #event.Skip()
-    
-    
-    
-    
-    
+
     def Version(self):
-        
         return "0.5.9"
-        
-  
+
     def ColorDialog(self):
 
         dlg = wx.ColourDialog(self)
-
-        # Ensure the full colour dialog is displayed, 
-        # not the abbreviated version.
         dlg.GetColourData().SetChooseFull(True)
 
         if dlg.ShowModal() == wx.ID_OK:
-
-            # If the user selected OK, then the dialog's wx.ColourData will
-            # contain valid information. Fetch the data ...
             data = dlg.GetColourData()
             self.color_data = str(data.GetColour().Get())
-            
-            
-
-            # ... then do something with it. The actual colour data will be
-            # returned as a three-tuple (r, g, b) in this particular case.
-            
-
-        # Once the dialog is destroyed, Mr. wx.ColourData is no longer your
-        # friend. Don't use it again!
         dlg.Destroy()
 
-
-
-
-
-
     def SelectProject(self):
-
         dlg = wx.DirDialog(self, "Select a project to import:",
         style=wx.DD_DEFAULT_STYLE)
-    
-            # If the user selects OK, then we process the dialog's data.
-            # This is done by getting the path data from the dialog - BEFORE
-            # we destroy it. 
         if dlg.ShowModal() == wx.ID_OK:
-        
             return  dlg.GetPath()
         else:
             return None
 
-
-
-   
-        
- # --------------------------------------------------------------------------
-    
-  
     def getFileFromUser(self, dir=None, prompt = None):
- 
         if not dir:
             dir = os.getcwd()
-            
         if not prompt:
             prompt = "Choose a file..." 
-        
         wildcard = "all files (*.*)|*.*|"                   \
              "content Files (*.content)|*.content|"           \
              "CSS Files (*.css)|*.css|"                       \
@@ -3372,56 +2598,33 @@ class wxPythonGUI(wx.Frame):
              "plain Text file (*.txt)|*.txt|"                 \
              "maker Dynamic (*.dynamic)|*.dynamic"            \
              "Quicktime movie (*.mov) | *.mov"
-        
         dlg = wx.FileDialog(
               self, message = prompt, style=wx.OPEN | wx.CHANGE_DIR )
-  
-              # If the user selects OK, then we process the dialog's data.
-              # This is done by getting the path data from the dialog - BEFORE
-              # we destroy it.
         try:
             dlg.ShowModal()
-  
         finally:
-  
             paths =  dlg.GetPaths()
             dlg.Destroy()
             return paths
 
-               
-
- # ------------------------------------------------------------------------
-        
-        
-    
     def getDirFromUser(self, dialogMessage = None):
-
         self.dirDialog = wx.DirDialog(self, message = dialogMessage,
                                       style=wx.DD_DEFAULT_STYLE|
                                       wx.DD_NEW_DIR_BUTTON)
-        
-        
-          
-# ------------------------------------------------------------------------
- 
 
 #===============================================================================
 # Custom FlatNoteBook
 #===============================================================================
 
 class MyCustomNoteBook(nb.FlatNotebook):
-        
     def __init__(self, parent, ID, 
                  pos=wx.DefaultPosition, 
                  size=wx.DefaultSize, 
                  agwStyle = wx.lib.flatnotebook.FNB_FF2,
                  style= wx.lib.flatnotebook.FNB_NODRAG | wx.lib.flatnotebook.FNB_X_ON_TAB):
-    
-    
         self._bForceSelection = False
         self._nPadding = 60
         self._nFrom = 0
-            #style |= wx.TAB_TRAVERSAL
         self._pages = None
         self._windows = []
         self._popupWin = None
@@ -3429,26 +2632,20 @@ class MyCustomNoteBook(nb.FlatNotebook):
         self._agwStyle = agwStyle
         self._orientation = None
         self._customPanel = None
-    
         wx.PyPanel.__init__(self, parent, ID, pos, size, style)
         attr = self.GetDefaultAttributes()
         self.SetOwnForegroundColour(attr.colFg)
         self.SetOwnBackgroundColour(attr.colBg)
-    
         self._pages = MyPageContainer(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, style)
-    
         self.Bind(wx.EVT_NAVIGATION_KEY, self.OnNavigationKey)
-    
         self.Init()
-        
-        
+
 class MyPageContainer(nb.PageContainer):
     """
     This class acts as a container for the pages you add to :class:`FlatNotebook`.
     """
 
-    def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition,
-                 size=wx.DefaultSize, style=0):
+    def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize, style=0):
         """
         Default class constructor.
 
@@ -3504,7 +2701,7 @@ class MyPageContainer(nb.PageContainer):
             memDc.SetFont(boldFont)
 
         height = memDc.GetCharHeight()
-        tabHeight = height + nb.FNB_HEIGHT_SPACER # We use 10 pixels as padding
+        tabHeight = height + nb.FNB_HEIGHT_SPACER # Use 10 pixels as padding
 
         wx.PyPanel.__init__(self, parent, id, pos, wx.Size(size.x, tabHeight),
                             style|wx.NO_BORDER|wx.NO_FULL_REPAINT_ON_RESIZE|wx.WANTS_CHARS)
@@ -3515,11 +2712,11 @@ class MyPageContainer(nb.PageContainer):
 
         self._pDropTarget = nb.FNBDropTarget(self)
         self.SetDropTarget(self._pDropTarget)
-        
+
         #=======================================================================
         #  Here we plug in our custom Renderer Manager
         #=======================================================================
-        
+
         self._mgr = MyRendererMgr()
 
         self.Bind(wx.EVT_PAINT, self.OnPaint)
@@ -3538,8 +2735,6 @@ class MyPageContainer(nb.PageContainer):
         self.Bind(wx.EVT_KILL_FOCUS, self.OnKillFocus)
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
 
-
-        
     def IsTabVisible(self, page):
         """
         Returns whether a tab is visible or not.
@@ -3548,26 +2743,18 @@ class MyPageContainer(nb.PageContainer):
         """
 
         iLastVisiblePage = self.GetLastVisibleTab()
-        
         return page <= iLastVisiblePage and page >= self._nFrom
-
 
     def GetLastVisibleTab(self):
         """ Returns the last visible tab in the tab area. """
-
         if self._nFrom < 0:
             return -1
-
         ii = 0
-
         for ii in xrange(self._nFrom, len(self._pagesInfoVec)):
-            
             if self._pagesInfoVec[ii].GetPosition() == wx.Point(-1, -1):
                 break
 
         return ii-1
-
-
 
     def OnSetFocus(self, event=None):
         """
@@ -3575,28 +2762,22 @@ class MyPageContainer(nb.PageContainer):
 
         :param `event`: a :class:`FocusEvent` event to be processed.
         """
-
         if self._iActivePage < 0:
             if event:
                 event.Skip()
             return
 
         self.SetFocusedPage(self._iActivePage)
-        # make selection advance
         try:
-            # don't complain if this does not work
             self.SetSelection(self._iActivePage)
         except:
             pass
-   
-        
 
 # ---------------------------------------------------------------------------- #
 # Class FNBRendererMgr
 # A manager that handles all the renderers defined below and calls the
 # appropriate one when drawing is needed
 # ---------------------------------------------------------------------------- #
-
 
 class MyRendererMgr(nb.FNBRendererMgr):
     """
@@ -3607,26 +2788,15 @@ class MyRendererMgr(nb.FNBRendererMgr):
     def __init__(self):
         """ Default class constructor. """
 
-        # overridden
-        # does nothing
-
     def GetRenderer(self, style):
-
-        # Here we push our custom renderers
-        
         return MakerRenderer()
 
-
-
 class MakerRenderer(nb.FNBRenderer):
-    
-    
     def __init__(self):
         """ Default class constructor. """
 
         self._tabHeight = None
         self.renderPen = wx.Pen("#444444",1 )
-        
         if wx.Platform == "__WXMAC__":
             # Get proper highlight colour for focus rectangle from the
             # current Mac theme.  kThemeBrushFocusHighlight is
@@ -3637,9 +2807,7 @@ class MakerRenderer(nb.FNBRenderer):
                 brush = wx.Brush(wx.BLACK)
                 brush.MacSetTheme(Carbon.Appearance.kThemeBrushFocusHighlight)
                 c = brush.GetColour()
-                
             self._focusPen = wx.Pen(c, 3)
-        
 
     def DrawTabs(self, pageContainer, dc):
         """
@@ -3648,7 +2816,6 @@ class MakerRenderer(nb.FNBRenderer):
         :param `pageContainer`: an instance of :class:`FlatNotebook`;
         :param `dc`: an instance of :class:`DC`.
         """
-        
         pc = pageContainer
         if "__WXMAC__" in wx.PlatformInfo:
             # Works well on MSW & GTK, however this lines should be skipped on MAC
@@ -3675,7 +2842,6 @@ class MakerRenderer(nb.FNBRenderer):
 
         size = pc.GetSize()
 
-        # Background
         dc.SetTextBackground(pc.GetBackgroundColour())
         dc.SetTextForeground(pc._activeTextColour)
         dc.SetBrush(backBrush)
@@ -3684,45 +2850,9 @@ class MakerRenderer(nb.FNBRenderer):
 
         colr = pc.GetBackgroundColour()
         dc.SetPen(wx.Pen(colr))
-
-#        if pc.HasAGWFlag(FNB_FF2):
-#            lightFactor = (pc.HasAGWFlag(FNB_BACKGROUND_GRADIENT) and [70] or [0])[0]
-#            PaintStraightGradientBox(dc, pc.GetClientRect(), pc._tabAreaColour, LightColour(pc._tabAreaColour, lightFactor))
-#            dc.SetBrush(wx.TRANSPARENT_BRUSH)
-
         dc.DrawRectangle(0, 0, size.x, size.y)
-
-        # We always draw the bottom/upper line of the tabs
-        # regradless the style
         dc.SetPen(borderPen)
 
-#        if not pc.HasAGWFlag(FNB_FF2):
-#            self.DrawTabsLine(pc, dc)
-
-        # Restore the pen
-        dc.SetPen(borderPen)
-
-#        if pc.HasAGWFlag(FNB_VC71):
-#
-#            greyLineYVal  = (pc.HasAGWFlag(FNB_BOTTOM) and [0] or [size.y - 2])[0]
-#            whiteLineYVal = (pc.HasAGWFlag(FNB_BOTTOM) and [3] or [size.y - 3])[0]
-#
-#            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE))
-#            dc.SetPen(pen)
-#
-#            # Draw thik grey line between the windows area and
-#            # the tab area
-#            for num in xrange(3):
-#                dc.DrawLine(0, greyLineYVal + num, size.x, greyLineYVal + num)
-#
-#            wbPen = (pc.HasAGWFlag(FNB_BOTTOM) and [wx.BLACK_PEN] or [wx.WHITE_PEN])[0]
-#            dc.SetPen(wbPen)
-#            dc.DrawLine(1, whiteLineYVal, size.x - 1, whiteLineYVal)
-#
-#            # Restore the pen
-#            dc.SetPen(borderPen)
-
-        # Draw labels
         normalFont = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
         boldFont = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
         boldFont.SetWeight(wx.FONTWEIGHT_BOLD)
@@ -3746,10 +2876,6 @@ class MakerRenderer(nb.FNBRenderer):
 
             dc.SetPen(borderPen)
 
-#            if not pc.HasAGWFlag(FNB_FF2):
-#                dc.SetBrush((i==pc.GetSelection() and [selBrush] or [noselBrush])[0])
-
-            # Now set the font to the correct font
             dc.SetFont((i==pc.GetSelection() and [boldFont] or [normalFont])[0])
 
             # Add the padding to the tab width
@@ -3817,13 +2943,8 @@ class MakerRenderer(nb.FNBRenderer):
         :param `pageContainer`: an instance of :class:`FlatNotebook`;
         :param `page`: an instance of :class:`PageInfo`, representing a page in the notebook.
         """
-        
         return
-                
 
-
-
-    
     def DrawTabsLine(self, pageContainer, dc, selTabX1=-1, selTabX2=-1):
         """
         Draws a line over the tabs.
@@ -3833,16 +2954,10 @@ class MakerRenderer(nb.FNBRenderer):
         :param `selTabX1`: first x coordinate of the tab line;
         :param `selTabX2`: second x coordinate of the tab line.
         """
-        
         pc = pageContainer
-
         clntRect = pc.GetClientRect()
-
         dc.SetPen(self.renderPen)
-            
         dc.DrawLine(1, clntRect.height, clntRect.width-1, clntRect.height)
-        
-
 
     def DrawTab(self, pageContainer, dc, posx, tabIdx, tabWidth, tabHeight, btnStatus):
         """
@@ -3860,11 +2975,9 @@ class MakerRenderer(nb.FNBRenderer):
         pc = pageContainer
 
         if tabIdx == pc.GetSelection():
-#            borderPen = wx.Pen("#111111",1)
             borderPen = self._focusPen
         else:
             borderPen = wx.Pen("#888888",1)
-        
 
         #------------------------------------
         # Paint the tab with gradient
@@ -3925,46 +3038,20 @@ class MakerRenderer(nb.FNBRenderer):
 
             # Draw the tab
             self.DrawTabX(pc, dc, x_rect, tabIdx, btnStatus)
-        
-        
-        
-        
-
-
-#===============================================================================
-# 
-#    End Custom Flat Notebook
-#
-#===============================================================================
-
-
-
 
 class MySplitter(wx.SplitterWindow):
     def __init__(self, parent, ID, log):
         wx.SplitterWindow.__init__(self, parent, ID,
                                    style = wx.SP_LIVE_UPDATE | wx.SP_3DSASH | wx.SP_THIN_SASH)
 
-#        def paintSplitter(evt):
-#            
-#            pass
-            
-        
-        #self.Bind(wx.EVT_PAINT, paintSplitter)
-
-        
 class MyArtProvider(wx.ArtProvider):
     def __init__(self):
         wx.ArtProvider.__init__(self)
-        
 
     def CreateBitmap(self, artid, client, size):
-       
         bmp = wx.NullBitmap
         bmp = makeCustomArt()
-
-        return bmp        
-
+        return bmp
 
 class ShellFrame(wx.Frame):
     def __init__(
@@ -3972,34 +3059,24 @@ class ShellFrame(wx.Frame):
             size=wx.DefaultSize, style=wx.DEFAULT_FRAME_STYLE
             ):
 
-        
         self.parent = parent
         wx.Frame.__init__(self, parent, ID, title, pos, size, style)
         self.shell = pyShell.shell.Shell(self, -1, introText="")
         self.shell.zoom(-1)
         self.Bind(wx.EVT_CLOSE,  self.onClose)
  
-    
- 
     def onClose(self, event):
-        
         w = "Your script is still running! "
         w += "Wait for it to finish or kill it..."
-        
+
         if not self.shell.GetText().endswith(">>> "):
             self.parent.Warning(w)
             return
-        
+
         self.Destroy()
  
     def getShell(self):
         return self.shell
 
-
-
 def makeCustomArt():
-    
-    return wx.Image(os.path.join(os.path.dirname(sys.argv[0]), 
-                                 "./system/makerPart.png"), 
-                                 wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-   
+    return wx.Image(os.path.join(os.path.dirname(sys.argv[0]), "./system/makerPart.png"), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
