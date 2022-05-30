@@ -1,5 +1,5 @@
-TheMaker is a lightweight Content Management System (CMS) for web sites. 
-It runs on your Mac. Linux and Windows and after you made your changes you 
+TheMaker is a lightweight HTML editor for websites. 
+It runs on your Mac, Linux and Windows and after you made your changes you 
 are publishing via FTP. 
 
 All that is required is some web space with FTP access.
