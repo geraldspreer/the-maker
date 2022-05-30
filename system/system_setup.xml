@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
- 
 <system_setup>  
-
-		<project>design</project> 
-		<filetype>content</filetype>
-		<default_filetype>htm</default_filetype>
-		<feedbackadress>info@makercms.org</feedbackadress>
-
+  <project>design</project> 
+  <filetype>content</filetype>
+  <default_filetype>htm</default_filetype>
+  <feedbackadress>info@makercms.org</feedbackadress>
 </system_setup>
-
-
- 
