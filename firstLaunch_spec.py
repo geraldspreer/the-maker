@@ -12,16 +12,13 @@ import sys
 import makerVersion
 from random import randint
 
-
 class TestApp(wx.App):
     def OnInit(self):
-
         self.mainView = self.create(None)
         return True
 
     def create(self, parent):
         return TestView(parent)
-
 
 class ProjectManagerTestController(makerProjectManager.ProjectManagerController):
     def __init__(self, model, view):
@@ -55,7 +52,6 @@ class ProjectManagerTestController(makerProjectManager.ProjectManagerController)
         print Message
 
     def updateProgressPulse(self, foo):
-
         print "updating progress pulse"
 
     def infoMessage(self, message):
@@ -67,23 +63,18 @@ class ProjectManagerTestController(makerProjectManager.ProjectManagerController)
         print "Error Message:", message
 
     def dirDialog(self, message):
-
         return self.view.getDirFromUser(message)
 
 
 class TestProjectManager(makerProjectManager.ProjectManager):
     def __init__(self, view):
-
         self.openFiles = []
-
         self.controller = ProjectManagerTestController(self, view)
-
         self.linkedProjectPaths = []
         self.loadLinkedProjects()
         self.linkedProjects = {}
         self.controller.listProjectsInTree(self.getProjects())
         self.openProjects = []
-
         self.projectConvertRepoName = "Test-YourMakerProjects"
         self.loadArgumentPassedProject()
 
@@ -96,12 +87,10 @@ class TestProjectManager(makerProjectManager.ProjectManager):
 
     def getApplicationPath(self):
         """ get path where the maker executable resides """
-
         appPath = os.path.join(os.getcwd(), ".")
         return appPath
 
     def getApplicationSupportDir(self):
-
         try:
             theDir = os.environ["HOME"]
         except:
@@ -109,10 +98,8 @@ class TestProjectManager(makerProjectManager.ProjectManager):
 
         return os.path.join(theDir, "Library/Application Support/TheMaker/")
 
-
 class TestView(makerWxGUI.wxPythonGUI):
     def _init_ctrls(self, prnt):
-
         wx.Frame.__init__(
             self,
             id=-1,
@@ -134,45 +121,35 @@ class TestView(makerWxGUI.wxPythonGUI):
             pass
 
         self._init_utils()
-
         self.SetMenuBar(self.mainMenuBar)
         self.SetStatusBarPane(0)
 
         # the other splitter
-
         # self.splitter2 = MySplitter(self, -1,None)
-
         # the top splitter
-
         self.splitter = makerWxGUI.MySplitter(self, -1, None)
 
         # and the stc is added to it
-
         # it is very importat to keep the NODRAG style
         #
         # if dragging is added at some point the
         # makerProjectController.py method noteBookPageClosed has to be
         # changed where the noteBoolPages dict is updated
         #
-
         #        self.noteBook = nb.FlatNotebook(self.splitter, -1, style= wx.lib.flatnotebook.FNB_NODRAG
         #                                        | wx.lib.flatnotebook.FNB_X_ON_TAB)
 
         self.noteBook = makerWxGUI.MyCustomNoteBook(self.splitter, -1, None, None)
-
         self.noteBook.SetPadding(wx.Size(20))
 
         # add a welcome message to the noteBook
-
         self.styledTextCtrl1 = (makerEditorWxView.editorView(self, "default")).editor
         self.welcomeId = self.styledTextCtrl1.GetId()
         self.noteBook.AddPage(self.styledTextCtrl1, "Thank you for using The Maker.")
         self.styledTextCtrl1.SetText(self.BoilerPlate)
 
         # switch off popup
-
         # self.styledTextCtrl1.Bind(wx.EVT_RIGHT_DOWN, self.OnSTCRightDown)
-
         # add widgets to the first splitter
 
         self.listWindow = wx.Panel(self.splitter, -1, style=wx.NO_BORDER)
@@ -188,24 +165,18 @@ class TestView(makerWxGUI.wxPythonGUI):
         )
 
         def drawAfterPaint(evt):
-
             Size = self.tree.GetClientSizeTuple()
-
             dc = wx.ClientDC(self.tree)
             dc.SetPen(self.treePen)
             dc.DrawLine(Size[0] - 1, 0, Size[0] - 1, Size[1])
 
         def onTreePaint(evt):
-
             wx.CallAfter(drawAfterPaint, evt)
-
             evt.Skip()
 
         self.treePen = wx.Pen("#666666", 1)
         self.tree.Bind(wx.EVT_PAINT, onTreePaint)
-
         image_size = (16, 16)
-
         projectArt = (
             wx.Image(
                 os.path.join(self.base, "./system/ToolBarIcons/114.png"),
@@ -214,7 +185,6 @@ class TestView(makerWxGUI.wxPythonGUI):
             .Scale(16, 16)
             .ConvertToBitmap()
         )
-
         folderArt = (
             wx.Image(
                 os.path.join(self.base, "./system/ToolBarIcons/99.png"),
@@ -223,7 +193,6 @@ class TestView(makerWxGUI.wxPythonGUI):
             .Scale(16, 16)
             .ConvertToBitmap()
         )
-
         folderOpenArt = (
             wx.Image(
                 os.path.join(self.base, "./system/ToolBarIcons/107.png"),
@@ -232,7 +201,6 @@ class TestView(makerWxGUI.wxPythonGUI):
             .Scale(16, 16)
             .ConvertToBitmap()
         )
-
         fileArt = (
             wx.Image(
                 os.path.join(self.base, "./system/ToolBarIcons/93.png"),
@@ -241,7 +209,6 @@ class TestView(makerWxGUI.wxPythonGUI):
             .Scale(16, 16)
             .ConvertToBitmap()
         )
-
         fileChangeArt = (
             wx.Image(
                 os.path.join(self.base, "./system/ToolBarIcons/118.png"),
@@ -250,7 +217,6 @@ class TestView(makerWxGUI.wxPythonGUI):
             .Scale(16, 16)
             .ConvertToBitmap()
         )
-
         partArt = (
             wx.Image(
                 os.path.join(self.base, "./system/ToolBarIcons/24-16.png"),
@@ -274,7 +240,6 @@ class TestView(makerWxGUI.wxPythonGUI):
         self.il = il
 
         self.listSizer.Add(self.tree, 1, border=0, flag=wx.EXPAND)
-
         self.listWindow.SetAutoLayout(True)
         self.listWindow.SetSizer(self.listSizer)
         self.listSizer.Fit(self.listWindow)
@@ -304,13 +269,12 @@ class TestView(makerWxGUI.wxPythonGUI):
         self.searchStatus.SetLabel("                         ")
 
         saveArt = wx.Bitmap(os.path.join(self.base, "./system/ToolBarIcons/23.png"))
-
         publishArt = wx.Bitmap(os.path.join(self.base, "./system/ToolBarIcons/53.png"))
         previewArt = wx.Bitmap(os.path.join(self.base, "./system/ToolBarIcons/25.png"))
         makeAllArt = wx.Bitmap(os.path.join(self.base, "./system/ToolBarIcons/24.png"))
 
         self.toolBar.AddSeparator()
-
+        
         self.toolBar.AddLabelTool(10, "Save", saveArt)
         self.toolBar.AddLabelTool(20, "Publish", publishArt)
         self.toolBar.AddLabelTool(30, "Preview", previewArt)
@@ -322,7 +286,7 @@ class TestView(makerWxGUI.wxPythonGUI):
         self.toolBar.AddControl(self.search)
 
         self.toolBar.Realize()
-
+        
         self.statusBar1 = wx.StatusBar(
             id=-1, name="statusBar1", parent=self, style=wx.ST_SIZEGRIP
         )
@@ -338,7 +302,6 @@ class TestView(makerWxGUI.wxPythonGUI):
         )
 
     def SetTitle(self, string):
-
         self.theTitle = string
 
     def Show(self):
@@ -364,42 +327,32 @@ class TestView(makerWxGUI.wxPythonGUI):
         return self.userSelectedDir
 
     def Error(self, Message):
-
         self._lastErrorMessage = Message
 
     def setInputReturnString(self, string):
-
         self.inputReturnString = string
 
     def setChoiceReturnString(self, string):
-
         self.choiceReturnString = string
 
     def setUserSelectedDir(self, string):
-
         self.userSelectedDir = string
 
     def initError(self):
-
         self._lastErrorMessage = ""
-
 
 class MakerTest(unittest.TestCase):
     def tearMeDown(self):
-
         self.app.Destroy()
 
     def setMeUp(self):
-
         self.user_home = "/Users/maker/"
-
         try:
             theDir = os.environ["HOME"]
         except:
             theDir = os.environ["HOMEPATH"]
 
         self.supportDir = os.path.join(theDir, "Library/Application Support/TheMaker/")
-
         if os.path.isfile(os.path.join(self.supportDir, ".makerUISettings")):
             os.remove(os.path.join(self.supportDir, ".makerUISettings"))
 
@@ -408,11 +361,8 @@ class MakerTest(unittest.TestCase):
         self.pm.controller.testing = True
 
     def test_LaunchWithoutUISettingsFile(self):
-
         self.setMeUp()
-
         self.tearMeDown()
-
 
 if __name__ == "__main__":
     unittest.main()
