@@ -1,7 +1,6 @@
 import os
 import re
 
-
 class CSSTools:
     def listAllStyleSheetsInPath(self, path, ext=".css"):
         theResult = []
@@ -74,5 +73,3 @@ class CSSTools:
 
         else:
             return False
-
-        # return listOfFiles

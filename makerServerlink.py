@@ -7,7 +7,6 @@ from ftplib import FTP
 
 class Server:
     # arguments : cms - instance of the cms.Core
-
     def __init__(self, core):
         self.server_link_message('Retrieving server information')    
         self.core = core
@@ -15,24 +14,17 @@ class Server:
         self.user = core.ftpUser
         self.root = core.ftpRoot
         self.status = 'disconnected'
-    
-    # ----------------------------------------------------------
-
     def login(self):
         if not self.core.getRemotePassword():
             self.server_link_message("! ! ! NO FTP PASSWORD SET ! ! ! ")
             return False
         else:
-            
             m = "Logging in ... " 
             self.server_link_message(m)
-        
         try:
             self.ftp = FTP(self.host)
-            #print 'host'
             self.ftp.set_debuglevel(1)
             self.ftp.login(self.user,self.core.getRemotePassword())
-            #print 'login'
             try:
                 self.ftp.cwd(self.root)
             except Exception, e:
@@ -45,7 +37,6 @@ class Server:
                 self.core.projectController.errorMessage(m)
                 self.logout()
                 return False
-            #print 'root'
             self.status = 'connected'
             return True
         except:
@@ -58,8 +49,6 @@ class Server:
             self.server_link_message(m)
             return False
 
-    # ----------------------------------------------------------
-
     def logout(self):
         try:
             self.server_link_message('Logging out ')
@@ -68,8 +57,6 @@ class Server:
         except:
             self.server_link_message('Unable to logout ')
 
-    # ----------------------------------------------------------
-    
     def ls(self):
         list = []
         self.server_link_message('ls')
@@ -80,38 +67,25 @@ class Server:
             print "Serverlink command 'ls' failed: ", str(e)
             return []
     
-    # ----------------------------------------------------------
-    
     def rename(self, oldName, newName):
         self.server_link_message('renaming ' + oldName + " to "+ newName)
         try:
             self.home()
             self.ftp.rename(oldName, newName)
-            
             return True
         except Exception, e:
             self.server_link_message("Unable to rename file:" + str(e))
-        
-            # return exception
             return str(e)
-
-    
-    
-    # ----------------------------------------------------------    
     
     def isdir(self, aDir):
-        #print "checking for existing dir %s" % aDir
         if aDir.strip() in ['/', '.']:
             return True
-
         try:
             self.ftp.cwd(aDir.strip())
             self.ftp.cwd('..')
             return True
         except:
             return False
-    
-    # ----------------------------------------------------------    
 
     def mkd(self, aDir):                
         try:
@@ -119,8 +93,6 @@ class Server:
             return True
         except Exception, e:
             return False
-            
-    # ----------------------------------------------------------        
 
     def upload(self, aFile, aRemoteFolder, aTarget, theFtpMode):
         """
@@ -134,11 +106,8 @@ class Server:
         
         def store_():            
             if not aRemoteFolder in ['.', '/']: # i.e. we are not in root
-                #print "switching to remote folder..."
                 self.ftp.cwd(aRemoteFolder)        # ins Verzeichnis wechseln
-            
             print "Storing...%s" % aTarget
-            
             try:
                 if theFtpMode == 'lines':
                     self.server_link_message('storing lines')
@@ -146,7 +115,7 @@ class Server:
                 elif theFtpMode == 'binary':
                     self.server_link_message('storing binary')
                     self.ftp.storbinary("STOR "+ aTarget, ob)
-                return True                
+                return True
             except:
                 print ' !! Serverlink: unable to store !!'
                 return False
@@ -164,32 +133,24 @@ class Server:
                 # logout and in and try again
                 self.logout()
                 self.login()
-                self.home()                
-                #print "trying again to store..."
-                
+                self.home()
+
         ob.close()
         self.server_link_message('upload failed')
         m  = 'Upload failed after 10 attempts for'
         m += '%s/%s' % (aRemoteFolder, aTarget)
         sys.stderr.write(m)
         self.ftp.cwd(self.root)
-        
-    # ----------------------------------------------------------              
     
     def download(self, remoteFilename, localFilename, theFtpMode):
-        """
-                
-        """                
         if os.path.isfile(localFilename):
             print "Download Error! A file :", localFilename, " already exists!"
             return False
         
         self.server_link_message('downloading file')
-        
         self.ftp.cwd(self.root)
-        
         print "downloading...", remoteFilename
-        try:        
+        try:
             if theFtpMode == 'lines':
                 fileToGet = open(localFilename,"w")
                 self.server_link_message('downloading lines')
@@ -203,10 +164,6 @@ class Server:
         except Exception, e:
             print e
             return False
-        
-        
-        
-    # ----------------------------------------------------------     
     
     def delete(self, aRemoteFolder, aFile):        
         self.server_link_message('Deleting remote file...' + aRemoteFolder + "/" + aFile)
@@ -218,28 +175,17 @@ class Server:
             # There is no need to delete.
             #print str(e)
             return True
-            
-       
-       
         try:
             self.ftp.delete(aFile)
             self.server_link_message('File deleted!')
             return True
-        
         except Exception, e:
             print "Unable to delete remote file! ", str(e)
             return False
-        
-    # ----------------------------------------------------------                
     
     def home(self):
         self.server_link_message('cd to ftp root')
         self.ftp.cwd(self.root)
         
-    # ----------------------------------------------------------            
-    
     def server_link_message(self, message):
         print 'serverlink: %s' % message
-        
-        
-    

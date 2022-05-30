@@ -6,14 +6,12 @@ import wx.xrc as xrc
 
 __res = None
 
-
 def get_resources():
     """ This function provides access to the XML resources in this module."""
     global __res
     if __res == None:
         __init_resources()
     return __res
-
 
 class xrcErrorDialog(wx.Dialog):
     def PreCreate(self, pre):
@@ -36,9 +34,7 @@ class xrcErrorDialog(wx.Dialog):
         self.Report = xrc.XRCCTRL(self, "Report")
         self.Cancel = xrc.XRCCTRL(self, "Cancel")
 
-
 # ------------------------ Resource data ----------------------
-
 
 def __init_resources():
     global __res
@@ -113,9 +109,7 @@ def __init_resources():
     )
     __res.Load("memory:XRC/makerErrorDialog/makerErrorDialog_xrc")
 
-
 # ----------------------- Gettext strings ---------------------
-
 
 def __gettext_strings():
     # This is a dummy function that lists all the strings that are used in

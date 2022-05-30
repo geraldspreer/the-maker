@@ -5,7 +5,6 @@ import wx.stc
 # ===== Widgets r us
 # ================================================================
 
-
 def toolBar(dict):
     return wx.ToolBar(
         id=wx.NewId(),
@@ -15,10 +14,6 @@ def toolBar(dict):
         size=dict["size"],
         style=dict["style"],
     )
-
-
-# ================================================================
-
 
 def choice(dict):
     return wx.Choice(
@@ -30,10 +25,6 @@ def choice(dict):
         size=dict["size"],
         style=dict["style"],
     )
-
-
-# ================================================================
-
 
 def button(dict):
     theID = wx.NewId()
@@ -51,7 +42,6 @@ def button(dict):
 
     return theButton
 
-
 def buttonNoHandler(dict):
     theID = wx.NewId()
     return wx.Button(
@@ -63,10 +53,6 @@ def buttonNoHandler(dict):
         size=dict["size"],
         style=dict["style"],
     )
-
-
-# ================================================================
-
 
 def listBox(dict):
     theID = wx.NewId()
@@ -82,10 +68,6 @@ def listBox(dict):
     listBox.Bind(wx.EVT_LISTBOX_DCLICK, dict["handler"], id=theID)
     return listBox
 
-
-# ================================================================
-
-
 def staticLine(dict):
     return wx.StaticLine(
         id=wx.NewId(),
@@ -95,10 +77,6 @@ def staticLine(dict):
         size=dict["size"],
         style=dict["style"],
     )
-
-
-# ================================================================
-
 
 def staticText(dict):
     return wx.StaticText(
@@ -111,10 +89,6 @@ def staticText(dict):
         style=dict["style"],
     )
 
-
-# ================================================================
-
-
 def staticBitmap(dict):
     return wx.StaticBitmap(
         bitmap=dict["bitmap"],
@@ -126,10 +100,6 @@ def staticBitmap(dict):
         style=dict["style"],
     )
 
-
-# ================================================================
-
-
 def window(dict):
     return wx.Window(
         id=wx.NewId(),
@@ -139,10 +109,6 @@ def window(dict):
         size=dict["size"],
         style=dict["style"],
     )
-
-
-# ================================================================
-
 
 def panel(dict):
     return wx.Panel(
@@ -154,10 +120,6 @@ def panel(dict):
         style=dict["style"],
     )
 
-
-# ================================================================
-
-
 def textCtrl(dict):
     return wx.TextCtrl(
         id=wx.NewId(),
@@ -168,10 +130,6 @@ def textCtrl(dict):
         style=dict["style"],
         value=dict["value"],
     )
-
-
-# ================================================================
-
 
 def styledTextCtrl(dict):
     idValue = -1
@@ -192,14 +150,13 @@ def styledTextCtrl(dict):
 
     return sCtrl
 
-
 # ================================================================
 # ================================================================
 # ================================================================
 
 
 def widgetFactory():
-    # all known widgets
+    # All known widgets
     return {
         "button": button,
         "buttonNoHandler": buttonNoHandler,
@@ -252,8 +209,6 @@ class MakerDialog(wx.Dialog):
         self.SetClientSize(dict["clientSize"])
         self.Center(dict["centerPos"])
 
-    # This decorator is clearly overkill but Brinick
-    # felt like implementing his very first decorator, so there...
     @checkWidgetExists
     def add(self, widgetName, widgetDict):
         return widgetFactory()[widgetName](widgetDict)

@@ -8,7 +8,6 @@ def newThread(function, *arg, **kwds):
 
     class MyThread(threading.Thread):
         def run(self):
-            # print "running new thread with function: ", function
             function(*arg, **kwds)
 
     MyThread().start()

@@ -4,8 +4,6 @@ import shutil
 import time
 import cPickle
 
-
-
 def readFile(pathToFile, asLines=False, lineRange=[], binary=False):
     conts = ''    
     if asLines: conts = []
@@ -34,8 +32,6 @@ def readFile(pathToFile, asLines=False, lineRange=[], binary=False):
         if handle: handle.close()
         return conts
 
-# ---------------------------------------------------------------
-
 def writeFile(pathToFile, fileConts, asLines=False, binary=False, append=False):
     flag = 'w'
     if append: flag = 'a'    
@@ -50,13 +46,9 @@ def writeFile(pathToFile, fileConts, asLines=False, binary=False, append=False):
     finally:
         if handle: handle.close()
 
-
-
 def copyFileTree(src, dst, ignore = [], callback = None, *args):
     """
-        
     is copying a tree of files one file at a time
-    
     callback is a function to be called after each file 
     e.g. to indicate progress, the callback function has to
     accept a string as argument
@@ -64,34 +56,23 @@ def copyFileTree(src, dst, ignore = [], callback = None, *args):
     
     if not src.endswith("/"):
         src += "/"
-    
     if not os.path.isdir(dst):
         os.mkdir(dst)
-    
     tree = os.walk(src)
-    
     for item in tree:
         try:
             # remove the leading dirs from the src path
             aditionalPath = item[0].replace(src, "")
-            
-            #call callback function 
             if callback:
                 callback("copying: " + aditionalPath)
-            
-            # create dir tree
             if aditionalPath != "":
                 os.mkdir(os.path.join(dst, aditionalPath))
-            
         except Exception, e:
             print "\nUnable to create dir: ", str(e)
             raise e
-                
         for file in item[2]:
-            
             if callback:
                 callback(file)
-            
             try:
                 if file not in ignore:
                     shutil.copyfile(os.path.join(item[0], file), 
@@ -102,27 +83,21 @@ def copyFileTree(src, dst, ignore = [], callback = None, *args):
             
 def verifyLatinChars(string):
     """ returns True if string contains only Latin chars"""
-    
     try:
         new = string.encode("latin-1")
         return True
-    
     except:
         return False
-
 
 def readDataFromFile(fileName):
     """
     read serialized data from a file
-    
     """
     bFile = open(fileName, "rb")
     data = cPickle.load(bFile)
     finalData = cPickle.loads(data)
     bFile.close() 
-            
     return finalData
-        
         
 def writeDataToFile(data, fileName):
     """
@@ -133,6 +108,3 @@ def writeDataToFile(data, fileName):
     bFile = open(fileName, "wb")
     cPickle.dump(bytes, bFile, 2)
     bFile.close()
-        
-            
-            

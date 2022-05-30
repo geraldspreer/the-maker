@@ -6,16 +6,12 @@ from makerUtilities import writeDataToFile, readDataFromFile
 
 TARGET_NAME = "MyMakerProjects"
 
-
 class UpdateSandboxedProjects:
     def patchUISettings(self, projects):
-
         theFile = os.path.join(self.getApplicationSupportDir(), ".makerUISettings")
         interfaceData = readDataFromFile(theFile)
-
         interfaceData["linkedProjects"] = projects
         interfaceData["sessionFiles"] = []
-
         writeDataToFile(interfaceData, theFile)
 
     def getApplicationPath(self):
@@ -34,7 +30,6 @@ class UpdateSandboxedProjects:
         return theDir
 
     def getApplicationSupportDir(self):
-
         try:
             theDir = os.environ["HOME"]
         except:
@@ -48,14 +43,11 @@ class UpdateSandboxedProjects:
         return supportDir
 
     def getConversionTargetDir(self):
-
         return os.path.join(self.getUserHomeDir(), TARGET_NAME)
 
     def getSystemPath(self):
         """ get system path """
-
         systemPath = os.path.join(os.getcwd(), "system/")
-
         return systemPath
 
     def isProject(self, project):
@@ -65,15 +57,13 @@ class UpdateSandboxedProjects:
             return False
 
     def update(self):
-
         sandBoxProjects = os.path.join(self.getApplicationSupportDir(), "makerProjects")
         converted = []
         # projects that need to be patched in the UI file
         toPatch = []
         errors = False
 
-        if not os.path.isdir(sandBoxProjects):
-            return
+        if not os.path.isdir(sandBoxProjects): return
 
         targetDir = os.path.join(self.getUserHomeDir(), "MyMakerProjects")
 

@@ -131,8 +131,6 @@ class Controller(makerController.SuperController):
                         if not conflictFiles.count(otherDataSet["ftp_source"]) >= 1:
                             conflictFiles.append(otherDataSet["ftp_source"])
 
-                # conflictFiles.append(dataSet['ftp_source'])
-
         return conflictFiles
 
     def resetItemBackgrounds(self):

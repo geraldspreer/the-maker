@@ -10,7 +10,7 @@ class ProjectBrowser(MakerDialog):
         self.selectedProject = None
  
     def createDialog(self, prnt):
-	MakerDialog.__init__(self,
+        MakerDialog.__init__(self,
                              {'name'       : '',
                               'parent'     : prnt, 
                               'pos'        : wx.Point(497, 197), 
@@ -28,7 +28,6 @@ class ProjectBrowser(MakerDialog):
                                              'size'    : wx.Size(301, 328),
                                              'style'   : wx.VSCROLL,
                                              'handler' : self.onListBoxClick})
-        
         # ----- PANEL -----
         self.panel1 = self.add('panel', {'name'   : 'panel1',
                                          'parent' : self,
@@ -37,7 +36,7 @@ class ProjectBrowser(MakerDialog):
                                          'style'  : wx.TAB_TRAVERSAL
                                          })
 
-	# ----- OK BUTTON -----
+        # ----- OK BUTTON -----
         self.OKbutton = self.add('button', {'label'   : 'OK',
                                             'name'    : 'ok', 
                                             'parent'  : self.panel1, 
@@ -46,7 +45,7 @@ class ProjectBrowser(MakerDialog):
                                             'style'   : 0,
                                             'handler' : self.onOKButton})
 
-	# ----- CANCEL BUTTON -----
+        # ----- CANCEL BUTTON -----
         self.cancelButton = self.add('button', {'label'   : 'Cancel',
                                                 'name'    : 'cancel', 
                                                 'parent'  : self.panel1, 
@@ -54,37 +53,26 @@ class ProjectBrowser(MakerDialog):
                                                 'size'    : wx.Size(75, 23), 
                                                 'style'   : 0,
                                                 'handler' : self.onCancelButton})
-
         self.createSizers()
-
-    # ------------------------------------------------------------
 
     def createSizers(self):
         self.boxSizer1 = wx.BoxSizer(orient=wx.VERTICAL)
         self.boxSizer1.Add(self.listBox1, 0, border=0, flag=wx.EXPAND | wx.GROW)
         self.boxSizer1.Add(self.panel1, 0, border=0, flag=wx.FIXED_MINSIZE)
         self.SetSizer(self.boxSizer1)
-
-    # ------------------------------------------------------------
     
     def fillProjectList(self, theList):
         for thing in theList:
             self.listBox1.Append(thing)
-
-    # ------------------------------------------------------------
 
     def onOKButton(self,event):
         self.selectedProject = self.listBox1.GetStringSelection()
         self.Close()
         event.Skip()
 
-    # ------------------------------------------------------------
-
     def onCancelButton(self, event):
         self.Close()
         event.Skip()
-
-    # ------------------------------------------------------------
 
     def onListBoxClick(self, event):
         self.selectedProject = self.listBox1.GetStringSelection()

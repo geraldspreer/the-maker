@@ -17,10 +17,8 @@ except:
     print "Leaving...."
     sys.exit()
 
-
 try:
     import markdown2
-
     print "Markdown2 - OK"
 except:
     print "You need to have Markdown2 installed !"
@@ -40,12 +38,10 @@ import makerBugReport
 import makerVersion
 import makerUpdateSandboxedProjects
 
-
 def afterThisUpdateStatusInfo(func):
     def wrapped(*args, **kwds):
         self = args[0]
         func(*args, **kwds)
-        # for now we have to do this check
         try:
             if self.projectController:
                 self.projectController.updateStatusInformation()
@@ -58,48 +54,23 @@ def afterThisUpdateStatusInfo(func):
 class MakerAppController(makerController.SuperController):
     def bindActions(self):
 
-        self.view.Bind(
-            self.view.wx.EVT_MENU, self.model.viewLicense, self.view.MenuItemLicense
-        )
-
-        self.view.Bind(
-            self.view.wx.EVT_MENU, self.showAboutDialog, id=self.view.wx.ID_ABOUT
-        )
-
-        self.view.Bind(
-            self.view.wx.EVT_MENU, self.model.bugReport, self.view.MenuItemBugReport
-        )
-
-        self.view.Bind(
-            self.view.wx.EVT_MENU, self.model.userFeedback, self.view.MenuItemFeedback
-        )
-
-        self.view.Bind(
-            self.view.wx.EVT_MENU,
-            self.model.openProjectWebsite,
-            self.view.MenuItemWebsite,
-        )
-
-        self.view.Bind(
-            self.view.wx.EVT_MENU, self.model.getHelp, self.view.MenuItemTutorial
-        )
-
-        self.view.Bind(
-            self.view.wx.EVT_MENU,
-            self.model.learnHTMLandCSS,
-            self.view.MenuItemLearnHTMLandCSS,
-        )
+        self.view.Bind( self.view.wx.EVT_MENU, self.model.viewLicense, self.view.MenuItemLicense)
+        self.view.Bind( self.view.wx.EVT_MENU, self.showAboutDialog, id=self.view.wx.ID_ABOUT)
+        self.view.Bind( self.view.wx.EVT_MENU, self.model.bugReport, self.view.MenuItemBugReport)
+        self.view.Bind( self.view.wx.EVT_MENU, self.model.userFeedback, self.view.MenuItemFeedback)
+        self.view.Bind( self.view.wx.EVT_MENU, self.model.openProjectWebsite, self.view.MenuItemWebsite,)
+        self.view.Bind( self.view.wx.EVT_MENU, self.model.getHelp, self.view.MenuItemTutorial)
+        self.view.Bind( self.view.wx.EVT_MENU, self.model.learnHTMLandCSS, self.view.MenuItemLearnHTMLandCSS,)
 
     def showView(self):
-
-        # this is done in the project manager so we can access all
+        # This is done in the project manager so we can access all
         # info that is needed... especially when saving
         self.model.pm.controller.loadAndSetInterfaceData()
 
         self.view.Show(True)
         self.view.SetTitle("The Maker for OS X - " + str(self.model.getVersion()))
 
-        # this following works since model is a wxApp
+        # This works since model is a wxApp
         self.model.SetTopWindow(self.view)
 
     def showAboutDialog(self, evt):
@@ -118,27 +89,15 @@ class MakerApp(wx.App):
         self.author = ["Gerald Spreer", "Brinick Simmons", "Ian Barrow"]
 
         self.mySplash = makerSplash.MySplashScreen()
-
-        # Splash screen will show by itself
-
         self.mainView = makerWxGUI.create(self)
-
-        # should application self-restart?
         self.restart = False
-
         self.appController = MakerAppController(self, self.mainView)
         self.appController.resetAllViews()
-
-        # error Handler
 
         self.errorHandler = makerErrorHandler.ErrorHandler(self.mainView)
         sys.stderr = self.errorHandler
 
-        # init projectManager
-
         self.pm = makerProjectManager.ProjectManager(self.mainView)
-
-        # display GUI
 
         self.appController.showView()
 
@@ -178,7 +137,6 @@ class MakerApp(wx.App):
 
 
 def main():
-
     try:
         converter = makerUpdateSandboxedProjects.UpdateSandboxedProjects()
         converter.update()
@@ -189,7 +147,6 @@ def main():
     application = MakerApp(0)
     application.MainLoop()
 
-    # restart ?
     if application.restart == True:
         main()
 

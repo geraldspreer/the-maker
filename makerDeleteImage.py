@@ -1,30 +1,23 @@
 import os
 import sys
 
-
 class DeleteImg:
     def __init__(self, projectModel, controller):
-
         self.projectModel = projectModel
         self.controller = controller
 
-        # print self.controller, self.projectModel
-
     def deleteImage(self):
-
         file = self.controller.imageDialog(self.projectModel.getPathParts())
         if not file:
             return
 
         fileparts = os.path.split(file)
-
         ext = os.path.splitext(fileparts[1])[-1]
         if ext not in self.projectModel.getSupportedImageFormats():
             self.controller.infoMessage("This is NOT an image file!")
             return
 
         if self.projectModel.checkIfProjectIsSetUp():
-            #
             try:
                 self.projectModel.serverLogin()
                 gfxFolder = self.projectModel.getRemoteGfxFolder()

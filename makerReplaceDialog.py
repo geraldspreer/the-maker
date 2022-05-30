@@ -6,14 +6,12 @@ import wx.xrc as xrc
 
 __res = None
 
-
 def get_resources():
     """ This function provides access to the XML resources in this module."""
     global __res
     if __res == None:
         __init_resources()
     return __res
-
 
 class xrcFindReplace(wx.Dialog):
     def PreCreate(self, pre):
@@ -40,7 +38,6 @@ class xrcFindReplace(wx.Dialog):
         self.findInOpen = xrc.XRCCTRL(self, "findInOpen")
         self.Cancel = xrc.XRCCTRL(self, "Cancel")
         self.OK = xrc.XRCCTRL(self, "OK")
-
 
 # ------------------------ Resource data ----------------------
 
