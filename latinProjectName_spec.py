@@ -14,16 +14,13 @@ import makerCopyright
 import makerEditorWxView
 from makerUtilities import readFile
 
-
 class TestApp(wx.App):
     def OnInit(self):
-
         self.mainView = self.create(None)
         return True
 
     def create(self, parent):
         return TestView(parent)
-
 
 class ProjectManagerTestController(makerProjectManager.ProjectManagerController):
     def loadStyles(self):
@@ -51,7 +48,6 @@ class ProjectManagerTestController(makerProjectManager.ProjectManagerController)
         self.styleMenus[None] = MenuItemDefaultStyle.GetId()
 
         self.view.subMenuEditorStyles.AppendSeparator()
-
         self.view.Bind(
             self.view.wx.EVT_MENU, self.resetEditorStyle, MenuItemDefaultStyle
         )
@@ -68,30 +64,25 @@ class ProjectManagerTestController(makerProjectManager.ProjectManagerController)
                 )
 
                 self.styleMenus[item] = x.GetId()
-
                 self.view.Bind(self.view.wx.EVT_MENU_HIGHLIGHT, self.prevEditorStyle, x)
                 self.view.Bind(self.view.wx.EVT_MENU, self.setEditorStyle, x)
-
         self.loadStyles()
 
     def dirDialog(self, message="Choose a directory:"):
         """
         returns a path or None when canceled
         """
-
         return "This would be the given dir"
 
     def showProgress(self, limit, Message, title):
         print Message
 
     def updateProgressPulse(self, foo):
-
         print "updating progress pulse"
 
 
 class TestProjectManager(makerProjectManager.ProjectManager):
     def __init__(self, view):
-
         self.controller = ProjectManagerTestController(self, view)
 
         self.linkedProjectPaths = []
@@ -106,10 +97,8 @@ class TestProjectManager(makerProjectManager.ProjectManager):
         """ get system path """
         return os.path.join(os.getcwd(), "system/")
 
-
 class TestView(makerWxGUI.wxPythonGUI):
     def _init_ctrls(self, prnt):
-
         wx.Frame.__init__(
             self,
             id=-1,
@@ -131,14 +120,11 @@ class TestView(makerWxGUI.wxPythonGUI):
             pass
 
         self._init_utils()
-
         self.SetMenuBar(self.mainMenuBar)
         self.SetStatusBarPane(0)
 
         # the other splitter
-
         # self.splitter2 = MySplitter(self, -1,None)
-
         # the top splitter
 
         self.splitter = makerWxGUI.MySplitter(self, -1, None)
