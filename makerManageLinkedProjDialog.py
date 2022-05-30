@@ -13,9 +13,6 @@ def get_resources():
         __init_resources()
     return __res
 
-
-
-
 class xrcManageLinked(wx.Dialog):
 #!XRCED:begin-block:xrcManageLinked.PreCreate
     def PreCreate(self, pre):

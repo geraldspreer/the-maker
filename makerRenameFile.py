@@ -8,11 +8,7 @@ from makerWidgets import MakerDialog
 
 
 class RenameDialog(MakerDialog):
-
-    # view class
-
     def __init__(self, parentView):
-
         self.createDialog(parentView)
 
     def createDialog(self, prnt):
@@ -69,8 +65,6 @@ class RenameDialog(MakerDialog):
             },
         )
 
-    # ------------------------------------------------------------
-
 
 class Controller(makerController.SuperController):
     def bindActions(self):
@@ -107,17 +101,13 @@ class Controller(makerController.SuperController):
             newName + self.model.fileModel.getType(),
         )
 
-        # fName = os.path.join(self.model.getFullName())
-
         if os.path.isfile(nName):
             self.view.warning.SetLabel("Filename exists")
             self.view.Ok.Disable()
             return
 
         else:
-
             self.model.rename()
-
             self.model.fileController.view.tree.SetItemText(
                 self.model.fileController.getReferringTreeItem(), newName
             )
@@ -138,10 +128,8 @@ class Controller(makerController.SuperController):
         self.view.DestroyChildren()
         self.view.Destroy()
 
-
 class MakerFileRename:
     def __init__(self, fileModel, mainView):
-
         nameView = RenameDialog(mainView)
         self.fileModel = fileModel
 
@@ -150,7 +138,6 @@ class MakerFileRename:
         self.controller.setNewName(self.fileModel.getName())
 
     def rename(self):
-
         oldFilename = self.fileModel.getFileName()
         oldRealName = self.fileModel.getRealName()
         newName = self.controller.getNewName()
@@ -162,7 +149,6 @@ class MakerFileRename:
         fName = os.path.join(self.fileModel.core.getPathParts(), oldFilename)
 
         if self.fileModel.getType() == ".content":
-            # print fName
             os.rename(fName, nName)
             os.rename(
                 os.path.join(
@@ -172,29 +158,22 @@ class MakerFileRename:
                 os.path.join(self.fileModel.core.getPathParts(), newName + ".head"),
             )
 
-            # remove old htm file
             fileName = self.fileModel.getFullName()
 
             if os.path.isfile(fileName):
                 os.remove(fileName)
 
         elif self.fileModel.getType() == ".dynamic":
-            # print fName
             os.rename(fName, nName)
-
         else:
-            # print fName
             os.rename(fName, nName)
 
         self.fileModel.setName(newName)
-
         distContent = readFile(self.fileModel.core.getDistributionTableFilename())
-
         if self.fileModel.getType() == ".content":
             newDist = distContent.replace(oldRealName, newName + ".htm")
 
         else:
-
             newDist = distContent.replace(
                 oldFilename, newName + self.fileModel.getType()
             )
@@ -202,15 +181,11 @@ class MakerFileRename:
         writeFile(self.fileModel.core.getDistributionTableFilename(), newDist)
 
         if self.fileModel.getType() == ".content":
-
             quotes = ["'", '"']
-
             for q in quotes:
-
                 this = q + oldRealName + q
                 that = q + newName + ".htm" + q
                 self.fileModel.core.replaceStringInAllItems(this, that)
-
         else:
             quotes = ["'", '"']
 

@@ -1,14 +1,11 @@
 import urllib2
 
-
 def check():
     """
-    check internet connection 
-    
-    returns True or False
+    Check internet connection
     """
     try:
-        urllib2.urlopen("http://www.google.com", data=None)
+        urllib2.urlopen("https://www.google.com", data=None)
         return True
     except Exception, e:
         return False

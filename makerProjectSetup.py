@@ -3,7 +3,6 @@ from makerWidgets import MakerDialog
 import makerFtpBrowser
 import makerCheckInternetConnection
 
-# Decorator
 def checkFtpSettings(func):
     """Tests if FTP Host, FTP User and FTP Root are OK."""
     def wrapper(self, evt):
@@ -17,7 +16,7 @@ def checkFtpSettings(func):
         
         root = self.ftp_root.GetValue()
         newroot = root
-        if not root.startswith('/'):            
+        if not root.startswith('/'):
             newroot = '/' + root
             self.ftp_root.SetValue(newroot)
 
@@ -31,9 +30,7 @@ def checkFtpSettings(func):
                                                 self.ftp_root.GetValue(),
                                                 passw)
 
-        
-        if result: 
-            return func(self, evt)
+        if result: return func(self, evt)
         
         self.controller.errorMessage(result)
         evt.Skip()
@@ -58,7 +55,7 @@ class ProjectSetup(MakerDialog):
         self.keepGoodPassword(None)
 
     def createDialog(self, prnt):
-	MakerDialog.__init__(self,
+        MakerDialog.__init__(self,
                              {'name'       : 'ProjectSetup',
                               'parent'     : prnt, 
                               'pos'        : wx.Point(439, 179), 
@@ -68,23 +65,6 @@ class ProjectSetup(MakerDialog):
                               'clientSize' : wx.Size(394, 355),
                               'centerPos'  : wx.BOTH})
 
-#        self.sprache = self.add('choice', 
-#                                {'choices' : ['en', 'de'],
-#                                 'name'    : 'sprache_choice',
-#                                 'parent'  : self,
-#                                 'pos'     : wx.Point(232, 32),
-#                                 'size'    : wx.Size(130, 21),
-#                                 'style'   : 0
-#                                 })
-
-#        self.add_language = self.add('choice', 
-#                                     {'choices' : ['en', 'de', 'None'],
-#                                      'name'    : 'add_lang_choice',
-#                                      'parent'  : self,
-#                                      'pos'     : wx.Point(232, 72),
-#                                      'size'    : wx.Size(130, 21),
-#                                      'style'   : 0
-#                                      })
 
         self.ftp_host = self.add('textCtrl', 
                                  {'name'   : 'ftp_host_ctl',
@@ -123,8 +103,6 @@ class ProjectSetup(MakerDialog):
                                   'value'  : '/path_to_my_project/'
                                   })
 
-        #self.ftp_root.Enable(False)
-
         self.url = self.add('textCtrl', 
                             {'name'   : 'url_ctl',
                              'parent' : self,
@@ -154,12 +132,6 @@ class ProjectSetup(MakerDialog):
                             'handler' : self.onOkButton
                             })
 
-#        self.staticLine1 = self.add('staticLine',
-#                                    {'name'   : 'staticLine1',
-#                                     'parent' : self, 
-#                                     'pos'    : wx.Point(24, 128),
-#                                     'size'   : wx.Size(336, 2), 
-#                                     'style'  : 0})
         
         self.gfx_label = self.add('staticText',
                                   {'label'  : 'Name for remote graphics folder:',
@@ -195,14 +167,6 @@ class ProjectSetup(MakerDialog):
                               'handler' : self.onHelpButton
                               })
 
-#        self.staticText1 = self.add('staticText',
-#                                    {'label'  : 'Project language:',
-#                                     'name'   : 'staticText1',
-#                                     'parent' : self,
-#                                     'pos'    : wx.Point(24, 40),
-#                                     'size'   : wx.Size(122, 20),
-#                                     'style'  : 0})
-
         self.staticText3 = self.add('staticText',
                                     {'label'  : 'FTP Host:',
                                      'name'   : 'staticText3',
@@ -235,22 +199,9 @@ class ProjectSetup(MakerDialog):
                                      'size'   : wx.Size(100, 20),
                                      'style'  : 0})
 
-#        self.staticText2 = self.add('staticText',
-#                                    {'label'  : 'Additional language:',
-#                                     'name'   : 'staticText2',
-#                                     'parent' : self,
-#                                     'pos'    : wx.Point(24, 80),
-#                                     'size'   : wx.Size(165, 20),
-#                                     'style'  : 0})
-
-    # ------------------------------------------------------------
 
     def setValues(self, theInformation):
         """Information is a dictionary with the current Projects information"""
-        #print "updating project setup information"
-        
-        #self.sprache.SetSelection(self.choices_sprache.index(theInformation['sprache']))
-        #self.add_language.SetSelection(self.choices_add_lang.index(theInformation['add_language']))
         self.ftp_host.SetValue(theInformation['ftp_host'])
         self.ftp_user.SetValue(theInformation['ftp_user'])
         self.ftp_root.SetValue(theInformation['ftp_root'])
@@ -267,14 +218,10 @@ class ProjectSetup(MakerDialog):
                          self.ftp_user.GetValue(),
                          self.ftp_root.GetValue()]:            
             self.controller.errorMessage('"not set" is an illegal FTP value!')
-                        
             return False
         
         root = self.ftp_root.GetValue()
         newroot = root
-#        if not root.startswith('/'):            
-#            newroot = '/' + root
-#            self.ftp_root.SetValue(newroot)
 
         if not newroot.endswith('/'):
             if not newroot == ".":
@@ -287,33 +234,20 @@ class ProjectSetup(MakerDialog):
             passw = self.controller.password("Please enter FTP password...")
         
         if passw != None:
-        
             result =  self.projectModel.testFtp(self.ftp_host.GetValue(),
                                                     self.ftp_user.GetValue(),
                                                     self.ftp_root.GetValue(),
                                                     passw)
-        
-            
             if result==True:
-                # lets keep this one since it worked
                 self.keepGoodPassword(passw)
                 self.projectModel.setRemotePassword(passw)
                 return True
-            
             else:
-                
                 return result
-        
         else:
             # if we return false the password dialog disappears and the check is 
             # cancelled
             return False
-        
-        
-
-
-
-    
     
     def keepGoodPassword(self, passw):
         self.goodPassword = passw
@@ -321,40 +255,23 @@ class ProjectSetup(MakerDialog):
     def getGoodPassword(self):
         return self.goodPassword
     
-    #@checkFtpSettings
-    #
-    # Gerald : I did not use the decorator since it was better to have
-    # doFTPCheck return True or an error message
-    #
-    
     def onOkButton(self, event):                
-        
         if not makerCheckInternetConnection.check():
-           
             self.controller.infoMessage("No Internet Connection! Unable to test settings!")
             self.saved = False
             self.Close()
-            
-            
         else:
-            
             result = self.doFTPCheck()
             if result != True:
                 if result != False:
                     self.controller.errorMessage(str(result))
                 return
-            
-        #self.theInformation["sprache"]      = self.choices_sprache[self.sprache.GetSelection()]
-        #self.theInformation["add_language"] = self.choices_add_lang[self.add_language.GetSelection()]
-        
             self.theInformation["ftp_host"] = self.ftp_host.GetValue()
             self.theInformation["ftp_user"] = self.ftp_user.GetValue()
             self.theInformation["ftp_root"] = self.ftp_root.GetValue()
-    
             value = self.gfxFolder.GetValue()
-                        
+
             # make sure it is just a foldername
-            
             if "/" in value:
                 if value.count("/") == 1 and value.endswith("/"):
                     pass
@@ -370,30 +287,20 @@ class ProjectSetup(MakerDialog):
                 if x in value:
                     self.controller.errorMessage('Please do not use . or spaces in the "Name for remote graphics folder:" field!')
                     return
-                           
             self.theInformation["gfx_folder"] = value
-            
             self.gfxFolder.SetValue(value)
-            
             self.theInformation["url"]= self.url.GetValue()
             if not self.url.GetValue().endswith('/'):
                 self.theInformation["url"] = self.url.GetValue() + '/'
-         
             self.saved = True
             self.Close()
             self.controller.model.setRemotePassword(self.getGoodPassword())
             event.Skip()
 
-    # ------------------------------------------------------------
-
-    
     def onBrowseButton(self, event):        
-        
         if not makerCheckInternetConnection.check():
-           
             self.controller.infoMessage("Unable to browse remote server! No internet connection! ")
             return
-        
         
         passw = self.controller.password()
         if not passw:
@@ -408,27 +315,16 @@ class ProjectSetup(MakerDialog):
             return None
         self.keepGoodPassword(passw)
         self.ftpBrowser.ftpBrowserAction_ls_()
-        
         pathName = self.ftpBrowser.ftpBrowserShow()
-        
         if pathName:
             self.ftp_root.SetValue(pathName) 
         event.Skip()
-
-    # ------------------------------------------------------------
 
     def onCancelButton(self, event):
         self.saved = False
         self.Close()
         event.Skip()
 
-    # ------------------------------------------------------------
-
     def onHelpButton(self, event):
         self.projectModel.help('#setup')
         event.Skip()
-    
-    # ------------------------------------------------------------
-    
-            
-

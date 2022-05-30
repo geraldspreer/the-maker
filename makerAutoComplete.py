@@ -1,12 +1,9 @@
 import os
-
 import makerCSSTools
 import makerController
 
-
 class AutoComplete(makerController.SuperController):
     def __init__(self, model, view, editor):
-
         self.editor = editor
         self.view = view
         self.model = model
@@ -20,14 +17,9 @@ class AutoComplete(makerController.SuperController):
         pass
 
     def autoComplete(self, event):
-
         # support functions
-
         def showAutoCompList(function):
-
-            # self.editor.AddText(self.quotes)
             self.editor.SetAnchor(self.editor.GetCurrentPos())
-            # self.editor.SetCurrentPos(self.editor.GetCurrentPos() - 1)
 
             items = function()
             if items == []:
@@ -37,8 +29,6 @@ class AutoComplete(makerController.SuperController):
             self.editor.AutoCompShow(0, "|".join(items))
 
         def showAutoCompListForTags(function):
-
-            # self.editor.SetAnchor(self.editor.GetCurrentPos())
             items = function()
             items.sort()
 
@@ -322,14 +312,11 @@ class AutoComplete(makerController.SuperController):
         # end support functions
 
         cssTool = makerCSSTools.CSSTools()
-
         key = event.GetKey()
 
         if key == 62:
             autoCompleteHTML()
-
         elif key == self.view.wx.WXK_RETURN:
-
             indentPrev = self.editor.GetLineIndentation(
                 self.editor.GetCurrentLine() - 1
             )
@@ -339,24 +326,17 @@ class AutoComplete(makerController.SuperController):
             )
 
         elif key == 60:
-
             autoCompleteTag()
-
         elif key == 34 or key == 39:  # checking for quotes
             self.quotes = '"'
             if key == 39:
                 self.quotes = "'"
             autoCompleteHTMLArgument()
-
         # css autocomplete
         elif key == 40:  # check for (
             self.quotes = ""
             autoCompleteHTMLArgument()
-
         elif key == 58:
-
             autoCompleteDynamic()
-
         else:
             pass
-            # event.Skip()

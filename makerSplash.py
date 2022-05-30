@@ -5,7 +5,6 @@ import os.path
 
 class MySplashScreen(wx.SplashScreen):
     """Create a splash screen widget."""
-
     def __init__(self):
         imageName = os.path.join(os.path.dirname(sys.argv[0]), "./system/Splash.png")
         aBitmap = wx.Image(name=imageName).ConvertToBitmap()
@@ -18,9 +17,6 @@ class MySplashScreen(wx.SplashScreen):
         )
 
         self.Bind(wx.EVT_CLOSE, self.onExit)
-        # wx.Yield()
-
-    # ---------------------------------------------------------------------#
 
     def onExit(self, evt):
         self.Hide()

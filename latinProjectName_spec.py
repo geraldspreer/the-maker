@@ -123,47 +123,20 @@ class TestView(makerWxGUI.wxPythonGUI):
         self.SetMenuBar(self.mainMenuBar)
         self.SetStatusBarPane(0)
 
-        # the other splitter
-        # self.splitter2 = MySplitter(self, -1,None)
-        # the top splitter
-
         self.splitter = makerWxGUI.MySplitter(self, -1, None)
-
-        # and the stc is added to it
-
-        # it is very importat to keep the NODRAG style
-        #
-        # if dragging is added at some point the
-        # makerProjectController.py method noteBookPageClosed has to be
-        # changed where the noteBoolPages dict is updated
-        #
-
-        #        self.noteBook = nb.FlatNotebook(self.splitter, -1, style= wx.lib.flatnotebook.FNB_NODRAG
-        #                                        | wx.lib.flatnotebook.FNB_X_ON_TAB)
-
         self.noteBook = makerWxGUI.MyCustomNoteBook(self.splitter, -1, None, None)
 
         self.noteBook.SetPadding(wx.Size(20))
-
-        # add a welcome message to the noteBook
 
         self.styledTextCtrl1 = (makerEditorWxView.editorView(self, "default")).editor
         self.welcomeId = self.styledTextCtrl1.GetId()
         self.noteBook.AddPage(self.styledTextCtrl1, "Thank you for using The Maker.")
         self.styledTextCtrl1.SetText(self.BoilerPlate)
 
-        # switch off popup
-
-        # self.styledTextCtrl1.Bind(wx.EVT_RIGHT_DOWN, self.OnSTCRightDown)
-
-        # add widgets to the first splitter
-
         self.listWindow = wx.Panel(self.splitter, -1, style=wx.NO_BORDER)
-        # self.listWindow.SetBackgroundColour(wx.RED)
 
         self.listSizer = wx.BoxSizer(orient=wx.VERTICAL)
 
-        # the listbox is added to the splitter too
         self.tree = wx.TreeCtrl(
             self.listWindow,
             -1,
@@ -250,9 +223,6 @@ class TestView(makerWxGUI.wxPythonGUI):
         self.fileidx = il.Add(fileArt)
         self.filechange = il.Add(fileChangeArt)
         self.part = il.Add(partArt)
-
-        # self.partArt(il, image_size)
-
         self.tree.SetImageList(il)
         self.il = il
 
@@ -309,9 +279,6 @@ class TestView(makerWxGUI.wxPythonGUI):
         self.statusBar1 = wx.StatusBar(
             id=-1, name="statusBar1", parent=self, style=wx.ST_SIZEGRIP
         )
-
-        # self.statusBar1.SetConstraints(LayoutAnchors(self.statusBar1, True,
-        #      True, False, False))
         self._init_coll_statusBar1_Fields(self.statusBar1)
         self.SetStatusBar(self.statusBar1)
 
@@ -333,21 +300,17 @@ class TestView(makerWxGUI.wxPythonGUI):
         pass
 
     def Error(self, Message):
-
         self._lastErrorMessage = Message
 
     def setInputReturnString(self, string):
-
         self.inputReturnString = string
 
     def setChoiceReturnString(self, string):
-
         self.choiceReturnString = string
 
 
 class MakerTest(unittest.TestCase):
     def setUp(self):
-
         self.user_home = "/Users/maker"
         self.osx_correct = "Library/Application Support/TheMaker/makerProjects"
         self.projectPath = os.path.join(self.user_home, self.osx_correct)
@@ -362,7 +325,6 @@ class MakerTest(unittest.TestCase):
         self.assertEqual(self.pm.controller.view._lastErrorMessage, m)
 
     def test_invalidCharsShouldNotCreateProject(self):
-
         existingProjects = len(self.pm.getProjects())
         self.app.mainView.setInputReturnString(u"лывора")
 
@@ -378,18 +340,14 @@ class MakerTest(unittest.TestCase):
         self.app.mainView._lastErrorMessage = None
 
     def test_validCharsShouldNotGiveError(self):
-
         self.app.mainView.inputReturnString = None
         self.app.mainView._lastErrorMessage = None
 
         testProjectName = u"Test_Project"
 
         self.app.mainView.setInputReturnString(testProjectName)
-
         self.pm.controller.actionAddNewProject(event=None)
-
         self.assertEqual(self.app.mainView._lastErrorMessage, None)
-
 
 if __name__ == "__main__":
     unittest.main()

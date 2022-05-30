@@ -2,7 +2,6 @@ import wx
 import wx.stc
 from wx.lib.anchors import LayoutAnchors
 
-
 if wx.Platform == "__WXMSW__":
     faces = {
         "times": "Times New Roman",
@@ -32,7 +31,6 @@ else:
         "size2": 8,
     }
 
-
 class editorView:
     def __init__(self, parent, fileType):
 
@@ -47,17 +45,12 @@ class editorView:
 
         self.editor.SetAutoLayout(True)
         self.editor.SetConstraints(LayoutAnchors(self.editor, True, True, True, True))
-        # self.editor.SetText(self.BoilerPlate)
         self.editor.SetThemeEnabled(True)
-
         self.editor.SetStyleBits(7)
-
         self.editor.StyleClearAll()  # Reset all to be like the default
 
         if fileType == ".py":
-
             kw = [
-                # --start keywords--
                 "and",
                 "assert",
                 "break",
@@ -86,7 +79,6 @@ class editorView:
                 "return",
                 "try",
                 "while",
-                # --end keywords--
             ]
             self.editor.SetLexer(wx.stc.STC_LEX_PYTHON)
             self.editor.SetKeyWords(0, " ".join(kw))
@@ -160,38 +152,26 @@ class editorView:
 
         self.applyCodeStyle(style=None)
 
-        # default word wrapping
         self.editor.SetWrapMode(wx.stc.STC_WRAP_WORD)
-
         self.editor.SetCurrentPos(0)
-
         self.editor.SetEdgeMode(wx.stc.STC_EDGE_LINE)
         self.editor.SetEdgeColumn(200)
-
         self.editor.SetHighlightGuide(1)
-        # indentation
         self.editor.SetIndentationGuides(False)
         self.editor.SetIndent(4)
-
         self.editor.SetCaretWidth(1)
         self.editor.SetControlCharSymbol(0)
         self.editor.SetCaretLineVisible(True)
-
         self.editor.SetMarginType(0, wx.stc.STC_MARGIN_NUMBER)
-        # Text Margins
         self.editor.SetMargins(10, 10)
         self.editor.SetMarginWidth(0, 25)
         self.editor.SetMarginWidth(1, 5)
-
         self.editor.UsePopUp(0)
 
     def applyCodeStyle(self, style=None):
-        # make use style passed to it.
-
         self.editorCodeStyle = style
 
         if not style:
-
             style = {
                 "comment": {"color": "#bc9458", "font-style": "italic"},
                 "constant.numeric": {"color": "#a5c261", "font-weight": "normal"},
@@ -259,7 +239,6 @@ class editorView:
 
         if self.editor.GetLexer() == wx.stc.STC_LEX_HTML:
             # HTML Styles
-
             # <p>[This is text]</p>
             self.editor.StyleSetSpec(
                 wx.stc.STC_H_DEFAULT,
@@ -676,9 +655,6 @@ class editorView:
                 + ",face:%(other)s,size:%(size)d" % faces,
             )
 
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_CHARACTER, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_CLASSNAME, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_COMMENTLINE, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
             self.editor.StyleSetSpec(
                 wx.stc.STC_HPA_DEFAULT,
                 "fore:"
@@ -687,10 +663,6 @@ class editorView:
                 + style["meta.default"]["background-color"]
                 + ",face:%(other)s,size:%(size)d" % faces,
             )
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_DEFNAME, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_IDENTIFIER, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_NUMBER, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_OPERATOR, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
             self.editor.StyleSetSpec(
                 wx.stc.STC_HPA_START,
                 "fore:"
@@ -699,9 +671,6 @@ class editorView:
                 + style["meta.default"]["background-color"]
                 + ",face:%(other)s,size:%(size)d" % faces,
             )
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_STRING, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_TRIPLE, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
-            #                self.editor.StyleSetSpec(wx.stc.STC_HPA_TRIPLEDOUBLE, 'fore:' + style['meta.default']['color'] +',back:'+style['meta.default']['background-color']+',face:%(other)s,size:%(size)d' % faces)
             self.editor.StyleSetSpec(
                 wx.stc.STC_HPA_WORD,
                 "fore:"
@@ -812,7 +781,6 @@ class editorView:
         elif self.editor.GetLexer() == wx.stc.STC_LEX_CSS:
 
             # CSS
-
             self.editor.StyleSetSpec(
                 wx.stc.STC_CSS_DEFAULT,
                 "fore:"
@@ -1299,7 +1267,6 @@ class editorView:
                 + style["meta.default"]["background-color"]
                 + ",face:%(other)s,size:%(size)d" % faces,
             )
-            # self.editor.StyleSetSpec(wx.stc.STC_C_DEFNAME, "fore:" + style["meta.default"]['color'] +",back:"+style["meta.default"]['background-color']+",face:%(other)s,size:%(size)d" % faces)
 
             self.editor.StyleSetSpec(
                 wx.stc.STC_C_IDENTIFIER,
@@ -1321,7 +1288,7 @@ class editorView:
         else:
             pass
 
-        # hack for unidentified entities
+        # Unidentified entities
         self.editor.SetBackgroundColour(style["meta.default"]["background-color"])
 
         # Global default styles for all languages

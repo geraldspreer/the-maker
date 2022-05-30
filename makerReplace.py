@@ -7,26 +7,17 @@ from makerUtilities import readFile, writeFile
 
 class Controller(makerController.SuperController):
     def drawDialog(self):
-
         self.dialog = makerReplaceDialog.xrcFindReplace(self.view)
         self.dialog.Cancel.Bind(self.view.wx.EVT_BUTTON, self.close)
-
         self.dialog.OK.Bind(self.view.wx.EVT_BUTTON, self.doReplaceCurrent)
-
         self.dialog.findInCurrent.Bind(self.view.wx.EVT_RADIOBUTTON, self.findInCurrent)
-
         self.dialog.findInProject.Bind(
             self.view.wx.EVT_RADIOBUTTON, self.replaceInProject
         )
-
         self.dialog.Find.Bind(self.view.wx.EVT_TEXT, self.showOccurences)
-
         self.dialog.Find.Bind(self.view.wx.EVT_TEXT_ENTER, self.showOccurences)
-
         self.dialog.findInProject.Enable(True)
-
         self.dialog.findInOpen.Enable(False)
-
         self.dialog.SetTitle("Find / Replace...")
 
         self.rawText = self.editor.GetText()
@@ -52,7 +43,6 @@ class Controller(makerController.SuperController):
         self.dialog.Show()
 
     def setEditor(self, editor):
-
         self.editor = editor
 
     def close(self, event):
@@ -62,30 +52,22 @@ class Controller(makerController.SuperController):
         """ just updating bindings """
         self.dialog.OK.Unbind(self.view.wx.EVT_BUTTON)
         self.dialog.OK.Bind(self.view.wx.EVT_BUTTON, self.doReplaceCurrent)
-
         self.dialog.Replace.Unbind(self.view.wx.EVT_SET_FOCUS)
-
         self.dialog.Find.Bind(self.view.wx.EVT_TEXT_ENTER, self.showOccurences)
-
         self.dialog.Find.Bind(self.view.wx.EVT_TEXT, self.showOccurences)
-
         self.showOccurences(None)
 
     def replaceInProjectFinal(self, evt):
-
         old = self.dialog.Find.GetValue()
         new = self.dialog.Replace.GetValue()
 
         # replace in current open file
         self.replaceCurrent(True)
-        # call model and replace in whole project
         self.model.replaceInProject(old, new)
         self.dialog.Destroy()
 
     def showOccurencesInProject(self, evt):
-
         project = self.model.project
-
         pathToProject = project.getPathParts()
         string = self.dialog.Find.GetValue()
         if string:
@@ -110,10 +92,8 @@ class Controller(makerController.SuperController):
         self.dialog.Replace.Bind(
             self.view.wx.EVT_SET_FOCUS, self.showOccurencesInProject
         )
-
         self.dialog.Find.Unbind(self.view.wx.EVT_TEXT)
         self.dialog.Find.Unbind(self.view.wx.EVT_TEXT_ENTER)
-
         self.dialog.OK.Unbind(self.view.wx.EVT_BUTTON)
         self.dialog.OK.Bind(self.view.wx.EVT_BUTTON, self.replaceInProjectFinal)
 
@@ -125,7 +105,6 @@ class Controller(makerController.SuperController):
         """if do project is True, this
         method will replace in all open files
         belonging to this project
-
         """
         findText = self.dialog.Find.GetValue()
         replaceText = self.dialog.Replace.GetValue()

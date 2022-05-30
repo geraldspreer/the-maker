@@ -10,26 +10,18 @@ import sys
 from makerUtilities import writeDataToFile, readDataFromFile
 import wx
 
-
 class MakerTest(unittest.TestCase):
     def tearMeDown(self):
-
         if os.path.isdir(self.targetDir):
             shutil.rmtree(self.targetDir, ignore_errors=True)
 
     def setMeUp(self):
-
         self.user_home = "/Users/maker/"
-
         testProjects = os.path.join(os.getcwd(), "_Testing_")
         self.tool = theUpdater()
-
         self.targetDir = self.tool.getConversionTargetDir()
-
         self.sandbox = self.tool.getApplicationSupportDir()
-
         self.oldProjectsDir = os.path.join(self.sandbox, "makerProjects")
-
         self.UIData = {
             "SplitterSashPosition": 200,
             "editorStyle": "Github",
@@ -51,30 +43,23 @@ class MakerTest(unittest.TestCase):
 
     def test_getCorrectTargetDir(self):
         self.setMeUp()
-
         self.assertTrue(
             self.targetDir.endswith(makerUpdateSandboxedProjects.TARGET_NAME),
             "Target dir set correct",
         )
-
         self.tearMeDown()
 
     def test_ifNoMakerProjectsDirInSandboxDoNothing(self):
         self.setMeUp()
-
         if os.path.isdir(self.oldProjectsDir):
             shutil.rmtree(self.oldProjectsDir)
 
         self.tool.update()
-
         self.assertFalse(os.path.isdir(self.targetDir), "There should be no target dir")
-
         self.tearMeDown()
 
     def test_ifNoProjectsInSandboxDoNothing(self):
-
         self.setMeUp()
-
         if os.path.isdir(self.oldProjectsDir):
             shutil.rmtree(self.oldProjectsDir)
 
@@ -86,11 +71,8 @@ class MakerTest(unittest.TestCase):
             "Project dir is there...",
         )
         self.assertEqual(os.listdir(self.oldProjectsDir), [], "It is empty...")
-
         self.tool.update()
-
         self.assertFalse(os.path.isdir(self.targetDir), "There should be no target dir")
-
         self.tearMeDown()
 
     def test_existingProjectsWillBeConverted(self):
@@ -118,15 +100,10 @@ class MakerTest(unittest.TestCase):
         junk = "IamNotAProject"
         spam = os.path.join(self.oldProjectsDir, junk)
         os.mkdir(spam)
-
         self.assertTrue(os.path.isdir(spam), "Junk project is there...")
-
         oldProjects = getProjectsInSandbox()
-
         self.assertTrue("TestProjectOne" in oldProjects, "Old project in list")
-
         self.tool.update()
-
         self.assertTrue(os.path.isdir(self.targetDir), "There should be no target dir")
         self.assertFalse(
             os.path.isdir(self.oldProjectsDir), "There should be no old project dir"
@@ -146,7 +123,6 @@ class MakerTest(unittest.TestCase):
         )
 
         self.tearMeDown()
-
 
 if __name__ == "__main__":
     unittest.main()

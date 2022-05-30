@@ -3,7 +3,6 @@
 import os
 import sys
 import webbrowser
-#from sets import Set
 from xml.sax import parse
 from xml.sax.handler import ContentHandler
 from ftplib import FTP
@@ -29,7 +28,6 @@ import makerAddNewLanguageCodedFile
 import makerCheckInternetConnection
 import makerProjectController
 
-
 from makerConstants import Constants
 
 def afterThisUpdateStatusInfo(func):
@@ -43,10 +41,7 @@ def afterThisUpdateStatusInfo(func):
         except Exception, e:
             print "makerProject"
             print "unable to process: afterThisUpdateInfo", str(e)
-    
     return wrapped
-
-
 
 def enforcePassword(func):
     def wrapped(*args, **kwds):
@@ -58,53 +53,29 @@ def enforcePassword(func):
                 func(*args, **kwds)
     return wrapped
 
-
-
 class MakerProjectModel:
     """ The model for projects
         on instantiation you pass it a path to a project
-    
     """
     def __init__(self, project, view, projectManager=None):
-                
-#        self.initialized = False
-        
-#        self.controller = controller
-#        # instance of makerController
-        
-          #                                    model , view
         self.projectController = makerProjectController.MakerProjectController(self, view)
-          
         self.projectManager = projectManager  
-                                       
         self.setProjectPath(project)
-        
         self.coreMessage("Working directory is: %s" % os.getcwd())
-        
         self.systemSetup()
-        
         self.pathParts = os.path.join(self.getProjectPath(), "parts/")
-        
         self.setupProjectAndInitServerlink()
-        
         self.setImageSyncNeeded(needed = False)
-         
         self.clearPassAttempts()
-        
         self.setCurrentFile(None)
-        
         self.setRemotePassword() # defaults to None
-        
         self.setContentEditMode(".content")
-        
         self.markers = ["!projectName!", 
                         "!pageName!",
                         "!creationDate!",
                         "!todaysDate!"
                         ]
-        
         self.initFtpQueue()
-        
         self.supportedFiles = [".content",
                             ".css",
                             ".cgi",
@@ -122,7 +93,6 @@ class MakerProjectModel:
                             ".foot",
                             ".head",
                             ".zip"]
-                            
         self.supportedImages = [".png",
                                 ".jpg",
                                 ".jpeg",
@@ -147,87 +117,51 @@ class MakerProjectModel:
                                 ".CUR",
                                 ".ANI",
                                 ".XPM"]
-        
-        
         self.loadFiles()
-        
-                
-        #       self.initialized = True
-        
-
-
-    # ------------------------------------------------------------
     
     @afterThisUpdateStatusInfo
     def loadFiles(self):
-        #self.projectController.treeViewReset()
         self.projectController.projectRootItem = self.projectManager.controller.findTreeItemByText(self.getProject())
-        
         self.setItemGroups(self.mergeSupportedAndUnsupportedFileGroups())
-        
         self.itemsInGroups = {}
         self.loadGroupItems() # this call populates the itemsInGroups List
-
         self.projectController.treeViewExpandItem(self.projectController.projectRootItem)
         self.projectController.selectTreeItem(self.projectController.projectRootItem)
-      
-        # mark queued files for the first time
         self.projectController.markAllQueuedFiles()
-        
     
     def mergeSupportedAndUnsupportedFileGroups(self):
-        
         allFileGroups = []
-        
         for group in self.supportedFiles:
             allFileGroups.append(group)
-        
-        
+
         for group in self.getAllFileExtensionsFromParts():
             if allFileGroups.count(group) == 0:
-                                
                 allFileGroups.append(group)
-        
-        # remove groups we would like to ignore
+
         toIgnore = ['.head',
-#                    '.foot',
-#                    '.body',
-#                    '.nav',
                     '.htm',
                     '.rss',
                     '.DS_Store']
-                    
-        
         
         for imageType in self.supportedImages:
             toIgnore.append(imageType)
-            # also ignore the img when the .ext is uppercase
             toIgnore.append(imageType.upper())
-    
         
         for item in toIgnore:
             try:
                 allFileGroups.remove(item)
-            
             except:
                 sys.stdout.write("*")
-        
-        
-        
+
         # remove _local and _content files
         for item in allFileGroups:
             if item.endswith("_local"):
                 allFileGroups.remove(item)
-            
         return allFileGroups
-    
-    # ------------------------------------------------------------
 
     def getAllFilesFromParts(self):
         """Returns a list of all the files in the parts folder."""
         return os.listdir(self.getPathParts())
-        
-    # ------------------------------------------------------------
     
     def getAllFileExtensionsFromParts(self):
         """ returns a list of all file extensions in parts"""      
@@ -236,41 +170,26 @@ class MakerProjectModel:
             theExt = os.path.splitext(file)[-1]
             if theExtensions.count(theExt) == 0: 
                 theExtensions.append(theExt)
-        
-         
         return theExtensions
-        
-    # ------------------------------------------------------------
     
     def replaceStringInAllItems(self, old, new):            
         """
         Replaces old with new in all text based files that are in the parts
         folder.
-        
         Note: there is no distinction between binary and text files
         only a try: block that fails (then it is likely to be a binary)
         if the anything goes wrong        
         """
-        
         files = []
-        #originalGroups = []
         itemGroups = self.getItemGroups()
-        
-        #for group in itemGroups:
-        #    originalGroups.append(group)
-                
         more = ['.nav','.body','.foot','.head']
-        
         for items in more:
             itemGroups.append(items)
-        
         for x in itemGroups:
             for y in self.getFilesByExtension(x):
                 files.append(y + x)
-            
         for z in files:
             f_ = readFile(self.getPathParts() + z)
-            
             try:
                 if old in f_:
                     self.addToFtpQueue(z)
@@ -280,61 +199,30 @@ class MakerProjectModel:
                 m  = "Cannot replace in file %s\n" % z
                 m += 'Possible (likely) binary file...'
                 print  m
-            
-        #self.setItemGroups(originalGroups)
-        
-    # ------------------------------------------------------------        
    
     def setProjectPath(self, aPath):
         self.pathProject = aPath
         
     def getProjectPath(self):
         return self.pathProject
-
-    # ------------------------------------------------------------
-        
-
-        
-    # ------------------------------------------------------------
         
     def getItemsByGroup(self, groupName):
         """Returns items of a special group. The index is the position 
         of the group in itemGroups.
         """
         return self.itemsInGroups[groupName]
-        
-    # ------------------------------------------------------------
-
     
     def loadGroupItems(self):
-        
-#        def rejectFile(groupName, theFile):
-#            """ reject files not in the current language"""
-#            
-#            if groupName in ['.content', '.dynamic']:
-#                if not theFile.endswith(self.getLanguage()):
-#                    return True
-#            return False
-        
-        
         self.coreMessage("loading group items...")
-
         self.itemsInGroups = {}
-                        
         for groupName in self.getItemGroups():
             result = self.getFilesByExtension(groupName)
-            
             self.itemsInGroups[groupName] = result
-            
             parentItem = self.projectController.findTreeItemByText(groupName)
             if parentItem:
                 for file in result:
-                    # if rejectFile(groupName, file): continue
                     self.projectController.treeViewAppendItem(parentItem, file, type="File")
-                    
 
-    # ------------------------------------------------------------
-    
     def getFilesByExtension(self, ext):
         """ext is in the .ext format eg. .jpg  or .content."""                
         theResult = []
@@ -344,10 +232,7 @@ class MakerProjectModel:
             (eins, zwei)  = os.path.splitext(datei)
             if zwei == ext:
                 theResult.append(eins)
-                
         return theResult
-        
-    # ------------------------------------------------------------
         
     def setItemGroups(self, groups):
         for item in groups:
@@ -357,51 +242,24 @@ class MakerProjectModel:
         
     def getItemGroups(self):
         return self.itemGroups
- 
 
-#    def getLanguage(self):
-#        try:
-#            return self.language
-#            
-#        except:
-#            return "No Language"
-
-#
-#    @afterThisUpdateStatusInfo
-#    def setLanguage(self, lang):
-#        self.language = lang
-#        
-    # ------------------------------------------------------------
     @afterThisUpdateStatusInfo
     def setProject(self, proj):
         self.project = proj
-       
-    
     
     def getProject(self):
-        
         return self.project
-        
-    # ------------------------------------------------------------
 
     def getPathParts(self):
         return self.pathParts
-
-    # ------------------------------------------------------------
  
     def coreMessage(self, message):
         print 'makerCore: %s' % str(message)
 
-
     def closeProject(self):
-        # call the cleanUp method
-        
         self.cleanUp()
-        
         if self.getFtpQueue():
             self.saveFtpQueue()
-
-
 
     def cleanUp(self):
         """
@@ -412,58 +270,37 @@ class MakerProjectModel:
             print "deleting printOut file"
             os.remove(os.path.join(self.getProjectPath(), "makerPrintOut.html"))                   
 
-
-    # ------------------------------------------------------------
-
     def importImage(self):
-        
         makerImageImporter.MakerImageImporter(self, self.projectController.view)
         self.setImageSyncNeeded(needed = True)
-        
     def deleteImage(self):
-        
         delImg = makerDeleteImage.DeleteImg(self, self.projectController)
         delImg.deleteImage()
-        
             
     def syncImages(self, verbose = True):
         """
         Sync local and remote image files
-        
         """
-        
         if not self.checkIfProjectIsSetUp(verbose = True):
             return
-             
         self.serverLogin()
         if not self.server.status == "connected":
             return
-                   
         imagesToUpload = []
         imagesToDownload = []
-            
-        
         remoteImages = self.getRemoteImageFiles()
-                
         localImages = self.getImageFiles()
-            
-            
         for image in remoteImages:
             if localImages.count(image) == 0:
                 imagesToDownload.append(image)
-             
         for image in localImages:
             if remoteImages.count(image) == 0:
                 imagesToUpload.append(image)
-              
-              
         if imagesToUpload == [] and imagesToDownload == []:
             self.serverLogout()
             if verbose == True:
                 self.projectController.infoMessage("Nothing To Sync!")
             return
-           
-      
                 
         if imagesToDownload != []:
             self.projectController.showProgress(len(imagesToDownload),"downloading:", title="synchronizing images...")
@@ -474,7 +311,6 @@ class MakerProjectModel:
                                                os.path.join(self.getPathParts(),image),
                                                "binary")
                 count += 1
-             
                         
         if imagesToUpload != []:
             self.projectController.showProgress(len(imagesToUpload),"uploading:", title="synchronizing images...")
@@ -487,20 +323,16 @@ class MakerProjectModel:
                 count += 1
             self.projectController.killProgressBar()
         
-        
         self.serverLogout()
         self.projectController.killProgressBar()
         self.setImageSyncNeeded(needed = False)
     
     def setupProjectAndInitServerlink(self):
-        
         self.projectSetup()
         self.coreMessage('Initializing link to ftp server')
         self.server = makerServerlink.Server(self)
 
-
     def saveProjectAsTemplate(self, event = None):
-        
         def resetProjectSetup(pathToExported = None):
             string = """<?xml version="1.0" encoding="ISO-8859-1" ?>
             <project_setup>
@@ -515,11 +347,8 @@ class MakerProjectModel:
             <ftp_root>.</ftp_root>
             <url>http://www.yourserver.com/</url>
             </project_setup>"""
-            
             xPath = os.path.join(pathToExported, "setup", "project_setup.xml")
-            
             writeFile(xPath, string)
-        
         
         def deleteHiddenFiles(root = None):
             path = root
@@ -543,16 +372,12 @@ class MakerProjectModel:
                                 self.projectController.updateProgressPulse("cleaning up: " + dPath)
                                 shutil.rmtree(dPath, ignore_errors=True)
         
-        
-        
         m = "If you are exporting a template, make sure that you have "
         m += "a current screenshot included.\n"
         m += "Save this screenshot as 'preview.jpg' into your parts folder. "
         m += "Dimensions should be 320x240 pixels."
         
-        
         self.projectController.infoMessage(m)
-        
         tgt = self.projectController.dirDialog("Save Template To:")
         if not tgt: return
         
@@ -564,33 +389,26 @@ class MakerProjectModel:
                 return
             else:
                 shutil.rmtree(fullTarget, ignore_errors=True)
-        
         os.mkdir(fullTarget)
-        
         src = self.getProjectPath()
         self.projectController.showProgress(limit=1, Message="Saving template...", title="Saving template...")
         copyFileTree(src, fullTarget, [], self.projectController.updateProgressPulse, ("storing: " + self.getProject()))
-                     
         deleteHiddenFiles(root = fullTarget)
         resetProjectSetup(fullTarget)  
         self.projectController.killProgressBar()
-        
-        
 
     def systemSetup(self):
         """Sets up the CMS. Data is read from system.xml"""
 
         self.homeDir = os.path.dirname(sys.argv[0])
-
         if os.name == 'nt':
             self.coreMessage('nt found converting path')
             new = self.homeDir.replace('\\','/')
             self.homeDir = new
-                
-        self.pathSystem = os.path.join(self.homeDir, 'system')
 
+        self.pathSystem = os.path.join(self.homeDir, 'system')
         self.coreMessage('Setting up system')
-      
+
         class XmlReader(ContentHandler):
             def __init__(XmlReader, scrwid=79, *args):
                 ContentHandler.__init__(XmlReader, *args)
@@ -604,12 +422,11 @@ class MakerProjectModel:
                 XmlReader.end_name = name
                 if XmlReader.end_name=="System_Setup":
                     sys.stdout.write("\n done\n")
-                
+
             def characters(XmlReader, chars):
                 if XmlReader.start_name == "feedbackadress":
                     self.feedbackadress = chars   
                 XmlReader.start_name = ""
-                
         parse(self.getSystemSetupFilename(), XmlReader())
         
     # ------------------------------------------------------------
@@ -628,7 +445,6 @@ class MakerProjectModel:
             self.projectController.errorMessage("Log in to server: FAILED...")
             return False
         
-        
     def serverLogout(self):
         """Logout from the FTP server."""        
         self.projectController.showProgress(2, "logging out...", "logging out...")
@@ -642,28 +458,19 @@ class MakerProjectModel:
             self.projectController.killProgressBar()
             self.projectController.errorMessage("Logging out of server: FAILED...")
             return False
-        
-    # ------------------------------------------------------------
 
     def checkIfRemoteDirIsDir(self, aDir):
         return self.server.isdir(aDir)
 
-    # ------------------------------------------------------------
-
     def makeRemoteDir(self, aDir):
         return self.server.mkd(aDir)
-            
-    # ------------------------------------------------------------           
-    
     
     def makeAll(self, event=None):
         """Rebuilds all web sites for the current language, and is queuing them.
         This method is not invoking any upload functions like in version < 0.91
-        
         """
            
         def initForMakeAll(name, group):
-                
             theClass = self.getFileClassForSupportedGroup(group)
             file = theClass(self, name, view=False)
             self.setCurrentFile(file)
@@ -674,16 +481,7 @@ class MakerProjectModel:
             nowFile = None
         
         pagelist = self.getFilesByExtension(".content")
-        #pagelist = []
-        
-#        # filter language
-#        for i in list:
-#            if i.endswith(nowFile.getLanguage()): 
-#                pagelist.append(i)
-#                
-        
         self.projectController.showProgress(len(pagelist),"rebuilding websites")
-        # the counter for the progress dialog
         step = xrange(len(pagelist))[0]     
 
         for i in pagelist:
@@ -693,24 +491,18 @@ class MakerProjectModel:
                 x.makeWebSite()
                 self.projectController.updateProgressMessage(step,"making page: "+ x.getName())
                 step += 1
-                
-                
             except:
                 print "Make all failed for :" , i
                 
         self.projectController.killProgressBar()
-        
         self.setCurrentFile(nowFile)
-    
 
     def testFTPFromSetupFile(self):
         psfn = self.getProjectSetupFilename()
         theInformation = self.getProjectInformation(psfn)
-        
         host = theInformation['ftp_host']
         user = theInformation['ftp_user']
         root = theInformation['ftp_root']
-        
         print "testing connection from file...", host, user, root 
         
         if host == "not set" or user == "not set":
@@ -723,7 +515,6 @@ class MakerProjectModel:
         else:
             self.saveValidFTPHost(host, user, root)
             return True 
-        
 
     def testFtp(self, host, user, root, passw):
         """
@@ -731,7 +522,6 @@ class MakerProjectModel:
         about what is wrong. If the password is good it is stored
         and used for upcoming connections.
         """
-  
         self.projectController.showProgress(4,"testing Hostname: " + host)
         testFtp = FTP()
         testFtp.set_debuglevel(2)
@@ -743,9 +533,7 @@ class MakerProjectModel:
         except Exception, e:
             self.projectController.killProgressBar()
             testFtp.close()
-                        
             return "bad hostname!" 
-            
 
         try:
             self.projectController.updateProgressMessage(3,"testing Username: " + user)
@@ -755,7 +543,6 @@ class MakerProjectModel:
         except ftplib.all_errors, e:
             testFtp.close()
             self.projectController.killProgressBar()
-            
             return str("Error No:\n" +  e[0] + "\nbad username")
         
         try:
@@ -763,47 +550,33 @@ class MakerProjectModel:
             print "action testFTP: testing password..."
             print "-----------------------------------"
             testFtp.sendcmd("PASS " +passw )
-                     
         except ftplib.all_errors,e:
-            
             self.projectController.killProgressBar()
             testFtp.close()
             self.setRemotePassword(None)
             # the fact that the server is accepting the username does not
             # mean that it is valid
-            
             return str("Error No:\n" +  e[0] + "\nbad username or password")
         
         try:
             self.projectController.updateProgressMessage(1,"testing root" )
             testFtp.cwd(root)
-                     
         except ftplib.all_errors,e:
-            
             self.projectController.killProgressBar()
             testFtp.close()
             self.setRemotePassword(None)
-                        
             return str("Error No:\n" +  e[0] + "\n bad path to project")
             
         self.projectController.killProgressBar()
-        #self.projectController.infoMessage("All FTP settings are good.")
         testFtp.close()
-        
         return True
         
     def addAllFilesToQueue(self):
-        
-        # build all content files
         self.makeAll()
-        
         distributionData = self.readDistributionTable()
-     
         listOfFiles = []
-        
         for aDict in distributionData:
             listOfFiles.append(aDict["ftp_source"])
-            
         
         for file in listOfFiles:
             # .htm files or in other words .content are already queued thru make all
@@ -819,34 +592,26 @@ class MakerProjectModel:
 
 
     def uploadEverything(self, event=None):
-              
         if not self.checkIfProjectIsSetUp(verbose=True):
             return
 
         self.addAllFilesToQueue()
-
         if not makerCheckInternetConnection.check():
             self.projectController.infoMessage("No internet connection!\nSorry, cannot send files to server...")   
         else:
             self.publishQueuedFiles()
             self.syncImages(verbose = False)
 
-
     def uploadFile(self, theFile, remoteFolder, theTarget, theFtpMode):
         """
         Uploads a single file and returns a boolean indicating outcome.
         You have to be logged in to do this.
         """
-        
         try:
-            
             self.server.upload(theFile, remoteFolder, theTarget, theFtpMode)
-               
             return True
         except:
-            
             return False
-    
     
     def downloadFile(self, remoteFile, localFile, theFtpMode):
         """
@@ -857,10 +622,6 @@ class MakerProjectModel:
             return True
         else:
             return False
-            
-    
-    # ------------------------------------------------------------ 
- 
     
     def renameRemoteFile(self, oldName, newName):
         try:
@@ -875,26 +636,19 @@ class MakerProjectModel:
         delete remote File
         you have to be logged in to do that
         returns True or False
-        
         if one of the parameters is "undefined" which is the value in the
         distribution table for pages that exist only locally -
         this method returns True but does nothing
         """
-        
         if remoteFolder=="undefined": return True
-                
+
         res = self.server.delete(remoteFolder, theFile)
         if res != True:            
             return False
         else:
             return True
-    # ------------------------------------------------------------             
-            
     def getRemoteGfxFolder(self):
-        
         return self.gfxFolder
-            
-    # ------------------------------------------------------------ 
         
     def getSystemPath(self):
         return self.pathSystem
@@ -902,12 +656,9 @@ class MakerProjectModel:
     def getSystemSetupFilename(self):
         return os.path.join(self.getSystemPath(), 'system_setup.xml')
 
-    
     def getProjectSetupFilename(self):
         return os.path.join(self.getProjectPath(), "setup/project_setup.xml")
 
-    # ------------------------------------------------------------ 
-    
     def initFtpQueue(self):
         """
         * check if there is an old queue
@@ -918,38 +669,25 @@ class MakerProjectModel:
         currQueue = os.path.join(self.getPathParts(), "current.queue")
         if os.path.isfile(currQueue):
             bFile = open(currQueue,"rb")
-            
             last = cPickle.load(bFile)
             lastQueue = cPickle.loads(last)
             bFile.close() 
             self.setFtpQueue(lastQueue)
-            
             os.remove(currQueue)
         else:
             self.setFtpQueue([])
         self.coreMessage("FTP Queue: %s" % str(self.ftpQueue))
         
-    # ------------------------------------------------------------             
-        
     def setFtpQueue(self, files):
         """items is a list of maker files."""
-        
-        #for file in files:
-        #    self.addToFtpQueue(file)
-        
         self.ftpQueue = files
-    
-    # ------------------------------------------------------------     
     
     def isFileInQueue(self, theFile):
         """Returns a boolean."""
-        
         if theFile in self.ftpQueue:
             return True
         else:
             return False
-        
-    # ------------------------------------------------------------     
     
     @afterThisUpdateStatusInfo
     def addToFtpQueue(self, theFile):
@@ -959,22 +697,14 @@ class MakerProjectModel:
             if os.path.isfile(os.path.join(self.getPathParts(), theFile)):
                 self.ftpQueue.append(theFile)
                 self.projectController.markQueuedFile(theFile)
-            
-
-    # ------------------------------------------------------------             
 
     @afterThisUpdateStatusInfo
     def deleteFromFtpQueue(self, theFile):
         self.ftpQueue.remove(theFile)
-        
-    # ------------------------------------------------------------     
     
     def getFtpQueue(self):
         """ returns the current FTP queue"""
-        
         return self.ftpQueue
-
-    # ------------------------------------------------------------     
     
     def renameItemInFtpQueue(self, oldName, newName):
         print self.ftpQueue
@@ -986,18 +716,12 @@ class MakerProjectModel:
                     new.append(newName)
                 else:
                     new.append(item)
-        
             self.ftpQueue = new
             print self.ftpQueue
-    
-    # ------------------------------------------------------------     
-    
     
     def clearFtpQueue(self):
         """Clears the queue with no warning."""
         self.ftpQueue = []
-
-    # ------------------------------------------------------------     
     
     def saveFtpQueue(self):
         """Serializes the queue for the next session."""
@@ -1008,8 +732,6 @@ class MakerProjectModel:
         bFile = open(os.path.join(self.getPathParts(),"current.queue"), "wb")
         cPickle.dump(bytes, bFile, 2)
         bFile.close()
-        
-     # ------------------------------------------------------------     
     
     @enforcePassword
     def publishQueuedFiles(self, event=None):
@@ -1019,9 +741,7 @@ class MakerProjectModel:
             return
             
         nowFile = self.getCurrentFile()
-        
         publishedFiles = []
-        
         self.projectController.showProgress(len(self.getFtpQueue()), 
                                             "uploading:", 
                                             title="uploading...")
@@ -1030,47 +750,25 @@ class MakerProjectModel:
         if not self.server.status == "connected":
             self.projectController.killProgressBar()
             return
-        
         count = 0
         
         for aFile in self.getFtpQueue():
             split = os.path.splitext(aFile)
             self.justInitFile(split[0], split[1])
-            
             fName = self.currentFile.getName()
             fExt = split[1]
-            
             fileName = fName + fExt
-                                    
-            # mark file as published only when it is so
-            
             
             # here you publish
             self.projectController.updateProgressMessage(count, fileName)
             self.currentFile.publish()
             count += 1
             
-            
             publishedFiles.append(fileName)
-            #if self.publishCurrentFile() == True:
-            
-            # remove the marker in the tree item
             self.projectController.markQueuedFile(fileName, mark=False)
-            
-            
-            
-                #reset = [self.currentFile.getName() + split[1]]
-                #self.resetTreeItemIconForFiles(reset)
-                        
-                #self.GUI.DisablePublishButton()
-        
         
         self.serverLogout()
-    
-        
         self.setCurrentFile(nowFile)
-        
-        # delete from Queue
         
         for file in publishedFiles:
             self.deleteFromFtpQueue(file)
@@ -1078,15 +776,10 @@ class MakerProjectModel:
         if self.imageSyncNeeded:
             self.syncImages(verbose = False)    
         self.projectController.killProgressBar()
-        
-        
-    
-    
     
       # ------------------------------------------------------------    
       # -- password stuff
       #-------------------------------------------------------------
-        
         
     def getPassAttempts(self):
         """Returns the number of password attempts."""
@@ -1101,22 +794,15 @@ class MakerProjectModel:
         """Sets the number of pass attempts to zero."""
         self.passAttempts = 0
             
-    # ------------------------------------------------------------    
-            
     def maxPassAttemptsReached(self):
         return self.getPassAttempts() == Constants.MAX_PASS_ATTEMPTS
-    
-    # ------------------------------------------------------------    
     
     def dealWithMaxPassReached(self):
         m = 'Sorry, no more password attempts allowed. Exiting...'
         self.projectController.errorMessage(m)
         sys.exit()
     
-        # ------------------------------------------------------------    
-    
     def loadPassword(self):
-                        
         def passwordOK(passw):
             """ password has been entered"""
             passw = passw.strip()
@@ -1126,13 +812,10 @@ class MakerProjectModel:
                                       self.ftpRoot,
                                       passw)
             return result
-            
-            
     
         if self.remotePasswordIsSet(): return True
             
         passw = self.projectController.password("Please enter FTP password...")
-        
         if not passw:
             return False
         
@@ -1147,8 +830,6 @@ class MakerProjectModel:
         self.setRemotePassword(passw)
         self.clearPassAttempts()
         return passw != None
-    
-        # ------------------------------------------------------------    
         
     def handleBadPassword(self):
         self.incPassAttempts()
@@ -1157,27 +838,17 @@ class MakerProjectModel:
         m += ' You have %d attempts left...' % left
         self.projectController.errorMessage(m)
     
-        # ------------------------------------------------------------    
-        #-------------------------------------------------------------
-   
-    
-    
-    
     def isFileBinary(self, file):
         """Returns a boolean. 
         PDF files are treated as binary by default."""
-        
         if os.path.splitext(file)[-1].lower() == '.pdf':
             print 'PDF file found. Is considered binary.'
             return True
-   
-        #print "Checking file..."
            
         textCharacters = "".join(map(chr, range(32, 127)) + list("\n\r\t\b"))
         nullTrans = string.maketrans("", "")
         
         s = readFile(file)
-        
         if "\0" in s:
             return True
         
@@ -1192,23 +863,18 @@ class MakerProjectModel:
         # this is considered a binary file
         if len(t)/len(s) > 0.30: return True    
         return False
-        
-    #---------------------------------------------------------------------
      
     def setFtpHost(self, host):
         self.ftpHost = host
     
     def getFtpHost(self):
         return self.ftpHost
-    
                         
     def setFtpUser(self, user):
         self.ftpUser = user
     
-    
     def getFtpUser(self):
         return self.ftpUser
-    
     
     def setFtpRoot(self,root):
         self.ftpRoot = root
@@ -1216,20 +882,11 @@ class MakerProjectModel:
     def getFtpRoot(self):
         return self.ftpRoot
     
-    
-    
-    # ------------------------------------------------------------ 
-   
-    # ------------------------------------------------------------
-    
     def checkIfProjectIsSetUp(self, verbose=False):
         """
         Determines weather FTP settings are useful
-        
         returns True or False
-        
         """
-        
         # The project is NOT set up when:
         #
         # - there is no internet connection since we cannot test the settings
@@ -1237,38 +894,24 @@ class MakerProjectModel:
         # 
         #
         #
-        
         connection = makerCheckInternetConnection.check()
         if not connection:
             if verbose:
                 self.projectController.infoMessage("No Internet Connection !")
             return False
         
-        
         if self.readValidFTPFile():
-            # compare with setup data
-            
             valid = self.readValidFTPFile()
-                    
             psfn = self.getProjectSetupFilename()
             projectData = self.getProjectInformation(psfn)
-            
             if projectData['ftp_host'] == valid[0] and projectData['ftp_user'] == valid[1]:
                 return True
-            
-            
-            
             else:
                 m = "All right. It seems like you have manually changed your setup file.\n"
                 m += "The current FTP settings have not been tested. Please use Project / Project Setup "
                 m += "to run a test."
                 self.projectController.errorMessage(m)
                 return False
-        
-        
-        
-        
-        
         else:
             if connection:
                 if not self.testFTPFromSetupFile():
@@ -1281,31 +924,23 @@ class MakerProjectModel:
                 # no internet connection
                 return False     
  
- 
     def saveValidFTPHost(self, host, user, root):
-        
         data = [host, user, root]
         bytes = cPickle.dumps(data, 2)
-        
         bFile = open(os.path.join(self.getProjectPath(),"setup/valid.ftp"), "wb")
         cPickle.dump(bytes, bFile, 2)
         bFile.close()
     
-    
     def readValidFTPFile(self):
-               
         validFTPFile = os.path.join(self.getProjectPath(), "setup/valid.ftp")
         if os.path.isfile(validFTPFile):
             bFile = open(validFTPFile,"rb")
-            
             last = cPickle.load(bFile)
             validConnection = cPickle.loads(last)
             bFile.close() 
             return validConnection
-
         else:
             return False
-
 
     def projectSetup(self):
         """
@@ -1314,7 +949,6 @@ class MakerProjectModel:
         """
         class XmlReader(ContentHandler):                
             def __init__(XmlReader, scrwid=79, *args):
-                
                 ContentHandler.__init__(XmlReader, *args)
                 
             def startElement(XmlReader, name, attrs):
@@ -1329,12 +963,8 @@ class MakerProjectModel:
                 
             def characters(XmlReader, chars):
                 sys.stdout.write("*")
-#                if XmlReader.start_name == "sprache":
-#                    self.language = chars                    
                 if XmlReader.start_name == "encoding":
                     self.encoding = chars
-#                elif XmlReader.start_name == "add_language":
-#                    self.add_language = chars
                 elif XmlReader.start_name == "gfx_folder":
                     if not chars.endswith("/"):
                         self.gfxFolder = chars + "/"
@@ -1373,64 +1003,6 @@ class MakerProjectModel:
         
         return True
 
-    # ------------------------------------------------------------     
-
-#    def switchLanguage(self, lang):
-#        
-#        if lang == self.getLanguage():
-#            return
-#        
-#        theList = self.filterFilesByLanguage(self.getFilesByExtension(".content"), 
-#                                             self.getLanguage())
-#        
-#        # add dynamics        
-#        for x in self.filterFilesByLanguage(self.getFilesByExtension(".dynamic"), 
-#                                            self.getLanguage()):
-#            theList.append(x)
-#        
-#        
-#        for fName in theList:
-#            item = self.projectController.findTreeItemByText(fName)
-#            
-#            # check if you have to delete from NoteBookPages
-#            
-#            # replace with None
-#            
-#            self.projectController.treeViewDeleteItem(item)
-#        
-#        
-#        
-#                           
-#        self.setLanguage(lang)
-#        
-#        for type in [".content", ".dynamic"]:
-#        
-#            newFiles = self.filterFilesByLanguage(self.getFilesByExtension(type), self.getLanguage())
-#             
-#            for file in newFiles:
-#                self.projectController.treeViewAppendItem(self.projectController.findTreeItemByText(type),
-#                                                          file, type="File")
-#                            
-#        
-#        self.projectController.reBindSelectEvent()
-#        
-#        #self.loadFiles()    
-        
-    # ------------------------------------------------------------     
-
-#    def deleteMakerFile(self):
-#        """Deletes local MakerFiles."""
-#
-#        self.coreMessage("Deleting: %s" % self.getCurrentFileName())
-#        
-#        try:
-#            self.currentFile.delete()
-#            return True
-#        except:
-#            return False
-#        
-    # ------------------------------------------------------------    
-    
     def getPageLocationsBySource(self, theObject):
         """Returns a list of the pages locations on the server."""
 
@@ -1439,10 +1011,8 @@ class MakerProjectModel:
         class XmlReader(ContentHandler):        
             def __init__(XmlReader, scrwid=79, *args):
                 ContentHandler.__init__(XmlReader, *args)
-                
             def startElement(XmlReader, name, attrs):
                 XmlReader.start_name = name
-                        
                 if XmlReader.start_name == "rule":
                     page   = theObject                            
                     object = attrs.get("ftp_source")
@@ -1454,12 +1024,8 @@ class MakerProjectModel:
                         
                         location = remoteDir + attrs.get("target") 
                         self.remotePageLocations.append(location)
-                    
         parse(self.getDistributionTableFilename(), XmlReader())
-              
         return self.remotePageLocations
-    
-    # ------------------------------------------------------------    
     
     def addToDistributionTable(self, ftpSource, remoteDir, ftpMode, target):
         """
@@ -1479,11 +1045,8 @@ class MakerProjectModel:
 
         self.writeDistributionTable(dictlist)
     
-    # ------------------------------------------------------------    
-    
     def deleteFromDistributionTable(self, filename):
         """Remove ALL rules for a file from the distribution table."""
-
         table = self.readDistributionTable()
         self.coreMessage('Current distribution table:\n%s' % str(table))
 
@@ -1497,39 +1060,28 @@ class MakerProjectModel:
         for i in range(len(pos)):
             x = pos[i]-i
             table.pop(x)
-            
         self.writeDistributionTable(table)
-    
-    # ------------------------------------------------------------        
     
     # TO DO: convert to use DOM methods
     def writeDistributionTable(self, data):
         info  = self.getXmlHead()
         info += "<!-- file was created @: %s -->\n" % time.ctime()
         info += "<distribution>\n"
-        
         for i in data:
             xl = i.keys()
             info += "<rule "
             for t in xl:
                 info += t+'="'+i[t]+'" '
             info += "></rule>\n"
-            
         info += "</distribution>"
-        
         writeFile(self.getDistributionTableFilename(), info)
-        
-    # ------------------------------------------------------------        
     
     def getLocalFilesFromDistTable(self):
-        
         sources = []
         data = self.readDistributionTable()
         for dict in data:
             sources.append(dict["ftp_source"])
-        
         return sources
-    
     
     def readDistributionTable(self):
         """
@@ -1559,10 +1111,7 @@ class MakerProjectModel:
                 pass
                 
         parse(self.getDistributionTableFilename(), XmlReader())
-        
         return self.distList
-    
-    # ------------------------------------------------------------        
     
     def getDataForMakerMarker(self, theMarker):
         """Return the data that will replace a maker marker."""
@@ -1572,7 +1121,7 @@ class MakerProjectModel:
             creationTime = os.fstat(f.fileno())
             f.close()
             return time.ctime(creationTime[-1])
-        
+
         thePath = os.path.join(self.getPathParts(),
                                self.currentFile.getRealName())
         theDate  = getFileCreationDate(thePath)
@@ -1588,49 +1137,33 @@ class MakerProjectModel:
         except:
             self.coreMessage("Marker %s not found !" % theMarker)
     
-    # ------------------------------------------------------------
-    
     def createNewDefaultFoldersFile(self):
-            """
-            this function is creating a new file called ./setup/defaultFolders.dat
-            all types present at the moment of creation get the . value as default
-            """
-            typesToIgnore = [".dynamic",""]
-            
-            data = {}
-            
-            for type in self.getItemGroups():
-                if type not in typesToIgnore:
-                    data[type] = "."
-            
+        """
+        this function is creating a new file called ./setup/defaultFolders.dat
+        all types present at the moment of creation get the . value as default
+        """
+        typesToIgnore = [".dynamic",""]
+        data = {}
+        for type in self.getItemGroups():
+            if type not in typesToIgnore:
+                data[type] = "."
             makerUtilities.writeDataToFile(data, os.path.join(self.getProjectPath(), 
                                                              "setup/defaultFolders.dat"))
-            
       
     def readDefaultFoldersFile(self):
         """
         returns a dictionary
         {"filetype" : "defaultRemoteFolder"}
         """
-        
         dataFile = self.getProjectPath() + "/" + "setup/defaultFolders.dat"
         if not os.path.isfile(dataFile):
-            
             self.createNewDefaultFoldersFile()
-            
         data = makerUtilities.readDataFromFile(dataFile)
-        
         return data
     
     def writeDefaultFoldersFile(self, data):
-        """
-        """
-        
         dataFile = self.getProjectPath() + "/" + "setup/defaultFolders.dat"
-            
         data = makerUtilities.writeDataToFile(data, dataFile)
-        
-                     
     
     def getDefaultRemoteFolder(self, fileType):
         """
@@ -1641,74 +1174,47 @@ class MakerProjectModel:
         if no entry is found in the data file the default value "."
         is returned
         """
-                   
         default = "."
         dataFile = self.getProjectPath() + "/" + "setup/defaultFolders.dat"
         if not os.path.isfile(dataFile):
-            
             self.createNewDefaultFoldersFile()
-            
             return default      # the . dir is the default value
-        
         data = makerUtilities.readDataFromFile(dataFile)
-                
-                        
         if fileType in data:
             remoteFolder = data[fileType]
-        
         else:
-            # add the new, unknown type to the data file
             data[fileType] = default
             makerUtilities.writeDataToFile(data, dataFile)
-                        
             remoteFolder = default
-        
-        
         return remoteFolder
-    
-    # ------------------------------------------------------------
 
     def imageSyncNeeded(self):
-        
         return self.imageSyncNeeded
-        
     
     def setImageSyncNeeded(self, needed = False):
         self.imageSyncNeeded = needed
 
-
-
-
     def importFiles(self, event=None):
-       	
         """Imports a MakerFile (handles all files, even binary)."""
-
         files = self.projectController._fileDialog()
-        
         if not files:
             return
         
         filesToImport = []
-        
         for item in files:
             print item.path()
             # these are NSUrls so we need to call path() 
             filesToImport.append(item.path())
         
         if filesToImport == []: return
-        
         # just making sure that no images are imported this way
-        
         for possibleImage in filesToImport:
-            
             fileType = os.path.splitext(os.path.basename(possibleImage))[-1]
-            
             if self.supportedImages.count(fileType.lower()) != 0:
                 self.projectController.errorMessage("Please do NOT Import Images this way!\n" + 
                                "Use 'Import Image' instead!\n\n" + 
                                "Import canceled!")
                 return
-        
         
         # This might seem a little odd. Here is why it is dome this way.
         # In the file selector we need to enable all files because there is no
@@ -1717,41 +1223,29 @@ class MakerProjectModel:
         # Images are not displayed in the treeView and are handled different from
         # all other files so we have to exclude them from being imported like 
         # any other file 
-        
-      
-        # - - - 
-        
         for file in filesToImport:
-        
             try:
-                
                 fileName     = os.path.basename(file)
                 filePath     = os.path.dirname(file)
                 fileNameNoExt, fileType = os.path.splitext(fileName)
-                
             except Exception, e:
                 print str(e)
                 return
-    
-            # just a flag for later
             isBinary = False
             flag   = 'r'        
             if self.isFileBinary(file):
                 isBinary = True
                 # we are only making this distinction on Xp or Vista
-                # since the Mac and Linux handle binary data well 
+                # since the Mac and Linux handle binary data well
                 if os.name == 'nt': flag = 'rb'
                     
             content = readFile(file, binary=isBinary)
-            
             theFile = os.path.split(file)[-1]
             
             # only display the rename message if the file already exists
             if os.path.isfile(os.path.join(self.getPathParts(),theFile)):
-            
                 m = "A file named '%s' already exists! " % theFile
                 m += "Enter another name..."  
-                
                 name = self.projectController.inputWithValue(m, fileNameNoExt)
                 
                 # just in case someone hits OK 
@@ -1759,45 +1253,32 @@ class MakerProjectModel:
                     name = None
             else:
                 name = os.path.splitext(theFile)[0]
-                    
-            # ----
+
             if name is None or not name.strip():
                 self.projectController.infoMessage("No File imported")
                 return
-    
+
             mode = 'lines'
             if isBinary: 
                 mode = 'binary'
             print "adding maker file ", name, fileType, mode
             self.addMakerFile(name, fileType, content, mode)
             self.addToFtpQueue(name + fileType)
-            
-       
 
     def addLanguage(self, newLang=None, langName = None):
-        
-        
-        # create header template
-        
         contents = readFile(os.path.join(self.getProjectPath(),"templates", 
                                      self.getProjectLanguages()[0] + ".head"))
         writeFile(os.path.join(self.getProjectPath(),"templates", newLang + ".head"), contents)
-        
-        # ------
-        
         fileTypesNeeded = ['.nav','.body','.foot']
         existingLangs = self.getProjectLanguages()
-        
         for type in fileTypesNeeded:
             src = os.path.join(self.getPathParts(), existingLangs[0] + type)
             dst = os.path.join(self.getPathParts(), newLang + type)
             shutil.copyfile(src, dst)
-            
-
             group = self.projectController.findTreeItemByText(type)
             if not group:
                 group = self.projectController.treeViewAddFolder(type)
-                    
+
             newItem = self.projectController.treeViewAppendItem(group, newLang, type=None)
             self.projectController.selectTreeItemAndLoad(newItem)
             
@@ -1805,112 +1286,69 @@ class MakerProjectModel:
         m += "\nThe following files have been created:\n"
         
         for type in fileTypesNeeded:
-            
             m += "\t" + newLang + type + "\n"
-            
         m += "Please translate them as needed."
-        
         self.projectController.infoMessage(m)
-        
-        
-
     
     def removeLanguage(self, toRemove=None, langName = None):
         """ 
             toRemove is language code like de, en 
             langName is the written language name like 'German'
         """
-        
         resp = self.projectController.askYesOrNo("This will remove all files of the language '" + langName 
                                            + "' and you will need to restart the application.\n Would you like to do that?" )
-        
-        if resp != "Yes":
-            return
-        
-        
-        # delete header template
+        if resp != "Yes": return
         
         os.remove(os.path.join(self.getProjectPath(),"templates", toRemove + ".head"))
-    
-        # ------
-        
         fileTypesNeeded = ['.nav','.body','.foot']
-        
         for type in fileTypesNeeded:
-            
            os.remove(os.path.join(self.getPathParts(), toRemove + type))
-        
 
         types = [".content",".dynamic",".head"]
         
         for type in types:
-            
             someFiles = self.getFilesByExtension(type)
             theList = self.filterFilesByLanguage(someFiles, toRemove)
             
             for item in theList:
-                
                 os.remove(os.path.join(self.getPathParts(), item + type))
 
         # exit
         self.projectManager.exitApplication()
-    
-
 
     def addMakerFile(self, name=None, type=None, content=None, mode="lines"):    
-        
         """
         Adds a file to the project parts/ directory.
-         
         type = the file type, if type is .content a language marker 
         is added to the name. This will result in name_en.content but name.css
         this method also calls loadGroupItems to update the internal Lists
-                
         mode is new since rev 112 
         either lines or binary - lines by default
-                
         """
-        
         depList = [".content", ".dynamic"]
-        
         if not name:
-        
             if type in depList:
-                
                 makerAddNewLanguageCodedFile.NewLangFile(self.projectController.view, self, type, content)
                 return
-                
             elif type == "other":
-                
                 m = "Enter a name for the new file: "
                 name = self.projectController.input(m)
-                
                 # nothing was entered
                 if not name: 
                     return
                 else:
-                
                     splitName = os.path.splitext(name)
-                    
                     type = splitName[-1]
                     name = splitName[0]
-                       
             else:
-                
                 m = "Enter a name for the new %s file: " % type
                 name = self.projectController.input(m)
-                
-                       
                 # nothing was entered
                 if not name: return
-                               
-                                
         if not content:
             content = makerFileTemplates.getTemplate(type)
-        
        
         def makerFileExists(thePath):
-                    
             if os.path.isfile(thePath):
                 message  = "%s is an existing file !\n" % thePath
                 message += "Please try again."
@@ -1920,69 +1358,46 @@ class MakerProjectModel:
         
         def findLanguage(name):
             possibleLanguages = self.getProjectLanguages()
-        
             for lang in possibleLanguages:
                 if name.endswith("_" + lang):
                     return lang    
         
-        
         addOn   = name + type
         newfile = self.getPathParts() + addOn
-    
         exists = makerFileExists(newfile)
         if exists: 
             print "file exists !"
             return 
         
-        
-        # this is only for imported .content and dynamic files
-        
         if type == ".content":
-            
             lang = findLanguage(name)
-        
             # TO DO: convert to use os.path.join()
             pathToHead = self.getPathParts()+"../templates/"+ lang +".head" 
             head = readFile(pathToHead)
-                         
             pathToNewHead = self.getPathParts() + name +".head"
-                                
             writeFile(pathToNewHead, head)
-        
             # TO DO: convert to use os.path.join()
             nameInTable = name +  ".htm"
-                                
             self.addToDistributionTable(nameInTable, 
                                         self.getDefaultRemoteFolder(type), 
                                         "lines", 
                                         nameInTable)
-            
             newFile = self.getPathParts() + name + type
             writeFile(newFile, content)
-        
-                
         elif type==".dynamic":
-        
             lang = getLanguage(name)
-            
             # TO DO: convert to use os.path.join()
-                                        
             newFile = self.getPathParts() + name +  type
             writeFile(newFile, content)
-             
-                                   
         isBinary = False
         if mode == "binary" and os.name == 'nt':
             isBinary = True
-    
         writeFile(newfile, content, binary=isBinary)
-    
-                
+
         self.addToDistributionTable(addOn, 
                                     self.getDefaultRemoteFolder(type), 
                                     mode, 
                                     addOn)
-            
         group = self.projectController.findTreeItemByText(type)
         if not group:
             group = self.projectController.treeViewAddFolder(type)
@@ -1990,15 +1405,9 @@ class MakerProjectModel:
         newItem = self.projectController.treeViewAppendItem(group, name, type=None)
         self.projectController.selectTreeItemAndLoad(newItem)
 
-
-            
-    # ------------------------------------------------------------   
-    
     def help(self, topic):
         """Show http://www.makercms.org/tutorial/#topic in a browser."""
         webbrowser.open("http://www.makercms.org/tutorial/"+topic)
-                
-    # ------------------------------------------------------------
 
     def feedback(self):
         webbrowser.open("mailto:%s?subject=CMS Feedback" % self.feedbackadress)
@@ -2006,16 +1415,11 @@ class MakerProjectModel:
     # ------------------------------------------------------------
 
     def viewInBrowser(self, url, uri):
-        
         webbrowser.open(uri+url)
-          
-    # ------------------------------------------------------------
 
     # TO DO: convert to use DOM method
     def getXmlHead(self):    
         return  '<?xml version="1.0" encoding="ISO-8859-1" ?>'
-                
-    # ------------------------------------------------------------
 
     def setRemotePassword(self, password=None):
         """Store password used to access the FTP server. Default is None."""
@@ -2030,12 +1434,6 @@ class MakerProjectModel:
         return passw and passw.strip()
 
     # ------------------------------------------------------------
-        
-#    def preview(self, theContent):
-#        self.currentFile.preview(theContent)
-#        return True
-
-    # ------------------------------------------------------------
 
     def distribute(self, theObject):
         """
@@ -2046,20 +1444,16 @@ class MakerProjectModel:
         self.coreMessage("Looking up the distribution table...")
 
         locations = [] 
-
         class XmlReader(ContentHandler):
             def Upload(XmlReader):
                 return    
 
             def __init__(XmlReader, scrwid=79, *args):
                 ContentHandler.__init__(XmlReader, *args)
-                
             def startElement(XmlReader, name, attrs):
                 XmlReader.start_name = name
-                        
                 if XmlReader.start_name == "rule":
                     page = theObject
-                            
                     object = attrs.get("ftp_source")
                     if  object == page:
                         ftpSource = self.getPathParts()+attrs.get("ftp_source")
@@ -2072,16 +1466,11 @@ class MakerProjectModel:
 
             def endElement(XmlReader, name):
                 pass
-                
             def characters(XmlReader, chars):
                 pass
-                
         parse(self.getDistributionTableFilename(), XmlReader())
-        
         return locations
 
-    # ------------------------------------------------------------
-    
     def filterFilesByLanguage(self, listOfFiles, lang=None):
         """ filters a give list of files by language and returns the
             result
@@ -2090,43 +1479,31 @@ class MakerProjectModel:
         """
         if not lang:
             lang = self.currentFile.getLanguage()
-            
         result = []
         for aFile in listOfFiles:
-            
             if aFile.endswith(lang): 
                 result.append(aFile)
-                
         return result
-    
-    
     
     def findContentFilesContainingThisDynamic(self, dynamic):
         """
         Returns a list of all .content files containing a reference
         to the given daynamic.
         """
-                
         listOfFiles = []
-        
         theList = self.getFilesByExtension(".content")
         for item in theList:
             pathToFile = os.path.join(self.getPathParts(), item + ".content")
             contentOfItem = readFile(pathToFile)
-            
             if contentOfItem.find(dynamic.encode(self.encoding)) == -1:
                 self.coreMessage("%s is not used in the file %s" % (dynamic,
                                                                     item))
             else:
                 listOfFiles.append(item)
-
         return listOfFiles
-    
-    # ------------------------------------------------------------
 
     def getFileClassForSupportedGroup(self, group):
         """Returns the corresponding maker class given a group."""
-             
         fileClasses = {".content" : makerFileTypes.MakerFileContent,     
                        ".css"     : makerFileTypes.MakerFileCss,     
                        ".cgi"     : makerFileTypes.MakerFileCgi,     
@@ -2145,25 +1522,18 @@ class MakerProjectModel:
                        ".foot"     : makerFileTypes.MakerFileFoot,
                        ".head"     : makerFileTypes.MakerFileHead,
                        ".head template" : makerFileTypes.MakerFileHeadTemplate
-                       
                        }
-        
-        
         return fileClasses[group]
 
-    # ------------------------------------------------------------
-    
     def findOpenFileInstByName(self, fileName):
         for instance in self.projectManager.openFiles:
             instName = instance.getFileName()
             project = instance.core.getProject() 
                             # check if file is from another project
             if instName == fileName  and project == self.getProject():
-                #print "returning ", instance.getFileName()
                 return instance
         else:
             return None
-    
     
     def justInitFile(self, name, group):
             """ for use when no interface interaction is needed"""
@@ -2174,68 +1544,39 @@ class MakerProjectModel:
             else:
                 if self.isFileBinary(os.path.join(self.getPathParts(), name + group)):
                     file =  makerFileTypes.MakerFileUnsupportedBinaryFile(self, name + group, view = False)
-                    
                 else:
-                    
                     file =  makerFileTypes.MakerFileUnsupportedTextFile(self, name + group, view = False)
-                                
             self.setCurrentFile(file)
-    
     
     @afterThisUpdateStatusInfo
     def loadFile(self, name, group):
         """Creates an new instance of a MakerFile"""    
-        
-        # check if group is supported if not use other classes
-        
         existingInstance = self.findOpenFileInstByName(name + group)
         if existingInstance:
-            #print "loading existing instance"
             self.setCurrentFile(existingInstance)
-            # take control
             self.currentFile.fileController.bindActions()
-            
         else:
-        
             if group in self.supportedFiles:
                 theClass = self.getFileClassForSupportedGroup(group)
                 theFile = theClass(self, name)
-                    
             else:
                 if self.isFileBinary(os.path.join(self.getPathParts(), name + group)):
                     theFile =  makerFileTypes.MakerFileUnsupportedBinaryFile(self, name + group)
-                    
                 else:
-                    
                     theFile =  makerFileTypes.MakerFileUnsupportedTextFile(self, name + group)
-                                
-                
             if theFile not in self.projectManager.openFiles:
                 self.projectManager.openFiles.append(theFile)
-            
             self.setCurrentFile(theFile)
-                    
-                # name in the line below is just the name eg.
-                # index for index.htm cause .htm is determined in class
-                
             self.currentFile.load()
-           
-            #return self.currentFile.load()
-   
-    # ------------------------------------------------------------
 
     @afterThisUpdateStatusInfo
     def setCurrentFile(self, aFile):
         """Set the ! instance of currentFile."""
-        
         self.currentFile = aFile
-            
     
     def getCurrentFile(self):
         """Get the ! instance of currentFile."""
         return self.currentFile    
-
-    # ------------------------------------------------------------
 
     def switchContentEditMode(self):
         """Switching between .head and .content"""
@@ -2251,30 +1592,21 @@ class MakerProjectModel:
         """mode can be either .content (default) or .head"""
         self.contentEditMode = mode
                
-    # ------------------------------------------------------------       
-               
     def getCurrentFileType(self):
         return self.currentFile.type
     
     def getCurrentFileName(self):
-        try:            
+        try:
             return self.currentFile.name + self.currentFile.type
         except:
             return "No File loaded !"
 
-
-    # ------------------------------------------------------------       
-    
     def saveFile(self, theContent):
         self.coreMessage('saving...')
         self.currentFile.save(theContent)
 
-    # ------------------------------------------------------------       
-
     def getProjectURL(self):
         return self.url
-
-    # ------------------------------------------------------------       
 
     # TO DO: convert these 6 methods to use os.path.join()
     def getBodyFileName(self):        
@@ -2308,81 +1640,51 @@ class MakerProjectModel:
         eg. de.nav for German
         So here we extract existing languages by looking up all navigation 
         (.nav) files
-        
         """
         list = self.getFilesByExtension(".nav")
         langList = []
         for item in list:
             langList.append(item)
-        
         return langList
-
-
-
-    # ------------------------------------------------------------           
     
     def restoreLocalFile(self):
         """If the file is not editable == binary this method does nothing."""
-
         self.coreMessage("Restoring original file")
-
         if self.currentFile.getEditable():
             pathToFile = self.getPathParts()+self.getCurrentFileName()+"_local"
-            
             local = readFile(pathToFile)
-            
             os.remove(pathToFile)
-            
             writeFile(self.getPathParts()+self.getCurrentFileName(), local)
-    
-    # ------------------------------------------------------------       
     
     @enforcePassword
     def browseFtp(self):
         self.ftpBrowser = makerFtpBrowser.FTPBrowser(self.projectController.view)
-        
         if not self.ftpBrowser.ftpBrowserAction_connect_(self.getFtpHost(), 
                                                          self.getFtpUser(),
                                                          self.getFtpRoot(),
                                                          self.getRemotePassword()):
             return None
         self.ftpBrowser.ftpBrowserAction_ls_()
-        # return the pathname displayed when the ftpBrowser was shut
         pathName = self.ftpBrowser.ftpBrowserShow()
-        
         return pathName 
-    
-    
-    
     
     def backupLocalFile(self):        
         self.coreMessage("Backing up original file")
 
         bar = readFile(self.getPathParts()+self.getCurrentFileName())
-        
-        # save for restoration
         pathToFile = self.getPathParts()+self.getCurrentFileName()+"_local"
         writeFile(pathToFile, bar)
-        
-    # ------------------------------------------------------------       
-    
-    
     
     def updateAllImageReferences(self):
         """Updates all image references in the current file."""
-        
         list = self.getImageFiles()
-
         for image in list:
             self.updateImageBase(image)
-    
-
     
     def applyMakerMetaStamp(self):
         """
         puts a copyright stamp at the end of the <head> section
         """
-        
         stamp = '  <meta name="generator" content="The Maker - Rapid Website Creation And Management" />'
 
         current = self.getCurrentFile()
@@ -2394,12 +1696,9 @@ class MakerProjectModel:
             new = s.replace("</head>", stamp + "\n\n</head>")
             writeFile(fileName, new)
     
-    
-    
     def updateImageBase(self, theImage):
         """
         You must invoke self.backupLocalFile() before this method.
-        
         Updates references to image files from local to the path on 
         the server one image at a time due to GUI interaction.
 
@@ -2408,20 +1707,11 @@ class MakerProjectModel:
         """
 
         theImage = theImage.encode(self.encoding)
-        
         pathToFile = self.getPathParts() + self.getCurrentFileName()
-        
-        
-        # replace images in single quotes
         urlJ = urlparse.urljoin(self.getProjectURL(), self.getRemoteGfxFolder())
-        
-                
         quoteList = [["'","'"],['"','"'],['url(',')']]
-        
         for quotes in quoteList:        
-            
             try:
-                #self.coreMessage("Replacing single quoted imege: %s" % str(theImage))
                 bar = readFile(pathToFile)
                 this = quotes[0] + theImage + quotes[1]
                 that = quotes[0] + urlJ + theImage + quotes[1]
@@ -2430,10 +1720,6 @@ class MakerProjectModel:
                 writeFile(pathToFile, newBar)
             except Exception, e:
                 print "replacing failed ", e
-                
-   
-    # ------------------------------------------------------------        
-        
     
     def getRemoteImageFiles(self):
         """returns a list of files in the remote image folder eg. gfx 
@@ -2443,19 +1729,14 @@ class MakerProjectModel:
         imageList = []
         self.server.home()
         
-        # does the folder exist ?
-        
         remoteFolder = self.getRemoteGfxFolder()
-        
         if not self.server.isdir(remoteFolder):
             self.server.mkd(remoteFolder)
-            
         
         self.server.ftp.cwd(remoteFolder)
         list = self.server.ls()
         if list == []:
             return imageList
-        
         for item in list:
             theFilesExt = os.path.splitext(item)[-1]
             if self.supportedImages.count(str(theFilesExt).lower()) > 0:
@@ -2463,36 +1744,27 @@ class MakerProjectModel:
         self.projectController.killProgressBar()
         return imageList
     
-    
     def getSupportedImageFormats(self):
         return self.supportedImages
-    
     
     def getImageFiles(self):
         """Returns a list of all the existing images."""   
         extensions = self.supportedImages
 
         fullList = []
-        
         for key in extensions:
             for eachCase in [key, key.upper()] :
                 theList = self.getFilesByExtension(eachCase)
                 for thing in theList:
                     fullList.append(thing + eachCase) 
-        
         return fullList
-
-    # ------------------------------------------------------------       
 
     # TO DO: convert to use os.path.join()
     def getDistributionTableFilename(self):
         return self.getProjectPath()+"/"+"setup/distribution"+".xml"
 
-    # ------------------------------------------------------------       
-    
     def getProjectInformation(self, theFile):
         info = {}
-
         class XmlReader(ContentHandler):                
             def __init__(XmlReader, scrwid=79, *args):
                 ContentHandler.__init__(XmlReader, *args)
@@ -2508,15 +1780,11 @@ class MakerProjectModel:
             def characters(XmlReader, chars):
                 if XmlReader.start_name != "project_setup":
                     info[str(XmlReader.start_name)] = str(chars)
-                            
                 XmlReader.start_name=""  
-                
         parse(theFile, XmlReader())
               
         del info['']
         return info
-
-    # ------------------------------------------------------------        
 
     # TO DO: convert to use DOM methods
     def writeProjectSetupFile(self, information, filename):
@@ -2533,8 +1801,3 @@ class MakerProjectModel:
         output += '</project_setup>\n'
 
         writeFile(filename, output)
-        
-# ------------------------------------------------------------         
-# ------------------------------------------------------------         
-# ------------------------------------------------------------        
-    

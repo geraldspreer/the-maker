@@ -27,105 +27,63 @@ class MakerFileController(makerController.SuperController):
     """
     @updateInterfaceControls
     def bindActions(self):
-        
-       
-       
         self.view.Unbind(self.view.wx.EVT_TOOL,  id=30)
         self.view.Unbind(self.view.wx.EVT_TOOL_RCLICKED, id=30)
-        
-        #self.view.previewButton.Unbind(self.view.wx.EVT_BUTTON)
-        #self.view.saveButton.Unbind(self.view.wx.EVT_BUTTON)
-        
         self.view.Unbind(self.view.wx.EVT_MENU, self.view.MenuItemSaveFile)
         self.view.Unbind(self.view.wx.EVT_MENU, self.view.MenuItemPrint)
-        
         self.view.Unbind(self.view.wx.EVT_TEXT, self.view.search)
-
-        
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CHANGED)
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSED)
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSING)
-        
-        
-        
+
         # take control
-        
-        
         self.view.Bind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CHANGED, 
                        self.model.core.projectController.noteBookPageChanged)
-        
-        
         self.view.Bind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSED, 
                        self.model.core.projectController.noteBookPageClosed)
-        
         # we need this event to make sure files are saved before they are closed
         self.view.Bind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSING, 
                        self.noteBookPageBeingClosed)
-        
-            
-        
         self.view.Bind(self.view.wx.EVT_MENU, self.replace, self.view.MenuItemReplace)
-        
         self.view.Bind(self.view.wx.EVT_TEXT, self.find, self.view.search)
-        
+
         # preview
-        
-        #self.view.previewButton.Bind(self.view.wx.EVT_BUTTON, self.preview)
         self.view.Bind(self.view.wx.EVT_TOOL, self.preview, id = 30)
         self.view.Bind(self.view.wx.EVT_TOOL_RCLICKED, self.preview, id = 30)
-        
-        
         self.view.Bind(self.view.wx.EVT_MENU, self.preview,self.view.MenuItemPreview)
         self.view.Bind(self.view.wx.EVT_MENU, self.preview,self.view.treePopUpMenuItemPreview)
-        
-                
-        #self.view.saveButton.Bind(self.view.wx.EVT_BUTTON, self.model.save)
         self.view.Bind(self.view.wx.EVT_TOOL, self.model.save, id = 10)
         self.view.Bind(self.view.wx.EVT_TOOL_RCLICKED, self.model.save, id = 10)
-        
-        
         self.view.Bind(self.view.wx.EVT_MENU, self.model.save, self.view.MenuItemSaveFile)
-        
+
         self.view.Bind(self.view.wx.EVT_MENU, 
                   self.findActionForEvent,
                   self.view.MenuItemCloseFile
                   )
-        
-        
         self.view.Bind(self.view.wx.EVT_MENU, 
                   self.findActionForEvent,
                   self.view.MenuItemDeleteFile
                   )
-        
         self.view.Bind(self.view.wx.EVT_MENU, 
                   self.findActionForEvent,
                   self.view.treePopUpMenuItemDeleteFile
                   )
-        
         self.view.Bind(self.view.wx.EVT_MENU, 
                   self.findActionForEvent,
                   self.view.treePopUpMenuItemRenameFile
                   )
-        
-        
         self.view.Bind(self.view.wx.EVT_MENU, 
                   self.findActionForEvent,
                   self.view.treePopUpMenuItemCloseFile
                   )
-        
-        
         self.view.Bind(self.view.wx.EVT_MENU, 
                   self.findActionForEvent,
                   self.view.MenuItemRenameFile
                   )
-        
         self.view.Bind(self.view.wx.EVT_MENU, 
                   self.findActionForEvent,
                   self.view.MenuItemSaveAsTemplate
                   )
-        
-        
-        
         self.view.Bind(self.view.wx.EVT_MENU, self.findActionForEvent, self.view.MenuItemPrint)
         self.view.Bind(self.view.wx.EVT_MENU, self.findActionForEvent, self.view.treePopUpMenuItemPrint)
     
@@ -136,8 +94,6 @@ class MakerFileController(makerController.SuperController):
         # Comments
         
         self.view.Bind(self.view.wx.EVT_MENU, self.insertComment, self.view.MenuItemComment)
-    
-    
         
         # Markers
         self.view.Bind(self.view.wx.EVT_MENU, self.findActionForEvent, self.view.MenuItemMarkerTodaysDate)
@@ -152,398 +108,318 @@ class MakerFileController(makerController.SuperController):
                   self.view.MenuItemWrapWord
                   )
         
-        
         # HTML
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_body)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_head)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_html)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_span)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_div)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_style)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_meta)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_link)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_DOCTYPE)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_title)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_em)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_pre)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_code)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_h2)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_h3)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_h1)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_h6)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_h4)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_ins)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_strong)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_bdo)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_dfn)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_var)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_samp)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_cite)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_blockquote)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_acronym)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_abbr)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_br)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_address)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_h5)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_q)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_p)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_del)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_kbd)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_a)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_base)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_map)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_object)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_param)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_img)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_area)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_dl)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_ol)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_dd)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_li)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_ul)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_dt)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_colgroup)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_tr)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_tbody)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_caption)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_tfoot)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_th)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_table)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_td)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_col)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_thead)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_fieldset)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_form)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_textarea)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_button)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_label)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_optgroup)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_input)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_legend)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_select)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_option)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_noscript)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_script)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_b)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_sub)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_i)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_big)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_tt)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_hr)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_sup)
         
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.findActionForEvent,
         self.view.MenuItemHTML_small)
-        
         
         # css
 
@@ -551,358 +427,287 @@ class MakerFileController(makerController.SuperController):
         self.findActionForEvent,
         self.view.MenuItemCSS_background)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_background_attachment)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_background_color)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_background_image)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_background_position)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_background_repeat)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_border)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_border_collapse)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_border_color)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_border_spacing)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_border_style)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_border_width)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_bottom)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_caption_side)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_clear)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_clip)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_color)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_content)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_counter_increment)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_counter_reset)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_cursor)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_direction)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_display)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_empty_cells)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_float)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_font)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_font_family)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_font_size)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_font_style)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_font_variant)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_font_weight)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_height)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_left)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_letter_spacing)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_line_height)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_list_style)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_list_style_image)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_list_style_position)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_list_style_type)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_margin)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_max_height)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_max_width)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_min_height)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_min_width)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_orphans)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_outline)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_outline_color)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_outline_style)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_outline_width)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_overflow)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_padding)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_page_break_after)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_page_break_before)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_page_break_inside)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_position)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_quotes)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_right)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_table_layout)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_text_align)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_text_decoration)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_text_indent)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_text_transform)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_top)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_unicode_bidi)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_vertical_align)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_visibility)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_white_space)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_widows)
-
 
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_width)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_word_spacing)
 
-
         self.view.Bind(self.view.wx.EVT_MENU, 
         self.findActionForEvent,
         self.view.MenuItemCSS_z_index)
-        
+
         # edit menu
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.undo,
         self.view.MenuItemUndo)
@@ -911,11 +716,9 @@ class MakerFileController(makerController.SuperController):
         self.redo,
         self.view.MenuItemRedo)
 
-        
         self.view.Bind(self.view.wx.EVT_MENU,
         self.cut,
         self.view.MenuItemCut)
-        
         
         self.view.Bind(self.view.wx.EVT_MENU,
         self.copy,
@@ -994,34 +797,22 @@ class MakerFileController(makerController.SuperController):
         theList = [".dynamic", ".content", ".html", ".php"]
         
         if self.model.getType() == ".css":
-            
             self.view.editorPopUpMenuItemLine_through.Enable(False)
             self.view.editorPopUpMenuItemUnderline.Enable(False)
             self.view.editorPopUpMenuItemBold.Enable(False)
             self.view.editorPopUpMenuItemOblique.Enable(False)
-            
             self.view.editorPopUpMenuItemSelectColor.Enable(True)    
-            
         elif self.model.getType() in theList:
-            
             self.view.editorPopUpMenuItemSelectColor.Enable(False)
-            
             self.view.editorPopUpMenuItemLine_through.Enable(True)
             self.view.editorPopUpMenuItemUnderline.Enable(True)
             self.view.editorPopUpMenuItemBold.Enable(True)
             self.view.editorPopUpMenuItemOblique.Enable(True)
-            
-        
-        #
-        #    end popup menu bindings
-        #
-        
         
         #
         # tools Menu
         #
         
-       
         self.view.Bind(self.view.wx.EVT_MENU,
         self.pickColor,
         self.view.MenuItemSelectColor) 
@@ -1045,33 +836,21 @@ class MakerFileController(makerController.SuperController):
         theList = [".dynamic", ".content", ".html", ".php"]
         
         if self.model.getType() == ".css":
-            
             self.view.MenuItemLine_through.Enable(False)
             self.view.MenuItemUnderline.Enable(False)
             self.view.MenuItemBold.Enable(False)
             self.view.MenuItemOblique.Enable(False)
-            
             self.view.MenuItemSelectColor.Enable(True)    
-            
         elif self.model.getType() in theList:
-            
             self.view.MenuItemSelectColor.Enable(False)
-            
             self.view.MenuItemLine_through.Enable(True)
             self.view.MenuItemUnderline.Enable(True)
             self.view.MenuItemBold.Enable(True)
             self.view.MenuItemOblique.Enable(True)
-            
         
         #
         #    end tools menu bindings
         #
-       
-        
-         
-        
-        
-        
         
     def undo(self, event):
         self.editor.Undo()
@@ -1079,13 +858,11 @@ class MakerFileController(makerController.SuperController):
     def redo(self, event):
         self.editor.Redo()
         
-        
     def cut(self, event):
         self.editor.Cut()
     
     def copy(self, event):
         self.editor.Copy()
-        
     
     def paste(self, event):
         self.editor.Paste()
@@ -1093,53 +870,31 @@ class MakerFileController(makerController.SuperController):
     @ensureCurrentFileSaved
     def rename(self, event):
         self.model.rename()
-        
-    
     
     def pythonShell(self, scriptToRun=None):
         """ brings up python shell and runs scriptToRun if given """
-        
         shell = self.view.doShell(self.view)
-        
         if scriptToRun:
             shell.runfile(scriptToRun)
-        
-     
             
     def createAbstractNameForViewObjects(self):
-        
-        #self.saveButton = self.view.saveButton
         self.saveMenu = self.view.MenuItemSaveFile
-        
         self.projectManager = self.model.core.projectManager
-        
         self.noteBook = self.view.noteBook
         self.openEditor()
-        
         self.publishMenu = self.view.MenuItemPublish
-        #self.publishButton = self.view.publishButton
-        
         self.search = self.view.search
-        
-        
-        
-                
+
     def clearEditor(self):
         self.editor.ClearAll()
     
     def enableEditor(self):
         self.editor.Enable()
-        
-        # enable edit functions
     
     def disableEditor(self):
         self.editor.Disable()
-        # disable edit functions
-        
         
     def openEditor(self):
-        """ create new instance """
-    
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CHANGED)
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSED)
         self.view.Unbind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSING)
@@ -1152,7 +907,6 @@ class MakerFileController(makerController.SuperController):
         self.setDefaultZoom()
         
         # - - delete welcome message - -
-        
         # the noteBook is by default displaying a welcome message
         # this message is set when the GUI is created
         # the following two lines are here to make sure this message
@@ -1161,8 +915,6 @@ class MakerFileController(makerController.SuperController):
         if self.noteBook.GetPageCount() != 0:
             if self.noteBook.GetPage(0).GetId() == self.view.welcomeId:
                 self.noteBook.DeletePage(0)
-        
-        # - - - - - - - - - - - - - - -
         
         self.noteBook.AddPage(self.editor, self.model.getFileName(), select=True)
         
@@ -1173,52 +925,37 @@ class MakerFileController(makerController.SuperController):
         # use fileController instance as value here
         self.model.core.projectManager.controller.noteBookPages[self.noteBook.GetSelection()] = self
         
-        
         self.view.Bind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CHANGED, 
                        self.model.core.projectController.noteBookPageChanged)
         
-        
         self.view.Bind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSED, 
                        self.model.core.projectController.noteBookPageClosed)
-        
         # we need this event to make sure files are saved before they are closed
         self.view.Bind(self.view.wx.lib.flatnotebook.EVT_FLATNOTEBOOK_PAGE_CLOSING, 
                        self.noteBookPageBeingClosed)
-        
          # editor right click
-        
         self.editor.Bind(self.view.wx.EVT_RIGHT_DOWN, 
                        self.editorRightClick)
-        
     
     def pickColor(self, event):
         """ bring up a color picker dialog"""
-        
         color = self.colorDialog() 
-        self.actionInsertText("rgb" + str(color))          
-    
+        self.actionInsertText("rgb" + str(color))
     
     def preview(self, event):
         text = self.getTextFromEditor()
         if not text:
             return
         self.model.preview(text)
-        
-  
     
     def textChanged(self, event):
-	     
 	self.model.core.currentFile.setSaved(False)
-        
     
     def setDefaultZoom(self):
-        
         self.defaultZoom = self.editor.GetZoom()
         
     def getDefaultZoom(self):
-        
         return self.defaultZoom
-    
     
     def setReferringTreeItem(self, item):
         """ set the tree item associated with that file"""
@@ -1228,40 +965,26 @@ class MakerFileController(makerController.SuperController):
         """ get the tree item associated with that file"""
         return self.referringTreeItem
     
-    
-    
-    
-    
-    
     def getTextFromEditor(self):
         """ returns text as string or 'Encoding Error'"""
-        
         try:
             text = self.editor.GetText().encode(self.model.core.encoding)
             return text
         except:
-            #print self.editor.GetText()
             for c in range(self.editor.GetTextLength()):
                 self.editor.SetSelection(c, c +1)
                 try: 
                     print self.editor.GetSelectedText().encode(self.model.core.encoding)
                 except:
-                    
                     self.editor.SetSelBackground(True, self.view.wx.RED)
                     self.editor.GotoPos(c)
                     self.editor.SetSelection(c, c +1)
-                    
                     self.infoMessage("Bad charcater found at position " + 
                                      str(c) + 
                                      " ! Cannot encode using:" + self.model.core.encoding + 
                                      "\nPlease review and edit...")
-                    
                     self.editor.SetSelBackground(True, self.view.wx.RED)
                     return "Encoding Error"
-            
-            
-        
-        
         
     def actionInsertText(self, text):
         """Insert text into the main editor."""
@@ -1270,57 +993,40 @@ class MakerFileController(makerController.SuperController):
       
     def actionInsertImage(self):
         """Insert text into the main editor."""
-        
         path = self.model.core.getPathParts()
-        
         image = self.imageDialog(path)
         if not image: return
 
         # only use the image filename - not the full path
         image = os.path.split(image)
-        
         if path.endswith("/"):
             origPath = path
         else:
             origPath = path + "/"
-               
         image = image[1]
-                    
         theTag = '<img class="" src="'+image+'" align="left" alt="'+image+'"/>'
         self.insertHtmlTags([theTag])
-    
-    
     
     def actionAddText(self, text):
         """Add text into the main editor."""
         self.editor.AddText(text)
-        
-    
-    
+
     def actionFormatText(self, text, format):
         """Insert HTML tags in editor."""
-        
         formats = {
             'bold'    : ['<span style="font-weight:bold;">', '</span>'],
             'oblique' : ['<span style="font-style:oblique;">', '</span>']
             }
-        
         defaultTags = ['<span style="text-decoration:'+format+'">','</span>']
         tags = formats.get(format, defaultTags)
         self.insertHtmlTags(tags)    
     
-    
-    
     def insertMarkdown(self, event):
-        # inserts a markdown area
         self.insertHtmlTags(["<markdown>", "</markdown>"])
     
-    
     def insertComment(self, event):
-        # inserts a comment depending on the filetype 
         commentTags = self.model.getCommentTags()
         self.insertHtmlTags(commentTags)
-    
     
     def insertHtmlTags(self, tags):
         """
@@ -1335,64 +1041,44 @@ class MakerFileController(makerController.SuperController):
         if len(tags)==1:
             # one tag
             self.editor.AddText(tags[0]+"\n")
-            
         else:
             # two tags
             self.editor.AddText(tags[0])
             self.editor.AddText(sel) 
-            
             self.editor.AddText(tags[1])    
             pos = self.editor.GetCurrentPos()
-            
             self.editor.SetCurrentPos(pos-(len(tags[1])))
             try:
                 self.editor.SetSelection(self.editor.GetCurrentPos(),self.editor.GetCurrentPos())
             except Exception, e:
                 print e
     
-        
-        
-    
     def actionInsertCSS(self, text):
         self.editor.AddText(text)
-        
         # now set the cursor to the position after the : character
-        
         self.editor.SearchAnchor()
         pos = self.editor.SearchPrev(self.view.wx.stc.STC_FIND_REGEXP, ":")
         self.editor.GotoPos(pos + 1)
     
-    
     def loadTextIntoEditor(self, text, binary = False):
-    
         self.editor.AddText(text)
         makerAutoComplete.AutoComplete(self.model, self.view, self.editor)
-        # this fixes " wxYield called recursively errors..."
         self.view.wx.SafeYield()
-        
         if not binary:
             self.editor.Bind(self.view.wx.stc.EVT_STC_CHANGE, self.textChanged)
-            
             # newly opened file - edit at beginning
             self.editor.SetSelection(0,0) # safer than SetCurrentPos
             self.editor.SetFocus()
-      
         
     def isCurrentFileSaved(self):
-        
         return self.model.getSaved()
-
-    
     
     def saveCurrentFile(self):
-        
         if not self.model.getSaved():
             m = "Do you want to save "
             m += "the file %s?" % self.model.core.getCurrentFileName()
             if self.askYesOrNo(m) == "Yes":
                 self.model.save()
-                
-                
                 
     def closeCurrentFile(self, callModel = True, event=None):
         page = self.noteBook.GetSelection()
@@ -1401,60 +1087,38 @@ class MakerFileController(makerController.SuperController):
         if callModel:
             self.model.closeFile(callController = False)
     
-    
-        
-    
     @ensureCurrentFileSaved
     def noteBookPageBeingClosed(self, event=None):
         self.model.closeFile()
-            
+
     @ensureCurrentFileSaved
     def actionPrint(self):
-        # prints the source of the file if printable
         self.model.printViaBrowser()
-
-
-#
-#            self.view.search.GetId() : (self.searchInEditor, self.view.search.GetValue()),
-#            self.view.MenuItemFind.GetId() : (self.activateSearch,),
-#            self.view.MenuItemFindNext.GetId() : (self.findNext, self.view.search.GetValue()),        
-#            self.view.MenuItemHTML_img.GetId() : (self.actionInsertImage,),
-
 
     def editorRightClick(self, event):
         """ shows popup menu """
-        
         self.editor.PopupMenu(self.view.editorPopUp, event.GetPosition())
-   
 
     def buildPopupMenu(self):
         """
         builds the popup menu for the editor and binds events
-        
         also enables / disables items according to the file type
         """
-    
 
     def replace(self, evt):
-        
         makerReplace.Replace(self.view, self.editor, self.model.getProjectInstance())
-
     
     def find(self, event):
         """ search text, select and make visible """
         string = self.search.GetValue()      
         location = self.editor.FindText(0, self.editor.GetTextLength(), string, 
                              self.view.wx.stc.STC_FIND_REGEXP)
-                
         if location != -1:
             self.view.searchStatus.SetLabel("")
             self.editor.GotoPos(location)
             self.editor.SetSelection(location, location + len(string))
         elif location == -1:
             self.view.searchStatus.SetLabel("String not found!")
-            
-    # ------------------------------------------------------------         
-   
     
     def activateSearch(self, event):
         """ sets the focus to the search field"""
@@ -1462,33 +1126,23 @@ class MakerFileController(makerController.SuperController):
         
     def findNext(self, event):
         """ find next occurrence of search term"""
-        
         searchTerm = self.search.GetValue()
         oldSelection = self.editor.GetSelection()
-        
+
         # the SearchAnchor has to be set to the end of the selection
-        
         self.editor.SetSelection(oldSelection[-1], oldSelection[-1])
-        
         self.editor.SearchAnchor()
         location = self.editor.SearchNext(self.view.wx.stc.STC_FIND_REGEXP, searchTerm)
-        
         if location != -1:
             self.view.searchStatus.SetLabel("")
             self.editor.GotoPos(location)
             self.editor.SetSelection(location, location + len(searchTerm))
-        
         elif location == -1:
             self.view.searchStatus.SetLabel("Last one found!")
             self.editor.SetSelection(oldSelection[0], oldSelection[-1])
-    
-    # ------------------------------------------------------------  
-        
-
 
     def findActionForEvent(self, event):
         """Find the right Action for the Menu item by his id."""
-       
         theActions = {
             self.view.MenuItemPrint.GetId() : (self.actionPrint, ),
             self.view.treePopUpMenuItemPrint.GetId() : (self.actionPrint, ),
@@ -1503,12 +1157,10 @@ class MakerFileController(makerController.SuperController):
             self.view.editorPopUpMenuItemUnderline.GetId() : (self.actionFormatText, (event, "underline")),
             self.view.editorPopUpMenuItemBold.GetId() : (self.actionFormatText, (event, "bold")),
             self.view.editorPopUpMenuItemOblique.GetId() : (self.actionFormatText, (event, "oblique")),
-            
             self.view.MenuItemLine_through.GetId() : (self.actionFormatText, (event, "line-through")),
             self.view.MenuItemUnderline.GetId() : (self.actionFormatText, (event, "underline")),
             self.view.MenuItemBold.GetId() : (self.actionFormatText, (event, "bold")),
             self.view.MenuItemOblique.GetId() : (self.actionFormatText, (event, "oblique")),
-                        
             self.view.MenuItemMarkerTodaysDate.GetId() : (self.actionAddText, "!todaysDate!"),
             self.view.MenuItemMarkerProjectName.GetId() : (self.actionAddText, "!projectName!"),
             self.view.MenuItemMarkerPageName.GetId() : (self.actionAddText, "!pageName!"),
@@ -1664,10 +1316,7 @@ class MakerFileController(makerController.SuperController):
             self.view.MenuItemCSS_z_index.GetId() : (self.actionInsertCSS, "z-index: ;"),
             self.view.MenuItemWrapWord.GetId(): (self.actionWordWrap, ),
             }
-        
         action = theActions[event.GetId()]
-        
-                        
         try:
             # one arg
             action[0](action[-1])
@@ -1678,67 +1327,37 @@ class MakerFileController(makerController.SuperController):
             except:
                 # no argument
                 action[0]()
-        
        
     def actionWordWrap(self):
-        
         if self.editor.GetWrapMode() == self.view.wx.stc.STC_WRAP_WORD:
             self.editor.SetWrapMode(self.view.wx.stc.STC_WRAP_NONE)
             self.view.MenuItemWrapWord.Check(False)
         else:
             self.editor.SetWrapMode(self.view.wx.stc.STC_WRAP_WORD)
             self.view.MenuItemWrapWord.Check(True)
-        
-        
-
 
     def updateStatusInformation(self):
         """ file related """
-            
-        
         # Save button and menus
-        
         page = self.noteBook.GetSelection()
         text = self.noteBook.GetPageText(page)
-              
-        # model = makerFile object
-               
-        # enable or disable Save As Template for .head files
-        
         if self.model.getType() == ".head" and self.model.getName() != "rss":
             self.view.MenuItemSaveAsTemplate.Enable(True)
         else:
             self.view.MenuItemSaveAsTemplate.Enable(False)
-                   
-                
         if self.model.saved:
-            
-            #self.saveButton.Disable()
             self.view.toolBar.EnableTool(10, False)
-            
             self.saveMenu.Enable(False)
-            # noteBook
             if text.endswith("*"):
                 self.noteBook.SetPageText(page, text.rstrip("*"))
-            
             self.publishMenu.SetText("Publish [" + str(len(self.model.core.getFtpQueue())) + " Files in Queue]" )
-            
             self.view.statusBar1.SetStatusText(number=4,
                                            text="FTP Queue: " + str(len(self.model.core.getFtpQueue())) 
                                            + " Files"
                                            )
-        
-            
-                        
         else:
-            #self.saveButton.Enable()
             self.view.toolBar.EnableTool(10, True)
             self.saveMenu.Enable(True)
             # noteBook
             if not text.endswith("*"):
                 self.noteBook.SetPageText(page, text + "*")
-                
-                
-  
-      
-        

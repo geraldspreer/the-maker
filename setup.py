@@ -26,7 +26,6 @@ if sys.platform == "darwin":
     print "building with py2app version: ", py2app.__version__
     print "#---------------------------------------------------------"
 
-
 setup(
     options=dict(py2app=dict(plist=plist)),
     name="TheMaker",
