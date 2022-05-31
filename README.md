@@ -1,3 +1,5 @@
+## TheMaker (discontinued)
+
 TheMaker is a lightweight HTML editor for websites. 
 It runs on your Mac, Linux and Windows and after you made your changes you 
 are publishing via FTP. 
@@ -8,7 +10,6 @@ We hope you have a pleasant experience using the maker. If you have any feedback
 you are welcome to contact us at [info at makercms dot org] .
    
 You will find a tutorial and videos at: [http://www.makercms.org/tutorial]
-
 
 ### Run from source:
 
@@ -34,6 +35,3 @@ To build run:
 $ ./compile_mac.sh
 
 See LICENSE for license information.
-
-
-
