@@ -135,7 +135,6 @@ class MakerApp(wx.App):
     def showCopyRight(self):
         print makerCopyright.getCopyright()
 
-
 def main():
     try:
         converter = makerUpdateSandboxedProjects.UpdateSandboxedProjects()
@@ -149,7 +148,6 @@ def main():
 
     if application.restart == True:
         main()
-
 
 if __name__ == "__main__":
     main()
